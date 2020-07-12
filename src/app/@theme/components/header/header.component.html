@@ -1,0 +1,30 @@
+<div class="header-container">
+  <div class="logo-container">
+    <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+      <nb-icon icon="menu-2-outline"></nb-icon>
+    </a>
+    <a class="logo" href="#" (click)="navigateHome()"
+      ><img src="../../../../assets/brand/class-master.png" width="75%" alt="Class Master"
+    /></a>
+  </div>
+  <nb-select selected="" (selectedChange)="changeSelect($event)" status="primary">
+    <nb-option value="">Select Institute</nb-option>
+    <nb-option *ngFor="let branch of branches" [value]="branch._id">{{ branch.name }}</nb-option>
+  </nb-select>
+</div>
+
+<div class="header-container">
+  <nb-actions size="small">
+    <nb-action class="control-item" icon="email-outline"></nb-action>
+    <nb-action class="control-item" icon="bell-outline"></nb-action>
+    <nb-action class="control-item" icon="power-outline" (click)="logOut()"></nb-action>
+    <nb-action class="user-action" *nbIsGranted="['view', 'user']">
+      <nb-user
+        [nbContextMenu]="userMenu"
+        [onlyPicture]="userPictureOnly"
+        [name]="user?.name | uppercase"
+      >
+      </nb-user>
+    </nb-action>
+  </nb-actions>
+</div>
