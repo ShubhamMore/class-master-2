@@ -9,7 +9,7 @@ export class StudentModel {
     public parentName: string,
     public parentEmail: string,
     public parentPhone: string,
-    public classMasterId: string,
+    public imsMasterId: string,
     public status: boolean,
   ) {}
 }

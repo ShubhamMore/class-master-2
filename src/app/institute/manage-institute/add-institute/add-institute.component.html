@@ -1,1 +1,429 @@
-<p>add-institute works!</p>
+<nb-card>
+  <nb-card-header>
+    <h4>
+      {{ !branch ? 'Create New Branch' : 'Edit Branch' }}
+    </h4>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper #stepper [linear]="true">
+      <nb-step [stepControl]="branchBasicDetailsForm" label="Basic Details">
+        <form
+          [formGroup]="branchBasicDetailsForm"
+          (ngSubmit)="submitBasicDetails()"
+          class="step-container"
+        >
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-name">Branch Name:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-name"
+                  name="branchName"
+                  placeholder="Branch name"
+                  formControlName="branchName"
+                  minlength="5"
+                  maxlength="30"
+                  autofocus
+                  fullWidth
+                  [status]="
+                    branchBasicDetailsForm.get('branchName').touched
+                      ? branchBasicDetailsForm.get('branchName').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    branchBasicDetailsForm.get('branchName').invalid &&
+                    branchBasicDetailsForm.get('branchName').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchBasicDetailsForm.get('branchName').errors?.required"
+                  >
+                    Branch name is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchBasicDetailsForm.get('branchName').errors?.minlength"
+                  >
+                    Branch name should contains minimum 5
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-email">Email address:</label>
+                <input
+                  type="email"
+                  nbInput
+                  id="input-email"
+                  name="email"
+                  formControlName="email"
+                  placeholder="Email address"
+                  fullWidth
+                  [status]="
+                    branchBasicDetailsForm.get('email').touched
+                      ? branchBasicDetailsForm.get('email').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    branchBasicDetailsForm.get('email').invalid &&
+                    branchBasicDetailsForm.get('email').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchBasicDetailsForm.get('email').errors?.required"
+                  >
+                    Email is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchBasicDetailsForm.get('email').errors?.email"
+                  >
+                    Email should be the real one!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-password">Phone:</label>
+                <input
+                  type="text"
+                  pattern="\d*"
+                  nbInput
+                  id="input-phone"
+                  name="phone"
+                  formControlName="phone"
+                  placeholder="phone"
+                  minlength="10"
+                  maxlength="10"
+                  fullWidth
+                  [status]="
+                    branchBasicDetailsForm.get('phone').touched
+                      ? branchBasicDetailsForm.get('phone').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    branchBasicDetailsForm.get('phone').invalid &&
+                    branchBasicDetailsForm.get('phone').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchBasicDetailsForm.get('phone').errors?.required"
+                  >
+                    Phone is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="
+                      branchBasicDetailsForm.get('phone').errors?.pattern ||
+                      branchBasicDetailsForm.get('phone').errors?.minlength
+                    "
+                  >
+                    Phone should contain 10 digits
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-12 text-right">
+              <button nbButton type="submit">Next</button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step [stepControl]="branchAddressForm" label="Address Details">
+        <form [formGroup]="branchAddressForm" (ngSubmit)="submitAddress()" class="step-container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-address-1">Address 1:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-address-1"
+                  name="address1"
+                  placeholder="Address 1"
+                  formControlName="address1"
+                  autofocus
+                  fullWidth
+                  [status]="
+                    branchAddressForm.get('address1').touched
+                      ? branchAddressForm.get('address1').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    branchAddressForm.get('address1').invalid &&
+                    branchAddressForm.get('address1').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchAddressForm.get('address1').errors?.required"
+                  >
+                    Address 1 is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-address-2">Address 2:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-address-2"
+                  name="address2"
+                  placeholder="Address 2"
+                  formControlName="address2"
+                  autofocus
+                  fullWidth
+                />
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-address-2">State:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-address-2"
+                  name="state"
+                  placeholder="State"
+                  formControlName="state"
+                  autofocus
+                  fullWidth
+                  [nbAutocomplete]="autoState"
+                  [status]="
+                    branchAddressForm.get('state').touched
+                      ? branchAddressForm.get('state').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (input)="onChangeStateInput($event.target.value)"
+                />
+                <nb-autocomplete #autoState (selectedChange)="changeState($event)">
+                  <nb-option *ngFor="let state of filteredStates | async" [value]="state.name">
+                    {{ state.name }}
+                  </nb-option>
+                </nb-autocomplete>
+                <ng-container
+                  *ngIf="
+                    branchAddressForm.get('state').invalid && branchAddressForm.get('state').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchAddressForm.get('state').errors?.required"
+                  >
+                    State is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-city">City:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-city"
+                  name="city"
+                  placeholder="city"
+                  formControlName="city"
+                  autofocus
+                  fullWidth
+                  [nbAutocomplete]="autoCity"
+                  [status]="
+                    branchAddressForm.get('city').touched
+                      ? branchAddressForm.get('city').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (input)="onChangeCityInput($event.target.value)"
+                />
+                <nb-autocomplete #autoCity>
+                  <nb-option *ngFor="let city of filteredCities | async" [value]="city.name">
+                    {{ city.name }}
+                  </nb-option>
+                </nb-autocomplete>
+                <ng-container
+                  *ngIf="
+                    branchAddressForm.get('city').invalid && branchAddressForm.get('city').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchAddressForm.get('city').errors?.required"
+                  >
+                    City is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-pin-code">Pin Code:</label>
+                <input
+                  type="text"
+                  pattern="\d*"
+                  nbInput
+                  id="input-pin-code"
+                  name="pinCode"
+                  placeholder="pinCode"
+                  formControlName="pinCode"
+                  autofocus
+                  fullWidth
+                  [status]="
+                    branchAddressForm.get('pinCode').touched
+                      ? branchAddressForm.get('pinCode').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+
+                <ng-container
+                  *ngIf="
+                    branchAddressForm.get('pinCode').invalid &&
+                    branchAddressForm.get('pinCode').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchAddressForm.get('pinCode').errors?.required"
+                  >
+                    Pin Code is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-12 text-right">
+              <button class="mr-3" nbButton nbStepperPrevious>prev</button>
+              <button nbButton type="submit">Next</button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step [stepControl]="branchCategoriesForm" label="Branch Categories">
+        <form
+          [formGroup]="branchCategoriesForm"
+          (ngSubmit)="!branch ? submitCategories() : saveBranch()"
+          class="step-container"
+        >
+          <div class="row">
+            <div
+              class="col-md-6"
+              *ngFor="
+                let category of branchCategoriesForm.get('categories')['controls'];
+                let i = index
+              "
+            >
+              <div class="form-control-group" [formGroup]="category">
+                <label class="label" for="input-category-{{ i }}">Category {{ i + 1 }}:</label>
+
+                <nb-form-field>
+                  <input
+                    type="text"
+                    nbInput
+                    id="input-category-{{ i }}"
+                    name="category-{{ i }}"
+                    placeholder="Category {{ i + 1 }}"
+                    formControlName="category"
+                    autofocus
+                    fullWidth
+                    [status]="
+                      category.get('category').touched
+                        ? category.get('category').invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+
+                  <button
+                    type="button"
+                    nbSuffix
+                    nbButton
+                    ghost
+                    *ngIf="i !== 0"
+                    (click)="deleteCategory(i)"
+                  >
+                    <nb-icon icon="eye-off-2-outline" pack="eva"> </nb-icon>
+                  </button>
+                </nb-form-field>
+
+                <ng-container
+                  *ngIf="category.get('category').invalid && category.get('category').touched"
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="category.get('category').errors?.required"
+                  >
+                    Category {{ i + 1 }} is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <button type="button" nbButton (click)="generateCategory()">Add Category</button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button class="mr-3" nbButton nbStepperPrevious>prev</button>
+              <button nbButton type="submit">{{ !branch ? "Next": "Submit"}}</button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step label="Payment" *ngIf="!branch">
+        <div class="step-container">
+          <h3>Wizard completed!</h3>
+          <div class="row mt-3">
+            <div class="col-md-12 text-right">
+              <button nbButton (click)="saveBranch()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

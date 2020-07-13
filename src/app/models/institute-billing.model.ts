@@ -5,6 +5,6 @@ export class InstituteBillingModel {
     public address: string,
     public gstNumber: string,
     public termsAndConditions: string,
-    public classMasterId: string,
+    public imsMasterId: string,
   ) {}
 }

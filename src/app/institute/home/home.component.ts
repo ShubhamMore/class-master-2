@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
     this.menuService.hideMenu();
     this.branchService.setBranchId('');
     this.user = this.authService.getUserData();
-    this.branchService.getBranches(this.user.classMasterId).subscribe(
+    this.branchService.getBranches(this.user.imsMasterId).subscribe(
       (branches: BranchModel[]) => {
         this.branches = branches;
         this.loading = false;

@@ -28,8 +28,8 @@ export class BranchService {
 
   constructor(private httpService: HttpService) {}
 
-  getBranches(classMasterId: any) {
-    const data = { api: 'getBranches', data: { classMasterId } };
+  getBranches(imsMasterId: any) {
+    const data = { api: 'getBranches', data: { imsMasterId } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -40,8 +40,8 @@ export class BranchService {
     );
   }
 
-  getBranchesForEmployee(classMasterId: any) {
-    const data = { api: 'getBranches', data: { classMasterId } };
+  getBranchesForEmployee(imsMasterId: any) {
+    const data = { api: 'getBranches', data: { imsMasterId } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -52,8 +52,8 @@ export class BranchService {
     );
   }
 
-  getBranchesForStudent(classMasterId: any) {
-    const data = { api: 'getBranches', data: { classMasterId } };
+  getBranchesForStudent(imsMasterId: any) {
+    const data = { api: 'getBranches', data: { imsMasterId } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -112,8 +112,8 @@ export class BranchService {
     );
   }
 
-  activateBranch(branch: string) {
-    const data = { api: 'activateBranch', data: { branch } };
+  activateBranch(id: string, paymentDetails: any) {
+    const data = { api: 'activateBranch', data: { id, paymentDetails } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -149,6 +149,14 @@ export class BranchService {
   }
 
   deleteBranch(id: string) {
-    // this.branches.splice(id, 1);
+    const data = { api: 'deleteBranch', data: { id } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
   }
 }

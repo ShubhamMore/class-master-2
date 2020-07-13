@@ -5,7 +5,7 @@ export class InstituteModel {
     public phone: string,
     public email: string,
     public address: string,
-    public classMasterId: string,
+    public imsMasterId: string,
     public status: boolean,
   ) {}
 }

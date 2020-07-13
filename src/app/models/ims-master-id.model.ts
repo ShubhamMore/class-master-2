@@ -1,4 +1,4 @@
-export class ClassMasterIdModel {
+export class ImsMasterIdModel {
   constructor(
     public _id: string,
     public institute: number,

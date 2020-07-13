@@ -7,6 +7,6 @@ export class EmployeeModel {
     public email: string,
     public address: string,
     public qualification: string,
-    public classMasterId: string,
+    public imsMasterId: string,
   ) {}
 }

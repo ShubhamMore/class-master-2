@@ -5,7 +5,7 @@ export class User {
     public email: string,
     public phone: string,
     public userRole: string,
-    public classMasterId: string,
+    public imsMasterId: string,
     private _token: string,
     private _tokenExpirationDate: Date,
   ) {}

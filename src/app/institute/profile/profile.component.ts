@@ -97,7 +97,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getBillingDetails() {
-    this.billingService.getBillingDetails(this.authService.getUserData().classMasterId).subscribe(
+    this.billingService.getBillingDetails(this.authService.getUserData().imsMasterId).subscribe(
       (res: any) => {
         this.billingDetails = res;
 

@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   branches: any[];
 
-  userMenu = [{ title: 'institute/Profile', link: '' }];
+  userMenu = [{ title: 'Profile', link: '/institute/profile' }];
 
   constructor(
     private sidebarService: NbSidebarService,

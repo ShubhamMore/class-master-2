@@ -11,6 +11,9 @@ import {
   NbInputModule,
   NbCheckboxModule,
   NbDatepickerModule,
+  NbStepperModule,
+  NbFormFieldModule,
+  NbAutocompleteModule,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
@@ -41,6 +44,9 @@ import { ViewInstituteComponent } from './manage-institute/view-institute/view-i
     NbCheckboxModule,
     NbButtonModule,
     NbDatepickerModule,
+    NbStepperModule,
+    NbFormFieldModule,
+    NbAutocompleteModule,
   ],
   declarations: [
     InstituteComponent,

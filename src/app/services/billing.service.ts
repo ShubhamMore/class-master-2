@@ -32,8 +32,8 @@ export class InstituteBillingService {
     );
   }
 
-  getBillingDetails(classMasterId: string) {
-    const data = { api: 'getBillingDetails', data: { classMasterId } };
+  getBillingDetails(imsMasterId: string) {
+    const data = { api: 'getBillingDetails', data: { imsMasterId } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

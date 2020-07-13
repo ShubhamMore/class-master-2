@@ -13,7 +13,7 @@ export interface AuthResponseData {
   email: string;
   phone: string;
   userRole: string;
-  classMasterId: string;
+  imsMasterId: string;
   token: string;
   expiresIn: string;
 }
@@ -23,7 +23,7 @@ export class UserData {
   name: string;
   email: string;
   phone: string;
-  classMasterId: string;
+  imsMasterId: string;
   userRole: string;
   _token: string;
   _tokenExpirationDate: string;
@@ -58,7 +58,7 @@ export class AuthService {
           res.email,
           res.phone,
           res.userRole,
-          res.classMasterId,
+          res.imsMasterId,
           res.token,
           +res.expiresIn,
         );
@@ -80,7 +80,7 @@ export class AuthService {
           res.email,
           res.phone,
           res.userRole,
-          res.classMasterId,
+          res.imsMasterId,
           res.token,
           res.expiresIn,
         );
@@ -95,7 +95,7 @@ export class AuthService {
       userData.email,
       userData.phone,
       userData.userRole,
-      userData.classMasterId,
+      userData.imsMasterId,
       userData._token,
       new Date(userData._tokenExpirationDate),
     );
@@ -182,21 +182,12 @@ export class AuthService {
     email: string,
     phone: string,
     userRole: string,
-    classMasterId: string,
+    imsMasterId: string,
     token: string,
     expiresIn: number,
   ) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(
-      userId,
-      name,
-      email,
-      phone,
-      userRole,
-      classMasterId,
-      token,
-      expirationDate,
-    );
+    const user = new User(userId, name, email, phone, userRole, imsMasterId, token, expirationDate);
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));
