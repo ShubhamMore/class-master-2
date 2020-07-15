@@ -1,4 +1,4 @@
-<nb-card>
+<nb-card *ngIf="!loading">
   <nb-card-header>
     <h4>
       {{ !branch ? 'Create New Branch' : 'Edit Branch' }}
@@ -408,7 +408,7 @@
             </div>
             <div class="col-md-6 text-right">
               <button class="mr-3" nbButton nbStepperPrevious>prev</button>
-              <button nbButton type="submit">{{ !branch ? "Next": "Submit"}}</button>
+              <button nbButton type="submit">{{ !branch ? 'Next' : 'Submit' }}</button>
             </div>
           </div>
         </form>
@@ -416,7 +416,7 @@
 
       <nb-step label="Payment" *ngIf="!branch">
         <div class="step-container">
-          <h3>Wizard completed!</h3>
+          <h3>Make Payment</h3>
           <div class="row mt-3">
             <div class="col-md-12 text-right">
               <button nbButton (click)="saveBranch()">Submit</button>

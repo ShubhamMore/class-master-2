@@ -7,10 +7,7 @@ import { throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class PaymentService {
-  private paymentDetails = {
-    amount: '99',
-    planType: null,
-  };
+  private paymentDetails: { planType: string; amount: string };
 
   constructor(private httpService: HttpService) {}
 
@@ -18,9 +15,8 @@ export class PaymentService {
     return this.paymentDetails;
   }
 
-  setPaymentDetails(amount: string, planType: string) {
-    this.paymentDetails.amount = amount;
-    this.paymentDetails.planType = planType;
+  setPaymentDetails(planType: string, amount: string) {
+    this.paymentDetails = { planType, amount };
   }
 
   deleteOrder(id: string) {

@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../../authentication/auth/auth-service/auth.service';
 import { BranchService } from './../../services/branch.service';
 import { BranchModel } from './../../models/branch.model';
@@ -18,6 +19,8 @@ export class HomeComponent implements OnInit {
     private branchService: BranchService,
     private authService: AuthService,
     private menuService: MenuService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -35,5 +38,10 @@ export class HomeComponent implements OnInit {
         this.loading = false;
       },
     );
+  }
+
+  manageBranch(id: string) {
+    this.branchService.setBranchId(id);
+    this.router.navigate(['/institute/branch/dashboard'], { relativeTo: this.route });
   }
 }

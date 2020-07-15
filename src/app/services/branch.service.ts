@@ -14,6 +14,10 @@ export class BranchService {
     this.branchId = branchId;
   }
 
+  deleteBranchId() {
+    this.branchId = null;
+  }
+
   getBranchId() {
     return this.branchId;
   }
@@ -24,6 +28,10 @@ export class BranchService {
 
   getBranchData() {
     return this.branch;
+  }
+
+  deleteBranchData() {
+    this.branch = null;
   }
 
   constructor(private httpService: HttpService) {}

@@ -1,3 +1,4 @@
+import { NbCardModule, NbUserModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -8,6 +9,6 @@ import { BranchHeaderComponent } from './branch-header/branch-header.component';
 
 @NgModule({
   declarations: [BranchComponent, DashboardComponent, BranchHeaderComponent],
-  imports: [CommonModule, BranchRoutingModule],
+  imports: [CommonModule, BranchRoutingModule, NbCardModule, NbUserModule],
 })
 export class BranchModule {}

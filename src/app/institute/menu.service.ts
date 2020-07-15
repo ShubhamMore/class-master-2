@@ -17,12 +17,14 @@ export class MenuService {
     this.menuItems.push(MENU_ITEMS[0]);
     this.menuItems.push(MENU_ITEMS[1]);
     this.menuItems.push(MENU_ITEMS[2]);
+    this.menuItems.push(MENU_ITEMS[3]);
     this.menuItems.push(MENU_ITEMS[4]);
     this.menuItems.push(MENU_ITEMS[5]);
     this.menuItems.push(MENU_ITEMS[6]);
     this.menuItems.push(MENU_ITEMS[7]);
     this.menuItems.push(MENU_ITEMS[8]);
     this.menuItems.push(MENU_ITEMS[9]);
+    this.menuItems.push(MENU_ITEMS[10]);
   }
 
   hideMenu() {
@@ -41,15 +43,13 @@ export class MenuService {
 
   showMenu() {
     this.menuItems = MENU_ITEMS.map((menuItem: NbMenuItem, i: number) => {
-      if (i !== 0 && i !== 1) {
-        menuItem.hidden = false;
-        if (menuItem.children) {
-          menuItem.children.map((menuItemChildren: NbMenuItem) => {
-            menuItemChildren.hidden = false;
-          });
-        }
-        return menuItem;
+      menuItem.hidden = false;
+      if (menuItem.children) {
+        menuItem.children.map((menuItemChildren: NbMenuItem) => {
+          menuItemChildren.hidden = false;
+        });
       }
+      return menuItem;
     });
   }
 }

@@ -1,1 +1,78 @@
-<p>manage-institute works!</p>
+<div class="row" *ngIf="branches.length === 0">
+  <div class="col-md-10 col-12 mx-auto text-center">
+    <nb-card>
+      <nb-card-body>
+        <img src="" alt="Institute" />
+        <br />
+        <h2>No Institute Added</h2>
+        <br />
+        <button nbButton status="primary" routerLink="/institute/add">Add Institute</button>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<div class="row" *ngIf="branches.length > 0">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <h3>My Institutes</h3>
+      </nb-card-header>
+      <nb-card-body>
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr *ngFor="let branch of branches">
+                <td>
+                  <nb-user
+                    size="medium"
+                    [name]="branch.basicDetails.branchName | uppercase"
+                    [title]="branch.address.city"
+                  >
+                  </nb-user>
+                </td>
+                <td>
+                  {{ getAddress(branch.address) }}
+                </td>
+                <td>
+                  <span class="">+91 {{ branch.basicDetails.phone }}</span>
+                </td>
+                <td>
+                  <button
+                    class="mr-2"
+                    nbButton
+                    status="info"
+                    size="small"
+                    (click)="viewBranch(branch._id)"
+                  >
+                    View
+                  </button>
+
+                  <button
+                    class="mr-2"
+                    nbButton
+                    status="basic"
+                    size="small"
+                    (click)="editBranch(branch._id)"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    class=""
+                    nbButton
+                    status="warning"
+                    size="small"
+                    (click)="manageBranch(branch._id)"
+                  >
+                    Manage
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

@@ -46,11 +46,11 @@ const routes: Routes = [
         component: ManageInstituteComponent,
       },
       {
-        path: 'view/:id',
+        path: 'view',
         component: ViewInstituteComponent,
       },
       {
-        path: 'edit/:id',
+        path: 'edit',
         component: AddInstituteComponent,
       },
 

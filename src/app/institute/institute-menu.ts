@@ -33,6 +33,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: true,
     children: [
       {
+        title: 'Receipt Details',
+        link: '/institute/branch/manage-branch/receipt',
+        hidden: true,
+      },
+      {
         title: 'Course',
         link: '/institute/branch/manage-branch/course',
         hidden: true,
@@ -77,6 +82,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: true,
   },
 
+  // 7
   {
     title: 'Student Attendance',
     icon: '',
@@ -84,6 +90,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: true,
   },
 
+  // 8
   {
     title: 'Exam Management',
     icon: '',
@@ -102,7 +109,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 7
+  // 9
   {
     title: 'Employee Management',
     icon: '',
@@ -126,7 +133,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 8
+  // 10
   {
     title: 'Lead Management',
     icon: '',
@@ -150,7 +157,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 9
+  // 11
   {
     title: 'Budget Management',
     icon: '',

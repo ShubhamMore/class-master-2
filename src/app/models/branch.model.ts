@@ -4,6 +4,7 @@ export class BranchModel {
     public basicDetails: BranchBasicDetailsModel,
     public address: BranchAddressModel,
     public categories: CategoryModel[],
+    public currentPlanDetails: BranchPlanDetailsModel,
     public status: boolean,
   ) {}
 }
@@ -30,4 +31,13 @@ export class BranchAddressModel {
 
 export class CategoryModel {
   constructor(public _id: string, public category: string, public status: boolean) {}
+}
+
+export class BranchPlanDetailsModel {
+  constructor(
+    public _id: string,
+    public planType: string,
+    public activationDate: boolean,
+    public expiryDate: string,
+  ) {}
 }

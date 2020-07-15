@@ -18,6 +18,10 @@ export class InstituteBillingService {
     return this.billingDetails;
   }
 
+  deleteBilling() {
+    this.billingDetails = null;
+  }
+
   constructor(private httpService: HttpService) {}
 
   saveBillingDetails(billingDetails: any) {
@@ -32,8 +36,8 @@ export class InstituteBillingService {
     );
   }
 
-  getBillingDetails(imsMasterId: string) {
-    const data = { api: 'getBillingDetails', data: { imsMasterId } };
+  getBillingDetails(branch: string) {
+    const data = { api: 'getBillingDetails', data: { branch } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

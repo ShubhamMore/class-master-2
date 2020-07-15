@@ -6,10 +6,10 @@ import { AuthService } from './../../../authentication/auth/auth-service/auth.se
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { BranchService } from './../../../services/branch.service';
 import { MenuService } from './../../menu.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { BranchModel, CategoryModel } from './../../../models/branch.model';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ObjectId } from 'bson';
 import { Location } from '@angular/common';
 import { of, Observable } from 'rxjs';
@@ -20,7 +20,7 @@ declare const Razorpay: any;
   templateUrl: './add-institute.component.html',
   styleUrls: ['./add-institute.component.scss'],
 })
-export class AddInstituteComponent implements OnInit {
+export class AddInstituteComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
@@ -30,7 +30,7 @@ export class AddInstituteComponent implements OnInit {
   branchAddressForm: FormGroup;
   branchCategoriesForm: FormGroup;
 
-  branchId: string;
+  private branchId: string;
   branch: BranchModel;
 
   private states: any[];
@@ -54,22 +54,42 @@ export class AddInstituteComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
-  ) {}
+  ) {
+    this.route.queryParams.subscribe((param: Params) => {
+      this.ngOnInit();
+    });
+  }
 
   ngOnInit() {
     this.loading = true;
-    this.states = this.countryService.getStates();
-    this.cities = [];
-    this.branchService.setBranchId('');
+
     this.menuService.hideMenu();
     this.user = this.authService.getUserData();
     this.paymentDetails = this.paymentService.getPaymentDetails();
 
-    if (!this.user || !this.paymentDetails) {
-      this.showToastr('top-right', 'danger', 'Invalid Payment');
+    let mode: string;
+    this.route.queryParams.subscribe((param: Params) => {
+      mode = param.mode;
+    });
+
+    this.branchId = this.branchService.getBranchId();
+
+    if (mode && mode !== 'edit') {
+      this.showToastr('top-right', 'danger', 'Invalid Route');
+      this.router.navigate(['/institute/page-not-found'], { relativeTo: this.route });
+      return;
+    } else if ((!this.user || !this.paymentDetails) && mode !== 'edit') {
+      this.showToastr('top-right', 'danger', 'Invalid Payment Details');
+      this.location.back();
+      return;
+    } else if (mode === 'edit' && !this.branchId) {
+      this.showToastr('top-right', 'danger', 'Branch not Available');
       this.location.back();
       return;
     }
+
+    this.states = this.countryService.getStates();
+    this.cities = [];
 
     this.branchBasicDetailsForm = new FormGroup({
       branchName: new FormControl(null, {
@@ -105,28 +125,31 @@ export class AddInstituteComponent implements OnInit {
       categories: new FormArray([]),
     });
 
-    this.branchId = this.branchService.getBranchId();
-
     if (this.branchId) {
       this.branchService.getBranchForEditing(this.branchId).subscribe(
         (branch: BranchModel) => {
           if (!branch) {
-            this.router.navigate(['/admin/page-not-found'], { relativeTo: this.route });
+            this.router.navigate(['/institute/page-not-found'], { relativeTo: this.route });
             return;
           }
           this.branch = branch;
           this.branchBasicDetailsForm.patchValue({
-            branch: this.branch.basicDetails.branchName,
+            branchName: this.branch.basicDetails.branchName,
             email: this.branch.basicDetails.email,
             phone: this.branch.basicDetails.phone,
           });
 
           this.branchAddressForm.patchValue({
             state: this.branch.address.state,
-            city: this.branch.address.city,
             address1: this.branch.address.address1,
             address2: this.branch.address.address2,
             pinCode: this.branch.address.pinCode,
+          });
+
+          this.changeState(this.branch.address.state);
+
+          this.branchAddressForm.patchValue({
+            city: this.branch.address.city,
           });
 
           const categories = this.getCategories();
@@ -147,7 +170,7 @@ export class AddInstituteComponent implements OnInit {
         key: environment.razorpayKeyId, // Enter the Key ID generated from the Dashboard
         amount: '', // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         currency: 'INR',
-        name: 'INS Master',
+        name: 'IMS Master',
         description: 'Test Transaction',
         image: '../../../../assets/brand/class-master-mini.png',
         // tslint:disable-next-line: max-line-length
@@ -415,5 +438,9 @@ export class AddInstituteComponent implements OnInit {
       position,
       status,
     });
+  }
+
+  ngOnDestroy() {
+    this.branchService.deleteBranchId();
   }
 }

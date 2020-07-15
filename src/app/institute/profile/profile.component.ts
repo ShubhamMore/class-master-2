@@ -1,6 +1,4 @@
 import { NbToastrService } from '@nebular/theme';
-import { InstituteBillingService } from './../../services/billing.service';
-import { InstituteBillingModel } from './../../models/institute-billing.model';
 import { environment } from './../../../environments/environment';
 import { AuthService } from './../../authentication/auth/auth-service/auth.service';
 import { InstituteModel } from './../../models/institute.model';
@@ -17,15 +15,12 @@ import { EncryptService } from '../../services/shared-services/encrypt.service';
 export class ProfileComponent implements OnInit {
   loading: boolean;
   profileForm: FormGroup;
-  billingForm: FormGroup;
   changePasswordForm: FormGroup;
   profile: InstituteModel;
-  billingDetails: InstituteBillingModel;
   constructor(
     private userService: UserService,
     private toastrService: NbToastrService,
     private authService: AuthService,
-    private billingService: InstituteBillingService,
     private encryptService: EncryptService,
   ) {}
 
@@ -39,15 +34,6 @@ export class ProfileComponent implements OnInit {
       address: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(10)],
       }),
-    });
-
-    this.billingForm = new FormGroup({
-      name: new FormControl(null, { validators: [Validators.required, Validators.minLength(5)] }),
-      address: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(10)],
-      }),
-      gstNumber: new FormControl(null, { validators: [] }),
-      termsAndConditions: new FormControl(null, { validators: [] }),
     });
 
     this.changePasswordForm = new FormGroup(
@@ -68,7 +54,6 @@ export class ProfileComponent implements OnInit {
     );
 
     this.getProfile();
-    this.getBillingDetails();
   }
 
   passwordValidator(group: FormGroup): { [s: string]: boolean } {
@@ -96,25 +81,6 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  getBillingDetails() {
-    this.billingService.getBillingDetails(this.authService.getUserData().imsMasterId).subscribe(
-      (res: any) => {
-        this.billingDetails = res;
-
-        this.billingForm.patchValue({
-          name: this.billingDetails.name,
-          address: this.billingDetails.address,
-          gstNumber: this.billingDetails.gstNumber,
-          termsAndConditions: this.billingDetails.termsAndConditions,
-        });
-        this.loading = false;
-      },
-      (error: any) => {
-        this.loading = false;
-      },
-    );
-  }
-
   saveProfile() {
     this.profileForm.markAllAsTouched();
     if (this.profileForm.invalid) {
@@ -129,27 +95,6 @@ export class ProfileComponent implements OnInit {
     this.userService.saveProfile(profile).subscribe(
       (res: any) => {
         this.showToastr('top-right', 'success', 'Profile updated Successfully!');
-        this.loading = false;
-      },
-      (error: any) => {
-        this.showToastr('top-right', 'danger', error);
-        this.loading = false;
-      },
-    );
-  }
-
-  saveBillingDetails() {
-    this.billingForm.markAllAsTouched();
-    if (this.billingForm.invalid) {
-      this.showToastr('top-right', 'danger', 'Fill Billing Details Correctly');
-      return;
-    }
-    this.loading = true;
-    const billingDetails = this.billingForm.value;
-
-    this.billingService.saveBillingDetails(billingDetails).subscribe(
-      (res: any) => {
-        this.showToastr('top-right', 'success', 'Billing Details Updated Successfully!');
         this.loading = false;
       },
       (error: any) => {

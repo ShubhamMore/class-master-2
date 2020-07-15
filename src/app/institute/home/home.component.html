@@ -11,3 +11,55 @@
     </nb-card>
   </div>
 </div>
+
+<div class="row" *ngIf="branches.length > 0">
+  <div class="col-md-8">
+    <nb-card>
+      <nb-card-header>
+        <h3>My Institutes</h3>
+      </nb-card-header>
+      <nb-card-body>
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr *ngFor="let branch of branches">
+                <td>
+                  <nb-user
+                    size="medium"
+                    [name]="branch.basicDetails.branchName | uppercase"
+                    [title]="branch.address.city"
+                  >
+                  </nb-user>
+                </td>
+                <td>
+                  <span class="">+91 {{ branch.basicDetails.phone }}</span>
+                </td>
+                <td>
+                  <button
+                    k
+                    class=""
+                    nbButton
+                    status="warning"
+                    size="small"
+                    (click)="manageBranch(branch._id)"
+                  >
+                    Manage
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-4">
+    <nb-card>
+      <nb-card-header class="text-center">
+        <button nbButton status="warning" routerLink="/institute/membership-plans">
+          New Branch
+        </button>
+      </nb-card-header>
+    </nb-card>
+  </div>
+</div>

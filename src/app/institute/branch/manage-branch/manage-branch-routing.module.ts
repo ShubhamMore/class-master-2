@@ -1,3 +1,4 @@
+import { ReceiptInfoComponent } from './receipt-info/receipt-info.component';
 import { AddBatchComponent } from './batch/add-batch/add-batch.component';
 import { AddCourseComponent } from './course/add-course/add-course.component';
 import { CourseComponent } from './course/course.component';
@@ -11,6 +12,11 @@ const routes: Routes = [
     path: '',
     component: ManageBranchComponent,
     children: [
+      {
+        path: 'receipt',
+        component: ReceiptInfoComponent,
+      },
+
       {
         path: 'course',
         loadChildren: () => import('./course/course.module').then((m) => m.CourseModule),

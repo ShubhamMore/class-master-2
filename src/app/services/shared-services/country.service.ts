@@ -18,7 +18,11 @@ export class CountryService {
     return this.country.default.states;
   }
 
-  getCities(state: string) {
-    return this.country.default.states.find((curState: any) => curState.name === state).cities;
+  getCities(name: string) {
+    const state = this.country.default.states.find((curState: any) => curState.name === name);
+    if (state) {
+      return state.cities;
+    }
+    return [];
   }
 }

@@ -135,7 +135,6 @@ export class AuthService {
   logout() {
     return this.http.post(environment.backend + 'logout', {}).subscribe(
       (res: any) => {
-        console.log('c');
         this.user.next(null);
         this.router.navigate(['/login']);
         localStorage.removeItem('userData');

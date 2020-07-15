@@ -19,7 +19,7 @@ export class BranchAuthGuard implements CanActivate {
     router: RouterStateSnapshot,
   ): boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
     const branchId: string = this.branchService.getBranchId();
-    if (branchId !== '') {
+    if (branchId && branchId !== '') {
       return true;
     }
     return this.router.createUrlTree(['/']);

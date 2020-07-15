@@ -1,15 +1,30 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { BranchService } from './../../../../../services/branch.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'ngx-manage-test',
   templateUrl: './manage-test.component.html',
-  styleUrls: ['./manage-test.component.scss']
+  styleUrls: ['./manage-test.component.scss'],
 })
 export class ManageTestComponent implements OnInit {
+  loading: boolean;
+  branchId: string;
 
-  constructor() { }
+  constructor(
+    private branchService: BranchService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location,
+  ) {}
 
   ngOnInit(): void {
+    this.loading = true;
+    this.branchId = this.branchService.getBranchId();
+    if (!this.branchId) {
+      this.location.back();
+      return;
+    }
   }
-
 }

@@ -1,1 +1,61 @@
-<p>view-institute works!</p>
+<nb-card *ngIf="!loading">
+  <nb-card-header>
+    <h3>{{ branch.basicDetails.branchName | uppercase }}</h3>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th>Branch Name</th>
+            <td>{{ branch.basicDetails.branchName }}</td>
+          </tr>
+          <tr>
+            <th>Current Plan Type</th>
+            <td>{{ branch.currentPlanDetails.planType }}</td>
+          </tr>
+          <tr>
+            <th>Activation Date</th>
+            <td>{{ branch.currentPlanDetails.activationDate }}</td>
+          </tr>
+          <tr>
+            <th>Expiry Date</th>
+            <td>{{ branch.currentPlanDetails.expiryDate }}</td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>{{ branch.basicDetails.email }}</td>
+          </tr>
+          <tr>
+            <th>Contact</th>
+            <td>{{ branch.basicDetails.phone }}</td>
+          </tr>
+          <tr>
+            <th>Address 1</th>
+            <td>{{ branch.address.address1 }}</td>
+          </tr>
+          <tr>
+            <th>Address 2</th>
+            <td>{{ branch.address.address2 }}</td>
+          </tr>
+          <tr>
+            <th>City</th>
+            <td>{{ branch.address.city }}</td>
+          </tr>
+          <tr>
+            <th>Pincode</th>
+            <td>{{ branch.address.pinCode }}</td>
+          </tr>
+          <tr>
+            <th>State</th>
+            <td>{{ branch.address.state }}</td>
+          </tr>
+          <tr>
+            <th>Categories</th>
+            <td>{{ getCategories() }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>
