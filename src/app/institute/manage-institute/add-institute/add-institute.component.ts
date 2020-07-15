@@ -78,11 +78,11 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
       this.showToastr('top-right', 'danger', 'Invalid Route');
       this.router.navigate(['/institute/page-not-found'], { relativeTo: this.route });
       return;
-    } else if ((!this.user || !this.paymentDetails) && mode !== 'edit') {
+    } else if (!mode && (!this.user || !this.paymentDetails)) {
       this.showToastr('top-right', 'danger', 'Invalid Payment Details');
       this.location.back();
       return;
-    } else if (mode === 'edit' && !this.branchId) {
+    } else if (mode && !this.branchId) {
       this.showToastr('top-right', 'danger', 'Branch not Available');
       this.location.back();
       return;
@@ -442,5 +442,6 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.branchService.deleteBranchId();
+    this.paymentService.deletePaymentDetails();
   }
 }

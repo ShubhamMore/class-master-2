@@ -6,26 +6,31 @@ import { throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
-  course: CourseModel;
+  private course: CourseModel;
+  private courseId: string;
 
-  private courseSearchData = {
-    branch: '',
-    category: '',
-  };
-
-  setBranch(branch: string) {
-    this.courseSearchData.branch = branch;
+  setCourseId(courseId: string) {
+    this.courseId = courseId;
   }
 
-  getBranch() {
-    return this.courseSearchData.branch;
+  getCourseId() {
+    return this.courseId;
   }
 
-  setCategory(category: string) {
-    this.courseSearchData.category = category;
+  deleteCourseId() {
+    this.courseId = null;
   }
-  getCategory() {
-    return this.courseSearchData.category;
+
+  setCourseData(course: CourseModel) {
+    this.course = course;
+  }
+
+  getCourseData() {
+    return this.course;
+  }
+
+  deleteCourseData() {
+    this.course = null;
   }
 
   constructor(private httpService: HttpService) {}

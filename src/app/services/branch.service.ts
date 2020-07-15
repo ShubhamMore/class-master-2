@@ -23,6 +23,7 @@ export class BranchService {
   }
 
   setBranchData(branch: BranchModel) {
+    this.deleteBranchData();
     this.branch = branch;
   }
 

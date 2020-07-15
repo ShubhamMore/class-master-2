@@ -14,6 +14,7 @@ import {
   NbStepperModule,
   NbFormFieldModule,
   NbAutocompleteModule,
+  NbTooltipModule,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
@@ -47,6 +48,7 @@ import { ViewInstituteComponent } from './manage-institute/view-institute/view-i
     NbStepperModule,
     NbFormFieldModule,
     NbAutocompleteModule,
+    NbTooltipModule,
   ],
   declarations: [
     InstituteComponent,

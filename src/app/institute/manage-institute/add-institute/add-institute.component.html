@@ -146,9 +146,14 @@
             </div>
           </div>
 
-          <div class="row mt-3">
+          <hr />
+
+          <div class="row">
             <div class="col-md-12 text-right">
-              <button nbButton type="submit">Next</button>
+              <button nbButton type="submit">
+                <span>Next</span>
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
             </div>
           </div>
         </form>
@@ -302,7 +307,7 @@
                   nbInput
                   id="input-pin-code"
                   name="pinCode"
-                  placeholder="pinCode"
+                  placeholder="Pin Code"
                   formControlName="pinCode"
                   autofocus
                   fullWidth
@@ -331,10 +336,20 @@
               </div>
             </div>
           </div>
-          <div class="row mt-3">
-            <div class="col-md-12 text-right">
-              <button class="mr-3" nbButton nbStepperPrevious>prev</button>
-              <button nbButton type="submit">Next</button>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button class="" nbButton nbStepperPrevious>
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton type="submit">
+                <span>Next</span><nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
             </div>
           </div>
         </form>
@@ -346,6 +361,15 @@
           (ngSubmit)="!branch ? submitCategories() : saveBranch()"
           class="step-container"
         >
+          <div class="row">
+            <div class="col-md-8">
+              <p>Click on following button to add more Categories</p>
+            </div>
+            <div class="col-md-4 text-right">
+              <button type="button" nbButton (click)="generateCategory()">Add Category</button>
+            </div>
+          </div>
+
           <div class="row">
             <div
               class="col-md-6"
@@ -384,7 +408,13 @@
                     *ngIf="i !== 0"
                     (click)="deleteCategory(i)"
                   >
-                    <nb-icon icon="eye-off-2-outline" pack="eva"> </nb-icon>
+                    <nb-icon
+                      nbTooltip="Remove Category {{ i + 1 }}"
+                      icon="minus-outline"
+                      status="danger"
+                      pack="eva"
+                    >
+                    </nb-icon>
                   </button>
                 </nb-form-field>
 
@@ -402,13 +432,22 @@
             </div>
           </div>
 
-          <div class="row mt-3">
-            <div class="col-md-6">
-              <button type="button" nbButton (click)="generateCategory()">Add Category</button>
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button class="" nbButton nbStepperPrevious>
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
             </div>
             <div class="col-md-6 text-right">
-              <button class="mr-3" nbButton nbStepperPrevious>prev</button>
-              <button nbButton type="submit">{{ !branch ? 'Next' : 'Submit' }}</button>
+              <button nbButton type="submit">
+                <span>{{ !branch ? 'Next' : 'Submit' }}</span>
+                <span *ngIf="!branch">
+                  <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+                </span>
+              </button>
             </div>
           </div>
         </form>
@@ -417,9 +456,18 @@
       <nb-step label="Payment" *ngIf="!branch">
         <div class="step-container">
           <h3>Make Payment</h3>
-          <div class="row mt-3">
-            <div class="col-md-12 text-right">
-              <button nbButton (click)="saveBranch()">Submit</button>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button class="" nbButton nbStepperPrevious>
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton (click)="saveBranch()"><span>Submit</span></button>
             </div>
           </div>
         </div>

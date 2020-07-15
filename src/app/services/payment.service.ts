@@ -9,8 +9,6 @@ import { throwError } from 'rxjs';
 export class PaymentService {
   private paymentDetails: { planType: string; amount: string };
 
-  constructor(private httpService: HttpService) {}
-
   getPaymentDetails() {
     return this.paymentDetails;
   }
@@ -18,6 +16,12 @@ export class PaymentService {
   setPaymentDetails(planType: string, amount: string) {
     this.paymentDetails = { planType, amount };
   }
+
+  deletePaymentDetails() {
+    this.paymentDetails = null;
+  }
+
+  constructor(private httpService: HttpService) {}
 
   deleteOrder(id: string) {
     const data = { api: 'deleteOrder', data: { id } };
