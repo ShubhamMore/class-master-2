@@ -4,13 +4,19 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class RoleService {
-  private roles: string[];
+  private userRoles: string[];
+  private employeeRoles: string[];
 
   constructor() {
-    this.roles = ['manager', 'teacher', 'councillor'];
+    this.userRoles = ['institute', 'employee', 'student'];
+    this.employeeRoles = ['manager', 'teacher', 'councillor'];
   }
 
-  getRoles() {
-    return this.roles;
+  getUserRoles() {
+    return this.userRoles;
+  }
+
+  getEmployeeRoles() {
+    return this.employeeRoles;
   }
 }

@@ -1,3 +1,4 @@
+import { RoleService } from './../../services/role.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth-service/auth.service';
 import { Observable } from 'rxjs';
@@ -18,9 +19,10 @@ export class RegisterComponent implements OnInit {
   userExist: boolean;
   loading: boolean;
   termsConditions: boolean;
-
+  roles: string[];
   constructor(
     private authService: AuthService,
+    private roleService: RoleService,
     private toastrService: NbToastrService,
     private router: Router,
     private route: ActivatedRoute,
@@ -30,7 +32,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-
+    this.roles = this.roleService.getUserRoles();
     this.userExist = false;
     this.form = new FormGroup(
       {
@@ -49,7 +51,7 @@ export class RegisterComponent implements OnInit {
         confirmPassword: new FormControl(null, {
           validators: [Validators.required, Validators.minLength(7), Validators.maxLength(20)],
         }),
-        userRole: new FormControl('institute', {
+        userRole: new FormControl(this.roles[0], {
           validators: [Validators.required],
         }),
       },

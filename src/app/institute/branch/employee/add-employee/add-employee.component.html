@@ -1,6 +1,13 @@
 <nb-card>
   <nb-card-header>
-    <button type="button" class="float-right" nbButton status="warning" size="tiny" (click)="back()">
+    <button
+      type="button"
+      class="float-right"
+      nbButton
+      status="warning"
+      size="tiny"
+      (click)="back()"
+    >
       Back
     </button>
     <h3 class="">
@@ -408,7 +415,7 @@
                 </tr>
                 <tr>
                   <th>Role</th>
-                  <td>{{ branchEmployeeForm.value.role }}</td>
+                  <td>{{ branchEmployeeForm.value.role | uppercase }}</td>
                 </tr>
                 <tr>
                   <th>Basic Salary</th>

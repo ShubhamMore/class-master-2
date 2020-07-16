@@ -180,7 +180,7 @@
               selected="institute"
               id="input-role"
               name="userRole"
-              placeholder="User Role"
+              placeholder="Select User Role"
               formControlName="userRole"
               fullWidth
               [status]="
@@ -191,9 +191,8 @@
                   : 'basic'
               "
             >
-              <nb-option value="institute">Institute</nb-option>
-              <nb-option value="employee">Employee</nb-option>
-              <nb-option value="student">Student</nb-option>
+              <nb-option *ngFor="let role of roles" [value]="role">{{role| uppercase}}</nb-option>
+
             </nb-select>
             <ng-container *ngIf="form.get('userRole').invalid && form.get('userRole').touched">
               <p class="caption status-danger" *ngIf="form.get('userRole').errors?.required">

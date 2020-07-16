@@ -81,7 +81,7 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.roles = this.roleService.getRoles();
+    this.roles = this.roleService.getEmployeeRoles();
 
     this.alreadyRegisteredUser = false;
 
@@ -183,6 +183,8 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
     this.employeeService.searchEmployee(this.employeeId).subscribe(
       (employee: EmployeeModel) => {
         this.employee = employee;
+
+        this.employeeId = employee.imsMasterId;
 
         this.alreadyRegisteredUser = false;
 
@@ -290,6 +292,7 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
     } else if (this.employeeId && !this.branchEmployeeId) {
       const newBranchEmployee: any = this.branchEmployeeForm.value;
       newBranchEmployee.branch = this.branchId;
+      newBranchEmployee.employee = this.employeeId;
       this.branchEmployeeService.newBranchEmployee(newBranchEmployee).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Branch Employee added Successfully');

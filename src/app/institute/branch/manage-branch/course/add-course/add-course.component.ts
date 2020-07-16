@@ -98,9 +98,12 @@ export class AddCourseComponent implements OnInit, OnDestroy {
           Validators.max(100),
         ],
       }),
-      totalFees: new FormControl(null, {
-        validators: [Validators.required],
-      }),
+      totalFees: new FormControl(
+        { value: null, disabled: true },
+        {
+          validators: [Validators.required],
+        },
+      ),
     });
 
     this.getCategories();
