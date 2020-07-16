@@ -1,10 +1,10 @@
+import { CourseService } from './../../../../../../services/course.service';
+import { BranchService } from './../../../../../../services/branch.service';
+import { CourseModel } from './../../../../../../models/course.model';
+import { CategoryModel, BranchModel } from './../../../../../../models/branch.model';
 import { NbToastrService } from '@nebular/theme';
-import { BranchModel, CategoryModel } from './../../../../../models/branch.model';
-import { CourseModel } from './../../../../../models/course.model';
-import { CourseService } from './../../../../../services/course.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BranchService } from './../../../../../services/branch.service';
 import { Location } from '@angular/common';
 @Component({
   selector: 'ngx-manage-course',

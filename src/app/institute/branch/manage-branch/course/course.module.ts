@@ -15,22 +15,26 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CourseRoutingModule } from './course-routing.module';
-import { ManageCourseComponent } from './manage-course/manage-course.component';
+import { ManageCourseComponent } from './add-course/manage-course/manage-course.component';
 
 @NgModule({
   declarations: [CourseComponent, ManageCourseComponent, AddCourseComponent],
   imports: [
     CommonModule,
     CourseRoutingModule,
+
     NbCardModule,
     NbButtonModule,
     NbSelectModule,
     NbIconModule,
     NbInputModule,
-    ReactiveFormsModule,
     NbFormFieldModule,
     NbCheckboxModule,
+    NbCheckboxModule,
     NbStepperModule,
+    NbFormFieldModule,
+
+    ReactiveFormsModule,
   ],
 })
 export class CourseModule {}

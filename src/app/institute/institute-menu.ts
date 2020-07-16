@@ -122,12 +122,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Active Employees',
-        link: '/institute/branch/employee/manage/active',
+        link: '/institute/branch/employee/manage',
+        queryParams: {type: 'active'},
         hidden: true,
       },
       {
         title: 'Inactive Employees',
-        link: '/institute/branch/employee/manage/inactive',
+        link: '/institute/branch/employee/manage',
+        queryParams: {type: 'inactive'},
         hidden: true,
       },
     ],

@@ -36,8 +36,8 @@ export class EmployeeService {
 
   constructor(private httpService: HttpService) {}
 
-  addEmployee(employee: any) {
-    const data = { api: 'newEmployee', data: employee };
+  addEmployee(employee: any, branchEmployee: any) {
+    const data = { api: 'newEmployee', data: { employee, branchEmployee } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -60,8 +60,20 @@ export class EmployeeService {
     );
   }
 
-  getEmployee(employee: string) {
-    const data = { api: 'getEmployee', data: { employee } };
+  getEmployee(id: string) {
+    const data = { api: 'getEmployee', data: { id } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  searchEmployee(employeeId: string) {
+    const data = { api: 'searchEmployee', data: { employeeId } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

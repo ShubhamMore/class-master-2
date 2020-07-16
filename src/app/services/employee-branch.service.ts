@@ -2,41 +2,41 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { EmployeeBranchModel } from '../models/employee-branch.model';
+import { BranchEmployeeModel } from '../models/branch-employee.model';
 
 @Injectable({ providedIn: 'root' })
-export class EmployeeBranchService {
-  private employeeBranchId: string;
-  private employeeBranch: EmployeeBranchModel;
+export class BranchEmployeeService {
+  private branchEmployeeId: string;
+  private branchEmployee: BranchEmployeeModel;
 
-  setEmployeeBranchData(employeeBranch: EmployeeBranchModel) {
-    this.employeeBranch = employeeBranch;
+  setBranchEmployeeData(branchEmployee: BranchEmployeeModel) {
+    this.branchEmployee = branchEmployee;
   }
 
-  getEmployeeBranchData() {
-    return this.employeeBranch;
+  getBranchEmployeeData() {
+    return this.branchEmployee;
   }
 
-  deleteEmployeeBranchData() {
-    this.employeeBranch = null;
+  deleteBranchEmployeeData() {
+    this.branchEmployee = null;
   }
 
-  setEmployeeBranchId(employeeBranchId: string) {
-    this.employeeBranchId = employeeBranchId;
+  setBranchEmployeeId(branchEmployeeId: string) {
+    this.branchEmployeeId = branchEmployeeId;
   }
 
-  getEmployeeBranchId() {
-    return this.employeeBranchId;
+  getBranchEmployeeId() {
+    return this.branchEmployeeId;
   }
 
-  deleteEmployeeBranchId() {
-    this.employeeBranchId = null;
+  deleteBranchEmployeeId() {
+    this.branchEmployeeId = null;
   }
 
   constructor(private httpService: HttpService) {}
 
-  getBranchEmployees(branch: string) {
-    const data = { api: 'getBranchEmployees', data: { branch } };
+  getBranchEmployees(branch: string, type: string) {
+    const data = { api: 'getBranchEmployees', data: { branch, type } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -48,7 +48,7 @@ export class EmployeeBranchService {
   }
 
   getBranchEmployee(id: string, employee: string) {
-    const data = { api: 'addEmployeeBranch', data: { id, employee } };
+    const data = { api: 'addBranchEmployee', data: { id, employee } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -95,7 +95,7 @@ export class EmployeeBranchService {
     );
   }
 
-  editBranchEmployee(branchEmployee: EmployeeBranchModel) {
+  editBranchEmployee(branchEmployee: BranchEmployeeModel) {
     const data = { api: 'updateBranchEmployee', data: branchEmployee };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {

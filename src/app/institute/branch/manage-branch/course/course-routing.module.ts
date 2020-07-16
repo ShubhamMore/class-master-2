@@ -1,9 +1,10 @@
 import { PageNotFoundComponent } from './../../../../shared/page-not-found/page-not-found.component';
-import { ManageCourseComponent } from './manage-course/manage-course.component';
+
 import { AddCourseComponent } from './add-course/add-course.component';
 import { CourseComponent } from './course.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ManageCourseComponent } from './add-course/manage-course/manage-course.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,17 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'manage',
+        pathMatch: 'full',
+      },
+
+      {
+        path: 'page-not-found',
+        component: PageNotFoundComponent,
+      },
+
+      {
+        path: '**',
+        redirectTo: 'page-not-found',
         pathMatch: 'full',
       },
     ],

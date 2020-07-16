@@ -48,14 +48,16 @@
               fullWidth
               [status]="
                 form.get('email').touched
-                  ? form.get('email').invalid
+                  ? form.get('email').invalid || userExist
                     ? 'danger'
                     : 'success'
                   : 'basic'
               "
               (input)="checkUser()"
             />
-            <ng-container *ngIf="form.get('email').invalid && form.get('email').touched">
+            <ng-container
+              *ngIf="(form.get('email').invalid || userExist) && form.get('email').touched"
+            >
               <p class="caption status-danger" *ngIf="form.get('email').errors?.required">
                 Email is required!
               </p>
@@ -69,10 +71,9 @@
           </div>
 
           <div class="form-control-group">
-            <label class="label" for="input-password">Phone:</label>
+            <label class="label" for="input-phone">Phone:</label>
             <input
-              type="text"
-              pattern="\d*"
+              type="number"
               nbInput
               id="input-phone"
               name="phone"
@@ -80,6 +81,7 @@
               placeholder="phone"
               minlength="10"
               maxlength="10"
+              min="0"
               fullWidth
               [status]="
                 form.get('phone').touched
