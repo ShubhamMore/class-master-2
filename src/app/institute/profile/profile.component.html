@@ -1,4 +1,10 @@
 <nb-card>
+  <nb-card-header *ngIf="profile">
+    <h3>
+      {{ profile.name | uppercase }}
+      <small class="float-right">{{ profile.imsMasterId | uppercase }}</small>
+    </h3>
+  </nb-card-header>
   <nb-card-body>
     <div class="row">
       <div class="col-12">

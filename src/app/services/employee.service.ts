@@ -3,25 +3,12 @@ import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { EmployeeModel } from '../models/employee.model';
-import { EmployeeBranchModel } from '../models/employee-branch.model';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
+  private employeeId: string;
+
   private employee: EmployeeModel;
-  private employeeBranch: EmployeeBranchModel;
-
-  private employeeSearchData = {
-    branch: '',
-  };
-
-  constructor(private httpService: HttpService) {}
-
-  setEmployeeBranchData(employeeBranch: EmployeeBranchModel) {
-    this.employeeBranch = employeeBranch;
-  }
-  getEmployeeBranchData() {
-    return this.employeeBranch;
-  }
 
   setEmployeeData(employee: EmployeeModel) {
     this.employee = employee;
@@ -31,13 +18,23 @@ export class EmployeeService {
     return this.employee;
   }
 
-  setBranch(branch: string) {
-    this.employeeSearchData.branch = branch;
+  deleteEmployeeData() {
+    this.employee = null;
   }
 
-  getBranch() {
-    return this.employeeSearchData.branch;
+  setEmployeeId(employeeId: string) {
+    this.employeeId = employeeId;
   }
+
+  getEmployeeId() {
+    return this.employeeId;
+  }
+
+  deleteEmployeeId() {
+    this.employeeId = null;
+  }
+
+  constructor(private httpService: HttpService) {}
 
   addEmployee(employee: any) {
     const data = { api: 'newEmployee', data: employee };
@@ -51,8 +48,8 @@ export class EmployeeService {
     );
   }
 
-  getEmployeeProfile(id: string) {
-    const data = { api: 'getEmployeeProfile', data: { id } };
+  getEmployees() {
+    const data = { api: 'getEmployees', data: {} };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -63,8 +60,8 @@ export class EmployeeService {
     );
   }
 
-  changeEmployeeStatus(employee: string, status: boolean) {
-    const data = { api: 'changeEmployeeStatus', data: { employee, status } };
+  getEmployee(employee: string) {
+    const data = { api: 'getEmployee', data: { employee } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -75,8 +72,8 @@ export class EmployeeService {
     );
   }
 
-  getEmployee(id: string) {
-    const data = { api: 'getEmployee', data: { id } };
+  getEmployeeForEditing(id: string) {
+    const data = { api: 'getEmployeeForEditing', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -87,8 +84,8 @@ export class EmployeeService {
     );
   }
 
-  getAllEmployeeByBranch(branch: string) {
-    const data = { api: 'getAllEmployeeByBranch', data: { branch } };
+  changeEmployeeStatus(id: string, status: boolean) {
+    const data = { api: 'changeEmployeeStatus', data: { id, status } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -99,8 +96,8 @@ export class EmployeeService {
     );
   }
 
-  changeEmployeeBranchStatus(employee: string, branch: string, status: boolean) {
-    const data = { api: 'changeEmployeeBranchStatus', data: { employee, branch, status } };
+  editEmployee(employee: EmployeeModel) {
+    const data = { api: 'updateEmployee', data: employee };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -111,44 +108,8 @@ export class EmployeeService {
     );
   }
 
-  getEmployeeForSalaryByBranch(employee: string, branch: string) {
-    const data = { api: 'getEmployeeForSalaryByBranch', data: { employee, branch } };
-    return this.httpService.httpPost(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      }),
-    );
-  }
-
-  getEmployeeBranchForEditing(employee: string, branch: string) {
-    const data = { api: 'getEmployeeForEditing', data: { employee, branch } };
-    return this.httpService.httpPost(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      }),
-    );
-  }
-
-  addEmployeeBranch(employeeBranch: any) {
-    const data = { api: 'addEmployeeBranch', data: employeeBranch };
-    return this.httpService.httpPost(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      }),
-    );
-  }
-
-  editEmployeeBranch(employeeBranch: EmployeeBranchModel) {
-    const data = { api: 'editEmployeeBranch', data: employeeBranch };
+  deleteEmployee(id: string) {
+    const data = { api: 'deleteEmployee', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

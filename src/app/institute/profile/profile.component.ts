@@ -56,14 +56,14 @@ export class ProfileComponent implements OnInit {
     this.getProfile();
   }
 
-  passwordValidator(group: FormGroup): { [s: string]: boolean } {
+  private passwordValidator(group: FormGroup): { [s: string]: boolean } {
     if (group.value.password !== group.value.confirmPassword) {
       return { invalidConfirmPassword: true };
     }
     return null;
   }
 
-  getProfile() {
+  private getProfile() {
     this.userService.getProfile().subscribe(
       (res: any) => {
         this.profile = res;
@@ -139,7 +139,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  showToastr(position: any, status: any, message: string) {
+  private showToastr(position: any, status: any, message: string) {
     this.toastrService.show(status, message, {
       position,
       status,
