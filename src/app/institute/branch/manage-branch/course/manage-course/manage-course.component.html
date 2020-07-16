@@ -1,11 +1,11 @@
 <nb-card>
   <nb-card-header>
     <div class="row">
-      <div class="col-md-9">
+      <div class="col-md-9 col-sm-8">
         <h3>Courses</h3>
       </div>
-      <div class="col-md-3">
-        <button nbButton status="primary" fullWidth (click)="addCourse()">
+      <div class="col-md-3 col-sm-4">
+        <button nbButton status="primary" fullWidth size="small" (click)="addCourse()">
           Add Course <nb-icon icon="plus-circle-outline"></nb-icon>
         </button>
       </div>
@@ -36,7 +36,7 @@
       </div>
     </div>
   </nb-card-header>
-  <nb-card-body>
+  <nb-card-body class="body-container">
     <div class="row">
       <div class="col-md-12">
         <ng-container *ngIf="!loading; else loadingData">
@@ -54,9 +54,9 @@
               <tbody>
                 <tr *ngFor="let course of courses; let i = index">
                   <td>{{ i + 1 }}</td>
-                  <td>{{ course.courseName }}</td>
-                  <td>{{ getCategory(course.category) }}</td>
-                  <td>{{ course.totalFees }}</td>
+                  <td>{{ course.basicDetails.courseName }}</td>
+                  <td>{{ getCategory(course.basicDetails.category) }}</td>
+                  <td>{{ course.feeDetails.totalFees }}</td>
                   <td>
                     <button
                       class="mr-3"
@@ -70,11 +70,11 @@
                     <button
                       class=""
                       nbButton
-                      [status]="course.status ? 'warning' : 'danger'"
+                      [status]="!course.status ? 'warning' : 'danger'"
                       size="small"
                       (click)="changeCourseStatus(course._id, !course.status, i)"
                     >
-                      {{ course.status ? 'Activate' : 'Deactivate' }}
+                      {{ !course.status ? 'Activate' : 'Deactivate' }}
                     </button>
                   </td>
                 </tr>

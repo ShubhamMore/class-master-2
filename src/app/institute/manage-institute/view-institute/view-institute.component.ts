@@ -50,7 +50,7 @@ export class ViewInstituteComponent implements OnInit, OnDestroy {
       categories.push(category.category);
     });
 
-    return categories.join(',');
+    return categories.join(', ');
   }
 
   ngOnDestroy() {

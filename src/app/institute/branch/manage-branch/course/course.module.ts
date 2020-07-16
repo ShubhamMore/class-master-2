@@ -7,6 +7,7 @@ import {
   NbInputModule,
   NbFormFieldModule,
   NbCheckboxModule,
+  NbStepperModule,
 } from '@nebular/theme';
 import { CourseComponent } from './course.component';
 import { AddCourseComponent } from './add-course/add-course.component';
@@ -28,7 +29,8 @@ import { ManageCourseComponent } from './manage-course/manage-course.component';
     NbInputModule,
     ReactiveFormsModule,
     NbFormFieldModule,
-    NbCheckboxModule
+    NbCheckboxModule,
+    NbStepperModule,
   ],
 })
 export class CourseModule {}

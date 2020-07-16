@@ -76,7 +76,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
 
     if (mode && mode !== 'edit') {
       this.showToastr('top-right', 'danger', 'Invalid Route');
-      this.router.navigate(['/institute/page-not-found'], { relativeTo: this.route });
+      this.router.navigate(['../page-not-found'], { relativeTo: this.route });
       return;
     } else if (!mode && (!this.user || !this.paymentDetails)) {
       this.showToastr('top-right', 'danger', 'Invalid Payment Details');
@@ -129,7 +129,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
       this.branchService.getBranchForEditing(this.branchId).subscribe(
         (branch: BranchModel) => {
           if (!branch) {
-            this.router.navigate(['/institute/page-not-found'], { relativeTo: this.route });
+            this.router.navigate(['../page-not-found'], { relativeTo: this.route });
             return;
           }
           this.branch = branch;
@@ -161,7 +161,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
           this.loading = false;
         },
         (err: any) => {
-          this.router.navigate(['page-not-found'], { relativeTo: this.route });
+          this.router.navigate(['../page-not-found'], { relativeTo: this.route });
           this.loading = false;
         },
       );
@@ -411,7 +411,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
       this.branchService.editBranch(branch).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'Branch Updated Successfully!');
-          this.router.navigate(['/institute']);
+          this.back();
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
@@ -433,11 +433,24 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
     }
   }
 
+  getCategoriesData() {
+    const categories: string[] = [];
+    this.branchCategoriesForm.value.categories.forEach((category: CategoryModel) => {
+      categories.push(category.category);
+    });
+
+    return categories.join(', ');
+  }
+
   private showToastr(position: any, status: any, message: string) {
     this.toastrService.show(status, message, {
       position,
       status,
     });
+  }
+
+  back() {
+    this.location.back();
   }
 
   ngOnDestroy() {

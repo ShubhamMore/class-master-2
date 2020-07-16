@@ -1,16 +1,24 @@
 export class CourseModel {
   constructor(
     public _id: string,
-    public courseName: string,
     public branch: string,
-    public category: string,
-    public description: string,
+    public basicDetails: CourseBasicDetailsModel,
     public subjects: SubjectModel[],
+    public feeDetails: CourseFeeDetailsModel,
+    public status: boolean,
+  ) {}
+}
+
+export class CourseBasicDetailsModel {
+  constructor(public courseName: string, public category: string, public description: string) {}
+}
+
+export class CourseFeeDetailsModel {
+  constructor(
     public fees: string,
     public gst: string,
-    public inclusiveGST: string,
+    public inclusiveGST: boolean,
     public totalFees: string,
-    public status: boolean,
   ) {}
 }
 

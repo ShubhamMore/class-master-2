@@ -1,3 +1,4 @@
+import { PageNotFoundComponent } from './../../../../shared/page-not-found/page-not-found.component';
 import { AddBatchComponent } from './add-batch/add-batch.component';
 import { ManageBatchComponent } from './manage-batch/manage-batch.component';
 import { BatchComponent } from './batch.component';
@@ -18,13 +19,24 @@ const routes: Routes = [
         component: AddBatchComponent,
       },
       {
-        path: 'edit/:id',
+        path: 'edit',
         component: AddBatchComponent,
       },
 
       {
         path: '',
         redirectTo: 'manage',
+        pathMatch: 'full',
+      },
+
+      {
+        path: 'page-not-found',
+        component: PageNotFoundComponent,
+      },
+
+      {
+        path: '**',
+        redirectTo: 'page-not-found',
         pathMatch: 'full',
       },
     ],

@@ -84,7 +84,7 @@ export class CourseService {
   }
 
   editCourse(Course: any) {
-    const data = { api: 'editCourse', data: Course };
+    const data = { api: 'updateCourse', data: Course };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

@@ -42,6 +42,6 @@ export class HomeComponent implements OnInit {
 
   manageBranch(id: string) {
     this.branchService.setBranchId(id);
-    this.router.navigate(['/institute/branch/dashboard'], { relativeTo: this.route });
+    this.router.navigate(['../branch/dashboard'], { relativeTo: this.route });
   }
 }

@@ -1,9 +1,9 @@
-import { CourseModel } from './../../../../../models/course.model';
+import { CourseModel, SubjectModel } from './../../../../../models/course.model';
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { CourseService } from './../../../../../services/course.service';
 import { CategoryModel, BranchModel } from './../../../../../models/branch.model';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../../services/branch.service';
 import { Location } from '@angular/common';
@@ -15,12 +15,19 @@ import { ObjectId } from 'bson';
   styleUrls: ['./add-course.component.scss'],
 })
 export class AddCourseComponent implements OnInit, OnDestroy {
+  @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
+
   loading: boolean;
   private branchId: string;
   private courseId: string;
   course: CourseModel;
   categories: CategoryModel[];
-  courseForm: FormGroup;
+  courseBasicDetailsForm: FormGroup;
+  courseFeeDetailsForm: FormGroup;
+  courseSubjectForm: FormGroup;
+
+  inclusiveGST: boolean;
+
   constructor(
     private branchService: BranchService,
     private courseService: CourseService,
@@ -28,7 +35,11 @@ export class AddCourseComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
-  ) {}
+  ) {
+    this.route.queryParams.subscribe((param: Params) => {
+      this.ngOnInit();
+    });
+  }
 
   ngOnInit(): void {
     this.loading = true;
@@ -47,45 +58,54 @@ export class AddCourseComponent implements OnInit, OnDestroy {
     });
 
     if (mode && mode !== 'edit') {
-      this.showToastr('top-right', 'danger', 'Invalid PRoute');
+      this.showToastr('top-right', 'danger', 'Invalid Route');
+      this.router.navigate(['../page-not-found'], { relativeTo: this.route });
       return;
     } else if (mode && !this.courseId) {
       this.showToastr('top-right', 'danger', 'Course Not Available');
+      this.router.navigate(['../page-not-found'], { relativeTo: this.route });
       return;
     }
 
-    this.courseForm = new FormGroup(
+    this.courseBasicDetailsForm = new FormGroup({
+      courseName: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+      category: new FormControl('', {
+        validators: [Validators.required],
+      }),
+      description: new FormControl(null, {
+        validators: [],
+      }),
+    });
+
+    this.courseSubjectForm = new FormGroup(
       {
-        courseName: new FormControl(null, {
-          validators: [Validators.required],
-        }),
-        branch: new FormControl(this.branchId, {
-          validators: [Validators.required],
-        }),
-        category: new FormControl('', {
-          validators: [Validators.required],
-        }),
-        description: new FormControl(null, {
-          validators: [],
-        }),
         subjects: new FormArray([]),
-        fees: new FormControl('0', {
-          validators: [Validators.required],
-        }),
-        gst: new FormControl('0', {
-          validators: [Validators.required],
-        }),
-        inclusiveGST: new FormControl(false, {
-          validators: [],
-        }),
-        totalFees: new FormControl('0', {
-          validators: [Validators.required],
-        }),
       },
       { validators: this.atLeastOneSubjectValidator.bind(this) },
     );
 
+    this.courseFeeDetailsForm = new FormGroup({
+      fees: new FormControl(null, {
+        validators: [Validators.required, Validators.min(0)],
+      }),
+      gst: new FormControl('0', {
+        validators: [
+          Validators.required,
+          Validators.maxLength(3),
+          Validators.min(0),
+          Validators.max(100),
+        ],
+      }),
+      totalFees: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+    });
+
     this.getCategories();
+
+    this.inclusiveGST = false;
 
     if (this.courseId) {
       this.courseService.getCourseForEditing(this.courseId).subscribe(
@@ -95,18 +115,21 @@ export class AddCourseComponent implements OnInit, OnDestroy {
             return;
           }
           this.course = course;
-          this.courseForm.patchValue({
-            course: course.courseName,
-            branch: course.branch,
-            category: course.category,
-            description: course.description,
-            fees: course.fees,
-            gst: course.gst,
-            inclusiveGST: course.inclusiveGST,
+          this.courseBasicDetailsForm.patchValue({
+            courseName: course.basicDetails.courseName,
+            category: course.basicDetails.category,
+            description: course.basicDetails.description,
           });
+
+          this.courseFeeDetailsForm.patchValue({
+            fees: course.feeDetails.fees,
+            gst: course.feeDetails.gst,
+          });
+
+          this.inclusiveGST = course.feeDetails.inclusiveGST;
           this.calculateTotal();
 
-          const subjects = this.courseForm.get('subjects') as FormArray;
+          const subjects = this.getSubjects();
           subjects.controls = [];
           this.course.subjects.forEach((subject) => {
             this.addSubject(subject);
@@ -114,7 +137,8 @@ export class AddCourseComponent implements OnInit, OnDestroy {
           this.loading = false;
         },
         (err: any) => {
-          this.loading = false;
+          this.router.navigate(['../page-not-found'], { relativeTo: this.route });
+          return;
         },
       );
     } else {
@@ -132,7 +156,10 @@ export class AddCourseComponent implements OnInit, OnDestroy {
           this.branchService.setBranchData(branch);
           this.categories = branch.categories;
         },
-        (error: any) => {},
+        (error: any) => {
+          this.showToastr('top-right', 'danger', error);
+          this.loading = false;
+        },
       );
     }
   }
@@ -152,6 +179,10 @@ export class AddCourseComponent implements OnInit, OnDestroy {
     return null;
   }
 
+  private getSubjects() {
+    return this.courseSubjectForm.get('subjects') as FormArray;
+  }
+
   private newSubject(subjectData: any) {
     return new FormGroup({
       _id: new FormControl(subjectData._id ? subjectData._id : new ObjectId().toString(), {
@@ -167,7 +198,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
   }
 
   private addSubject(subject: any) {
-    const subjects = this.courseForm.get('subjects') as FormArray;
+    const subjects = this.getSubjects();
     subjects.push(this.newSubject(subject));
   }
 
@@ -182,55 +213,105 @@ export class AddCourseComponent implements OnInit, OnDestroy {
 
   deleteSubject(i: number) {
     if (i !== 0 && i !== 1) {
-      const subjects = this.courseForm.get('subjects') as FormArray;
+      const subjects = this.getSubjects();
       subjects.removeAt(i);
     }
   }
 
+  inclusiveGSTChanged(inclusiveGST: boolean) {
+    this.inclusiveGST = inclusiveGST;
+    this.calculateTotal();
+  }
+
   calculateTotal() {
-    const inclusiveGST = this.courseForm.value.inclusiveGST;
-    const fee = this.courseForm.value.fees;
-    const gst = this.courseForm.value.gst;
+    const inclusiveGST = this.inclusiveGST;
+    const fee = this.courseFeeDetailsForm.value.fees;
+    const gst = this.courseFeeDetailsForm.value.gst;
+
     if (inclusiveGST) {
-      this.courseForm.patchValue({ total: fee });
+      this.courseFeeDetailsForm.patchValue({ totalFees: fee });
       return;
     }
     const gstValue = (+fee / 100) * +gst;
-    const total = (+fee + gstValue).toString();
-    this.courseForm.patchValue({ total });
+    const totalFees = (+fee + gstValue).toString();
+    this.courseFeeDetailsForm.patchValue({ totalFees });
+  }
+
+  submitBasicDetails() {
+    this.courseBasicDetailsForm.markAllAsTouched();
+    if (this.courseBasicDetailsForm.invalid) {
+      this.showToastr('top-right', 'danger', 'Basic details are required');
+      return;
+    }
+    this.stepper.next();
+  }
+
+  submitSubjects() {
+    this.courseSubjectForm.markAllAsTouched();
+    if (this.courseSubjectForm.invalid) {
+      this.showToastr('top-right', 'danger', 'At least 1 Subject is required');
+      return;
+    }
+    this.stepper.next();
+  }
+
+  submitFeeDetails() {
+    this.courseFeeDetailsForm.markAllAsTouched();
+    if (this.courseFeeDetailsForm.invalid) {
+      this.showToastr('top-right', 'danger', 'Fee details are required');
+
+      return;
+    }
+    this.stepper.next();
   }
 
   saveCourse() {
-    this.courseForm.markAllAsTouched();
+    this.courseBasicDetailsForm.markAllAsTouched();
+    this.courseSubjectForm.markAllAsTouched();
+    this.courseFeeDetailsForm.markAllAsTouched();
 
-    if (this.courseForm.invalid) {
+    if (this.courseBasicDetailsForm.invalid) {
+      this.showToastr('top-right', 'danger', 'Basic details are required');
+      return;
+    } else if (this.courseSubjectForm.invalid) {
+      this.showToastr('top-right', 'danger', 'At least 1 Subject is required');
+
+      return;
+    } else if (this.courseFeeDetailsForm.invalid) {
+      this.showToastr('top-right', 'danger', 'Fee Details are required');
       return;
     }
 
     this.loading = true;
 
+    const course: any = {
+      branch: this.branchId,
+      basicDetails: this.courseBasicDetailsForm.value,
+      subjects: this.courseSubjectForm.value.subjects,
+      feeDetails: this.courseFeeDetailsForm.value,
+    };
+    course.feeDetails.inclusiveGST = this.inclusiveGST;
     if (!this.course) {
-      const course = this.courseForm.value;
-
       this.courseService.addCourse(course).subscribe(
         (res: any) => {
-          this.courseForm.reset();
+          this.showToastr('top-right', 'success', 'New Course Added Successfully!');
           this.location.back();
         },
         (error: any) => {
+          this.showToastr('top-right', 'danger', error);
           this.loading = false;
         },
       );
     } else {
-      const course = this.courseForm.value;
       course._id = this.course._id;
 
       this.courseService.editCourse(course).subscribe(
         (res: any) => {
-          this.courseForm.reset();
+          this.showToastr('top-right', 'success', 'Course Updated Successfully!');
           this.location.back();
         },
         (error: any) => {
+          this.showToastr('top-right', 'danger', error);
           this.loading = false;
         },
       );
@@ -242,6 +323,39 @@ export class AddCourseComponent implements OnInit, OnDestroy {
       position,
       status,
     });
+  }
+
+  getGstAmount() {
+    const fee = this.courseFeeDetailsForm.value.fees;
+    const gst = this.courseFeeDetailsForm.value.gst;
+
+    const gstValue = (+fee / 100) * +gst;
+    return gstValue.toString();
+  }
+
+  getCategory(categoryId: string) {
+    const category = this.categories.find(
+      (curCategory: CategoryModel) => curCategory._id === categoryId,
+    );
+
+    if (category) {
+      return category.category;
+    }
+
+    return '--';
+  }
+
+  getSubjectsData() {
+    const subjects: string[] = [];
+    this.courseSubjectForm.value.subjects.forEach((subject: SubjectModel) => {
+      subjects.push(subject.subject);
+    });
+
+    return subjects.join(', ');
+  }
+
+  back() {
+    this.location.back();
   }
 
   ngOnDestroy() {

@@ -25,6 +25,6 @@ export class MembershipPlansComponent implements OnInit {
 
   activate(planType: string, amount: string) {
     this.paymentService.setPaymentDetails(planType, amount);
-    this.router.navigate(['/institute/add'], { relativeTo: this.route });
+    this.router.navigate(['../add'], { relativeTo: this.route });
   }
 }

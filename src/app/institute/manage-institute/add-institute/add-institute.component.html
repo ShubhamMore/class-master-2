@@ -1,6 +1,10 @@
 <nb-card *ngIf="!loading">
   <nb-card-header>
     <h4>
+      <button class="float-right" nbButton status="warning" size="tiny" (click)="back()">
+        Back
+      </button>
+
       {{ !branch ? 'Create New Branch' : 'Edit Branch' }}
     </h4>
   </nb-card-header>
@@ -358,15 +362,17 @@
       <nb-step [stepControl]="branchCategoriesForm" label="Branch Categories">
         <form
           [formGroup]="branchCategoriesForm"
-          (ngSubmit)="!branch ? submitCategories() : saveBranch()"
+          (ngSubmit)="submitCategories()"
           class="step-container"
         >
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9 col-sm-8">
               <p>Click on following button to add more Categories</p>
             </div>
-            <div class="col-md-4 text-right">
-              <button type="button" nbButton (click)="generateCategory()">Add Category</button>
+            <div class="col-md-3 col-sm-4 mb-3">
+              <button type="button" nbButton fullWidth (click)="generateCategory()">
+                Add Category
+              </button>
             </div>
           </div>
 
@@ -443,8 +449,8 @@
             </div>
             <div class="col-md-6 text-right">
               <button nbButton type="submit">
-                <span>{{ !branch ? 'Next' : 'Submit' }}</span>
-                <span *ngIf="!branch">
+                <span>Next</span>
+                <span>
                   <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
                 </span>
               </button>
@@ -453,9 +459,60 @@
         </form>
       </nb-step>
 
-      <nb-step label="Payment" *ngIf="!branch">
+      <nb-step label="{{ !branch ? 'Payment' : 'Submit' }}">
         <div class="step-container">
-          <h3>Make Payment</h3>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Branch Name</th>
+                  <td>{{ branchBasicDetailsForm.value.branchName }}</td>
+                </tr>
+                <tr>
+                  <th>Current Plan Type</th>
+                  <td>
+                    {{
+                      this.paymentDetails
+                        ? this.paymentDetails.planType
+                        : branch.currentPlanDetails.planType
+                    }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td>{{ branchBasicDetailsForm.value.email }}</td>
+                </tr>
+                <tr>
+                  <th>Contact</th>
+                  <td>{{ branchBasicDetailsForm.value.phone }}</td>
+                </tr>
+                <tr>
+                  <th>Address 1</th>
+                  <td>{{ branchAddressForm.value.address1 }}</td>
+                </tr>
+                <tr>
+                  <th>Address 2</th>
+                  <td>{{ branchAddressForm.value.address2 }}</td>
+                </tr>
+                <tr>
+                  <th>City</th>
+                  <td>{{ branchAddressForm.value.city }}</td>
+                </tr>
+                <tr>
+                  <th>Pincode</th>
+                  <td>{{ branchAddressForm.value.pinCode }}</td>
+                </tr>
+                <tr>
+                  <th>State</th>
+                  <td>{{ branchAddressForm.value.state }}</td>
+                </tr>
+                <tr>
+                  <th>Categories</th>
+                  <td>{{ getCategoriesData() }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <hr />
 

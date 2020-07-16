@@ -1,3 +1,4 @@
+import { PageNotFoundComponent } from './../../../shared/page-not-found/page-not-found.component';
 import { ReceiptInfoComponent } from './receipt-info/receipt-info.component';
 import { AddBatchComponent } from './batch/add-batch/add-batch.component';
 import { AddCourseComponent } from './course/add-course/add-course.component';
@@ -30,6 +31,17 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'course',
+        pathMatch: 'full',
+      },
+
+      {
+        path: 'page-not-found',
+        component: PageNotFoundComponent,
+      },
+
+      {
+        path: '**',
+        redirectTo: 'page-not-found',
         pathMatch: 'full',
       },
     ],

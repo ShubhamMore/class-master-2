@@ -58,18 +58,18 @@ export class MyInstitutesComponent implements OnInit {
 
   manageBranch(id: string) {
     this.branchService.setBranchId(id);
-    this.router.navigate(['/institute/branch/dashboard'], { relativeTo: this.route });
+    this.router.navigate(['../branch/dashboard'], { relativeTo: this.route });
   }
 
   viewBranch(id: string) {
     this.branchService.setBranchId(id);
-    this.router.navigate(['/institute/view'], { relativeTo: this.route });
+    this.router.navigate(['../view'], { relativeTo: this.route });
   }
 
   editBranch(id: string) {
     this.branchService.setBranchId(id);
-    this.router.navigate(['/institute/edit'], {
-      // relativeTo: this.route,
+    this.router.navigate(['../edit'], {
+      relativeTo: this.route,
       queryParams: { mode: 'edit' },
     });
   }
