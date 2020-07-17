@@ -1,4 +1,4 @@
-import { PageNotFoundComponent } from './../../../../shared/page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './../../../../../../shared/page-not-found/page-not-found.component';
 import { AddBatchComponent } from './add-batch/add-batch.component';
 import { ManageBatchComponent } from './manage-batch/manage-batch.component';
 import { BatchComponent } from './batch.component';

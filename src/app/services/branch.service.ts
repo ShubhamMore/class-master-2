@@ -7,6 +7,7 @@ import { throwError } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class BranchService {
   private branchId: string;
+  private categoryId: string;
 
   private branch: BranchModel;
 
@@ -20,6 +21,18 @@ export class BranchService {
 
   getBranchId() {
     return this.branchId;
+  }
+
+  setCategoryId(categoryId: string) {
+    this.categoryId = categoryId;
+  }
+
+  deleteCategoryId() {
+    this.categoryId = null;
+  }
+
+  getCategoryId() {
+    return this.categoryId;
   }
 
   setBranchData(branch: BranchModel) {

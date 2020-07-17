@@ -1,11 +1,11 @@
-import { CourseModel, SubjectModel } from './../../../../../models/course.model';
+import { CourseModel, SubjectModel } from './../../../../../../models/course.model';
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
-import { CourseService } from './../../../../../services/course.service';
-import { CategoryModel, BranchModel } from './../../../../../models/branch.model';
+import { CourseService } from './../../../../../../services/course.service';
+import { CategoryModel, BranchModel } from './../../../../../../models/branch.model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { BranchService } from './../../../../../services/branch.service';
+import { BranchService } from './../../../../../../services/branch.service';
 import { Location } from '@angular/common';
 import { ObjectId } from 'bson';
 
@@ -71,6 +71,14 @@ export class AddCourseComponent implements OnInit, OnDestroy {
       courseName: new FormControl(null, {
         validators: [Validators.required],
       }),
+      duration: new FormControl(null, {
+        validators: [
+          Validators.required,
+          Validators.maxLength(2),
+          Validators.min(1),
+          Validators.max(99),
+        ],
+      }),
       category: new FormControl('', {
         validators: [Validators.required],
       }),
@@ -98,12 +106,9 @@ export class AddCourseComponent implements OnInit, OnDestroy {
           Validators.max(100),
         ],
       }),
-      totalFees: new FormControl(
-        { value: null, disabled: true },
-        {
-          validators: [Validators.required],
-        },
-      ),
+      totalFees: new FormControl(null, {
+        validators: [Validators.required],
+      }),
     });
 
     this.getCategories();
@@ -120,6 +125,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
           this.course = course;
           this.courseBasicDetailsForm.patchValue({
             courseName: course.basicDetails.courseName,
+            duration: course.basicDetails.duration,
             category: course.basicDetails.category,
             description: course.basicDetails.description,
           });

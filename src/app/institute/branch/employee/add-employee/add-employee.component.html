@@ -15,7 +15,7 @@
     </h3>
   </nb-card-header>
   <nb-card-body>
-    <nb-stepper #stepper [linear]="true">
+    <nb-stepper #stepper [linear]="true" [disableStepNavigation]="true">
       <nb-step [stepControl]="employeeForm" label="Basic Details">
         <div class="row">
           <div class="col-md-12" *ngIf="!employee">

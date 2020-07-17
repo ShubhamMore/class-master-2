@@ -1,7 +1,7 @@
-import { CourseService } from './../../../../../../services/course.service';
-import { BranchService } from './../../../../../../services/branch.service';
-import { CourseModel } from './../../../../../../models/course.model';
-import { CategoryModel, BranchModel } from './../../../../../../models/branch.model';
+import { CourseService } from './../../../../../services/course.service';
+import { BranchService } from './../../../../../services/branch.service';
+import { CourseModel } from './../../../../../models/course.model';
+import { CategoryModel, BranchModel } from './../../../../../models/branch.model';
 import { NbToastrService } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -79,6 +79,11 @@ export class ManageCourseComponent implements OnInit {
 
   addCourse() {
     this.router.navigate(['../add'], { relativeTo: this.route });
+  }
+
+  courseBatches(course: CourseModel) {
+    this.courseService.setCourseData(course);
+    this.router.navigate(['../batch'], { relativeTo: this.route });
   }
 
   editCourse(id: string) {

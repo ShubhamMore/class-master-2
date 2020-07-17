@@ -1,32 +1,26 @@
 import { PageNotFoundComponent } from './../../../../shared/page-not-found/page-not-found.component';
-
-import { AddCourseComponent } from './manage-course/add-course/add-course.component';
-import { CourseComponent } from './course.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ManageCourseComponent } from './manage-course/manage-course.component';
+import { ManageDiscountAndOfferComponent } from './manage-discount-and-offer/manage-discount-and-offer.component';
+import { AddDiscountAndOfferComponent } from './add-discount-and-offer/add-discount-and-offer.component';
+import { DiscountAndOfferComponent } from './discount-and-offer.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: CourseComponent,
+    component: DiscountAndOfferComponent,
     children: [
       {
         path: 'manage',
-        component: ManageCourseComponent,
+        component: ManageDiscountAndOfferComponent,
       },
       {
         path: 'add',
-        component: AddCourseComponent,
+        component: AddDiscountAndOfferComponent,
       },
       {
         path: 'edit',
-        component: AddCourseComponent,
-      },
-
-      {
-        path: 'batch',
-        loadChildren: () => import('./manage-course/batch/batch.module').then((m) => m.BatchModule),
+        component: AddDiscountAndOfferComponent,
       },
 
       {
@@ -53,4 +47,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CourseRoutingModule {}
+export class DiscountAndOfferRoutingModule {}

@@ -5,24 +5,23 @@ import {
   NbSelectModule,
   NbIconModule,
   NbInputModule,
-  NbFormFieldModule,
   NbCheckboxModule,
   NbStepperModule,
+  NbFormFieldModule,
 } from '@nebular/theme';
-import { CourseComponent } from './course.component';
-import { AddCourseComponent } from './manage-course/add-course/add-course.component';
+import { AddBatchComponent } from './add-batch/add-batch.component';
+import { ManageBatchComponent } from './manage-batch/manage-batch.component';
+import { BatchComponent } from './batch.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CourseRoutingModule } from './course-routing.module';
-import { ManageCourseComponent } from './manage-course/manage-course.component';
+import { BatchRoutingModule } from './batch-routing.module';
 
 @NgModule({
-  declarations: [CourseComponent, ManageCourseComponent, AddCourseComponent],
+  declarations: [BatchComponent, ManageBatchComponent, AddBatchComponent],
   imports: [
     CommonModule,
-    CourseRoutingModule,
-
+    BatchRoutingModule,
     NbCardModule,
     NbButtonModule,
     NbSelectModule,
@@ -36,4 +35,4 @@ import { ManageCourseComponent } from './manage-course/manage-course.component';
     ReactiveFormsModule,
   ],
 })
-export class CourseModule {}
+export class BatchModule {}

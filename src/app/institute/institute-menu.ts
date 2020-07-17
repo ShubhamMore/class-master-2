@@ -43,8 +43,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
         hidden: true,
       },
       {
-        title: 'Batch',
-        link: '/institute/branch/manage-branch/batch',
+        title: 'Discount & Offers',
+        link: '/institute/branch/manage-branch/discount-and-offers',
         hidden: true,
       },
     ],
@@ -123,13 +123,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Active Employees',
         link: '/institute/branch/employee/manage',
-        queryParams: {type: 'active'},
+        queryParams: { type: 'active' },
         hidden: true,
       },
       {
         title: 'Inactive Employees',
         link: '/institute/branch/employee/manage',
-        queryParams: {type: 'inactive'},
+        queryParams: { type: 'inactive' },
         hidden: true,
       },
     ],

@@ -1,42 +1,42 @@
+import { DiscountAndOfferModel } from '../models/discount-and-offer.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { BranchEmployeeModel } from '../models/branch-employee.model';
 
 @Injectable({ providedIn: 'root' })
-export class BranchEmployeeService {
-  private branchEmployeeId: string;
-  private branchEmployee: BranchEmployeeModel;
+export class DiscountAndOfferService {
+  private discountAndOffer: DiscountAndOfferModel;
+  private discountAndOfferId: string;
 
-  setBranchEmployeeData(branchEmployee: BranchEmployeeModel) {
-    this.branchEmployee = branchEmployee;
+  setDiscountAndOfferId(discountAndOfferId: string) {
+    this.discountAndOfferId = discountAndOfferId;
   }
 
-  getBranchEmployeeData() {
-    return this.branchEmployee;
+  getDiscountAndOfferId() {
+    return this.discountAndOfferId;
   }
 
-  deleteBranchEmployeeData() {
-    this.branchEmployee = null;
+  deleteDiscountAndOfferId() {
+    this.discountAndOfferId = null;
   }
 
-  setBranchEmployeeId(branchEmployeeId: string) {
-    this.branchEmployeeId = branchEmployeeId;
+  setDiscountAndOfferData(discountAndOffer: DiscountAndOfferModel) {
+    this.discountAndOffer = discountAndOffer;
   }
 
-  getBranchEmployeeId() {
-    return this.branchEmployeeId;
+  getDiscountAndOfferData() {
+    return this.discountAndOffer;
   }
 
-  deleteBranchEmployeeId() {
-    this.branchEmployeeId = null;
+  deleteDiscountAndOfferData() {
+    this.discountAndOffer = null;
   }
 
   constructor(private httpService: HttpService) {}
 
-  getBranchEmployees(branch: string, type: string) {
-    const data = { api: 'getBranchEmployees', data: { branch, type } };
+  getDiscountAndOffers(branch: any) {
+    const data = { api: 'getDiscountAndOffers', data: { branch } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -47,8 +47,8 @@ export class BranchEmployeeService {
     );
   }
 
-  getBranchEmployeesForBatch(branch: string, role: string) {
-    const data = { api: 'getBranchEmployeesForBatch', data: { branch, role } };
+  getDiscountAndOffersForStudent(branch: any) {
+    const data = { api: 'getDiscountAndOffersForStudent', data: { branch } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -59,8 +59,8 @@ export class BranchEmployeeService {
     );
   }
 
-  getBranchEmployee(id: string, employee: string) {
-    const data = { api: 'addBranchEmployee', data: { id, employee } };
+  getDiscountAndOffer(id: string) {
+    const data = { api: 'getDiscountAndOffer', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -71,8 +71,8 @@ export class BranchEmployeeService {
     );
   }
 
-  getBranchEmployeeForSalary(id: string, employee: string) {
-    const data = { api: 'getBranchEmployeeForSalary', data: { id, employee } };
+  getDiscountAndOfferForEditing(id: string) {
+    const data = { api: 'getDiscountAndOfferForEditing', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -83,8 +83,8 @@ export class BranchEmployeeService {
     );
   }
 
-  newBranchEmployee(branchEmployee: any) {
-    const data = { api: 'newBranchEmployee', data: branchEmployee };
+  CheckDiscountAndOffer(branch: string, code: string) {
+    const data = { api: 'CheckDiscountAndOffer', data: { branch, code } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -95,8 +95,8 @@ export class BranchEmployeeService {
     );
   }
 
-  getBranchEmployeeForEditing(id: string, employee: string) {
-    const data = { api: 'getBranchEmployeeForEditing', data: { id, employee } };
+  addDiscountAndOffer(discountAndOffer: any) {
+    const data = { api: 'newDiscountAndOffer', data: discountAndOffer };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -107,8 +107,8 @@ export class BranchEmployeeService {
     );
   }
 
-  editBranchEmployee(branchEmployee: BranchEmployeeModel) {
-    const data = { api: 'updateBranchEmployee', data: branchEmployee };
+  editDiscountAndOffer(discountAndOffer: DiscountAndOfferModel) {
+    const data = { api: 'updateDiscountAndOffer', data: discountAndOffer };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -119,8 +119,8 @@ export class BranchEmployeeService {
     );
   }
 
-  changeBranchEmployeeStatus(id: string, status: boolean) {
-    const data = { api: 'changeBranchEmployeeStatus', data: { id, status } };
+  deleteDiscountAndOffer(id: string) {
+    const data = { api: 'deleteDiscountAndOffer', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -131,8 +131,8 @@ export class BranchEmployeeService {
     );
   }
 
-  deleteBranchEmployee(id: string) {
-    const data = { api: 'deleteBranchEmployee', data: { id } };
+  changeDiscountAndOfferStatus(id: string, status: boolean) {
+    const data = { api: 'changeDiscountAndOfferStatus', data: { id, status } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

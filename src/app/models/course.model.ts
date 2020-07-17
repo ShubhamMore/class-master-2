@@ -10,7 +10,12 @@ export class CourseModel {
 }
 
 export class CourseBasicDetailsModel {
-  constructor(public courseName: string, public category: string, public description: string) {}
+  constructor(
+    public courseName: string,
+    public category: string,
+    public duration: number,
+    public description: string,
+  ) {}
 }
 
 export class CourseFeeDetailsModel {

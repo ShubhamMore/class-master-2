@@ -1,12 +1,8 @@
 import { PageNotFoundComponent } from './../../../shared/page-not-found/page-not-found.component';
 import { ReceiptInfoComponent } from './receipt-info/receipt-info.component';
-import { AddBatchComponent } from './batch/add-batch/add-batch.component';
-import { AddCourseComponent } from './course/add-course/add-course.component';
-import { CourseComponent } from './course/course.component';
 import { ManageBranchComponent } from './manage-branch.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { BatchComponent } from './batch/batch.component';
 
 const routes: Routes = [
   {
@@ -24,8 +20,11 @@ const routes: Routes = [
       },
 
       {
-        path: 'batch',
-        loadChildren: () => import('./batch/batch.module').then((m) => m.BatchModule),
+        path: 'discount-and-offers',
+        loadChildren: () =>
+          import('./discount-and-offer/discount-and-offer.module').then(
+            (m) => m.DiscountAndOfferModule,
+          ),
       },
 
       {

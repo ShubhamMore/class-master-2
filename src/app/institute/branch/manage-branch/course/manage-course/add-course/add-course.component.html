@@ -15,7 +15,7 @@
         <form class="" (submit)="submitBasicDetails()" [formGroup]="courseBasicDetailsForm">
           <h6>Course Details:</h6>
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-5">
               <div class="form-control-group">
                 <label class="label" for="input -course-name">Course Name:</label>
                 <input
@@ -53,6 +53,49 @@
                     *ngIf="courseBasicDetailsForm.get('courseName').errors?.minlength"
                   >
                     Course Name should contain minimum 3 characters
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-control-group">
+                <label class="label" for="input-duration">Course Duration:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-duration"
+                  name="duration"
+                  min="1"
+                  maxlength="2"
+                  formControlName="duration"
+                  placeholder="Duration (in Months)"
+                  fullWidth
+                  [status]="
+                    courseBasicDetailsForm.get('duration').touched
+                      ? courseBasicDetailsForm.get('duration').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    courseBasicDetailsForm.get('duration').invalid &&
+                    courseBasicDetailsForm.get('duration').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="courseBasicDetailsForm.get('duration').errors?.required"
+                  >
+                    Course Duration is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="courseBasicDetailsForm.get('duration').errors?.min"
+                  >
+                    Course Duration should be greater than 1
                   </p>
                 </ng-container>
               </div>
@@ -328,6 +371,7 @@
                       ? 'danger'
                       : 'basic'
                   "
+                  disabled="true"
                 />
                 <ng-container
                   *ngIf="
@@ -384,6 +428,10 @@
                 <tr>
                   <th>Course Name</th>
                   <td>{{ courseBasicDetailsForm.value.courseName }}</td>
+                </tr>
+                <tr>
+                  <th>Course Duration</th>
+                  <td>{{ courseBasicDetailsForm.value.duration }}</td>
                 </tr>
                 <tr>
                   <th>Category</th>

@@ -6,36 +6,31 @@ import { throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class BatchService {
-  batch: BatchModel;
+  private batch: BatchModel;
+  private batchId: string;
 
-  private batchSearchData = {
-    branch: '',
-    category: '',
-    course: '',
-  };
-
-  setBranch(branch: string) {
-    this.batchSearchData.branch = branch;
+  setBatchId(batchId: string) {
+    this.batchId = batchId;
   }
 
-  getBranch() {
-    return this.batchSearchData.branch;
+  getBatchId() {
+    return this.batchId;
   }
 
-  setCategory(category: string) {
-    this.batchSearchData.category = category;
+  deleteBatchId() {
+    this.batchId = null;
   }
 
-  getCategory() {
-    return this.batchSearchData.category;
+  setBatchData(batch: BatchModel) {
+    this.batch = batch;
   }
 
-  setCourse(course: string) {
-    this.batchSearchData.course = course;
+  getBatchData() {
+    return this.batch;
   }
 
-  getCourse() {
-    return this.batchSearchData.course;
+  deleteBatchData() {
+    this.batch = null;
   }
 
   constructor(private httpService: HttpService) {}
@@ -89,7 +84,7 @@ export class BatchService {
   }
 
   editBatch(batch: any) {
-    const data = { api: 'editBatch', data: batch };
+    const data = { api: 'updateBatch', data: batch };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -101,7 +96,15 @@ export class BatchService {
   }
 
   deleteBatch(id: string) {
-    // this.batches.splice(id, 1);
+    const data = { api: 'deleteBatch', data: { id } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
   }
 
   changeBatchStatus(id: string, status: boolean) {

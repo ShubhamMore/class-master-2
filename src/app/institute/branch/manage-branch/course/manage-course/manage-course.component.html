@@ -61,6 +61,15 @@
                     <button
                       class="mr-3"
                       nbButton
+                      status="info"
+                      size="small"
+                      (click)="courseBatches(course)"
+                    >
+                      Batches
+                    </button>
+                    <button
+                      class="mr-3"
+                      nbButton
                       status="basic"
                       size="small"
                       (click)="editCourse(course._id)"
