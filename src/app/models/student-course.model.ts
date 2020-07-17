@@ -9,7 +9,9 @@ export class StudentCourseModel {
     public activationDate: string,
     public rollNumber: string,
     public discountType: string,
-    public discount: number,
+    public discountAmount: number,
+    public additionalDiscountType: string,
+    public additionalDiscountAmount: number,
     public netPayable: number,
     public status: boolean,
   ) {}
