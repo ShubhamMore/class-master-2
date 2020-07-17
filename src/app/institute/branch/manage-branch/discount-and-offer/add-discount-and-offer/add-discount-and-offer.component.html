@@ -1,1 +1,335 @@
-<p>add-discount-and-offer works!</p>
+<nb-card>
+  <nb-card-header>
+    <button class="float-right" nbButton status="warning" size="tiny" (click)="back()">
+      Back
+    </button>
+    <h3 class="">
+      {{
+        !discountAndOffer
+          ? 'Add New DiscountAndOffer'
+          : 'Edit Offer ' + (discountAndOffer.offerName | uppercase)
+      }}
+    </h3>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper #stepper [linear]="true">
+      <nb-step [stepControl]="discountAndOfferForm" label="Basic Details">
+        <form class="" (submit)="submitDiscountAndOffer()" [formGroup]="discountAndOfferForm">
+          <h6>Discount & Offer:</h6>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-offer-name">Offer Name:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-offer-name"
+                  name="offerName"
+                  formControlName="offerName"
+                  placeholder="Offer Name"
+                  maxlength="30"
+                  fullWidth
+                  [status]="
+                    discountAndOfferForm.get('offerName').touched
+                      ? discountAndOfferForm.get('offerName').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    discountAndOfferForm.get('offerName').invalid &&
+                    discountAndOfferForm.get('offerName').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="discountAndOfferForm.get('offerName').errors?.required"
+                  >
+                    Offer Name is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-code">Code:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-code"
+                  name="code"
+                  formControlName="code"
+                  placeholder="Code"
+                  maxlength="30"
+                  fullWidth
+                  [status]="
+                    discountAndOfferForm.get('code').touched
+                      ? discountAndOfferForm.get('code').invalid || !validOfferCode
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (input)="checkOfferCode($event.target.value)"
+                />
+                <ng-container *ngIf="discountAndOfferForm.get('code').touched">
+                  <p
+                    class="caption status-danger"
+                    *ngIf="discountAndOfferForm.get('code').errors?.required"
+                  >
+                    Code is required!
+                  </p>
+                  <p class="caption status-danger" *ngIf="!validOfferCode">
+                    This Offer Code Already Exist!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-billing-discount-type">Discount Type:</label>
+                <nb-select
+                  id="input-discount-type"
+                  name="discountType"
+                  formControlName="discountType"
+                  placeholder="Select Discount Type"
+                  fullWidth
+                  [status]="
+                    discountAndOfferForm.get('discountType').touched
+                      ? discountAndOfferForm.get('discountType').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="">Select Discount Type</nb-option>
+                  <nb-option *ngFor="let discountType of discountTypes" [value]="discountType">{{
+                    discountType | uppercase
+                  }}</nb-option>
+                </nb-select>
+                <ng-container *ngIf="discountAndOfferForm.get('discountType').touched">
+                  <p
+                    class="caption status-danger"
+                    *ngIf="discountAndOfferForm.get('discountType').errors?.required"
+                  >
+                    Discount Type is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-discount-amount">Discount Amount:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-discount-amount"
+                  name="discountAmount"
+                  min="0"
+                  formControlName="discountAmount"
+                  placeholder="Discount {{
+                    discountAndOfferForm.value.discountType === 'percentage'
+                      ? 'Percentage (%)'
+                      : 'Amount'
+                  }} "
+                  fullWidth
+                  [status]="
+                    discountAndOfferForm.get('discountAmount').touched
+                      ? discountAndOfferForm.get('discountAmount').invalid ||
+                        discountAndOfferForm.hasError('invalidDiscountPercentage')
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container *ngIf="discountAndOfferForm.get('discountAmount').touched">
+                  <p
+                    class="caption status-danger"
+                    *ngIf="discountAndOfferForm.get('discountAmount').errors?.required"
+                  >
+                    Discount Amount is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="discountAndOfferForm.get('discountAmount').errors?.min"
+                  >
+                    Discount Amount should be more than or equal to 0
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="discountAndOfferForm.hasError('invalidDiscountPercentage')"
+                  >
+                    Discount Percentage should be between 0% to 100%
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-start-date">Start Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-start-date"
+                  name="startDate"
+                  formControlName="startDate"
+                  placeholder="Start Date"
+                  [min]="
+                    discountAndOffer ? discountAndOffer.startDate : dateService.getDateString()
+                  "
+                  fullWidth
+                  [status]="
+                    discountAndOfferForm.get('startDate').touched
+                      ? discountAndOfferForm.get('startDate').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    discountAndOfferForm.get('startDate').invalid &&
+                    discountAndOfferForm.get('startDate').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="discountAndOfferForm.get('startDate').errors?.required"
+                  >
+                    Start Date is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-expiry-date">Expiry Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-expiry-date"
+                  name="expiryDate"
+                  [min]="
+                    discountAndOffer ? discountAndOffer.startDate : dateService.getDateString()
+                  "
+                  formControlName="expiryDate"
+                  placeholder="Expiry Date "
+                  fullWidth
+                />
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-billing-description">Description:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-description"
+                  name="description"
+                  formControlName="description"
+                  placeholder="Description (Optional)"
+                  fullWidth
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-billing-terms-and-conditions"
+                  >Terms & Conditions:</label
+                >
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-terms-and-conditions"
+                  name="termsAndConditions"
+                  formControlName="termsAndConditions"
+                  placeholder="Terms & Conditions (Optional)"
+                  fullWidth
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <button nbButton type="submit">
+                <span>Next</span>
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step label="Submit">
+        <div class="step-container">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Offer Name</th>
+                  <td>{{ discountAndOfferForm.value.offerName }}</td>
+                </tr>
+                <tr>
+                  <th>Offer Code</th>
+                  <td>{{ discountAndOfferForm.value.code }}</td>
+                </tr>
+                <tr>
+                  <th>Discount Type</th>
+                  <td>{{ discountAndOfferForm.value.discountType | uppercase }}</td>
+                </tr>
+                <tr>
+                  <th>Discount Amount</th>
+                  <td>
+                    {{ discountAndOfferForm.value.discountAmount }}
+                    {{ discountAndOfferForm.value.discountType === 'percentage' ? '%' : '' }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Start Date</th>
+                  <td>{{ dateService.formatDate(discountAndOfferForm.value.startDate) }}</td>
+                </tr>
+                <tr>
+                  <th>Expiry Date</th>
+                  <td>{{ dateService.formatDate(discountAndOfferForm.value.expiryDate) }}</td>
+                </tr>
+                <tr>
+                  <th>Description</th>
+                  <td>{{ discountAndOfferForm.value.description }}</td>
+                </tr>
+                <tr>
+                  <th>Terms & Conditions</th>
+                  <td>{{ discountAndOfferForm.value.termsAndConditions }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button class="" nbButton nbStepperPrevious>
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton (click)="saveDiscountAndOffer()"><span>Submit</span></button>
+            </div>
+          </div>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

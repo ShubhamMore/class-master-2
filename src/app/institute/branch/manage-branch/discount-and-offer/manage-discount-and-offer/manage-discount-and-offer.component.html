@@ -1,1 +1,92 @@
-<p>manage-discount-and-offer works!</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>Discounts And Offers</h3>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <button nbButton status="primary" fullWidth size="small" (click)="addDiscountAndOffer()">
+          Add Discount & Offer <nb-icon icon="plus-circle-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="body-container">
+    <div class="row">
+      <div class="col-md-12">
+        <ng-container *ngIf="!loading; else loadingData">
+          <div
+            class="table-responsive"
+            *ngIf="discountAndOffers.length > 0; else noDiscountsAndOffers"
+          >
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Discount And Offer</th>
+                  <th>Offer Code</th>
+                  <th>Percentage/Amount</th>
+                  <th>Start Date</th>
+                  <th>Expiry Date</th>
+                  <th>Action</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let discountAndOffer of discountAndOffers; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ discountAndOffer.offerName }}</td>
+                  <td>{{ discountAndOffer.code }}</td>
+                  <td>
+                    {{ discountAndOffer.discountAmount }}
+                    {{ discountAndOffer.discountType === 'percentage' ? '%' : '' }}
+                  </td>
+                  <td class="keep-hyphen">
+                    {{ dateService.formatDate(discountAndOffer.startDate) }}
+                  </td>
+                  <td class="keep-hyphen">
+                    {{ dateService.formatDate(discountAndOffer.expiryDate) }}
+                  </td>
+                  <td>
+                    <button
+                      class="mr-3"
+                      nbButton
+                      status="basic"
+                      size="small"
+                      (click)="editDiscountAndOffer(discountAndOffer._id)"
+                    >
+                      Edit
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      class=""
+                      nbButton
+                      [status]="!discountAndOffer.status ? 'warning' : 'danger'"
+                      size="small"
+                      (click)="
+                        changeDiscountAndOfferStatus(
+                          discountAndOffer._id,
+                          !discountAndOffer.status,
+                          i
+                        )
+                      "
+                    >
+                      {{ !discountAndOffer.status ? 'Activate' : 'Deactivate' }}
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noDiscountsAndOffers>
+            <p class="text-center">No Discounts And Offers Available</p>
+          </ng-template>
+        </ng-container>
+        <ng-template #loadingData>
+          <p class="text-center">Loading...</p>
+        </ng-template>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

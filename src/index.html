@@ -98,12 +98,23 @@
         box-shadow: 0 3px 3px 0 #3dafff;
         animation: spin 1.5s linear infinite;
       }
+
+      .disable-text-selection {
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer */
+        -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+        -webkit-user-select: none; /* Chrome, Safari, and Opera */
+        -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+      }
     </style>
-      <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  </head>
   <body class="mat-typography">
-    <ngx-app>Loading...</ngx-app>
+    <ngx-app class="disable-text-selection">Loading...</ngx-app>
     <div id="nb-global-spinner" class="spinner">
       <div class="blob blob-0"></div>
       <div class="blob blob-1"></div>

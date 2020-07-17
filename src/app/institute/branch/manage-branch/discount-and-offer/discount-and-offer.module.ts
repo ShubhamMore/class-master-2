@@ -1,3 +1,14 @@
+import { ReactiveFormsModule } from '@angular/forms';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbSelectModule,
+  NbIconModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbCheckboxModule,
+  NbStepperModule,
+} from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -12,6 +23,21 @@ import { ManageDiscountAndOfferComponent } from './manage-discount-and-offer/man
     AddDiscountAndOfferComponent,
     ManageDiscountAndOfferComponent,
   ],
-  imports: [CommonModule, DiscountAndOfferRoutingModule],
+  imports: [
+    CommonModule,
+    DiscountAndOfferRoutingModule,
+
+    NbCardModule,
+    NbButtonModule,
+    NbSelectModule,
+    NbIconModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbCheckboxModule,
+    NbStepperModule,
+    NbFormFieldModule,
+
+    ReactiveFormsModule,
+  ],
 })
 export class DiscountAndOfferModule {}

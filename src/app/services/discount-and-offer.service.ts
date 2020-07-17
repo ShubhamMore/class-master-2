@@ -6,8 +6,14 @@ import { throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DiscountAndOfferService {
+  private discountTypes: string[] = ['percentage', 'amount'];
+
   private discountAndOffer: DiscountAndOfferModel;
   private discountAndOfferId: string;
+
+  getDiscountTypes() {
+    return this.discountTypes;
+  }
 
   setDiscountAndOfferId(discountAndOfferId: string) {
     this.discountAndOfferId = discountAndOfferId;

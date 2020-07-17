@@ -1,6 +1,6 @@
 <nb-card>
-  <nb-card-header *ngIf="profile">
-    <h3>
+  <nb-card-header>
+    <h3 *ngIf="profile">
       {{ profile.name | uppercase }}
       <small class="float-right">{{ profile.imsMasterId | uppercase }}</small>
     </h3>
@@ -8,7 +8,12 @@
   <nb-card-body>
     <div class="row">
       <div class="col-12">
-        <h3 id="title" class="title">User Profile</h3>
+        <h4 id="title" class="title">
+          User Profile
+          <small class="float-right" *ngIf="profile"
+            ><em>{{ profile.email | lowercase }}</em></small
+          >
+        </h4>
 
         <form (ngSubmit)="saveProfile()" [formGroup]="profileForm">
           <p class="sub-title">Personal Details</p>
@@ -152,7 +157,7 @@
 
     <div class="row">
       <div class="col-md-12">
-        <h3 id="title" class="title">Change password</h3>
+        <h4 id="title" class="title">Change password</h4>
         <p class="sub-title">Please set a new password</p>
 
         <form (ngSubmit)="changePassword()" [formGroup]="changePasswordForm">
