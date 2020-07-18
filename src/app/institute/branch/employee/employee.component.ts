@@ -12,12 +12,7 @@ export class EmployeeComponent implements OnInit {
   loading: boolean;
   branchId: string;
 
-  constructor(
-    private branchService: BranchService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private location: Location,
-  ) {}
+  constructor(private branchService: BranchService, private location: Location) {}
 
   ngOnInit(): void {
     this.loading = true;

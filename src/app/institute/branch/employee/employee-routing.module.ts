@@ -1,9 +1,6 @@
-import { PageNotFoundComponent } from './../../../shared/page-not-found/page-not-found.component';
-import { ManageEmployeeComponent } from './manage-employee/manage-employee.component';
 import { EmployeeComponent } from './employee.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AddEmployeeComponent } from './add-employee/add-employee.component';
 
 const routes: Routes = [
   {
@@ -15,11 +12,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./add-employee/add-employee.module').then((m) => m.AddEmployeeModule),
       },
+
       {
         path: 'edit',
         loadChildren: () =>
           import('./add-employee/add-employee.module').then((m) => m.AddEmployeeModule),
       },
+
       {
         path: 'manage',
         loadChildren: () =>

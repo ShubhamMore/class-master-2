@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BranchService } from './../../../services/branch.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'ngx-student',
@@ -6,7 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./student.component.scss'],
 })
 export class StudentComponent implements OnInit {
-  constructor() {}
+  loading: boolean;
+  branchId: string;
 
-  ngOnInit(): void {}
+  constructor(private branchService: BranchService, private location: Location) {}
+
+  ngOnInit(): void {
+    this.loading = true;
+    this.branchId = this.branchService.getBranchId();
+    if (!this.branchId) {
+      this.location.back();
+      return;
+    }
+  }
 }

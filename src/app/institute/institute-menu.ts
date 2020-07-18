@@ -150,13 +150,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Active Leads',
-        link: '/institute/branch/lead/manage/active',
-        hidden: true,
+        link: '/institute/branch/lead/manage',
+        queryParams: { type: 'active' },
       },
       {
         title: 'Close Leads',
-        link: '/institute/branch/lead/manage/inactive',
-        hidden: true,
+        link: '/institute/branch/lead/manage',
+        queryParams: { type: 'inactive' },
       },
     ],
   },

@@ -5,7 +5,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
   template: `
     <span class="created-by">
-      Created with ♥ by <b><a href="https://akveo.page.link/8V2f" target="_blank">Akveo</a></b> 2019
+      Created with ♥ by TEAM
+      <strong><a href="https://www.google.com" target="_blank">CLASS MASTER</a></strong> 2020
     </span>
   `,
 })

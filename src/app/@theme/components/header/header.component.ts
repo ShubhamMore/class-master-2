@@ -1,6 +1,5 @@
 import { BranchService } from './../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BranchModel } from './../../../models/branch.model';
 import { AuthService } from './../../../authentication/auth/auth-service/auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {

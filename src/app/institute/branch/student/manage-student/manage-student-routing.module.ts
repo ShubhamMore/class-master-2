@@ -8,7 +8,6 @@ const routes: Routes = [
     component: ManageStudentComponent,
   },
 
-  ,
   {
     path: 'page-not-found',
     loadChildren: () =>

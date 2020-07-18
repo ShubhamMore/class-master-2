@@ -7,11 +7,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {
   NbCardModule,
   NbSelectModule,
+  NbCheckboxModule,
   NbInputModule,
   NbButtonModule,
   NbIconModule,
   NbStepperModule,
   NbTooltipModule,
+  NbFormFieldModule,
 } from '@nebular/theme';
 
 import { AddStudentComponent } from './add-student.component';
@@ -24,6 +26,8 @@ import { AddStudentComponent } from './add-student.component';
 
     NbCardModule,
     NbSelectModule,
+    NbCheckboxModule,
+    NbFormFieldModule,
     NbInputModule,
     NbButtonModule,
     NbIconModule,

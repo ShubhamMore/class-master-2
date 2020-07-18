@@ -6,10 +6,10 @@ import { ManageStudentRoutingModule } from './manage-student-routing.module';
 
 import {
   NbCardModule,
-  NbSelectModule,
   NbButtonModule,
   NbIconModule,
   NbTooltipModule,
+  NbSelectModule,
 } from '@nebular/theme';
 
 @NgModule({

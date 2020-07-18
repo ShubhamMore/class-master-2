@@ -1,5 +1,3 @@
-import { ManageStudentComponent } from './manage-student/manage-student.component';
-import { AddStudentComponent } from './add-student/add-student.component';
 import { StudentComponent } from './student.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -14,6 +12,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('./add-student/add-student.module').then((m) => m.AddStudentModule),
       },
+
       {
         path: 'edit',
         loadChildren: () =>
@@ -28,11 +27,10 @@ const routes: Routes = [
 
       {
         path: '',
-        redirectTo: 'manage',
+        redirectTo: 'manage?type=active',
         pathMatch: 'full',
       },
 
-      ,
       {
         path: 'page-not-found',
         loadChildren: () =>
@@ -49,7 +47,6 @@ const routes: Routes = [
     ],
   },
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
