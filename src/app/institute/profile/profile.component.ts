@@ -29,7 +29,13 @@ export class ProfileComponent implements OnInit {
     this.profileForm = new FormGroup({
       name: new FormControl(null, { validators: [Validators.required, Validators.minLength(5)] }),
       phone: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)],
+        validators: [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+          Validators.min(1000000000),
+          Validators.max(9999999999),
+        ],
       }),
       address: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(10)],

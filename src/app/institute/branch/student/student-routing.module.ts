@@ -1,4 +1,3 @@
-import { PassoutStudentComponent } from './manage-student/passout-student/passout-student.component';
 import { ManageStudentComponent } from './manage-student/manage-student.component';
 import { AddStudentComponent } from './add-student/add-student.component';
 import { StudentComponent } from './student.component';
@@ -15,14 +14,13 @@ const routes: Routes = [
         component: AddStudentComponent,
       },
       {
-        path: 'edit/:id',
+        path: 'edit',
         component: AddStudentComponent,
       },
 
       {
         path: 'manage',
-        loadChildren: () =>
-          import('./manage-student/manage-student.module').then((m) => m.ManageStudentModule),
+        component: ManageStudentComponent,
       },
 
       {

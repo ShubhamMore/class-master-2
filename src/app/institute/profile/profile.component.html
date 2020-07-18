@@ -68,6 +68,8 @@
                   placeholder="User phone"
                   minlength="10"
                   maxlength="10"
+                  min="1000000000"
+                  max="9999999999"
                   fullWidth
                   [status]="
                     profileForm.get('phone').touched
@@ -91,7 +93,9 @@
                     *ngIf="
                       profileForm.get('phone').errors?.minlength ||
                       profileForm.get('phone').errors?.maxlength ||
-                      profileForm.get('phone').errors?.pattern
+                      profileForm.get('phone').errors?.pattern ||
+                      profileForm.get('phone').errors?.min ||
+                      profileForm.get('phone').errors?.max
                     "
                   >
                     User phone should be 10 digits

@@ -1,5 +1,5 @@
 import { EmployeeService } from './../../../../services/employee.service';
-import { BranchEmployeeService } from './../../../../services/employee-branch.service';
+import { BranchEmployeeService } from '../../../../services/branch-employee.service';
 import { BranchEmployeeModel } from '../../../../models/branch-employee.model';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';

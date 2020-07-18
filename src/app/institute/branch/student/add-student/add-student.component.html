@@ -1,1 +1,550 @@
-<p>add-student works!</p>
+<nb-card>
+  <nb-card-header>
+    <button
+      type="button"
+      class="float-right"
+      nbButton
+      status="warning"
+      size="tiny"
+      (click)="back()"
+    >
+      Back
+    </button>
+    <h3 class="">
+      {{ !student ? 'Add New Student' : 'Edit Student ' + (student.name | uppercase) }}
+    </h3>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper #stepper [linear]="true" [disableStepNavigation]="true">
+      <nb-step [stepControl]="studentForm" label="Basic Details">
+        <div class="row">
+          <div class="col-md-12" *ngIf="!student">
+            <nb-checkbox
+              id="input-already-registered"
+              name="alreadyRegistered"
+              [checked]="alreadyRegisteredUser"
+              (checkedChange)="alreadyRegister($event)"
+              >Already Registered Student</nb-checkbox
+            >
+          </div>
+          <div class="col-md-6 col-sm-8" *ngIf="alreadyRegisteredUser || student">
+            <form class="" (submit)="searchStudent()" [formGroup]="studentSearchForm">
+              <div class="form-control-group">
+                <label class="label" for="input-student-student-id">Student Id:</label>
+                <nb-form-field>
+                  <input
+                    type="text"
+                    nbInput
+                    id="input-student-id"
+                    studentId="studentId"
+                    formControlName="studentId"
+                    placeholder="Student Email or IMS Master Id"
+                    fullWidth
+                    [status]="
+                      studentSearchForm.get('studentId').touched
+                        ? studentSearchForm.get('studentId').invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                  <button nbSuffix nbTooltip="Fetch" nbButton ghost type="submit" *ngIf="!student">
+                    <nb-icon icon="arrow-circle-right-outline" status="success"> </nb-icon>
+                  </button>
+                </nb-form-field>
+
+                <ng-container
+                  *ngIf="
+                    studentSearchForm.get('studentId').invalid &&
+                    studentSearchForm.get('studentId').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentSearchForm.get('studentId').errors?.required"
+                  >
+                    Student Id is required!
+                  </p>
+                </ng-container>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <form
+          class=""
+          (submit)="studentFormSubmit()"
+          [formGroup]="studentForm"
+          *ngIf="!alreadyRegisteredUser"
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-student-student-name">Student Name:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-student-name"
+                  name="name"
+                  formControlName="name"
+                  placeholder="Student Name"
+                  minlength="3"
+                  maxlength="30"
+                  fullWidth
+                  [status]="
+                    studentForm.get('name').touched
+                      ? studentForm.get('name').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="studentForm.get('name').invalid && studentForm.get('name').touched"
+                >
+                  <p class="caption status-danger" *ngIf="studentForm.get('name').errors?.required">
+                    Student name is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentForm.get('name').errors?.minlength"
+                  >
+                    Student Name should contain minimum 3 characters
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-email">Email address:</label>
+                <input
+                  type="email"
+                  nbInput
+                  id="input-email"
+                  name="email"
+                  formControlName="email"
+                  placeholder="Email address"
+                  fullWidth
+                  [status]="
+                    studentForm.get('email').touched
+                      ? studentForm.get('email').invalid || userExist
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (input)="checkUser()"
+                />
+                <ng-container
+                  *ngIf="
+                    (studentForm.get('email').invalid || userExist) &&
+                    studentForm.get('email').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentForm.get('email').errors?.required"
+                  >
+                    Email is required!
+                  </p>
+                  <p class="caption status-danger" *ngIf="studentForm.get('email').errors?.email">
+                    Email should be the real one!
+                  </p>
+                  <p class="caption status-danger" *ngIf="userExist">
+                    Email Already registered, Please try another Email!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-phone">Phone:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-phone"
+                  name="phone"
+                  formControlName="phone"
+                  placeholder="phone"
+                  minlength="10"
+                  maxlength="10"
+                  min="1000000000"
+                  max="9999999999"
+                  fullWidth
+                  [status]="
+                    studentForm.get('phone').touched
+                      ? studentForm.get('phone').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="studentForm.get('phone').invalid && studentForm.get('phone').touched"
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentForm.get('phone').errors?.required"
+                  >
+                    Phone is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="
+                      studentForm.get('phone').errors?.minlength ||
+                      studentForm.get('phone').errors?.maxlength ||
+                      studentForm.get('phone').errors?.min ||
+                      studentForm.get('phone').errors?.max
+                    "
+                  >
+                    Phone should contain 10 digits
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-birth-date">Birth Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-birth-date"
+                  name="birthDate"
+                  [max]="dateService.getDateString()"
+                  formControlName="birthDate"
+                  placeholder="Birth Date"
+                  fullWidth
+                />
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-address">Address:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-address"
+                  name="address"
+                  formControlName="address"
+                  placeholder="Address (Optional)"
+                  fullWidth
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-parent-name">Parent Name:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-parent-name"
+                  name="parentName"
+                  formControlName="parentName"
+                  placeholder="Parent Name"
+                  minlength="3"
+                  maxlength="30"
+                  fullWidth
+                  [status]="
+                    studentForm.get('parentName').touched
+                      ? studentForm.get('parentName').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    studentForm.get('parentName').invalid && studentForm.get('parentName').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentForm.get('parentName').errors?.minlength"
+                  >
+                    Parent Name should contain minimum 3 characters
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-parent-email">Parent Email address:</label>
+                <input
+                  type="parentEmail"
+                  nbInput
+                  id="input-parent-email"
+                  name="parentEmail"
+                  formControlName="parentEmail"
+                  placeholder="Parent Email address"
+                  fullWidth
+                  [status]="
+                    studentForm.get('parentEmail').touched
+                      ? studentForm.get('parentEmail').invalid || userExist
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    (studentForm.get('parentEmail').invalid || userExist) &&
+                    studentForm.get('parentEmail').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentForm.get('parentEmail').errors?.parentEmail"
+                  >
+                    Parent Email should be the real one!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-parent-phone">Parent Phone:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-parent-phone"
+                  name="parentPhone"
+                  formControlName="parentPhone"
+                  placeholder="Parent Phone"
+                  minlength="10"
+                  maxlength="10"
+                  min="1000000000"
+                  max="9999999999"
+                  fullWidth
+                  [status]="
+                    studentForm.get('parentPhone').touched
+                      ? studentForm.get('parentPhone').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    studentForm.get('parentPhone').invalid && studentForm.get('parentPhone').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="
+                      studentForm.get('parentPhone').errors?.minlength ||
+                      studentForm.get('parentPhone').errors?.maxlength ||
+                      studentForm.get('parentPhone').errors?.min ||
+                      studentForm.get('parentPhone').errors?.max
+                    "
+                  >
+                    Parent Phone should contain 10 digits
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <button nbButton type="submit">
+                <span>Next</span>
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step [stepControl]="branchStudentForm" label="Enrollment Details">
+        <form
+          [formGroup]="branchStudentForm"
+          (ngSubmit)="branchStudentFormSubmit()"
+          class="step-container"
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-category">Branch Category:</label>
+                <nb-select
+                  id="input-category"
+                  name="category"
+                  formControlName="category"
+                  placeholder="Select Category"
+                  fullWidth
+                  [status]="
+                    branchStudentForm.get('category').touched
+                      ? branchStudentForm.get('category').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="">Select Category</nb-option>
+                  <nb-option *ngFor="let category of categories" [value]="category._id">{{
+                    category.category
+                  }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="
+                    branchStudentForm.get('category').invalid &&
+                    branchStudentForm.get('category').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchStudentForm.get('category').errors?.required"
+                  >
+                    Branch Category is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-admission-date">Admission Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-admission-date"
+                  name="admissionDate"
+                  formControlName="admissionDate"
+                  placeholder="admissionDate"
+                  fullWidth
+                  [status]="
+                    branchStudentForm.get('admissionDate').touched
+                      ? branchStudentForm.get('admissionDate').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    branchStudentForm.get('admissionDate').invalid &&
+                    branchStudentForm.get('admissionDate').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchStudentForm.get('admissionDate').errors?.required"
+                  >
+                    Admission Date is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-description">Description:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-description"
+                  name="description"
+                  formControlName="description"
+                  placeholder="Description (Optional)"
+                  fullWidth
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button type="button" class="" nbButton (click)="previousStep()">
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton type="submit">
+                <span>Next</span><nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step label="Submit">
+        <div class="step-container">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                <tr *ngIf="studentSearchForm.value.studentId">
+                  <th>IMS Id</th>
+                  <td>{{ studentSearchForm.value.studentId }}</td>
+                </tr>
+                <tr>
+                  <th>Student Name</th>
+                  <td>{{ studentForm.value.name }}</td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td>{{ studentForm.value.email }}</td>
+                </tr>
+                <tr>
+                  <th>Phone</th>
+                  <td>{{ studentForm.value.phone }}</td>
+                </tr>
+                <tr>
+                  <th>Address</th>
+                  <td>{{ studentForm.value.address }}</td>
+                </tr>
+                <tr>
+                  <th>Parent Name</th>
+                  <td>{{ studentForm.value.parentName }}</td>
+                </tr>
+                <tr>
+                  <th>Parent Email</th>
+                  <td>{{ studentForm.value.parentEmail }}</td>
+                </tr>
+                <tr>
+                  <th>Parent Phone</th>
+                  <td>{{ studentForm.value.parentPhone }}</td>
+                </tr>
+                <tr>
+                  <th>Category</th>
+                  <td>{{ getCategory(branchStudentForm.value.category) }}</td>
+                </tr>
+                <tr>
+                  <th>Admission Date</th>
+                  <td>{{ dateService.formatDate(branchStudentForm.value.admissionDate) }}</td>
+                </tr>
+                <tr>
+                  <th>Description</th>
+                  <td>{{ branchStudentForm.value.description }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button type="button" class="" nbButton (click)="previousStep()">
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton (click)="saveStudent()"><span>Submit</span></button>
+            </div>
+          </div>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

@@ -2,42 +2,41 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { StudentModel } from '../models/Student.model';
+import { BranchStudentModel } from '../models/branch-student.model';
 
 @Injectable({ providedIn: 'root' })
-export class StudentService {
-  private studentId: string;
+export class BranchStudentService {
+  private branchStudentId: string;
+  private branchStudent: BranchStudentModel;
 
-  private student: StudentModel;
-
-  setStudentData(student: StudentModel) {
-    this.student = student;
+  setBranchStudentData(branchStudent: BranchStudentModel) {
+    this.branchStudent = branchStudent;
   }
 
-  getStudentData() {
-    return this.student;
+  getBranchStudentData() {
+    return this.branchStudent;
   }
 
-  deleteStudentData() {
-    this.student = null;
+  deleteBranchStudentData() {
+    this.branchStudent = null;
   }
 
-  setStudentId(studentId: string) {
-    this.studentId = studentId;
+  setBranchStudentId(branchStudentId: string) {
+    this.branchStudentId = branchStudentId;
   }
 
-  getStudentId() {
-    return this.studentId;
+  getBranchStudentId() {
+    return this.branchStudentId;
   }
 
-  deleteStudentId() {
-    this.studentId = null;
+  deleteBranchStudentId() {
+    this.branchStudentId = null;
   }
 
   constructor(private httpService: HttpService) {}
 
-  addStudent(student: any, branchStudent: any) {
-    const data = { api: 'newStudent', data: { student, branchStudent } };
+  getBranchStudents(branch: string, category: string, type: string) {
+    const data = { api: 'getBranchStudents', data: { branch, category, type } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -48,8 +47,8 @@ export class StudentService {
     );
   }
 
-  getStudents() {
-    const data = { api: 'getStudents', data: {} };
+  getBranchStudent(id: string, student: string) {
+    const data = { api: 'addBranchStudent', data: { id, student } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -60,8 +59,8 @@ export class StudentService {
     );
   }
 
-  getStudent(id: string) {
-    const data = { api: 'getStudent', data: { id } };
+  newBranchStudent(branchStudent: any) {
+    const data = { api: 'newBranchStudent', data: branchStudent };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -72,8 +71,8 @@ export class StudentService {
     );
   }
 
-  searchStudent(studentId: string) {
-    const data = { api: 'searchStudent', data: { studentId } };
+  getBranchStudentForEditing(id: string, student: string) {
+    const data = { api: 'getBranchStudentForEditing', data: { id, student } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -84,8 +83,8 @@ export class StudentService {
     );
   }
 
-  getStudentForEditing(id: string) {
-    const data = { api: 'getStudentForEditing', data: { id } };
+  editBranchStudent(branchStudent: BranchStudentModel) {
+    const data = { api: 'updateBranchStudent', data: branchStudent };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -96,8 +95,8 @@ export class StudentService {
     );
   }
 
-  changeStudentStatus(id: string, status: boolean) {
-    const data = { api: 'changeStudentStatus', data: { id, status } };
+  changeBranchStudentStatus(id: string, status: boolean) {
+    const data = { api: 'changeBranchStudentStatus', data: { id, status } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -108,20 +107,8 @@ export class StudentService {
     );
   }
 
-  editStudent(student: StudentModel) {
-    const data = { api: 'updateStudent', data: student };
-    return this.httpService.httpPost(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      }),
-    );
-  }
-
-  deleteStudent(id: string) {
-    const data = { api: 'deleteStudent', data: { id } };
+  deleteBranchStudent(id: string) {
+    const data = { api: 'deleteBranchStudent', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

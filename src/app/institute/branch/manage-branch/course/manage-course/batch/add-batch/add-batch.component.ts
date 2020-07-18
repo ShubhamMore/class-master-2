@@ -10,7 +10,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../../../../services/branch.service';
 import { Location } from '@angular/common';
 import { ObjectId } from 'bson';
-import { BranchEmployeeService } from '../../../../../../../services/employee-branch.service';
+import { BranchEmployeeService } from '../../../../../../../services/branch-employee.service';
 @Component({
   selector: 'ngx-add-batch',
   templateUrl: './add-batch.component.html',

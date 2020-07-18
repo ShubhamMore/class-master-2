@@ -172,7 +172,8 @@
                   placeholder="phone"
                   minlength="10"
                   maxlength="10"
-                  min="0"
+                  min="1000000000"
+                  max="9999999999"
                   fullWidth
                   [status]="
                     employeeForm.get('phone').touched
@@ -196,7 +197,8 @@
                     *ngIf="
                       employeeForm.get('phone').errors?.minlength ||
                       employeeForm.get('phone').errors?.maxlength ||
-                      employeeForm.get('phone').errors?.min
+                      employeeForm.get('phone').errors?.min ||
+                      employeeForm.get('phone').errors?.max
                     "
                   >
                     Phone should contain 10 digits
@@ -213,6 +215,7 @@
                   nbInput
                   id="input-birth-date"
                   name="birthDate"
+                  [max]="dateService.getDateString()"
                   formControlName="birthDate"
                   placeholder="Birth Date"
                   fullWidth
@@ -398,7 +401,7 @@
                   <td>{{ employeeForm.value.name }}</td>
                 </tr>
                 <tr>
-                  <th>Category</th>
+                  <th>Email</th>
                   <td>{{ employeeForm.value.email }}</td>
                 </tr>
                 <tr>

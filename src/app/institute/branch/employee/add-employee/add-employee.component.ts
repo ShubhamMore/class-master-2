@@ -1,8 +1,9 @@
+import { DateService } from './../../../../services/shared-services/date.service';
 import { RoleService } from './../../../../services/role.service';
 import { UserService } from './../../../../services/shared-services/user.service';
 import { environment } from './../../../../../environments/environment.prod';
 import { EncryptService } from './../../../../services/shared-services/encrypt.service';
-import { BranchEmployeeService } from './../../../../services/employee-branch.service';
+import { BranchEmployeeService } from '../../../../services/branch-employee.service';
 import { EmployeeService } from './../../../../services/employee.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EmployeeModel } from './../../../../models/employee.model';
@@ -40,6 +41,7 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
     private branchService: BranchService,
     private employeeService: EmployeeService,
     private roleService: RoleService,
+    public dateService: DateService,
     private userService: UserService,
     private toastrService: NbToastrService,
     private branchEmployeeService: BranchEmployeeService,
@@ -97,7 +99,8 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(10),
           Validators.maxLength(10),
-          Validators.min(0),
+          Validators.min(1000000000),
+          Validators.max(9999999999),
         ],
       }),
       birthDate: new FormControl(null, {
@@ -124,7 +127,7 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
           (res: any) => {
             this.employee = res.employee;
             this.branchEmployee = res.branchEmployee;
-
+            this.userExist = false;
             this.employeeSearchForm.patchValue({
               employeeId: this.employee.imsMasterId,
             });
@@ -185,7 +188,7 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
         this.employee = employee;
 
         this.employeeId = employee.imsMasterId;
-
+        this.userExist = false;
         this.alreadyRegisteredUser = false;
 
         this.employeeSearchForm.patchValue({
@@ -234,7 +237,9 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
 
   previousStep() {
     this.stepper.previous();
-    this.disableEmployeeDetails();
+    if (this.employee) {
+      this.disableEmployeeDetails();
+    }
   }
 
   employeeFormSubmit() {
@@ -246,7 +251,9 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
       this.showToastr('top-right', 'danger', 'User with this email address is already Exist');
       return;
     }
-    this.enableEmployeeDetails();
+    if (this.employee) {
+      this.enableEmployeeDetails();
+    }
     this.stepper.next();
   }
 

@@ -63,12 +63,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Active Students',
-        link: '/institute/branch/student/manage/active',
+        link: '/institute/branch/student/manage',
+        queryParams: { type: 'active' },
         hidden: true,
       },
       {
-        title: 'Passout Students',
-        link: '/institute/branch/student/manage/passout',
+        title: 'Inactive Students',
+        link: '/institute/branch/student/manage',
+        queryParams: { type: 'inactive' },
         hidden: true,
       },
     ],
