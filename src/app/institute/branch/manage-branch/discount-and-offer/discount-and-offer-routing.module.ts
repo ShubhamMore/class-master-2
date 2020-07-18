@@ -1,8 +1,5 @@
-import { PageNotFoundComponent } from './../../../../shared/page-not-found/page-not-found.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ManageDiscountAndOfferComponent } from './manage-discount-and-offer/manage-discount-and-offer.component';
-import { AddDiscountAndOfferComponent } from './add-discount-and-offer/add-discount-and-offer.component';
 import { DiscountAndOfferComponent } from './discount-and-offer.component';
 
 const routes: Routes = [
@@ -12,15 +9,24 @@ const routes: Routes = [
     children: [
       {
         path: 'manage',
-        component: ManageDiscountAndOfferComponent,
+        loadChildren: () =>
+          import('./manage-discount-and-offer/manage-discount-and-offer.module').then(
+            (m) => m.ManageDiscountAndOfferModule,
+          ),
       },
       {
         path: 'add',
-        component: AddDiscountAndOfferComponent,
+        loadChildren: () =>
+          import('./add-discount-and-offer/add-discount-and-offer.module').then(
+            (m) => m.AddDiscountAndOfferModule,
+          ),
       },
       {
         path: 'edit',
-        component: AddDiscountAndOfferComponent,
+        loadChildren: () =>
+          import('./add-discount-and-offer/add-discount-and-offer.module').then(
+            (m) => m.AddDiscountAndOfferModule,
+          ),
       },
 
       {
@@ -31,7 +37,10 @@ const routes: Routes = [
 
       {
         path: 'page-not-found',
-        component: PageNotFoundComponent,
+        loadChildren: () =>
+          import('../../../../shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule,
+          ),
       },
 
       {

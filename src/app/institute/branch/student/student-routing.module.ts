@@ -11,21 +11,39 @@ const routes: Routes = [
     children: [
       {
         path: 'add',
-        component: AddStudentComponent,
+        loadChildren: () =>
+          import('./add-student/add-student.module').then((m) => m.AddStudentModule),
       },
       {
         path: 'edit',
-        component: AddStudentComponent,
+        loadChildren: () =>
+          import('./add-student/add-student.module').then((m) => m.AddStudentModule),
       },
 
       {
         path: 'manage',
-        component: ManageStudentComponent,
+        loadChildren: () =>
+          import('./manage-student/manage-student.module').then((m) => m.ManageStudentModule),
       },
 
       {
         path: '',
         redirectTo: 'manage',
+        pathMatch: 'full',
+      },
+
+      ,
+      {
+        path: 'page-not-found',
+        loadChildren: () =>
+          import('../../../shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule,
+          ),
+      },
+
+      {
+        path: '**',
+        redirectTo: 'page-not-found',
         pathMatch: 'full',
       },
     ],

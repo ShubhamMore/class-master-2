@@ -1,6 +1,3 @@
-import { AddOnlineTestQuestionsComponent } from './add-online-test-questions/add-online-test-questions.component';
-import { AddOnlineTestComponent } from './add-online-test/add-online-test.component';
-import { ManageOnlineTestComponent } from './manage-online-test/manage-online-test.component';
 import { OnlineTestComponent } from './online-test.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -12,32 +9,46 @@ const routes: Routes = [
     children: [
       {
         path: 'manage',
-        component: ManageOnlineTestComponent,
+        loadChildren: () =>
+          import('./manage-online-test/manage-online-test.module').then(
+            (m) => m.ManageOnlineTestModule,
+          ),
       },
       {
         path: 'add',
-        component: AddOnlineTestComponent,
+        loadChildren: () =>
+          import('./add-online-test/add-online-test.module').then((m) => m.AddOnlineTestModule),
       },
       {
-        path: ':id/edit',
-        component: AddOnlineTestComponent,
+        path: 'edit',
+        loadChildren: () =>
+          import('./add-online-test/add-online-test.module').then((m) => m.AddOnlineTestModule),
       },
       {
-        path: ':id/questions',
-        component: ManageOnlineTestComponent,
-      },
-      {
-        path: ':id/questions/add',
-        component: AddOnlineTestQuestionsComponent,
-      },
-      {
-        path: ':id/questions/:questionid/edit',
-        component: AddOnlineTestQuestionsComponent,
+        path: 'question',
+        loadChildren: () =>
+          import('./online-test-question/online-test-question.module').then(
+            (m) => m.OnlineTestQuestionModule,
+          ),
       },
 
       {
         path: '',
         redirectTo: 'manage',
+        pathMatch: 'full',
+      },
+
+      {
+        path: 'page-not-found',
+        loadChildren: () =>
+          import('../../../../shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule,
+          ),
+      },
+
+      {
+        path: '**',
+        redirectTo: 'page-not-found',
         pathMatch: 'full',
       },
     ],

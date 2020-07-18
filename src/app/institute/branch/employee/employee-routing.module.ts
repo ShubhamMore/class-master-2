@@ -12,15 +12,18 @@ const routes: Routes = [
     children: [
       {
         path: 'add',
-        component: AddEmployeeComponent,
+        loadChildren: () =>
+          import('./add-employee/add-employee.module').then((m) => m.AddEmployeeModule),
       },
       {
         path: 'edit',
-        component: AddEmployeeComponent,
+        loadChildren: () =>
+          import('./add-employee/add-employee.module').then((m) => m.AddEmployeeModule),
       },
       {
         path: 'manage',
-        component: ManageEmployeeComponent,
+        loadChildren: () =>
+          import('./manage-employee/manage-employee.module').then((m) => m.ManageEmployeeModule),
       },
 
       {
@@ -31,7 +34,10 @@ const routes: Routes = [
 
       {
         path: 'page-not-found',
-        component: PageNotFoundComponent,
+        loadChildren: () =>
+          import('../../../shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule,
+          ),
       },
 
       {

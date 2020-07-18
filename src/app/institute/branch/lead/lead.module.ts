@@ -6,7 +6,7 @@ import { LeadComponent } from './lead.component';
 import { AddLeadComponent } from './add-lead/add-lead.component';
 
 @NgModule({
-  declarations: [LeadComponent, AddLeadComponent],
+  declarations: [LeadComponent],
   imports: [CommonModule, LeadRoutingModule],
 })
 export class LeadModule {}

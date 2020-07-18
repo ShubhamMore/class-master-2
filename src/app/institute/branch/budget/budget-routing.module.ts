@@ -10,11 +10,26 @@ const routes: Routes = [
     children: [
       {
         path: 'manage',
-        component: ManageBudgetComponent,
+        loadChildren: () =>
+          import('./manage-budget/manage-budget.module').then((m) => m.ManageBudgetModule),
       },
       {
         path: '',
         redirectTo: 'manage',
+        pathMatch: 'full',
+      },
+
+      {
+        path: 'page-not-found',
+        loadChildren: () =>
+          import('../../../shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule,
+          ),
+      },
+
+      {
+        path: '**',
+        redirectTo: 'page-not-found',
         pathMatch: 'full',
       },
     ],

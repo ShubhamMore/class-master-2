@@ -1,5 +1,3 @@
-import { AddAttendanceComponent } from './add-attendance/add-attendance.component';
-import { ManageAttendanceComponent } from './manage-attendance/manage-attendance.component';
 import { AttendanceComponent } from './attendance.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -11,21 +9,36 @@ const routes: Routes = [
     children: [
       {
         path: 'manage',
-        component: ManageAttendanceComponent,
+        loadChildren: () =>
+          import('./manage-attendance/manage-attendance.module').then(
+            (m) => m.ManageAttendanceModule,
+          ),
       },
       {
         path: 'add',
-        component: AddAttendanceComponent,
+        loadChildren: () =>
+          import('./add-attendance/add-attendance.module').then((m) => m.AddAttendanceModule),
       },
       {
-        path: ':id/edit',
-        component: AddAttendanceComponent,
+        path: 'edit',
+        loadChildren: () =>
+          import('./add-attendance/add-attendance.module').then((m) => m.AddAttendanceModule),
       },
       {
         path: '',
         redirectTo: 'manage',
         pathMatch: 'full',
       },
+
+      {
+        path: 'page-not-found',
+        loadChildren: () =>
+          import('../../../shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule,
+          ),
+      },
+
+      { path: '**', redirectTo: 'page-not-found' },
     ],
   },
 ];

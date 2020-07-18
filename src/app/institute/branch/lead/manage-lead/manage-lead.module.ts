@@ -3,11 +3,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ManageLeadRoutingModule } from './manage-lead-routing.module';
-import { ActiveLeadComponent } from './active-lead/active-lead.component';
-import { InactiveLeadComponent } from './inactive-lead/inactive-lead.component';
 
 @NgModule({
-  declarations: [ManageLeadComponent, ActiveLeadComponent, InactiveLeadComponent],
+  declarations: [ManageLeadComponent],
   imports: [CommonModule, ManageLeadRoutingModule],
 })
 export class ManageLeadModule {}

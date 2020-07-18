@@ -1,10 +1,6 @@
-import { PageNotFoundComponent } from './../../../../shared/page-not-found/page-not-found.component';
-
-import { AddCourseComponent } from './manage-course/add-course/add-course.component';
 import { CourseComponent } from './course.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ManageCourseComponent } from './manage-course/manage-course.component';
 
 const routes: Routes = [
   {
@@ -13,20 +9,21 @@ const routes: Routes = [
     children: [
       {
         path: 'manage',
-        component: ManageCourseComponent,
+        loadChildren: () =>
+          import('./manage-course/manage-course.module').then((m) => m.ManageCourseModule),
       },
       {
         path: 'add',
-        component: AddCourseComponent,
+        loadChildren: () => import('./add-course/add-course.module').then((m) => m.AddCourseModule),
       },
       {
         path: 'edit',
-        component: AddCourseComponent,
+        loadChildren: () => import('./add-course/add-course.module').then((m) => m.AddCourseModule),
       },
 
       {
         path: 'batch',
-        loadChildren: () => import('./manage-course/batch/batch.module').then((m) => m.BatchModule),
+        loadChildren: () => import('./batch/batch.module').then((m) => m.BatchModule),
       },
 
       {
@@ -37,7 +34,10 @@ const routes: Routes = [
 
       {
         path: 'page-not-found',
-        component: PageNotFoundComponent,
+        loadChildren: () =>
+          import('../../../../shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule,
+          ),
       },
 
       {

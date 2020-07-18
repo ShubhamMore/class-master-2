@@ -1,6 +1,4 @@
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { BranchComponent } from './branch.component';
-import { PageNotFoundComponent } from './../../shared/page-not-found/page-not-found.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
@@ -11,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        component: DashboardComponent,
+        loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
 
       {
@@ -64,7 +62,10 @@ const routes: Routes = [
 
       {
         path: 'page-not-found',
-        component: PageNotFoundComponent,
+        loadChildren: () =>
+          import('../../shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule,
+          ),
       },
 
       {

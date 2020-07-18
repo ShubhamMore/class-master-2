@@ -12,24 +12,40 @@ const routes: Routes = [
     children: [
       {
         path: 'manage',
-        component: ManageTestComponent,
+        loadChildren: () =>
+          import('./manage-test/manage-test.module').then((m) => m.ManageTestModule),
       },
       {
         path: 'add',
-        component: AddTestComponent,
+        loadChildren: () => import('./add-test/add-test.module').then((m) => m.AddTestModule),
       },
       {
-        path: ':id/edit',
-        component: AddTestComponent,
+        path: 'edit',
+        loadChildren: () => import('./add-test/add-test.module').then((m) => m.AddTestModule),
       },
       {
-        path: ':id/score',
-        component: AddTestScoreComponent,
+        path: 'score',
+        loadChildren: () =>
+          import('./add-test-score/add-test-score.module').then((m) => m.AddTestScoreModule),
       },
 
       {
         path: '',
         redirectTo: 'manage',
+        pathMatch: 'full',
+      },
+
+      {
+        path: 'page-not-found',
+        loadChildren: () =>
+          import('../../../../shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule,
+          ),
+      },
+
+      {
+        path: '**',
+        redirectTo: 'page-not-found',
         pathMatch: 'full',
       },
     ],

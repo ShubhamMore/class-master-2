@@ -10,12 +10,14 @@ const routes: Routes = [
     children: [
       {
         path: 'add',
-        component: AddLeadComponent,
+        loadChildren: () => import('./add-lead/add-lead.module').then((m) => m.AddLeadModule),
       },
+
       {
-        path: 'edit/:id',
-        component: AddLeadComponent,
+        path: 'edit',
+        loadChildren: () => import('./add-lead/add-lead.module').then((m) => m.AddLeadModule),
       },
+
       {
         path: 'manage',
         loadChildren: () =>
@@ -24,6 +26,20 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'manage',
+        pathMatch: 'full',
+      },
+
+      {
+        path: 'page-not-found',
+        loadChildren: () =>
+          import('../../../shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule,
+          ),
+      },
+
+      {
+        path: '**',
+        redirectTo: 'page-not-found',
         pathMatch: 'full',
       },
     ],

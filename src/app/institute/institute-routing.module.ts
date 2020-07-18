@@ -1,16 +1,9 @@
 import { BranchAuthGuard } from './../authentication/auth/guards/branch.auth.guard';
-import { MembershipPlansComponent } from './membership-plans/membership-plans.component';
-import { ManageInstituteComponent } from './manage-institute/manage-institute.component';
-import { AddInstituteComponent } from './manage-institute/add-institute/add-institute.component';
 import { PageNotFoundComponent } from './../shared/page-not-found/page-not-found.component';
-import { HomeComponent } from './home/home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { InstituteComponent } from './institute.component';
-import { ProfileComponent } from './profile/profile.component';
-import { MyInstitutesComponent } from './my-institutes/my-institutes.component';
-import { ViewInstituteComponent } from './manage-institute/view-institute/view-institute.component';
 
 const routes: Routes = [
   {
@@ -19,39 +12,53 @@ const routes: Routes = [
     children: [
       {
         path: 'profile',
-        component: ProfileComponent,
+        loadChildren: () => import('./profile/profile.module').then((m) => m.ProfileModule),
+        canActivate: [],
       },
 
       {
         path: 'home',
-        component: HomeComponent,
+        loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+        canActivate: [],
       },
 
       {
         path: 'my-institutes',
-        component: MyInstitutesComponent,
+        loadChildren: () =>
+          import('./manage-institute/manage-institute.module').then((m) => m.ManageInstituteModule),
+        canActivate: [],
       },
 
       {
         path: 'membership-plans',
-        component: MembershipPlansComponent,
+        loadChildren: () =>
+          import('./membership-plans/membership-plans.module').then((m) => m.MembershipPlansModule),
+        canActivate: [],
       },
 
       {
         path: 'add',
-        component: AddInstituteComponent,
-      },
-      {
-        path: 'manage',
-        component: ManageInstituteComponent,
+        loadChildren: () =>
+          import('./manage-institute/add-institute/add-institute.module').then(
+            (m) => m.AddInstituteModule,
+          ),
+        canActivate: [],
       },
       {
         path: 'view',
-        component: ViewInstituteComponent,
+        loadChildren: () =>
+          import('./manage-institute/view-institute/view-institute.module').then(
+            (m) => m.ViewInstituteModule,
+          ),
+        canActivate: [],
       },
       {
         path: 'edit',
-        component: AddInstituteComponent,
+        loadChildren: () =>
+          import('./manage-institute/add-institute/add-institute.module').then(
+            (m) => m.AddInstituteModule,
+          ),
+        canActivate: [],
       },
 
       {
@@ -68,7 +75,10 @@ const routes: Routes = [
 
       {
         path: 'page-not-found',
-        component: PageNotFoundComponent,
+        loadChildren: () =>
+          import('../shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule,
+          ),
       },
 
       {
