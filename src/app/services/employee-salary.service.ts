@@ -8,7 +8,7 @@ import { EmployeeSalaryModel } from '../models/employee-salary.model';
   providedIn: 'root',
 })
 export class EmployeeSalaryService {
-  EmployeeSalary: EmployeeSalaryModel;
+  employeeSalary: EmployeeSalaryModel;
 
   constructor(private httpService: HttpService) {}
 

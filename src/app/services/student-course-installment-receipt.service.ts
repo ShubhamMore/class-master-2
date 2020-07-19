@@ -8,7 +8,34 @@ import { StudentCourseInstallmentReceiptModel } from '../models/student-course-i
   providedIn: 'root',
 })
 export class StudentCourseInstallmentReceiptService {
-  studentCourseInstallmentReceipt: StudentCourseInstallmentReceiptModel;
+  private studentCourseInstallmentReceiptId: string;
+  private studentCourseInstallmentReceipt: StudentCourseInstallmentReceiptModel;
+
+  setStudentCourseInstallmentReceiptData(
+    studentCourseInstallmentReceipt: StudentCourseInstallmentReceiptModel,
+  ) {
+    this.studentCourseInstallmentReceipt = studentCourseInstallmentReceipt;
+  }
+
+  getStudentCourseInstallmentReceiptData() {
+    return this.studentCourseInstallmentReceipt;
+  }
+
+  deleteStudentCourseInstallmentReceiptData() {
+    this.studentCourseInstallmentReceipt = null;
+  }
+
+  setStudentCourseInstallmentReceiptId(studentCourseInstallmentReceiptId: string) {
+    this.studentCourseInstallmentReceiptId = studentCourseInstallmentReceiptId;
+  }
+
+  getStudentCourseInstallmentReceiptId() {
+    return this.studentCourseInstallmentReceiptId;
+  }
+
+  deleteStudentCourseInstallmentReceiptId() {
+    this.studentCourseInstallmentReceiptId = null;
+  }
 
   constructor(private httpService: HttpService) {}
 

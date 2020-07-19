@@ -7,7 +7,6 @@ import { StudentCourseModel } from '../models/student-course.model';
 @Injectable({ providedIn: 'root' })
 export class StudentCourseService {
   private studentCourseId: string;
-
   private studentCourse: StudentCourseModel;
 
   setStudentCourseData(studentCourse: StudentCourseModel) {
