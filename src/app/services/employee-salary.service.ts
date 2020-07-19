@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { HttpService } from './shared-services/http.service';
 import { throwError } from 'rxjs';
-import { SalaryModel } from '../models/salary.model';
+import { EmployeeSalaryModel } from '../models/employee-salary.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SalaryService {
-  Salary: SalaryModel;
+export class EmployeeSalaryService {
+  EmployeeSalary: EmployeeSalaryModel;
 
   constructor(private httpService: HttpService) {}
 
-  addSalary(salary: any) {
-    const data = { api: 'newSalary', data: salary };
+  addEmployeeSalary(employeeSalary: any) {
+    const data = { api: 'newEmployeeSalary', data: employeeSalary };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -24,8 +24,8 @@ export class SalaryService {
     );
   }
 
-  changeSalaryStatus(id: string, status: boolean) {
-    const data = { api: 'changeSalaryStatus', data: { id, status } };
+  changeEmployeeSalaryStatus(id: string, status: boolean) {
+    const data = { api: 'changeEmployeeSalaryStatus', data: { id, status } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -60,8 +60,8 @@ export class SalaryService {
     );
   }
 
-  getSalary(salary: string) {
-    const data = { api: 'getSalary', data: { salary } };
+  getEmployeeSalary(employeeSalary: string) {
+    const data = { api: 'getEmployeeSalary', data: { employeeSalary } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -72,8 +72,8 @@ export class SalaryService {
     );
   }
 
-  deleteSalary(salary: string) {
-    const data = { api: 'deleteSalary', data: { salary } };
+  deleteEmployeeSalary(employeeSalary: string) {
+    const data = { api: 'deleteEmployeeSalary', data: { employeeSalary } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

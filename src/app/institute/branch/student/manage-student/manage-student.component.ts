@@ -99,8 +99,16 @@ export class ManageStudentComponent implements OnInit {
 
   branchStudentCourses(id: string, student: string, category: string) {
     this.studentService.setStudentId(student);
+    this.branchService.setCategoryId(category);
     this.branchStudentService.setBranchStudentId(id);
-    this.router.navigate(['../courses'], { relativeTo: this.route });
+    this.router.navigate(['../course'], { relativeTo: this.route });
+  }
+
+  branchAddStudentCourses(id: string, student: string, category: string) {
+    this.studentService.setStudentId(student);
+    this.branchService.setCategoryId(category);
+    this.branchStudentService.setBranchStudentId(id);
+    this.router.navigate(['../course/add'], { relativeTo: this.route });
   }
 
   changeBranchStudentStatus(id: string, status: boolean, i: number) {

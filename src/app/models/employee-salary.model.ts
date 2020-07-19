@@ -1,4 +1,4 @@
-export class SalaryModel {
+export class EmployeeSalaryModel {
   constructor(
     public _id: string,
     public employee: string,

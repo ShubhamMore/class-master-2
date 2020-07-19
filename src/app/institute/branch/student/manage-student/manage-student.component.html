@@ -32,7 +32,9 @@
                   <th>#</th>
                   <th>Student</th>
                   <th>Category</th>
-                  <th colspan="3">Action</th>
+                  <th>Courses</th>
+                  <th>Installments</th>
+                  <th colspan="2">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -42,36 +44,44 @@
                   <td>{{ getCategory(branchStudent.category) }}</td>
 
                   <td>
-                    <button
-                      class="mr-3"
-                      nbButton
-                      status="basic"
-                      size="small"
-                      (click)="editBranchStudent(branchStudent._id, branchStudent.student)"
-                    >
-                      Edit
-                    </button>
+                    <div class="btn-group">
+                      <button
+                        nbButton
+                        status="success"
+                        nbPrefix
+                        size="small"
+                        (click)="
+                          branchStudentCourses(
+                            branchStudent._id,
+                            branchStudent.student,
+                            branchStudent.category
+                          )
+                        "
+                      >
+                        Courses
+                      </button>
+                      <button
+                        class=""
+                        nbButton
+                        nbTooltip="Add Course"
+                        nbSuffix
+                        status="success"
+                        size="small"
+                        (click)="
+                          branchAddStudentCourses(
+                            branchStudent._id,
+                            branchStudent.student,
+                            branchStudent.category
+                          )
+                        "
+                      >
+                        <nb-icon icon="plus-outline"></nb-icon>
+                      </button>
+                    </div>
                   </td>
+
                   <td>
                     <button
-                      class="mr-3"
-                      nbButton
-                      status="success"
-                      size="small"
-                      (click)="
-                        branchStudentCourses(
-                          branchStudent._id,
-                          branchStudent.student,
-                          branchStudent.category
-                        )
-                      "
-                    >
-                      Courses
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      class="mr-3"
                       nbButton
                       status="info"
                       size="small"
@@ -83,9 +93,21 @@
                         )
                       "
                     >
-                      Assign Course
+                      Installments
                     </button>
                   </td>
+
+                  <td>
+                    <button
+                      nbButton
+                      status="basic"
+                      size="small"
+                      (click)="editBranchStudent(branchStudent._id, branchStudent.student)"
+                    >
+                      Edit
+                    </button>
+                  </td>
+
                   <td>
                     <button
                       class=""

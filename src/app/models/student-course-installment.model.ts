@@ -1,4 +1,4 @@
-export class StudentFeeModel {
+export class StudentCourseInstallmentModel {
   constructor(
     public _id: string,
     public student: string,

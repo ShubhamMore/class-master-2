@@ -1,0 +1,79 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>Student Courses</h3>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <button nbButton status="primary" fullWidth size="small" (click)="addStudentCourse()">
+          Add Course&nbsp;<nb-icon icon="plus-circle-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="body-container">
+    <div class="row">
+      <div class="col-md-12">
+        <ng-container *ngIf="!loading; else loadingData">
+          <div class="table-responsive" *ngIf="studentCourses.length > 0; else noStudentCourses">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Student</th>
+                  <th>Category</th>
+                  <th>Installments</th>
+                  <th colspan="2">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let studentCourse of studentCourses; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ studentCourse.student }}</td>
+                  <td>{{ studentCourse }}</td>
+
+                  <td>
+                    <div class="btn-group">
+                      <button nbButton status="success" nbPrefix size="small">
+                        Courses
+                      </button>
+                    </div>
+                  </td>
+
+                  <td>
+                    <button nbButton status="info" size="small">
+                      Installments
+                    </button>
+                  </td>
+
+                  <td>
+                    <button nbButton status="basic" size="small">
+                      Edit
+                    </button>
+                  </td>
+
+                  <td>
+                    <button
+                      class=""
+                      nbButton
+                      [status]="!studentCourse.status ? 'warning' : 'danger'"
+                      size="small"
+                    >
+                      {{ !studentCourse.status ? 'Activate' : 'Deactivate' }}
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noStudentCourses>
+            <p class="text-center">No Student Courses Available</p>
+          </ng-template>
+        </ng-container>
+        <ng-template #loadingData>
+          <p class="text-center">Loading...</p>
+        </ng-template>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

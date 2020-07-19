@@ -2,18 +2,21 @@ import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { HttpService } from './shared-services/http.service';
 import { throwError } from 'rxjs';
-import { ReceiptModel } from '../models/receipt.model';
+import { StudentCourseInstallmentReceiptModel } from '../models/student-course-installment-receipt.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ReceiptService {
-  receipt: ReceiptModel;
+export class StudentCourseInstallmentReceiptService {
+  studentCourseInstallmentReceipt: StudentCourseInstallmentReceiptModel;
 
   constructor(private httpService: HttpService) {}
 
-  addReceipt(receipt: any) {
-    const data = { api: 'newReceipt', data: receipt };
+  addStudentCourseInstallmentReceipt(studentCourseInstallmentReceipt: any) {
+    const data = {
+      api: 'newStudentCourseInstallmentReceipt',
+      data: studentCourseInstallmentReceipt,
+    };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -24,8 +27,8 @@ export class ReceiptService {
     );
   }
 
-  changeReceiptStatus(id: string, status: boolean) {
-    const data = { api: 'changeReceiptStatus', data: { id, status } };
+  changeStudentCourseInstallmentReceiptStatus(id: string, status: boolean) {
+    const data = { api: 'changeStudentCourseInstallmentReceiptStatus', data: { id, status } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -36,8 +39,8 @@ export class ReceiptService {
     );
   }
 
-  getAllReceipts(student: string) {
-    const data = { api: 'getAllReceipts', data: { student } };
+  getAllStudentCourseInstallmentReceipts(student: string) {
+    const data = { api: 'getAllStudentCourseInstallmentReceipts', data: { student } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -48,8 +51,8 @@ export class ReceiptService {
     );
   }
 
-  getAllReceiptsForStudent(student: string) {
-    const data = { api: 'getAllReceiptsForStudent', data: { student } };
+  getAllStudentCourseInstallmentReceiptsForStudent(student: string) {
+    const data = { api: 'getAllStudentCourseInstallmentReceiptsForStudent', data: { student } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -60,8 +63,11 @@ export class ReceiptService {
     );
   }
 
-  getReceipt(receipt: string) {
-    const data = { api: 'getReceipt', data: { receipt } };
+  getStudentCourseInstallmentReceipt(studentCourseInstallmentReceipt: string) {
+    const data = {
+      api: 'getStudentCourseInstallmentReceipt',
+      data: { studentCourseInstallmentReceipt },
+    };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -72,8 +78,11 @@ export class ReceiptService {
     );
   }
 
-  getReceiptForEditing(receipt: string) {
-    const data = { api: 'getReceiptForEditing', data: { receipt } };
+  getStudentCourseInstallmentReceiptForEditing(studentCourseInstallmentReceipt: string) {
+    const data = {
+      api: 'getStudentCourseInstallmentReceiptForEditing',
+      data: { studentCourseInstallmentReceipt },
+    };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -84,8 +93,11 @@ export class ReceiptService {
     );
   }
 
-  editReceipt(receipt: string) {
-    const data = { api: 'editReceipt', data: { receipt } };
+  editStudentCourseInstallmentReceipt(studentCourseInstallmentReceipt: string) {
+    const data = {
+      api: 'editStudentCourseInstallmentReceipt',
+      data: { studentCourseInstallmentReceipt },
+    };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -96,8 +108,11 @@ export class ReceiptService {
     );
   }
 
-  deleteReceipt(receipt: string) {
-    const data = { api: 'deleteReceipt', data: { receipt } };
+  deleteStudentCourseInstallmentReceipt(studentCourseInstallmentReceipt: string) {
+    const data = {
+      api: 'deleteStudentCourseInstallmentReceipt',
+      data: { studentCourseInstallmentReceipt },
+    };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

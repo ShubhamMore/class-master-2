@@ -1,4 +1,4 @@
-export class ReceiptModel {
+export class StudentCourseInstallmentReceiptModel {
   constructor(
     public _id: string,
     public student: string,

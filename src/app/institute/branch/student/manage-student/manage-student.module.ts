@@ -10,6 +10,7 @@ import {
   NbIconModule,
   NbTooltipModule,
   NbSelectModule,
+  NbFormFieldModule,
 } from '@nebular/theme';
 
 @NgModule({
@@ -19,6 +20,7 @@ import {
     ManageStudentRoutingModule,
     NbCardModule,
     NbSelectModule,
+    NbFormFieldModule,
     NbButtonModule,
     NbIconModule,
     NbTooltipModule,
