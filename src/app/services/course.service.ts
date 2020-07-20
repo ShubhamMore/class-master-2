@@ -2,11 +2,12 @@ import { CourseModel } from '../models/course.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
-  private course: CourseModel;
+  private courses = new BehaviorSubject<CourseModel[]>([]);
+  private course = new BehaviorSubject<CourseModel>(null);
   private courseId: string;
 
   setCourseId(courseId: string) {
@@ -21,8 +22,20 @@ export class CourseService {
     this.courseId = null;
   }
 
+  setCoursesData(courses: CourseModel[]) {
+    this.courses.next(courses);
+  }
+
+  getCoursesData() {
+    return this.courses;
+  }
+
+  deleteCoursesData() {
+    this.courses.next([]);
+  }
+
   setCourseData(course: CourseModel) {
-    this.course = course;
+    this.course.next(course);
   }
 
   getCourseData() {
@@ -30,7 +43,7 @@ export class CourseService {
   }
 
   deleteCourseData() {
-    this.course = null;
+    this.course.next(null);
   }
 
   constructor(private httpService: HttpService) {}

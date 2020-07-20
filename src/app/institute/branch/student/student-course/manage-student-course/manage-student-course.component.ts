@@ -1,8 +1,11 @@
+import { NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StudentCourseModel } from './../../../../../models/student-course.model';
-import { Component, OnInit } from '@angular/core';
+import { StudentModel } from './../../../../../models/student.model';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from '../../../../../services/branch.service';
 import { StudentService } from '../../../../../services/student.service';
+import { StudentCourseService } from '../../../../../services/student-course.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -10,19 +13,21 @@ import { Location } from '@angular/common';
   templateUrl: './manage-student-course.component.html',
   styleUrls: ['./manage-student-course.component.scss'],
 })
-export class ManageStudentCourseComponent implements OnInit {
+export class ManageStudentCourseComponent implements OnInit, OnDestroy {
   private branchId: string;
   private studentId: string;
   private categoryId: string;
 
   loading: boolean;
 
+  student: StudentModel;
   studentCourses: StudentCourseModel[];
 
   constructor(
     private branchService: BranchService,
+    private toastrService: NbToastrService,
     private studentService: StudentService,
-    private studentCourseService: StudentService,
+    private studentCourseService: StudentCourseService,
     private location: Location,
     private router: Router,
     private route: ActivatedRoute,
@@ -38,12 +43,43 @@ export class ManageStudentCourseComponent implements OnInit {
       this.location.back();
       return;
     }
+
+    this.getStudent();
     this.studentCourses = [];
+    this.getStudentCourses();
   }
 
-  getStudentCourses() {}
+  private getStudentCourses() {
+    this.studentCourseService
+      .getStudentCourses(this.branchId, this.categoryId, this.studentId)
+      .subscribe(
+        (studentCourses: any[]) => {
+          this.studentCourses = studentCourses;
+          this.loading = false;
+        },
+        (err: any) => {
+          this.showToastr('top-right', 'danger', err);
+          this.loading = false;
+        },
+      );
+  }
+
+  private getStudent() {
+    this.studentService.getStudentData().subscribe((student: StudentModel) => {
+      this.student = student;
+    });
+  }
 
   addStudentCourse() {
     this.router.navigate(['../add'], { relativeTo: this.route });
   }
+
+  private showToastr(position: any, status: any, message: string) {
+    this.toastrService.show(status, message, {
+      position,
+      status,
+    });
+  }
+
+  ngOnDestroy() {}
 }

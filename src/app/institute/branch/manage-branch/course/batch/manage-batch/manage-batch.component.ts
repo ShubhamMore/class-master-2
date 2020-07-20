@@ -36,15 +36,16 @@ export class ManageBatchComponent implements OnInit {
       return;
     }
 
-    this.course = this.courseService.getCourseData();
-    if (!this.course) {
-      this.location.back();
-      return;
-    }
-
     this.batches = [];
 
-    this.getBatches();
+    this.courseService.getCourseData().subscribe((course: CourseModel) => {
+      this.course = course;
+      if (!this.course) {
+        this.location.back();
+        return;
+      }
+      this.getBatches();
+    });
   }
 
   getBatches() {

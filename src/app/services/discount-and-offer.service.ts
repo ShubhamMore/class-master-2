@@ -2,13 +2,14 @@ import { DiscountAndOfferModel } from '../models/discount-and-offer.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DiscountAndOfferService {
   private discountTypes: string[] = ['percentage', 'amount'];
 
-  private discountAndOffer: DiscountAndOfferModel;
+  private discountAndOffers = new BehaviorSubject<DiscountAndOfferModel[]>([]);
+  private discountAndOffer = new BehaviorSubject<DiscountAndOfferModel>(null);
   private discountAndOfferId: string;
 
   getDiscountTypes() {
@@ -27,8 +28,20 @@ export class DiscountAndOfferService {
     this.discountAndOfferId = null;
   }
 
+  setDiscountAndOffersData(discountAndOffers: DiscountAndOfferModel[]) {
+    this.discountAndOffers.next(discountAndOffers);
+  }
+
+  getDiscountAndOffersData() {
+    return this.discountAndOffers;
+  }
+
+  deleteDiscountAndOffersData() {
+    this.discountAndOffers.next([]);
+  }
+
   setDiscountAndOfferData(discountAndOffer: DiscountAndOfferModel) {
-    this.discountAndOffer = discountAndOffer;
+    this.discountAndOffer.next(discountAndOffer);
   }
 
   getDiscountAndOfferData() {
@@ -36,7 +49,7 @@ export class DiscountAndOfferService {
   }
 
   deleteDiscountAndOfferData() {
-    this.discountAndOffer = null;
+    this.discountAndOffer.next(null);
   }
 
   constructor(private httpService: HttpService) {}

@@ -2,7 +2,9 @@
   <nb-card-header>
     <div class="row">
       <div class="col-md-9 col-sm-8">
-        <h3>Student Courses</h3>
+        <h3>
+          Courses <small *ngIf="student">of {{ student.name }}</small>
+        </h3>
       </div>
       <div class="col-md-3 col-sm-4">
         <button nbButton status="primary" fullWidth size="small" (click)="addStudentCourse()">

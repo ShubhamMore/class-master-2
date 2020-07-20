@@ -2,16 +2,16 @@ import { InstituteBillingModel } from './../models/institute-billing.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InstituteBillingService {
-  billingDetails: InstituteBillingModel;
+  billingDetails = new BehaviorSubject<InstituteBillingModel>(null);
 
-  setBilling(billingDetails: any) {
-    this.billingDetails = billingDetails;
+  setBilling(billingDetails: InstituteBillingModel) {
+    this.billingDetails.next(billingDetails);
   }
 
   getBilling() {
@@ -19,7 +19,7 @@ export class InstituteBillingService {
   }
 
   deleteBilling() {
-    this.billingDetails = null;
+    this.billingDetails.next(null);
   }
 
   constructor(private httpService: HttpService) {}

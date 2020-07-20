@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, Observable, BehaviorSubject } from 'rxjs';
 import { StudentModel } from '../models/Student.model';
 
 @Injectable({ providedIn: 'root' })
 export class StudentService {
   private studentId: string;
-  private student: StudentModel;
+  private student = new BehaviorSubject<StudentModel>(null);
 
   setStudentData(student: StudentModel) {
-    this.student = student;
+    this.student.next(student);
   }
 
   getStudentData() {
@@ -18,7 +18,7 @@ export class StudentService {
   }
 
   deleteStudentData() {
-    this.student = null;
+    this.student.next(null);
   }
 
   setStudentId(studentId: string) {
@@ -61,6 +61,18 @@ export class StudentService {
 
   getStudent(id: string) {
     const data = { api: 'getStudent', data: { id } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  getStudentByImsId(studentImsId: string) {
+    const data = { api: 'getStudentByImsId', data: { studentImsId } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

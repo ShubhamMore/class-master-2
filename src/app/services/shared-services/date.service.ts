@@ -13,7 +13,7 @@ export class DateService {
   constructor() {
     this.date = new Date();
     this.dateString = this.convertToDateString(this.date);
-    this.dateInMilliseconds = this.date.getMilliseconds();
+    this.dateInMilliseconds = this.date.getTime();
     this.dateTimeString = this.convertToDateTimeString(this.date);
     this.dateTimeISOString = this.convertToISOString(this.date);
   }
@@ -43,7 +43,7 @@ export class DateService {
   }
 
   dateToMilliseconds(date: any) {
-    return new Date(date).getMilliseconds();
+    return new Date(date).getTime();
   }
 
   millisecondsToDate(milliseconds: number) {
@@ -51,7 +51,7 @@ export class DateService {
   }
 
   millisecondsToDateString(milliseconds: number) {
-    return this.convertToDateString(new Date(milliseconds));
+    return this.convertToDateString(milliseconds);
   }
 
   convertToDate(date: any): Date {

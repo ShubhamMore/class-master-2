@@ -47,8 +47,8 @@ export class StudentCourseService {
     );
   }
 
-  getStudentCourses(student: string) {
-    const data = { api: 'getStudentCourses', data: { student } };
+  getStudentCourses(branch: string, category: string, student: string) {
+    const data = { api: 'getStudentCourses', data: { branch, category, student } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

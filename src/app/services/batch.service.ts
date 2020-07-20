@@ -2,11 +2,12 @@ import { BatchModel } from '../models/batch.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class BatchService {
-  private batch: BatchModel;
+  private batches = new BehaviorSubject<BatchModel[]>([]);
+  private batch = new BehaviorSubject<BatchModel>(null);
   private batchId: string;
 
   setBatchId(batchId: string) {
@@ -21,8 +22,20 @@ export class BatchService {
     this.batchId = null;
   }
 
+  setBatchesData(batches: BatchModel[]) {
+    this.batches.next(batches);
+  }
+
+  getBatchesData() {
+    return this.batches;
+  }
+
+  deleteBatchesData() {
+    this.batches.next([]);
+  }
+
   setBatchData(batch: BatchModel) {
-    this.batch = batch;
+    this.batch.next(batch);
   }
 
   getBatchData() {
@@ -30,7 +43,7 @@ export class BatchService {
   }
 
   deleteBatchData() {
-    this.batch = null;
+    this.batch.next(null);
   }
 
   constructor(private httpService: HttpService) {}

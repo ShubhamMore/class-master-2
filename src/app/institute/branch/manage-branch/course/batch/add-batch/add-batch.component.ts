@@ -58,11 +58,13 @@ export class AddBatchComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.course = this.courseService.getCourseData();
-    if (!this.course) {
-      this.location.back();
-      return;
-    }
+    this.courseService.getCourseData().subscribe((course: CourseModel) => {
+      this.course = course;
+      if (!this.course) {
+        this.location.back();
+        return;
+      }
+    });
 
     this.batchId = this.batchService.getBatchId();
 
