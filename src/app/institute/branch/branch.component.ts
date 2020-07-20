@@ -26,12 +26,13 @@ export class BranchComponent implements OnInit, OnDestroy {
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['/institute/page-not-found'], { relativeTo: this.route });
+      this.router.navigate(['../page-not-found'], { relativeTo: this.route });
       return;
     }
   }
 
   ngOnDestroy() {
+    this.branchService.deleteBranchId();
     this.branchService.deleteBranchData();
   }
 }

@@ -22,7 +22,7 @@ export class BranchHeaderComponent implements OnInit {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['/institute/page-not-found'], { relativeTo: this.route });
+      this.router.navigate(['../page-not-found'], { relativeTo: this.route });
       return;
     }
 
@@ -33,7 +33,7 @@ export class BranchHeaderComponent implements OnInit {
         this.loading = false;
       },
       (err: any) => {
-        // this.router.navigate(['/institute/page-not-found'], { relativeTo: this.route });
+        // this.router.navigate(['../page-not-found'], { relativeTo: this.route });
       },
     );
   }

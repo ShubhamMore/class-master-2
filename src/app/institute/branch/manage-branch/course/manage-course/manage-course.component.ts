@@ -46,7 +46,7 @@ export class ManageCourseComponent implements OnInit {
         this.getCourses('');
       },
       (err: any) => {
-        // this.router.navigate(['/institute/page-not-found'], { relativeTo: this.route });
+        // this.router.navigate(['../page-not-found'], { relativeTo: this.route });
       },
     );
   }

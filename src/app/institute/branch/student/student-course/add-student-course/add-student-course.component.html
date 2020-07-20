@@ -1,4 +1,4 @@
-<nb-card>
+<nb-card *ngIf="!loading">
   <nb-card-header>
     <button
       type="button"
@@ -546,7 +546,8 @@
               <div
                 class="table-responsive"
                 *ngIf="
-                  studentCourseInstallmentForm.get('installments')['controls'].length > 0;
+                  !!getNoOfInstallments() &&
+                    studentCourseInstallmentForm.get('installments')['controls'].length > 0;
                   else noInstallments
                 "
               >
@@ -575,8 +576,8 @@
                             <input
                               type="date"
                               nbInput
-                              id="input-installmentDate"
-                              name="installmentDate"
+                              id="input-installmentDate-{{ i }}"
+                              name="installmentDate-{{ i }}"
                               formControlName="installmentDate"
                               placeholder="Installment Date"
                               fullWidth
@@ -611,8 +612,8 @@
                             <input
                               type="number"
                               nbInput
-                              id="input-installmentAmount"
-                              name="installmentAmount"
+                              id="input-installmentAmount-{{ i }}"
+                              name="installmentAmount-{{ i }}"
                               formControlName="installmentAmount"
                               placeholder="Installment Amount"
                               [min]="getMinInstallmentAmount(i)"
@@ -662,8 +663,8 @@
                             <input
                               type="number"
                               nbInput
-                              id="input-amountPending"
-                              name="amountPending"
+                              id="input-amountPending-{{ i }}"
+                              name="amountPending-{{ i }}"
                               formControlName="amountPending"
                               placeholder="Pending Amount"
                               [min]="getMinInstallmentPendingAmount(i)"
@@ -676,6 +677,7 @@
                                     : 'success'
                                   : 'basic'
                               "
+                              disabled="true"
                             />
                             <ng-container
                               *ngIf="
@@ -740,54 +742,109 @@
       <nb-step label="Submit">
         <div class="step-container">
           <div class="table-responsive">
-            <!-- <table class="table table-bordered">
+            <table class="table table-bordered">
               <tbody>
-                <tr *ngIf="studentSearchForm.value.studentId">
-                  <th>IMS Id</th>
-                  <td>{{ studentSearchForm.value.studentId }}</td>
+                <tr>
+                  <th colspan="2">Course Details</th>
                 </tr>
                 <tr>
-                  <th>Student Name</th>
-                  <td>{{ studentCourseForm.value.name }}</td>
+                  <th>Course</th>
+                  <td>{{ getCourse(studentCourseForm.value.course) }}</td>
                 </tr>
                 <tr>
-                  <th>Email</th>
-                  <td>{{ studentCourseForm.value.email }}</td>
+                  <th>Batch</th>
+                  <td>{{ getBatch(studentCourseForm.value.batch) }}</td>
                 </tr>
                 <tr>
-                  <th>Phone</th>
-                  <td>{{ studentCourseForm.value.phone }}</td>
+                  <th>Roll Number</th>
+                  <td>{{ studentCourseForm.value.rollNumber }}</td>
                 </tr>
                 <tr>
-                  <th>Address</th>
-                  <td>{{ studentCourseForm.value.address }}</td>
+                  <th>Discount</th>
+                  <td>{{ getDiscount(studentCourseForm.value.discount) }}</td>
                 </tr>
                 <tr>
-                  <th>Parent Name</th>
-                  <td>{{ studentCourseForm.value.parentName }}</td>
+                  <th>Additional Discount</th>
+                  <td>
+                    {{
+                      studentCourseForm.value.additionalDiscountAmount
+                        ? studentCourseForm.value.additionalDiscountAmount +
+                          (studentCourseForm.value.additionalDiscountType === 'percentage'
+                            ? '%'
+                            : '')
+                        : '--'
+                    }}
+                  </td>
                 </tr>
                 <tr>
-                  <th>Parent Email</th>
-                  <td>{{ studentCourseForm.value.parentEmail }}</td>
+                  <th>Net Payable</th>
+                  <td>{{ studentCourseForm.value.netPayable }}</td>
                 </tr>
                 <tr>
-                  <th>Parent Phone</th>
-                  <td>{{ studentCourseForm.value.parentPhone }}</td>
+                  <th>Activation Date</th>
+                  <td>{{ dateService.formatDate(studentCourseForm.value.activationDate) }}</td>
                 </tr>
                 <tr>
-                  <th>Category</th>
-                  <td>{{ getCategory(studentCourseFeeForm.value.category) }}</td>
+                  <th colspan="2">Course Fee Details</th>
                 </tr>
                 <tr>
-                  <th>Admission Date</th>
-                  <td>{{ dateService.formatDate(studentCourseFeeForm.value.admissionDate) }}</td>
+                  <th>Date</th>
+                  <td>{{ dateService.formatDate(studentCourseFeeForm.value.date) }}</td>
                 </tr>
                 <tr>
-                  <th>Description</th>
-                  <td>{{ studentCourseFeeForm.value.description }}</td>
+                  <th>Number of Installments</th>
+                  <td>{{ studentCourseFeeForm.getRawValue().noOfInstallments }}</td>
+                </tr>
+                <tr>
+                  <th>Amount Collected</th>
+                  <td>{{ studentCourseFeeForm.value.amountCollected }}</td>
+                </tr>
+                <tr>
+                  <th>Pending Amount</th>
+                  <td>{{ studentCourseFeeForm.value.pendingAmount }}</td>
+                </tr>
+                <tr>
+                  <th>Total Payable Amount</th>
+                  <td>{{ studentCourseFeeForm.value.totalAmount }}</td>
+                </tr>
+                <tr>
+                  <th colspan="2">Installment Details</th>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <div class="table-responsive">
+                      <table class="table table-sm table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Installment No.</th>
+                            <th>Installment Date</th>
+                            <th>Installment Amount</th>
+                            <th>Pending Amount after Installment</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            *ngFor="
+                              let installment of studentCourseInstallmentForm.get('installments')[
+                                'controls'
+                              ];
+                              let i = index
+                            "
+                          >
+                            <td>Installment {{ installment.value.installmentNo }}</td>
+                            <td>
+                              {{ dateService.formatDate(installment.value.installmentDate) }}
+                            </td>
+                            <td>{{ installment.value.installmentAmount }}</td>
+                            <td>{{ installment.value.amountPending }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
-            </table> -->
+            </table>
           </div>
 
           <hr />

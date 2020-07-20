@@ -222,7 +222,7 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
     }
   }
 
-  discountPercentageValidator(group: FormGroup): { [s: string]: boolean } {
+  private discountPercentageValidator(group: FormGroup): { [s: string]: boolean } {
     const discountType = group.value.additionalDiscountType;
     const amount = +group.value.additionalDiscountAmount;
     if (discountType === 'percentage' && amount > 100) {
@@ -361,13 +361,13 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
       installmentAmount: new FormControl(
         studentCourseInstallment.installmentAmount ? studentCourseInstallment.installmentAmount : 0,
         {
-          validators: [Validators.required, Validators.min(0)],
+          validators: [Validators.required],
         },
       ),
       amountPending: new FormControl(
         studentCourseInstallment.installmentAmount ? studentCourseInstallment.amountPending : 0,
         {
-          validators: [Validators.required, Validators.min(0)],
+          validators: [Validators.required],
         },
       ),
       receiptId: new FormControl(
@@ -453,6 +453,7 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
         installment
           .get('installmentAmount')
           .setValidators([
+            Validators.required,
             Validators.min(this.getMinInstallmentAmount(i)),
             Validators.max(this.getMaxInstallmentAmount(i)),
           ]);
@@ -460,6 +461,7 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
         installment
           .get('amountPending')
           .setValidators([
+            Validators.required,
             Validators.min(this.getMinInstallmentPendingAmount(i)),
             Validators.max(this.getMaxInstallmentPendingAmount(i)),
           ]);
@@ -476,6 +478,10 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
   }
 
   customInstallmentAmount(amount: number, i: number) {
+    if (amount < this.getMinInstallmentAmount(i) || amount > this.getMaxInstallmentAmount(i)) {
+      return;
+    }
+
     const installments = this.getStudentCourseInstallments();
     const noOfInstallments: number = this.getNoOfInstallments();
 
@@ -487,28 +493,26 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
     const amountPending: number = pendingAmount - amount;
 
     installments[i].patchValue({ amountPending });
-
     const noOfUnchangedInstallments: number =
-      noOfInstallments - (i + 1) === 0 ? noOfInstallments - (i + 1) : 1;
-
+      noOfInstallments - (i + 1) > 0 ? noOfInstallments - (i + 1) : 1;
     const installmentAmount: number = Math.ceil(amountPending / noOfUnchangedInstallments);
+    if (i !== noOfInstallments - 1) {
+      for (let j = 0; j < noOfUnchangedInstallments; j++) {
+        let curAmountPending = amountPending - +(installmentAmount * (j + 1));
+        curAmountPending = curAmountPending < 0 ? 0 : curAmountPending;
 
-    for (let j = 0; j < noOfUnchangedInstallments; j++) {
-      let curAmountPending = pendingAmount - +(installmentAmount * (j + 1));
-      curAmountPending = curAmountPending < 0 ? 0 : curAmountPending;
-
-      installments[i + j + 1].patchValue({
-        installmentAmount,
-        amountPending: curAmountPending,
-      });
+        installments[i + j + 1].patchValue({
+          installmentAmount,
+          amountPending: curAmountPending,
+        });
+      }
     }
   }
 
   getMinInstallmentDate(i: number) {
     const installments: FormGroup[] = this.getStudentCourseInstallments();
-    const noOfInstallments: number = this.getNoOfInstallments();
     if (i === 0) {
-      this.studentCourseFeeForm.value.date;
+      return this.studentCourseFeeForm.value.date;
     } else {
       return installments[i - 1].getRawValue().installmentDate;
     }
@@ -518,10 +522,14 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
     const installments: FormGroup[] = this.getStudentCourseInstallments();
     const noOfInstallments: number = this.getNoOfInstallments();
 
-    return this.dateService.millisecondsToDateString(
-      this.dateService.dateToMilliseconds(this.studentCourseFeeForm.value.date) +
-        1000 * 60 * 60 * 24 * 30 * this.course.basicDetails.duration,
-    );
+    if (i === noOfInstallments - 1) {
+      return this.dateService.millisecondsToDateString(
+        this.dateService.dateToMilliseconds(this.studentCourseFeeForm.value.date) +
+          1000 * 60 * 60 * 24 * 30 * this.course.basicDetails.duration,
+      );
+    } else {
+      return installments[i + 1].getRawValue().installmentDate;
+    }
   }
 
   getMinInstallmentAmount(i: number) {
@@ -533,6 +541,8 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
       return 1;
     } else if (i === noOfInstallments - 1) {
       return installments[i - 1].getRawValue().amountPending;
+    } else {
+      return 1;
     }
   }
 
@@ -576,26 +586,29 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
       );
     } else if (i === noOfInstallments - 1) {
       return 0;
+    } else {
+      return 0;
     }
   }
 
-  getNoOfInstallments() {
-    return this.studentCourseFeeForm.getRawValue().noOfInstallments;
+  getNoOfInstallments(): number {
+    return +this.studentCourseFeeForm.getRawValue().noOfInstallments;
   }
 
-  enableStudentCourseInstallmentFields() {
+  private enableStudentCourseInstallmentFields() {
     const installments = this.getStudentCourseInstallments();
     installments.forEach((installment: FormGroup) => {
       installment.get('installmentAmount').enable();
-      installment.get('amountPending').enable();
+      // installment.get('amountPending').enable();
     });
   }
 
-  disableStudentCourseInstallmentFields() {
+  private disableStudentCourseInstallmentFields() {
     const installments = this.getStudentCourseInstallments();
     installments.forEach((installment: FormGroup) => {
       installment.get('installmentAmount').disable();
-      installment.get('amountPending').disable();
+
+      // installment.get('amountPending').disable();
     });
   }
 
@@ -603,7 +616,8 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
     if (this.studentCourse) {
       this.disableStudentCourseDetails();
     }
-    if (this.studentCourseInstallment) {
+    const installmentType = this.studentCourseFeeForm.value.installmentType;
+    if (installmentType !== '4') {
       this.disableStudentCourseInstallmentFields();
     }
     this.stepper.previous();
@@ -627,9 +641,9 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
       this.showToastr('top-right', 'danger', 'Student Course Fee Details are Required');
       return;
     }
-    if (this.studentCourseInstallment) {
-      this.enableStudentCourseInstallmentFields();
-    }
+    // if (this.studentCourseInstallment) {
+    //   // this.enableStudentCourseInstallmentFields();
+    // }
     this.stepper.next();
   }
 
@@ -639,9 +653,8 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
       this.showToastr('top-right', 'danger', 'Student Course Installment Details are Required');
       return;
     }
-    if (this.studentCourseInstallment) {
-      this.enableStudentCourseInstallmentFields();
-    }
+    this.enableStudentCourseInstallmentFields();
+
     this.stepper.next();
   }
 

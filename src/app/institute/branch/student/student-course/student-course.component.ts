@@ -69,7 +69,6 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.branchService.deleteBranchId();
     this.branchService.deleteCategoryId();
     this.studentService.deleteStudentId();
     this.studentService.deleteStudentData();
