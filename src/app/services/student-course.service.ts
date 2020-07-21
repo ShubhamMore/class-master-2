@@ -35,8 +35,8 @@ export class StudentCourseService {
 
   constructor(private httpService: HttpService) {}
 
-  addStudentCourse(studentCourse: any, branchStudentCourse: any) {
-    const data = { api: 'newStudentCourse', data: { studentCourse, branchStudentCourse } };
+  addStudentCourse(studentCourse: any, studentCourseInstallment: any) {
+    const data = { api: 'newStudentCourse', data: { studentCourse, studentCourseInstallment } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -61,6 +61,27 @@ export class StudentCourseService {
 
   getStudentCourse(id: string) {
     const data = { api: 'getStudentCourse', data: { id } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  checkBatchRollNumber(
+    branch: string,
+    category: string,
+    course: string,
+    batch: string,
+    rollNumber: number,
+  ) {
+    const data = {
+      api: 'checkBatchRollNumber',
+      data: { branch, category, course, batch, rollNumber },
+    };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

@@ -621,19 +621,16 @@
                               fullWidth
                               [status]="
                                 installment.get('installmentAmount').touched
-                                  ? installment.get('installmentAmount').invalid
+                                  ? installment.get('installmentAmount').invalid ||
+                                    installment.hasError('invalidMinInstallmentAmount') ||
+                                    installment.hasError('invalidMaxInstallmentAmount')
                                     ? 'danger'
                                     : 'success'
                                   : 'basic'
                               "
                               (input)="customInstallmentAmount($event.target.value, i)"
                             />
-                            <ng-container
-                              *ngIf="
-                                installment.get('installmentAmount').touched &&
-                                installment.get('installmentAmount').invalid
-                              "
-                            >
+                            <ng-container *ngIf="installment.get('installmentAmount').touched">
                               <p
                                 class="caption status-danger"
                                 *ngIf="installment.get('installmentAmount').errors?.required"
@@ -642,14 +639,14 @@
                               </p>
                               <p
                                 class="caption status-danger"
-                                *ngIf="installment.get('installmentAmount').errors?.min"
+                                *ngIf="installment.hasError('invalidMinInstallmentAmount')"
                               >
                                 Installment {{ i + 1 }} Amount should be Minimum
                                 {{ getMinInstallmentAmount(i) }}
                               </p>
                               <p
                                 class="caption status-danger"
-                                *ngIf="installment.get('installmentAmount').errors?.max"
+                                *ngIf="installment.hasError('invalidMaxInstallmentAmount')"
                               >
                                 Installment {{ i + 1 }} Amount should be Maximum
                                 {{ getMaxInstallmentAmount(i) }}
@@ -672,19 +669,16 @@
                               fullWidth
                               [status]="
                                 installment.get('amountPending').touched
-                                  ? installment.get('amountPending').invalid
+                                  ? installment.get('amountPending').invalid ||
+                                    installment.hasError('invalidMinInstallmentPendingAmount') ||
+                                    installment.hasError('invalidMaxInstallmentPendingAmount')
                                     ? 'danger'
                                     : 'success'
                                   : 'basic'
                               "
                               disabled="true"
                             />
-                            <ng-container
-                              *ngIf="
-                                installment.get('amountPending').touched &&
-                                installment.get('amountPending').invalid
-                              "
-                            >
+                            <ng-container *ngIf="installment.get('amountPending').touched">
                               <p
                                 class="caption status-danger"
                                 *ngIf="installment.get('amountPending').errors?.required"
@@ -693,14 +687,14 @@
                               </p>
                               <p
                                 class="caption status-danger"
-                                *ngIf="installment.get('amountPending').errors?.min"
+                                *ngIf="installment.hasError('invalidMinInstallmentPendingAmount')"
                               >
                                 Installment {{ i + 1 }} Pending Amount should be Minimum
                                 {{ getMinInstallmentPendingAmount(i) }}
                               </p>
                               <p
                                 class="caption status-danger"
-                                *ngIf="installment.get('amountPending').errors?.max"
+                                *ngIf="installment.hasError('invalidMaxInstallmentPendingAmount')"
                               >
                                 Installment {{ i + 1 }} Pending Amount should be Maximum
                                 {{ getMaxInstallmentPendingAmount(i) }}

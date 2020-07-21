@@ -23,7 +23,7 @@
                 <tr>
                   <th>#</th>
                   <th>Student</th>
-                  <th>Category</th>
+                  <th>Course</th>
                   <th>Installments</th>
                   <th colspan="2">Action</th>
                 </tr>
@@ -32,24 +32,28 @@
                 <tr *ngFor="let studentCourse of studentCourses; let i = index">
                   <td>{{ i + 1 }}</td>
                   <td>{{ studentCourse.student }}</td>
-                  <td>{{ studentCourse }}</td>
+                  <td>{{ studentCourse.course }}</td>
 
                   <td>
-                    <div class="btn-group">
-                      <button nbButton status="success" nbPrefix size="small">
-                        Courses
-                      </button>
-                    </div>
-                  </td>
-
-                  <td>
-                    <button nbButton status="info" size="small">
+                    <button
+                      nbButton
+                      status="info"
+                      size="small"
+                      (click)="courseInstallments(studentCourse._id)"
+                    >
                       Installments
                     </button>
                   </td>
 
                   <td>
-                    <button nbButton status="basic" size="small">
+                    <button
+                      nbButton
+                      status="basic"
+                      size="small"
+                      (click)="
+                        courseEdit(studentCourse._id, studentCourse.studentCourseInstallment)
+                      "
+                    >
                       Edit
                     </button>
                   </td>
@@ -60,6 +64,7 @@
                       nbButton
                       [status]="!studentCourse.status ? 'warning' : 'danger'"
                       size="small"
+                      (click)="changeCourseStatus(studentCourse._id, !studentCourse.status, i)"
                     >
                       {{ !studentCourse.status ? 'Activate' : 'Deactivate' }}
                     </button>

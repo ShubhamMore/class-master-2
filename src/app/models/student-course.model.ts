@@ -2,6 +2,7 @@ export class StudentCourseModel {
   constructor(
     public _id: string,
     public student: string,
+    public studentCourseInstallment: string,
     public branch: string,
     public category: string,
     public course: string,

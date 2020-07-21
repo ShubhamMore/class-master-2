@@ -7,6 +7,7 @@ import { BranchService } from '../../../../../services/branch.service';
 import { StudentService } from '../../../../../services/student.service';
 import { StudentCourseService } from '../../../../../services/student-course.service';
 import { Location } from '@angular/common';
+import { StudentCourseInstallmentService } from '../../../../../services/student-course-installment.service';
 
 @Component({
   selector: 'ngx-manage-student-course',
@@ -21,13 +22,14 @@ export class ManageStudentCourseComponent implements OnInit, OnDestroy {
   loading: boolean;
 
   student: StudentModel;
-  studentCourses: StudentCourseModel[];
+  studentCourses: any[];
 
   constructor(
     private branchService: BranchService,
     private toastrService: NbToastrService,
     private studentService: StudentService,
     private studentCourseService: StudentCourseService,
+    private studentCourseInstallmentService: StudentCourseInstallmentService,
     private location: Location,
     private router: Router,
     private route: ActivatedRoute,
@@ -73,6 +75,16 @@ export class ManageStudentCourseComponent implements OnInit, OnDestroy {
   addStudentCourse() {
     this.router.navigate(['../add'], { relativeTo: this.route });
   }
+
+  courseInstallments(courseId: string) {}
+
+  courseEdit(courseId: string, installmentId: string) {
+    this.studentCourseService.setStudentCourseId(courseId);
+    this.studentCourseInstallmentService.setStudentCourseInstallmentId(installmentId);
+    this.router.navigate(['../edit'], { relativeTo: this.route, queryParams: { mode: 'edit' } });
+  }
+
+  changeCourseStatus(courseId: string, status: boolean, i: number) {}
 
   private showToastr(position: any, status: any, message: string) {
     this.toastrService.show(status, message, {
