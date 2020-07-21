@@ -46,6 +46,8 @@ export class BatchService {
     this.batch.next(null);
   }
 
+  getBatchName(batchId: string) {}
+
   constructor(private httpService: HttpService) {}
 
   getBatches(branch: string, category: string, course: any) {

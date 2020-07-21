@@ -35,10 +35,10 @@ export class StudentCourseInstallmentService {
 
   constructor(private httpService: HttpService) {}
 
-  addStudentCourseInstallment(studentCourseInstallment: any, branchStudentCourseInstallment: any) {
+  addStudentCourseInstallment(studentCourse: string, studentCourseInstallment: any) {
     const data = {
       api: 'newStudentCourseInstallment',
-      data: { studentCourseInstallment, branchStudentCourseInstallment },
+      data: { studentCourse, studentCourseInstallment },
     };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {

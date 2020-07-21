@@ -46,6 +46,18 @@ export class CourseService {
     this.course.next(null);
   }
 
+  getCourseName(courseId: string) {
+    return this.courses.pipe(
+      map((courses: CourseModel[]) => {
+        const course = courses.find((curCourse: CourseModel) => curCourse._id === courseId);
+        if (course) {
+          return course.basicDetails.courseName;
+        }
+        return '--';
+      }),
+    );
+  }
+
   constructor(private httpService: HttpService) {}
 
   getCourses(branch: any, category: any) {

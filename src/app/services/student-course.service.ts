@@ -1,3 +1,4 @@
+import { StudentCourseInstallmentModel } from './../models/student-course-installment.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
@@ -116,8 +117,11 @@ export class StudentCourseService {
     );
   }
 
-  editStudentCourse(studentCourse: StudentCourseModel) {
-    const data = { api: 'updateStudentCourse', data: studentCourse };
+  editStudentCourse(
+    studentCourse: StudentCourseModel,
+    studentCourseInstallment: StudentCourseInstallmentModel,
+  ) {
+    const data = { api: 'updateStudentCourse', data: { studentCourse, studentCourseInstallment } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

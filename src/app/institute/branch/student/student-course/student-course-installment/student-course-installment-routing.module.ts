@@ -19,17 +19,17 @@ const routes: Routes = [
       {
         path: 'add',
         loadChildren: () =>
-          import('./get-student-course-installment/get-student-course-installment.module').then(
-            (m) => m.GetStudentCourseInstallmentModule,
-          ),
+          import(
+            './collect-student-course-installment/collect-student-course-installment.module'
+          ).then((m) => m.CollectStudentCourseInstallmentModule),
       },
 
       {
         path: 'edit',
         loadChildren: () =>
-          import('./get-student-course-installment/get-student-course-installment.module').then(
-            (m) => m.GetStudentCourseInstallmentModule,
-          ),
+          import(
+            './collect-student-course-installment/collect-student-course-installment.module'
+          ).then((m) => m.CollectStudentCourseInstallmentModule),
       },
 
       {

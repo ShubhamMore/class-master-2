@@ -33,6 +33,17 @@ export class StudentService {
     this.studentId = null;
   }
 
+  getStudentName() {
+    return this.getStudentData().pipe(
+      map((student: StudentModel) => {
+        if (student) {
+          return student.name;
+        }
+        return '--';
+      }),
+    );
+  }
+
   constructor(private httpService: HttpService) {}
 
   addStudent(student: any, branchStudent: any) {
