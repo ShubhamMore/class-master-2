@@ -3,7 +3,6 @@ import { CourseService } from './../../../../../services/course.service';
 import { NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StudentCourseModel } from './../../../../../models/student-course.model';
-import { StudentModel } from './../../../../../models/student.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from '../../../../../services/branch.service';
 import { StudentService } from '../../../../../services/student.service';
@@ -11,6 +10,8 @@ import { StudentCourseService } from '../../../../../services/student-course.ser
 import { Location } from '@angular/common';
 import { StudentCourseInstallmentService } from '../../../../../services/student-course-installment.service';
 import { Observable } from 'rxjs';
+import { BatchService } from '../../../../../services/batch.service';
+import { DateService } from '../../../../../services/shared-services/date.service';
 
 @Component({
   selector: 'ngx-manage-student-course',
@@ -24,14 +25,15 @@ export class ManageStudentCourseComponent implements OnInit, OnDestroy {
 
   loading: boolean;
 
-  student: StudentModel;
   studentCourses: StudentCourseModel[];
 
   constructor(
+    public dateService: DateService,
     private branchService: BranchService,
     private toastrService: NbToastrService,
     private studentService: StudentService,
     private courseService: CourseService,
+    private batchService: BatchService,
     private studentCourseService: StudentCourseService,
     private studentCourseInstallmentService: StudentCourseInstallmentService,
     private location: Location,
@@ -50,7 +52,6 @@ export class ManageStudentCourseComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.getStudent();
     this.studentCourses = [];
     this.getStudentCourses();
   }
@@ -68,12 +69,6 @@ export class ManageStudentCourseComponent implements OnInit, OnDestroy {
           this.loading = false;
         },
       );
-  }
-
-  private getStudent() {
-    this.studentService.getStudentData().subscribe((student: StudentModel) => {
-      this.student = student;
-    });
   }
 
   addStudentCourse() {
@@ -101,10 +96,26 @@ export class ManageStudentCourseComponent implements OnInit, OnDestroy {
     });
   }
 
+  getStudentName(): Observable<string> {
+    return this.studentService.getStudentName().pipe(
+      map((studentName: string) => {
+        return studentName;
+      }),
+    );
+  }
+
   getCourseName(courseId: string): Observable<string> {
     return this.courseService.getCourseName(courseId).pipe(
       map((courseName: string) => {
         return courseName;
+      }),
+    );
+  }
+
+  getBatchName(BatchId: string): Observable<string> {
+    return this.batchService.getBatchName(BatchId).pipe(
+      map((batchName: string) => {
+        return batchName;
       }),
     );
   }

@@ -46,12 +46,22 @@ export class BatchService {
     this.batch.next(null);
   }
 
-  getBatchName(batchId: string) {}
+  getBatchName(batchId: string) {
+    return this.batches.pipe(
+      map((batches: BatchModel[]) => {
+        const batch = batches.find((curBatch: BatchModel) => curBatch._id === batchId);
+        if (batch) {
+          return batch.basicDetails.batchName;
+        }
+        return '--';
+      }),
+    );
+  }
 
   constructor(private httpService: HttpService) {}
 
-  getBatches(branch: string, category: string, course: any) {
-    const data = { api: 'getBatches', data: { branch, category, course } };
+  getBatches(branch: string, category: string, batch: any) {
+    const data = { api: 'getBatches', data: { branch, category, batch } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

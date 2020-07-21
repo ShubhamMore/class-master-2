@@ -247,12 +247,16 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
 
   checkRollNumber() {
     const rollNumber = this.studentCourseForm.getRawValue().rollNumber.toString();
+    const batchId = this.studentCourseForm.getRawValue().batch;
     if (rollNumber) {
-      if (this.studentCourse && this.studentCourse.rollNumber === rollNumber) {
+      if (
+        this.studentCourse &&
+        this.studentCourse.batch === batchId &&
+        this.studentCourse.rollNumber === rollNumber
+      ) {
         return;
       }
       const courseId = this.studentCourseForm.getRawValue().course;
-      const batchId = this.studentCourseForm.getRawValue().batch;
       if (courseId && batchId) {
         this.studentCourseService
           .checkBatchRollNumber(this.branchId, this.categoryId, courseId, batchId, rollNumber)

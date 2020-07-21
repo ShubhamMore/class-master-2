@@ -1,7 +1,9 @@
+import { StudentCourseInstallmentService } from './../../../../../../services/student-course-installment.service';
 import { Component, OnInit } from '@angular/core';
 import { BranchService } from '../../../../../../services/branch.service';
 import { StudentService } from '../../../../../../services/student.service';
 import { Location } from '@angular/common';
+import { CourseService } from '../../../../../../services/course.service';
 
 @Component({
   selector: 'ngx-manage-student-course-installment',
@@ -15,6 +17,9 @@ export class ManageStudentCourseInstallmentComponent implements OnInit {
 
   constructor(
     private branchService: BranchService,
+    private studentCourseInstallmentService: StudentCourseInstallmentService,
+
+    private courseService: CourseService,
     private studentService: StudentService,
     private location: Location,
   ) {}

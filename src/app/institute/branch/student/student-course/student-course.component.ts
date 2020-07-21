@@ -1,3 +1,4 @@
+import { NbToastrService } from '@nebular/theme';
 import { BatchModel } from './../../../../models/batch.model';
 import { CourseModel } from './../../../../models/course.model';
 import { BatchService } from './../../../../services/batch.service';
@@ -22,6 +23,7 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
 
   constructor(
     private branchService: BranchService,
+    private toastrService: NbToastrService,
     private courseService: CourseService,
     private batchService: BatchService,
     private studentService: StudentService,
@@ -36,6 +38,7 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
 
     if (!this.branchId && !this.categoryId && !this.studentId) {
       this.location.back();
+      this.showToastr('top-right', 'danger', 'Student Details Not Available');
       return;
     }
 
@@ -43,29 +46,52 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
       (student: StudentModel) => {
         this.studentService.setStudentData(student);
       },
-      (err: any) => {},
+      (err: any) => {
+        this.studentService.setStudentData(null);
+        this.showToastr('top-right', 'danger', err);
+        this.location.back();
+      },
     );
 
     this.courseService.getCourses(this.branchId, this.categoryId).subscribe(
       (courses: CourseModel[]) => {
         this.courseService.setCoursesData(courses);
       },
-      (err: any) => {},
+      (err: any) => {
+        this.courseService.setCoursesData(null);
+        this.showToastr('top-right', 'danger', err);
+        this.location.back();
+      },
     );
 
     this.batchService.getBatches(this.branchId, this.categoryId, '').subscribe(
       (batches: BatchModel[]) => {
         this.batchService.setBatchesData(batches);
       },
-      (err: any) => {},
+      (err: any) => {
+        this.batchService.setBatchesData(null);
+        this.showToastr('top-right', 'danger', err);
+        this.location.back();
+      },
     );
 
     this.discountAndOfferService.getDiscountAndOffers(this.branchId).subscribe(
       (discountAndOffers: DiscountAndOfferModel[]) => {
         this.discountAndOfferService.setDiscountAndOffersData(discountAndOffers);
       },
-      (err: any) => {},
+      (err: any) => {
+        this.discountAndOfferService.setDiscountAndOffersData(null);
+        this.showToastr('top-right', 'danger', err);
+        this.location.back();
+      },
     );
+  }
+
+  private showToastr(position: any, status: any, message: string) {
+    this.toastrService.show(status, message, {
+      position,
+      status,
+    });
   }
 
   ngOnDestroy() {

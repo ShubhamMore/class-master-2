@@ -4,7 +4,7 @@
       <div class="col-md-9 col-sm-8">
         <h3>
           Courses
-          <small *ngIf="student">of {{ student.name | uppercase }}</small>
+          <small>of {{ getStudentName() | async | uppercase }}</small>
         </h3>
       </div>
       <div class="col-md-3 col-sm-4">
@@ -24,6 +24,9 @@
                 <tr>
                   <th>#</th>
                   <th>Course</th>
+                  <th>Batch</th>
+                  <th>Roll Number</th>
+                  <th>Activation date</th>
                   <th>Installments</th>
                   <th colspan="2">Action</th>
                 </tr>
@@ -32,6 +35,9 @@
                 <tr *ngFor="let studentCourse of studentCourses; let i = index">
                   <td>{{ i + 1 }}</td>
                   <td>{{ getCourseName(studentCourse.course) | async }}</td>
+                  <td>{{ getBatchName(studentCourse.batch) | async }}</td>
+                  <td>{{ studentCourse.rollNumber }}</td>
+                  <td>{{ dateService.formatDate(studentCourse.activationDate) }}</td>
 
                   <td>
                     <button
