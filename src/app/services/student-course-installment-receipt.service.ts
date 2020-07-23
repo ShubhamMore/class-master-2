@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { HttpService } from './shared-services/http.service';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 import { StudentCourseInstallmentReceiptModel } from '../models/student-course-installment-receipt.model';
 
 @Injectable({
@@ -9,12 +9,14 @@ import { StudentCourseInstallmentReceiptModel } from '../models/student-course-i
 })
 export class StudentCourseInstallmentReceiptService {
   private studentCourseInstallmentReceiptId: string;
-  private studentCourseInstallmentReceipt: StudentCourseInstallmentReceiptModel;
+  private studentCourseInstallmentReceipt = new BehaviorSubject<
+    StudentCourseInstallmentReceiptModel
+  >(null);
 
   setStudentCourseInstallmentReceiptData(
     studentCourseInstallmentReceipt: StudentCourseInstallmentReceiptModel,
   ) {
-    this.studentCourseInstallmentReceipt = studentCourseInstallmentReceipt;
+    this.studentCourseInstallmentReceipt.next(studentCourseInstallmentReceipt);
   }
 
   getStudentCourseInstallmentReceiptData() {
@@ -22,7 +24,7 @@ export class StudentCourseInstallmentReceiptService {
   }
 
   deleteStudentCourseInstallmentReceiptData() {
-    this.studentCourseInstallmentReceipt = null;
+    this.studentCourseInstallmentReceipt.next(null);
   }
 
   setStudentCourseInstallmentReceiptId(studentCourseInstallmentReceiptId: string) {
@@ -78,8 +80,8 @@ export class StudentCourseInstallmentReceiptService {
     );
   }
 
-  getAllStudentCourseInstallmentReceiptsForStudent(student: string) {
-    const data = { api: 'getAllStudentCourseInstallmentReceiptsForStudent', data: { student } };
+  getStudentAllCourseInstallmentReceiptsForStudent(student: string) {
+    const data = { api: 'getStudentAllCourseInstallmentReceiptsForStudent', data: { student } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -90,10 +92,10 @@ export class StudentCourseInstallmentReceiptService {
     );
   }
 
-  getStudentCourseInstallmentReceipt(studentCourseInstallmentReceipt: string) {
+  getStudentCourseInstallmentReceipt(id: string) {
     const data = {
       api: 'getStudentCourseInstallmentReceipt',
-      data: { studentCourseInstallmentReceipt },
+      data: { id },
     };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
@@ -105,10 +107,10 @@ export class StudentCourseInstallmentReceiptService {
     );
   }
 
-  getStudentCourseInstallmentReceiptForEditing(studentCourseInstallmentReceipt: string) {
+  getStudentCourseInstallmentReceiptForEditing(id: string) {
     const data = {
       api: 'getStudentCourseInstallmentReceiptForEditing',
-      data: { studentCourseInstallmentReceipt },
+      data: { id },
     };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
@@ -123,7 +125,7 @@ export class StudentCourseInstallmentReceiptService {
   editStudentCourseInstallmentReceipt(studentCourseInstallmentReceipt: string) {
     const data = {
       api: 'editStudentCourseInstallmentReceipt',
-      data: { studentCourseInstallmentReceipt },
+      data: studentCourseInstallmentReceipt,
     };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
@@ -135,10 +137,10 @@ export class StudentCourseInstallmentReceiptService {
     );
   }
 
-  deleteStudentCourseInstallmentReceipt(studentCourseInstallmentReceipt: string) {
+  deleteStudentCourseInstallmentReceipt(id: string) {
     const data = {
       api: 'deleteStudentCourseInstallmentReceipt',
-      data: { studentCourseInstallmentReceipt },
+      data: { id },
     };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {

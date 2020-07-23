@@ -1,16 +1,20 @@
+import {
+  StudentCourseInstallmentModel,
+  InstallmentModel,
+} from './../models/student-course-installment.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
-import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
-import { StudentCourseInstallmentModel } from '../models/student-course-installment.model';
+import { map, catchError, take } from 'rxjs/operators';
+import { throwError, BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class StudentCourseInstallmentService {
   private studentCourseInstallmentId: string;
-  private studentCourseInstallment: StudentCourseInstallmentModel;
+  private courseInstallmentId: string;
+  private studentCourseInstallment = new BehaviorSubject<StudentCourseInstallmentModel>(null);
 
   setStudentCourseInstallmentData(studentCourseInstallment: StudentCourseInstallmentModel) {
-    this.studentCourseInstallment = studentCourseInstallment;
+    this.studentCourseInstallment.next(studentCourseInstallment);
   }
 
   getStudentCourseInstallmentData() {
@@ -18,7 +22,7 @@ export class StudentCourseInstallmentService {
   }
 
   deleteStudentCourseInstallmentData() {
-    this.studentCourseInstallment = null;
+    this.studentCourseInstallment.next(null);
   }
 
   setStudentCourseInstallmentId(studentCourseInstallmentId: string) {
@@ -31,6 +35,55 @@ export class StudentCourseInstallmentService {
 
   deleteStudentCourseInstallmentId() {
     this.studentCourseInstallmentId = null;
+  }
+
+  setCourseInstallmentId(courseInstallmentId: string) {
+    this.courseInstallmentId = courseInstallmentId;
+  }
+
+  getCourseInstallmentId() {
+    return this.courseInstallmentId;
+  }
+
+  deleteCourseInstallmentId() {
+    this.courseInstallmentId = null;
+  }
+
+  setCourseInstallmentReceipt(installmentId: string, receiptId: string) {
+    this.studentCourseInstallment.subscribe(
+      (studentCourseInstallment: StudentCourseInstallmentModel) => {
+        if (studentCourseInstallment) {
+          const i = studentCourseInstallment.installments.findIndex(
+            (curInstallment: InstallmentModel) => curInstallment._id === installmentId,
+          );
+          if (i >= 0) {
+            if (receiptId) {
+              studentCourseInstallment.amountCollected =
+                studentCourseInstallment.amountCollected +
+                studentCourseInstallment.installments[i].installmentAmount;
+            } else {
+              studentCourseInstallment.amountCollected =
+                studentCourseInstallment.amountCollected -
+                studentCourseInstallment.installments[i].installmentAmount;
+            }
+            studentCourseInstallment.pendingAmount =
+              studentCourseInstallment.totalAmount - studentCourseInstallment.amountCollected;
+            studentCourseInstallment.installments[i].receiptId = receiptId;
+          }
+        }
+      },
+    );
+  }
+
+  getCourseInstallment(installmentId: string): Observable<InstallmentModel> {
+    return this.studentCourseInstallment.pipe(
+      map((studentCourseInstallment: StudentCourseInstallmentModel) => {
+        const installment = studentCourseInstallment.installments.find(
+          (curInstallment: InstallmentModel) => curInstallment._id === installmentId,
+        );
+        return installment;
+      }),
+    );
   }
 
   constructor(private httpService: HttpService) {}

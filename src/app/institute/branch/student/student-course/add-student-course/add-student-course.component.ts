@@ -217,9 +217,14 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
 
             this.resetStudentCourseInstallments();
 
-            this.studentCourseInstallment.installments.forEach((installment: InstallmentModel) => {
-              this.addStudentCourseInstallment(installment);
-            });
+            this.studentCourseInstallment.installments.forEach(
+              (installment: InstallmentModel, i: number) => {
+                this.addStudentCourseInstallment(installment);
+                if (installment.receiptId) {
+                  this.getStudentCourseInstallments()[i].get('installmentDate').disable();
+                }
+              },
+            );
 
             this.disableStudentCourseInstallmentFields();
           }

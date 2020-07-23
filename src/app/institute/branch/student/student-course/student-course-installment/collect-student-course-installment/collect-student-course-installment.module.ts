@@ -1,3 +1,12 @@
+import { ReactiveFormsModule } from '@angular/forms';
+import {
+  NbCardModule,
+  NbInputModule,
+  NbSelectModule,
+  NbButtonModule,
+  NbIconModule,
+  NbStepperModule,
+} from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -6,6 +15,18 @@ import { CollectStudentCourseInstallmentComponent } from './collect-student-cour
 
 @NgModule({
   declarations: [CollectStudentCourseInstallmentComponent],
-  imports: [CommonModule, CollectStudentCourseInstallmentRoutingModule],
+  imports: [
+    CommonModule,
+    CollectStudentCourseInstallmentRoutingModule,
+
+    NbCardModule,
+    NbInputModule,
+    NbSelectModule,
+    NbButtonModule,
+    NbIconModule,
+    NbStepperModule,
+
+    ReactiveFormsModule,
+  ],
 })
 export class CollectStudentCourseInstallmentModule {}

@@ -1,1 +1,129 @@
-<p>manage-student-course-installment works!</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9">
+        <h3>
+          Installments
+          <small>of {{ getStudentName() | async | uppercase }}</small>
+        </h3>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="body-container">
+    <div class="row">
+      <div class="col-md-12">
+        <ng-container *ngIf="!loading; else loadingData">
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr class="border shadow-sm">
+                  <td>
+                    <span>
+                      <strong>Course: </strong
+                      >{{ getCourseName(studentCourseInstallment.course) | async }}
+                    </span>
+                    <br />
+                    <span>
+                      <strong>Date: </strong
+                      >{{ dateService.formatDate(studentCourseInstallment.date) }}
+                    </span>
+                  </td>
+                  <td>
+                    <span>
+                      <strong>Collected Amount: </strong
+                      >{{ studentCourseInstallment.amountCollected }}
+                    </span>
+                    <br />
+                    <span>
+                      <strong>Pending Amount: </strong>{{ studentCourseInstallment.pendingAmount }}
+                    </span>
+                    <br />
+                    <span
+                      ><strong>Total Amount: </strong
+                      >{{ studentCourseInstallment.totalAmount }}</span
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br />
+
+          <div
+            class="table-responsive"
+            *ngIf="
+              studentCourseInstallment.installments.length > 0;
+              else noStudentCourseInstallments
+            "
+          >
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Installment No</th>
+                  <th>Installment Date</th>
+                  <th>Installment Amount</th>
+                  <th>Pending Amount</th>
+                  <th>Collect/Receipt</th>
+                  <th colspan="2">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let installment of studentCourseInstallment.installments; let i = index"
+                >
+                  <td>Installment {{ installment.installmentNo }}</td>
+                  <td>{{ dateService.formatDate(installment.installmentDate) }}</td>
+                  <td>{{ installment.installmentAmount }}</td>
+                  <td>{{ installment.amountPending }}</td>
+                  <td>
+                    <button
+                      nbButton
+                      [status]="installment.receiptId ? 'success' : 'info'"
+                      size="small"
+                      (click)="
+                        installment.receiptId
+                          ? showReceipt(installment.receiptId)
+                          : collectInstallment(installment._id)
+                      "
+                    >
+                      {{ installment.receiptId ? 'Receipt' : ' Collect' }}
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      *ngIf="installment.receiptId"
+                      nbButton
+                      status="basic"
+                      size="small"
+                      (click)="editReceipt(installment._id, installment.receiptId)"
+                    >
+                      <nb-icon nbTooltip="Edit Receipt" icon="edit-outline"></nb-icon>
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      *ngIf="installment.receiptId"
+                      nbButton
+                      status="danger"
+                      size="small"
+                      (click)="deleteReceipt(installment._id, installment.receiptId)"
+                    >
+                      <nb-icon nbTooltip="Delete Receipt" icon="trash-outline"></nb-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noStudentCourseInstallments>
+            <p class="text-center">No Student Course Installments Available</p>
+          </ng-template>
+        </ng-container>
+        <ng-template #loadingData>
+          <p class="text-center">Loading...</p>
+        </ng-template>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

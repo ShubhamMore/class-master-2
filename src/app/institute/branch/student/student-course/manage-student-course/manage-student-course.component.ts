@@ -47,7 +47,7 @@ export class ManageStudentCourseComponent implements OnInit, OnDestroy {
     this.categoryId = this.branchService.getCategoryId();
     this.studentId = this.studentService.getStudentId();
 
-    if (!this.branchId && !this.categoryId && !this.studentId) {
+    if (!this.branchId || !this.categoryId || !this.studentId) {
       this.location.back();
       return;
     }
@@ -75,7 +75,12 @@ export class ManageStudentCourseComponent implements OnInit, OnDestroy {
     this.router.navigate(['../add'], { relativeTo: this.route });
   }
 
-  courseInstallments(studentCourseId: string, studentCourseInstallmentId: string) {
+  courseInstallments(
+    studentCourseId: string,
+    courseId: string,
+    studentCourseInstallmentId: string,
+  ) {
+    this.courseService.setCourseId(courseId);
     this.studentCourseService.setStudentCourseId(studentCourseId);
     this.studentCourseInstallmentService.setStudentCourseInstallmentId(studentCourseInstallmentId);
     this.router.navigate(['../installment'], { relativeTo: this.route });
@@ -118,6 +123,10 @@ export class ManageStudentCourseComponent implements OnInit, OnDestroy {
         return batchName;
       }),
     );
+  }
+
+  back() {
+    this.location.back();
   }
 
   ngOnDestroy() {}
