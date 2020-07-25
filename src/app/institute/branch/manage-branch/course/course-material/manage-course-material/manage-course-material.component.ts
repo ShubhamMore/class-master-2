@@ -1,4 +1,3 @@
-import { Subject } from 'rxjs';
 import { CourseMaterialModel } from './../../../../../../models/course-material.model';
 import { Component, OnInit } from '@angular/core';
 import { CourseModel, SubjectModel } from './../../../../../../models/course.model';
@@ -91,6 +90,7 @@ export class ManageCourseMaterialComponent implements OnInit {
   }
 
   viewCourseMaterial(courseMaterial: CourseMaterialModel) {
+    this.courseMaterialService.setCourseMaterialId(courseMaterial._id);
     this.courseMaterialService.setCourseMaterialData(courseMaterial);
     this.router.navigate(['../view'], { relativeTo: this.route });
   }

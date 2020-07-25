@@ -62,6 +62,18 @@ export class CourseMaterialService {
     );
   }
 
+  getCourseMaterial(id: string) {
+    const data = { api: 'getCourseMaterials', data: { id } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getCourseMaterialsForStudent(branch: string, category: string, course: string, subject: string) {
     const data = {
       api: 'getCourseMaterialsForStudent',

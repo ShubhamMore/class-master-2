@@ -1,1 +1,56 @@
-<p>view-course-material works!</p>
+<nb-card *ngIf="!loading">
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-12">
+        <button class="float-right" nbButton size="tiny" status="warning" (click)="back()">
+          Back
+        </button>
+        <h3 *ngIf="courseMaterial.title">{{ courseMaterial.title | uppercase }}</h3>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <div *ngIf="courseMaterial.fileType === 'PDF'">
+          <pdf-viewer
+            [src]="courseMaterial.secureUrl"
+            [render-text]="false"
+            [original-size]="true"
+          ></pdf-viewer>
+        </div>
+
+        <div class="text-center" *ngIf="courseMaterial.fileType === 'IMAGE'">
+          <img
+            [src]="courseMaterial.secureUrl"
+            [alt]="courseMaterial.title"
+            width="80%"
+            height="auto"
+          />
+        </div>
+
+        <div class="text-center" *ngIf="courseMaterial.fileType === 'MP4'">
+          <div class="row">
+            <div class="col-md-10 col-12 mx-auto">
+              <video
+                #videoPlayer
+                class="video"
+                disablePictureInPicture
+                id="video"
+                name="video"
+                oncontextmenu="return false;"
+                width="100%"
+                controls
+                controlsList="nodownload"
+              >
+                <!--controlsList="noremoteplayback"-->
+                <source [src]="courseMaterial.secureUrl" type="video/mp4" />
+                This browser/App does not support the video.
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
