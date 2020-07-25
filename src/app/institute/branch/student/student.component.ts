@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BranchService } from './../../../services/branch.service';
-import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-student',
@@ -11,13 +11,18 @@ export class StudentComponent implements OnInit {
   loading: boolean;
   branchId: string;
 
-  constructor(private branchService: BranchService, private location: Location) {}
+  constructor(
+    private branchService: BranchService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
   }

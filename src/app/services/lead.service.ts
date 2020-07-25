@@ -1,41 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 import { LeadModel } from '../models/Lead.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LeadService {
-  lead: LeadModel;
+  private leadId: string;
+  private lead = new BehaviorSubject<LeadModel>(null);
 
-  private leadSearchData: any = {
-    branch: '',
-    category: '',
-    course: '',
-    date: null,
-  };
-
-  setBranch(branch: string) {
-    this.leadSearchData.branch = branch;
-  }
-  getBranch() {
-    return this.leadSearchData.branch;
+  setLeadData(lead: LeadModel) {
+    this.lead.next(lead);
   }
 
-  setCategory(category: string) {
-    this.leadSearchData.category = category;
-  }
-  getCategory() {
-    return this.leadSearchData.category;
+  getLeadData() {
+    return this.lead;
   }
 
-  setCourse(course: string) {
-    this.leadSearchData.course = course;
+  deleteLeadData() {
+    this.lead.next(null);
   }
-  getCourse() {
-    return this.leadSearchData.course;
+
+  setLeadId(leadId: string) {
+    this.leadId = leadId;
+  }
+
+  getLeadId() {
+    return this.leadId;
+  }
+
+  deleteLeadId() {
+    this.leadId = null;
   }
 
   constructor(private httpService: HttpService) {}

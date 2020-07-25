@@ -6,7 +6,7 @@ import { StudentCourseInstallmentService } from './../../../../../services/stude
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from '../../../../../services/branch.service';
 import { StudentService } from '../../../../../services/student.service';
-import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-student-course-installment',
@@ -27,7 +27,8 @@ export class StudentCourseInstallmentComponent implements OnInit, OnDestroy {
     private studentService: StudentService,
     private courseService: CourseService,
     private studentCourseInstallmentService: StudentCourseInstallmentService,
-    private location: Location,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -45,7 +46,8 @@ export class StudentCourseInstallmentComponent implements OnInit, OnDestroy {
       !this.studentId ||
       !this.studentCourseInstallmentId
     ) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
@@ -60,7 +62,7 @@ export class StudentCourseInstallmentComponent implements OnInit, OnDestroy {
         },
         (err: any) => {
           this.showToastr('top-right', 'danger', err);
-          this.location.back();
+          this.router.navigate(['../'], { relativeTo: this.route });
         },
       );
   }

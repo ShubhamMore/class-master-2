@@ -27,6 +27,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'course-material',
+        loadChildren: () =>
+          import('./course-material/course-material.module').then((m) => m.CourseMaterialModule),
+      },
+
+      {
         path: '',
         redirectTo: 'manage',
         pathMatch: 'full',

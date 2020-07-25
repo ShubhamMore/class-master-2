@@ -1,13 +1,13 @@
 import { map } from 'rxjs/operators';
 import { CourseService } from './../../../../../services/course.service';
 import { NbToastrService } from '@nebular/theme';
-import { Router, ActivatedRoute } from '@angular/router';
 import { StudentCourseModel } from './../../../../../models/student-course.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from '../../../../../services/branch.service';
 import { StudentService } from '../../../../../services/student.service';
 import { StudentCourseService } from '../../../../../services/student-course.service';
-import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { StudentCourseInstallmentService } from '../../../../../services/student-course-installment.service';
 import { Observable } from 'rxjs';
 import { BatchService } from '../../../../../services/batch.service';
@@ -36,7 +36,6 @@ export class ManageStudentCourseComponent implements OnInit, OnDestroy {
     private batchService: BatchService,
     private studentCourseService: StudentCourseService,
     private studentCourseInstallmentService: StudentCourseInstallmentService,
-    private location: Location,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -48,7 +47,8 @@ export class ManageStudentCourseComponent implements OnInit, OnDestroy {
     this.studentId = this.studentService.getStudentId();
 
     if (!this.branchId || !this.categoryId || !this.studentId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
@@ -126,7 +126,7 @@ export class ManageStudentCourseComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.location.back();
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {}

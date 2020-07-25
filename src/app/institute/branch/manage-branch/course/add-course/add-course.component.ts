@@ -6,7 +6,7 @@ import { CategoryModel, BranchModel } from './../../../../../models/branch.model
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../../services/branch.service';
-import { Location } from '@angular/common';
+
 import { ObjectId } from 'bson';
 
 @Component({
@@ -32,9 +32,9 @@ export class AddCourseComponent implements OnInit, OnDestroy {
     private branchService: BranchService,
     private courseService: CourseService,
     private toastrService: NbToastrService,
+
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {
     this.route.queryParams.subscribe((param: Params) => {
       this.ngOnInit();
@@ -45,7 +45,8 @@ export class AddCourseComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
@@ -304,7 +305,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
       this.courseService.addCourse(course).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Course Added Successfully!');
-          this.location.back();
+          this.router.navigate(['../'], { relativeTo: this.route });
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
@@ -317,7 +318,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
       this.courseService.editCourse(course).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'Course Updated Successfully!');
-          this.location.back();
+          this.router.navigate(['../'], { relativeTo: this.route });
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
@@ -364,7 +365,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.location.back();
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

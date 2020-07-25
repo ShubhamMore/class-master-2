@@ -12,7 +12,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../../services/branch.service';
-import { Location } from '@angular/common';
+
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { StudentCourseInstallmentService } from '../../../../../services/student-course-installment.service';
 import { StudentCourseInstallmentModel } from '../../../../../models/student-course-installment.model';
@@ -66,9 +66,9 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
     private studentService: StudentService,
     private studentCourseService: StudentCourseService,
     private studentCourseInstallmentService: StudentCourseInstallmentService,
+
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {
     route.queryParams.subscribe((param: Params) => {
       this.ngOnInit();
@@ -81,7 +81,8 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
     this.categoryId = this.branchService.getCategoryId();
     this.studentId = this.studentService.getStudentId();
     if (!this.branchId && !this.categoryId && !this.studentId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
@@ -943,7 +944,7 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.location.back();
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {}

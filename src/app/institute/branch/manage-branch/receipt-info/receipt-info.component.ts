@@ -1,7 +1,7 @@
-import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { BranchService } from '../../../../services/branch.service';
-import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { NbToastrService } from '@nebular/theme';
 import { InstituteBillingService } from './../../../../services/billing.service';
 import { InstituteBillingModel } from './../../../../models/institute-billing.model';
@@ -22,16 +22,17 @@ export class ReceiptInfoComponent implements OnInit {
     private branchService: BranchService,
     private toastrService: NbToastrService,
     private billingService: InstituteBillingService,
+
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
@@ -82,7 +83,8 @@ export class ReceiptInfoComponent implements OnInit {
     this.billingService.saveBillingDetails(billingDetails).subscribe(
       (res: any) => {
         this.showToastr('top-right', 'success', 'Billing Details Updated Successfully!');
-        this.location.back();
+        this.router.navigate(['../'], { relativeTo: this.route });
+
         this.loading = false;
       },
       (error: any) => {

@@ -1,5 +1,5 @@
+import { Router } from '@angular/router';
 import { BranchService } from './../../../services/branch.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../../../authentication/auth/auth-service/auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
@@ -31,7 +31,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private sidebarService: NbSidebarService,
     private branchService: BranchService,
     private router: Router,
-    private route: ActivatedRoute,
     private menuService: NbMenuService,
     private themeService: NbThemeService,
     private layoutService: LayoutService,

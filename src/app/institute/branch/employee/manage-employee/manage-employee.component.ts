@@ -4,7 +4,6 @@ import { BranchEmployeeModel } from '../../../../models/branch-employee.model';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../services/branch.service';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'ngx-manage-employee',
@@ -20,9 +19,9 @@ export class ManageEmployeeComponent implements OnInit {
     private branchService: BranchService,
     private employeeService: EmployeeService,
     private branchEmployeeService: BranchEmployeeService,
+
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {
     this.route.queryParams.subscribe((param: Params) => {
       // put the code from `ngOnInit` here
@@ -34,7 +33,8 @@ export class ManageEmployeeComponent implements OnInit {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 

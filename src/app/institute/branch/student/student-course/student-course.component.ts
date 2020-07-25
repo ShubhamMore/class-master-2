@@ -9,7 +9,7 @@ import { StudentModel } from './../../../../models/student.model';
 import { StudentService } from './../../../../services/student.service';
 import { BranchService } from './../../../../services/branch.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-student-course',
@@ -28,7 +28,8 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
     private batchService: BatchService,
     private studentService: StudentService,
     private discountAndOfferService: DiscountAndOfferService,
-    private location: Location,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +38,8 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
     this.studentId = this.studentService.getStudentId();
 
     if (!this.branchId && !this.categoryId && !this.studentId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       this.showToastr('top-right', 'danger', 'Student Details Not Available');
       return;
     }
@@ -49,7 +51,7 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
       (err: any) => {
         this.studentService.setStudentData(null);
         this.showToastr('top-right', 'danger', err);
-        this.location.back();
+        this.router.navigate(['../'], { relativeTo: this.route });
       },
     );
 
@@ -60,7 +62,7 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
       (err: any) => {
         this.courseService.setCoursesData(null);
         this.showToastr('top-right', 'danger', err);
-        this.location.back();
+        this.router.navigate(['../'], { relativeTo: this.route });
       },
     );
 
@@ -71,7 +73,7 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
       (err: any) => {
         this.batchService.setBatchesData(null);
         this.showToastr('top-right', 'danger', err);
-        this.location.back();
+        this.router.navigate(['../'], { relativeTo: this.route });
       },
     );
 
@@ -82,7 +84,7 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
       (err: any) => {
         this.discountAndOfferService.setDiscountAndOffersData(null);
         this.showToastr('top-right', 'danger', err);
-        this.location.back();
+        this.router.navigate(['../'], { relativeTo: this.route });
       },
     );
   }

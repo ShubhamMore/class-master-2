@@ -5,7 +5,7 @@ import { CategoryModel, BranchModel } from './../../../../../models/branch.model
 import { NbToastrService } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+
 @Component({
   selector: 'ngx-manage-course',
   templateUrl: './manage-course.component.html',
@@ -22,16 +22,17 @@ export class ManageCourseComponent implements OnInit {
     private branchService: BranchService,
     private courseService: CourseService,
     private toastrService: NbToastrService,
+
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
@@ -82,8 +83,15 @@ export class ManageCourseComponent implements OnInit {
   }
 
   courseBatches(course: CourseModel) {
+    this.courseService.setCourseId(course._id);
     this.courseService.setCourseData(course);
     this.router.navigate(['../batch'], { relativeTo: this.route });
+  }
+
+  courseMaterial(course: CourseModel) {
+    this.courseService.setCourseId(course._id);
+    this.courseService.setCourseData(course);
+    this.router.navigate(['../course-material'], { relativeTo: this.route });
   }
 
   editCourse(id: string) {

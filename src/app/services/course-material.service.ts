@@ -1,54 +1,57 @@
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { HttpService } from './shared-services/http.service';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 import { CourseMaterialModel } from '../models/course-material.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CourseMaterialService {
-  courseMaterial: CourseMaterialModel;
+  courseMaterialId: string;
+  courseMaterial = new BehaviorSubject<CourseMaterialModel>(null);
+  courseMaterials = new BehaviorSubject<CourseMaterialModel[]>([]);
 
-  private courseMaterialSearchData: any = {
-    branch: '',
-    category: '',
-    course: '',
-    subject: '',
-  };
-
-  setBranch(branch: string) {
-    this.courseMaterialSearchData.branch = branch;
-  }
-  getBranch() {
-    return this.courseMaterialSearchData.branch;
+  setCourseMaterialId(courseMaterialId: string) {
+    this.courseMaterialId = courseMaterialId;
   }
 
-  setCategory(category: string) {
-    this.courseMaterialSearchData.category = category;
-  }
-  getCategory() {
-    return this.courseMaterialSearchData.category;
+  getCourseMaterialId() {
+    return this.courseMaterialId;
   }
 
-  setCourse(course: string) {
-    this.courseMaterialSearchData.course = course;
-  }
-  getCourse() {
-    return this.courseMaterialSearchData.course;
+  deleteCourseMaterialId() {
+    this.courseMaterialId = null;
   }
 
-  setSubject(subject: string) {
-    this.courseMaterialSearchData.subject = subject;
+  setCourseMaterialsData(courseMaterials: CourseMaterialModel[]) {
+    this.courseMaterials.next(courseMaterials);
   }
-  getSubject() {
-    return this.courseMaterialSearchData.subject;
+
+  getCourseMaterialsData() {
+    return this.courseMaterials;
+  }
+
+  deleteCourseMaterialsData() {
+    this.courseMaterials.next([]);
+  }
+
+  setCourseMaterialData(courseMaterial: CourseMaterialModel) {
+    this.courseMaterial.next(courseMaterial);
+  }
+
+  getCourseMaterialData() {
+    return this.courseMaterial;
+  }
+
+  deleteCourseMaterialData() {
+    this.courseMaterial.next(null);
   }
 
   constructor(private httpService: HttpService) {}
 
   getCourseMaterials(branch: string, category: string, course: string, subject: string) {
-    const data = { api: 'geCourseMaterials', data: { branch, category, course, subject } };
+    const data = { api: 'getCourseMaterials', data: { branch, category, course, subject } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -61,7 +64,7 @@ export class CourseMaterialService {
 
   getCourseMaterialsForStudent(branch: string, category: string, course: string, subject: string) {
     const data = {
-      api: 'geCourseMaterialsForStudent',
+      api: 'getCourseMaterialsForStudent',
       data: { branch, category, course, subject },
     };
     return this.httpService.httpPost(data).pipe(

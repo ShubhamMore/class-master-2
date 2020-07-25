@@ -48,7 +48,7 @@
                   <th>Course</th>
                   <th>Category</th>
                   <th>Fees</th>
-                  <th>Action</th>
+                  <th colspan="4">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -67,6 +67,19 @@
                     >
                       Batches
                     </button>
+                  </td>
+                  <td>
+                    <button
+                      class="mr-3"
+                      nbButton
+                      status="success"
+                      size="small"
+                      (click)="courseMaterial(course)"
+                    >
+                      Course Material
+                    </button>
+                  </td>
+                  <td>
                     <button
                       class="mr-3"
                       nbButton
@@ -76,6 +89,8 @@
                     >
                       Edit
                     </button>
+                  </td>
+                  <td>
                     <button
                       class=""
                       nbButton

@@ -6,7 +6,7 @@ import { DiscountAndOfferService } from './../../../../../services/discount-and-
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../../services/branch.service';
-import { Location } from '@angular/common';
+
 @Component({
   selector: 'ngx-add-discount-and-offer',
   templateUrl: './add-discount-and-offer.component.html',
@@ -27,9 +27,9 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
     public dateService: DateService,
     private discountAndOfferService: DiscountAndOfferService,
     private toastrService: NbToastrService,
+
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {
     this.route.queryParams.subscribe((param: Params) => {
       this.ngOnInit();
@@ -40,7 +40,8 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
@@ -181,7 +182,7 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
       this.discountAndOfferService.addDiscountAndOffer(discountAndOffer).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Discount And Offer Added Successfully!');
-          this.location.back();
+          this.router.navigate(['../'], { relativeTo: this.route });
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
@@ -194,7 +195,7 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
       this.discountAndOfferService.editDiscountAndOffer(discountAndOffer).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'Discount And Offer Updated Successfully!');
-          this.location.back();
+          this.router.navigate(['../'], { relativeTo: this.route });
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
@@ -212,7 +213,7 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.location.back();
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

@@ -11,7 +11,7 @@ import { BranchStudentModel } from '../../../../models/branch-student.model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../services/branch.service';
-import { Location } from '@angular/common';
+
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 
 @Component({
@@ -46,9 +46,9 @@ export class AddStudentComponent implements OnInit, OnDestroy {
     private toastrService: NbToastrService,
     private branchStudentService: BranchStudentService,
     private encryptService: EncryptService,
+
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {
     route.queryParams.subscribe((param: Params) => {
       // put the code from `ngOnInit` here
@@ -60,7 +60,8 @@ export class AddStudentComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
@@ -396,7 +397,7 @@ export class AddStudentComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.location.back();
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

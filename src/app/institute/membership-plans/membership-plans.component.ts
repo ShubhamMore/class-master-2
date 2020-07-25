@@ -1,4 +1,4 @@
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentService } from './../../services/payment.service';
 import { BranchService } from './../../services/branch.service';
 import { MenuService } from './../menu.service';

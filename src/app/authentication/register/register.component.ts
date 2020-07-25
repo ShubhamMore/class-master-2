@@ -1,9 +1,9 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { RoleService } from './../../services/role.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth-service/auth.service';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import { EncryptService } from '../../services/shared-services/encrypt.service';
 import { environment } from '../../../environments/environment';
 import { UserService } from '../../services/shared-services/user.service';

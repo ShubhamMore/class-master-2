@@ -5,7 +5,7 @@ import { DiscountAndOfferModel } from './../../../../../models/discount-and-offe
 import { NbToastrService } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+
 @Component({
   selector: 'ngx-manage-discount-and-offer',
   templateUrl: './manage-discount-and-offer.component.html',
@@ -21,16 +21,17 @@ export class ManageDiscountAndOfferComponent implements OnInit {
     public dateService: DateService,
     private discountAndOfferService: DiscountAndOfferService,
     private toastrService: NbToastrService,
+
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 

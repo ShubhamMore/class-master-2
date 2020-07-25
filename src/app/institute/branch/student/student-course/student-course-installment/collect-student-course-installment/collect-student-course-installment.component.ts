@@ -10,7 +10,7 @@ import { InstallmentModel } from './../../../../../../models/student-course-inst
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { BranchService } from '../../../../../../services/branch.service';
 import { StudentService } from '../../../../../../services/student.service';
-import { Location } from '@angular/common';
+
 import { StudentCourseInstallmentReceiptService } from '../../../../../../services/student-course-installment-receipt.service';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 
@@ -44,7 +44,6 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
     private courseService: CourseService,
     private studentCourseInstallmentService: StudentCourseInstallmentService,
     private studentCourseInstallmentReceiptService: StudentCourseInstallmentReceiptService,
-    private location: Location,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -58,7 +57,8 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
     this.courseInstallmentId = this.studentCourseInstallmentService.getCourseInstallmentId();
 
     if (!this.branchId || !this.categoryId || !this.courseId || !this.studentId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
@@ -88,7 +88,8 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
 
     if (mode && mode !== 'edit') {
       this.showToastr('top-right', 'danger', 'Invalid Route');
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
@@ -97,18 +98,20 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
 
     if (mode && !this.studentCourseInstallmentReceiptId) {
       this.showToastr('top-right', 'danger', 'Receipt Id Not Provided');
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
     if (this.studentCourseInstallmentReceiptId) {
       this.studentCourseInstallmentReceiptService
-        .getStudentCourseInstallmentReceipt(this.studentCourseInstallmentReceiptId)
+        .getStudentCourseInstallmentReceiptForEditing(this.studentCourseInstallmentReceiptId)
         .subscribe(
           (studentCourseInstallmentReceipt: StudentCourseInstallmentReceiptModel) => {
             if (!studentCourseInstallmentReceipt) {
               this.showToastr('top-right', 'danger', 'Receipt Not Available');
-              this.location.back();
+              this.router.navigate(['../'], { relativeTo: this.route });
+
               return;
             }
             this.studentCourseInstallmentReceipt = studentCourseInstallmentReceipt;
@@ -131,7 +134,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
           },
           (err: any) => {
             this.showToastr('top-right', 'danger', 'Receipt Not Available');
-            this.location.back();
+            this.router.navigate(['../'], { relativeTo: this.route });
           },
         );
     } else {
@@ -139,7 +142,8 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
         .getCourseInstallment(this.courseInstallmentId)
         .subscribe((courseInstallment: InstallmentModel) => {
           if (!courseInstallment) {
-            this.location.back();
+            this.router.navigate(['../'], { relativeTo: this.route });
+
             return;
           }
 
@@ -205,13 +209,11 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
         .subscribe(
           (res: { receiptId: string }) => {
             this.showToastr('top-right', 'success', 'Installment Receipt Generated Successfully!');
-
             this.studentCourseInstallmentService.setCourseInstallmentReceipt(
               this.courseInstallmentId,
               res.receiptId,
             );
-            this.router.navigate(['../manage'], { relativeTo: this.route });
-            this.loading = false;
+            this.back();
           },
           (err: any) => {
             this.showToastr('top-right', 'danger', err);
@@ -225,8 +227,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
         .subscribe(
           (res: any) => {
             this.showToastr('top-right', 'success', 'Installment Receipt Updated Successfully!');
-            this.router.navigate(['../manage'], { relativeTo: this.route });
-            this.loading = false;
+            this.back();
           },
           (err: any) => {
             this.showToastr('top-right', 'danger', err);
@@ -245,7 +246,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
   }
 
   back() {
-    this.location.back();
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   private showToastr(position: any, status: any, message: string) {

@@ -11,7 +11,6 @@ import { BranchEmployeeModel } from '../../../../models/branch-employee.model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../services/branch.service';
-import { Location } from '@angular/common';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 
 @Component({
@@ -46,9 +45,9 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
     private toastrService: NbToastrService,
     private branchEmployeeService: BranchEmployeeService,
     private encryptService: EncryptService,
+
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {
     route.queryParams.subscribe((param: Params) => {
       // put the code from `ngOnInit` here
@@ -60,7 +59,8 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
@@ -339,7 +339,7 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.location.back();
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

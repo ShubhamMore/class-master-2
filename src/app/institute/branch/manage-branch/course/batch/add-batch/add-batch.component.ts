@@ -8,7 +8,7 @@ import { BatchService } from './../../../../../../services/batch.service';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../../../services/branch.service';
-import { Location } from '@angular/common';
+
 import { ObjectId } from 'bson';
 import { BranchEmployeeService } from '../../../../../../services/branch-employee.service';
 
@@ -41,9 +41,9 @@ export class AddBatchComponent implements OnInit, OnDestroy {
     private batchService: BatchService,
     private courseService: CourseService,
     private toastrService: NbToastrService,
+
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {
     this.route.queryParams.subscribe((param: Params) => {
       this.ngOnInit();
@@ -54,14 +54,16 @@ export class AddBatchComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
     this.courseService.getCourseData().subscribe((course: CourseModel) => {
       this.course = course;
       if (!this.course) {
-        this.location.back();
+        this.router.navigate(['../'], { relativeTo: this.route });
+
         return;
       }
     });
@@ -293,7 +295,7 @@ export class AddBatchComponent implements OnInit, OnDestroy {
       this.batchService.addBatch(batch).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Batch Added Successfully!');
-          this.location.back();
+          this.router.navigate(['../'], { relativeTo: this.route });
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
@@ -306,7 +308,7 @@ export class AddBatchComponent implements OnInit, OnDestroy {
       this.batchService.editBatch(batch).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'Batch Updated Successfully!');
-          this.location.back();
+          this.router.navigate(['../'], { relativeTo: this.route });
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
@@ -324,7 +326,7 @@ export class AddBatchComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.location.back();
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

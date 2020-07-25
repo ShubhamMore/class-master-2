@@ -60,8 +60,8 @@ export class BatchService {
 
   constructor(private httpService: HttpService) {}
 
-  getBatches(branch: string, category: string, batch: any) {
-    const data = { api: 'getBatches', data: { branch, category, batch } };
+  getBatches(branch: string, category: string, course: any) {
+    const data = { api: 'getBatches', data: { branch, category, course } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

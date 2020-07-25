@@ -6,7 +6,7 @@ import { BatchModel } from './../../../../../../models/batch.model';
 import { NbToastrService } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+
 @Component({
   selector: 'ngx-manage-batch',
   templateUrl: './manage-batch.component.html',
@@ -25,14 +25,13 @@ export class ManageBatchComponent implements OnInit {
     private toastrService: NbToastrService,
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
 
@@ -41,7 +40,7 @@ export class ManageBatchComponent implements OnInit {
     this.courseService.getCourseData().subscribe((course: CourseModel) => {
       this.course = course;
       if (!this.course) {
-        this.location.back();
+        this.router.navigate(['../'], { relativeTo: this.route });
         return;
       }
       this.getBatches();
@@ -50,6 +49,7 @@ export class ManageBatchComponent implements OnInit {
 
   getBatches() {
     this.loading = true;
+
     this.batchService
       .getBatches(this.branchId, this.course.basicDetails.category, this.course._id)
       .subscribe(

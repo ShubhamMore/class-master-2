@@ -6,7 +6,6 @@ import { BranchStudentModel } from '../../../../models/branch-student.model';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../services/branch.service';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'ngx-manage-student',
@@ -26,9 +25,9 @@ export class ManageStudentComponent implements OnInit {
     private studentService: StudentService,
     private toastrService: NbToastrService,
     private branchStudentService: BranchStudentService,
+
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {
     this.route.queryParams.subscribe((param: Params) => {
       // put the code from `ngOnInit` here
@@ -40,7 +39,8 @@ export class ManageStudentComponent implements OnInit {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 

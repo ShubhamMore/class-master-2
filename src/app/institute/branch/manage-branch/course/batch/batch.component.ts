@@ -1,8 +1,7 @@
 import { CourseService } from './../../../../../services/course.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { BranchService } from './../../../../../services/branch.service';
-import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-batch',
@@ -12,31 +11,35 @@ import { Location } from '@angular/common';
 export class BatchComponent implements OnInit, OnDestroy {
   loading: boolean;
   branchId: string;
+  courseId: string;
 
   constructor(
     private branchService: BranchService,
     private courseService: CourseService,
+
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
-    if (!this.branchId) {
-      this.location.back();
+    this.courseId = this.courseService.getCourseId();
+    if (!this.branchId || !this.courseId) {
+      this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
 
     const course = this.courseService.getCourseData();
     if (!course) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
+    this.loading = false;
   }
 
   ngOnDestroy() {
+    this.courseService.deleteCourseId();
     this.courseService.deleteCourseData();
   }
 }

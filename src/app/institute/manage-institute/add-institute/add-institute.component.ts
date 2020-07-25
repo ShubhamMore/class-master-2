@@ -11,7 +11,7 @@ import { BranchModel, CategoryModel } from './../../../models/branch.model';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ObjectId } from 'bson';
-import { Location } from '@angular/common';
+
 import { of, Observable } from 'rxjs';
 declare const Razorpay: any;
 
@@ -51,9 +51,9 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
     private branchService: BranchService,
     private paymentService: PaymentService,
     private toastrService: NbToastrService,
+
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {
     this.route.queryParams.subscribe((param: Params) => {
       this.ngOnInit();
@@ -80,11 +80,13 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
       return;
     } else if (!mode && (!this.user || !this.paymentDetails)) {
       this.showToastr('top-right', 'danger', 'Invalid Payment Details');
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     } else if (mode && !this.branchId) {
       this.showToastr('top-right', 'danger', 'Branch not Available');
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
 
@@ -450,7 +452,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.location.back();
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

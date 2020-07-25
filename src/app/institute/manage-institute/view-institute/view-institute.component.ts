@@ -1,9 +1,8 @@
-import { Router, ActivatedRoute } from '@angular/router';
 import { BranchModel, CategoryModel } from './../../../models/branch.model';
 import { MenuService } from './../../menu.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from '../../../services/branch.service';
-import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-view-institute',
@@ -17,10 +16,10 @@ export class ViewInstituteComponent implements OnInit, OnDestroy {
 
   constructor(
     private menuService: MenuService,
+
+    private branchService: BranchService,
     private router: Router,
     private route: ActivatedRoute,
-    private branchService: BranchService,
-    private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +38,7 @@ export class ViewInstituteComponent implements OnInit, OnDestroy {
         this.loading = false;
       },
       (error: any) => {
-        this.location.back();
+        this.router.navigate(['../'], { relativeTo: this.route });
       },
     );
   }
