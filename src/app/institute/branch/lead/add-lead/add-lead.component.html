@@ -1,1 +1,536 @@
-<p>add-lead works!</p>
+<nb-card>
+  <nb-card-header>
+    <button class="float-right" nbButton status="warning" size="tiny" (click)="back()">
+      Back
+    </button>
+    <h3 class="">
+      {{ !lead ? 'Add New Lead' : 'Edit Lead ' + (lead.leadName | uppercase) }}
+    </h3>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper #stepper [linear]="true">
+      <nb-step [stepControl]="leadForm" label="Basic Details">
+        <form class="" (submit)="submitLeadForm()" [formGroup]="leadForm">
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-lead-name">Name:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-lead-name"
+                  name="leadName"
+                  formControlName="leadName"
+                  placeholder="Lead Name"
+                  minlength="3"
+                  maxlength="30"
+                  fullWidth
+                  [status]="
+                    leadForm.get('leadName').touched
+                      ? leadForm.get('leadName').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+
+                <ng-container
+                  *ngIf="leadForm.get('leadName').invalid && leadForm.get('leadName').touched"
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="leadForm.get('leadName').errors?.required"
+                  >
+                    Lead Name is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="leadForm.get('leadName').errors?.minlength"
+                  >
+                    Lead Name should contain minimum 3 characters
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-email">Email address:</label>
+                <input
+                  type="email"
+                  nbInput
+                  id="input-email"
+                  name="email"
+                  formControlName="leadEmail"
+                  placeholder="Email address"
+                  fullWidth
+                  [status]="
+                    leadForm.get('leadEmail').touched
+                      ? leadForm.get('leadEmail').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="leadForm.get('leadEmail').invalid && leadForm.get('leadEmail').touched"
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="leadForm.get('leadEmail').errors?.required"
+                  >
+                    Email is required!
+                  </p>
+                  <p class="caption status-danger" *ngIf="leadForm.get('leadEmail').errors?.email">
+                    Email should be the real one!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-phone">Phone:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-phone"
+                  name="phone"
+                  formControlName="leadContact"
+                  placeholder="phone"
+                  minlength="10"
+                  maxlength="10"
+                  min="1000000000"
+                  max="9999999999"
+                  fullWidth
+                  [status]="
+                    leadForm.get('leadContact').touched
+                      ? leadForm.get('leadContact').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="leadForm.get('leadContact').invalid && leadForm.get('leadContact').touched"
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="leadForm.get('leadContact').errors?.required"
+                  >
+                    Phone is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="
+                      leadForm.get('leadContact').errors?.minlength ||
+                      leadForm.get('leadContact').errors?.maxlength ||
+                      leadForm.get('leadContact').errors?.min ||
+                      leadForm.get('leadContact').errors?.max
+                    "
+                  >
+                    Phone should contain 10 digits
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-address">Address:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-address"
+                  name="address"
+                  formControlName="address"
+                  placeholder="address (Optional)"
+                  fullWidth
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-date">Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-date"
+                  name="date"
+                  [min]="dateService.getDateString()"
+                  formControlName="date"
+                  placeholder="date"
+                  fullWidth
+                  [status]="
+                    leadForm.get('date').touched
+                      ? leadForm.get('date').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container *ngIf="leadForm.get('date').invalid && leadForm.get('date').touched">
+                  <p class="caption status-danger" *ngIf="leadForm.get('date').errors?.required">
+                    Date is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-follow-up-date">Follow Up Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-follow-up-date"
+                  name="followUpDate"
+                  [min]="dateService.getDateString()"
+                  formControlName="followUpDate"
+                  placeholder="followUpDate"
+                  fullWidth
+                  [status]="
+                    leadForm.get('followUpDate').touched
+                      ? leadForm.get('followUpDate').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    leadForm.get('followUpDate').invalid && leadForm.get('followUpDate').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="leadForm.get('followUpDate').errors?.required"
+                  >
+                    Follow Up Date is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-category">Category:</label>
+                <nb-select
+                  id="input-category"
+                  name="category"
+                  formControlName="category"
+                  placeholder="Select Category"
+                  fullWidth
+                  [status]="
+                    leadForm.get('category').touched
+                      ? leadForm.get('category').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (selectedChange)="onSelectCategory($event)"
+                >
+                  <nb-option value="">Select Category</nb-option>
+                  <nb-option *ngFor="let category of categories" [value]="category._id">{{
+                    category.category
+                  }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="leadForm.get('category').invalid && leadForm.get('category').touched"
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="leadForm.get('category').errors?.required"
+                  >
+                    Category is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-course">Course:</label>
+                <nb-select
+                  id="input-course"
+                  name="course"
+                  formControlName="course"
+                  placeholder="Select Course"
+                  fullWidth
+                  [status]="
+                    leadForm.get('course').touched
+                      ? leadForm.get('course').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="">Select Course</nb-option>
+                  <nb-option *ngFor="let course of myCourses" [value]="course._id">{{
+                    course.basicDetails.courseName
+                  }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="leadForm.get('course').invalid && leadForm.get('course').touched"
+                >
+                  <p class="caption status-danger" *ngIf="leadForm.get('course').errors?.required">
+                    Course is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-source">Source:</label>
+                <nb-select
+                  id="input-source"
+                  name="source"
+                  formControlName="source"
+                  placeholder="Select Source"
+                  fullWidth
+                  [status]="
+                    leadForm.get('source').touched
+                      ? leadForm.get('source').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="">Select Source</nb-option>
+                  <nb-option *ngFor="let source of sources" [value]="source">{{
+                    source | uppercase
+                  }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="leadForm.get('source').invalid && leadForm.get('source').touched"
+                >
+                  <p class="caption status-danger" *ngIf="leadForm.get('source').errors?.required">
+                    Source is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-strength">Strength:</label>
+                <nb-select
+                  id="input-strength"
+                  name="strength"
+                  formControlName="strength"
+                  placeholder="Select Strength"
+                  fullWidth
+                  [status]="
+                    leadForm.get('strength').touched
+                      ? leadForm.get('strength').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="">Select Strength</nb-option>
+                  <nb-option *ngFor="let strength of strengths" [value]="strength">{{
+                    strength | uppercase
+                  }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="leadForm.get('strength').invalid && leadForm.get('strength').touched"
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="leadForm.get('strength').errors?.required"
+                  >
+                    Strength is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-mode">Mode:</label>
+                <nb-select
+                  id="input-mode"
+                  name="mode"
+                  formControlName="mode"
+                  placeholder="Select Mode"
+                  fullWidth
+                  [status]="
+                    leadForm.get('mode').touched
+                      ? leadForm.get('mode').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="">Select Mode</nb-option>
+                  <nb-option *ngFor="let mode of modes" [value]="mode">{{
+                    mode | uppercase
+                  }}</nb-option>
+                </nb-select>
+                <ng-container *ngIf="leadForm.get('mode').invalid && leadForm.get('mode').touched">
+                  <p class="caption status-danger" *ngIf="leadForm.get('mode').errors?.required">
+                    Mode is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-status">Status:</label>
+                <nb-select
+                  id="input-status"
+                  name="status"
+                  formControlName="status"
+                  placeholder="Select Status"
+                  fullWidth
+                  [status]="
+                    leadForm.get('status').touched
+                      ? leadForm.get('status').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="">Select Status</nb-option>
+                  <nb-option *ngFor="let status of statuses" [value]="status">{{
+                    status | uppercase
+                  }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="leadForm.get('status').invalid && leadForm.get('status').touched"
+                >
+                  <p class="caption status-danger" *ngIf="leadForm.get('status').errors?.required">
+                    Status is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-comment">Comment:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-comment"
+                  name="comment"
+                  formControlName="comment"
+                  placeholder="Comment"
+                  maxlength="50"
+                  fullWidth
+                  [status]="
+                    leadForm.get('comment').touched
+                      ? leadForm.get('comment').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+
+                <ng-container
+                  *ngIf="leadForm.get('comment').invalid && leadForm.get('comment').touched"
+                >
+                  <p class="caption status-danger" *ngIf="leadForm.get('comment').errors?.required">
+                    Comment is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <button nbButton type="submit">
+                <span>Next</span>
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step label="Submit">
+        <div class="step-container">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Name</th>
+                  <td>{{ leadForm.value.leadName }}</td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td>{{ leadForm.value.leadEmail }}</td>
+                </tr>
+                <tr>
+                  <th>Phone</th>
+                  <td>{{ leadForm.value.leadContact }}</td>
+                </tr>
+                <tr>
+                  <th>Address</th>
+                  <td>{{ leadForm.value.address }}</td>
+                </tr>
+                <tr>
+                  <th>Date</th>
+                  <td>{{ leadForm.value.date }}</td>
+                </tr>
+                <tr>
+                  <th>Follow Up Date</th>
+                  <td>{{ leadForm.value.followUpDate }}</td>
+                </tr>
+                <tr>
+                  <th>Category</th>
+                  <td>{{ getCategory(leadForm.value.category) }}</td>
+                </tr>
+                <tr>
+                  <th>Course</th>
+                  <td>{{ getCourse(leadForm.value.course) }}</td>
+                </tr>
+                <tr>
+                  <th>Source</th>
+                  <td>{{ leadForm.value.source | uppercase }}</td>
+                </tr>
+                <tr>
+                  <th>Mode</th>
+                  <td>{{ leadForm.value.mode | uppercase }}</td>
+                </tr>
+                <tr>
+                  <th>Strength</th>
+                  <td>{{ leadForm.value.strength | uppercase }}</td>
+                </tr>
+                <tr>
+                  <th>Status</th>
+                  <td>{{ leadForm.value.status | uppercase }}</td>
+                </tr>
+                <tr>
+                  <th>Comment</th>
+                  <td>{{ leadForm.value.comment }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button class="" nbButton nbStepperPrevious>
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton (click)="saveLead()"><span>Submit</span></button>
+            </div>
+          </div>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

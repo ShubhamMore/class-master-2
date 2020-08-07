@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { CourseModel } from './../../../models/course.model';
+import { CourseService } from './../../../services/course.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from './../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -7,13 +9,13 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './lead.component.html',
   styleUrls: ['./lead.component.scss'],
 })
-export class LeadComponent implements OnInit {
+export class LeadComponent implements OnInit, OnDestroy {
   loading: boolean;
   branchId: string;
 
   constructor(
     private branchService: BranchService,
-
+    private courseService: CourseService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -23,8 +25,22 @@ export class LeadComponent implements OnInit {
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
-
       return;
     }
+
+    this.courseService.getCourses(this.branchId, '').subscribe(
+      (courses: CourseModel[]) => {
+        this.courseService.setCoursesData(courses);
+        this.loading = false;
+      },
+      (err: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+        return;
+      },
+    );
+  }
+
+  ngOnDestroy() {
+    this.courseService.deleteCoursesData();
   }
 }

@@ -1,4 +1,3 @@
-import { AddLeadComponent } from './add-lead/add-lead.component';
 import { LeadComponent } from './lead.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -23,9 +22,10 @@ const routes: Routes = [
         loadChildren: () =>
           import('./manage-lead/manage-lead.module').then((m) => m.ManageLeadModule),
       },
+
       {
         path: '',
-        redirectTo: 'manage',
+        redirectTo: 'manage?type=active',
         pathMatch: 'full',
       },
 

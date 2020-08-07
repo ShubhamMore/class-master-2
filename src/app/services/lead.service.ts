@@ -49,8 +49,8 @@ export class LeadService {
     );
   }
 
-  getLeads(course: any, leadType: string) {
-    const data = { api: 'getLeads', data: { course, leadType } };
+  getLeads(branch: string, category: string, course: any, leadType: string) {
+    const data = { api: 'getLeads', data: { branch, category, course, leadType } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -97,7 +97,7 @@ export class LeadService {
     );
   }
 
-  changeLeadStatus(id: string, status: boolean) {
+  changeLeadStatus(id: string, status: string) {
     const data = { api: 'changeLeadStatus', data: { id, status } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {

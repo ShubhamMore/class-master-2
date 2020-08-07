@@ -46,7 +46,6 @@ export class AddStudentComponent implements OnInit, OnDestroy {
     private toastrService: NbToastrService,
     private branchStudentService: BranchStudentService,
     private encryptService: EncryptService,
-
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -61,7 +60,6 @@ export class AddStudentComponent implements OnInit, OnDestroy {
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
-
       return;
     }
 

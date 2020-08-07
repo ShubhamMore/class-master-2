@@ -10,7 +10,7 @@ export class LeadModel {
     public address: string,
     public date: string,
     public followUpDate: string,
-    public status: boolean,
+    public status: string,
     public strength: string,
     public mode: string,
     public source: string,

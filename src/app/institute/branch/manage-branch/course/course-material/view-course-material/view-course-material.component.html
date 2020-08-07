@@ -15,6 +15,7 @@
         <div *ngIf="courseMaterial.fileType === 'PDF'">
           <pdf-viewer
             [src]="courseMaterial.secureUrl"
+            loading="lazy"
             [render-text]="false"
             [original-size]="true"
           ></pdf-viewer>
@@ -24,6 +25,7 @@
           <img
             [src]="courseMaterial.secureUrl"
             [alt]="courseMaterial.title"
+            loading="lazy"
             width="80%"
             height="auto"
           />
@@ -40,10 +42,11 @@
                 name="video"
                 oncontextmenu="return false;"
                 width="100%"
+                loading="lazy"
                 controls
                 controlsList="nodownload"
               >
-                <!--controlsList="noremoteplayback"-->
+                <!--controlsList="noRemotePlayback"-->
                 <source [src]="courseMaterial.secureUrl" type="video/mp4" />
                 This browser/App does not support the video.
               </video>
