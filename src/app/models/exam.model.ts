@@ -5,6 +5,8 @@ export class ExamModel {
     public outOfMarks: string,
     public passingMarks: string,
     public date: string,
+    public time: string,
+    public duration: string,
     public branch: string,
     public category: string,
     public course: string,

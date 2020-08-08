@@ -2,6 +2,7 @@ import {
   NbCardModule,
   NbButtonModule,
   NbIconModule,
+  NbBadgeModule,
   NbTooltipModule,
   NbSelectModule,
 } from '@nebular/theme';
@@ -19,6 +20,7 @@ import { ManageLeadRoutingModule } from './manage-lead-routing.module';
 
     NbCardModule,
     NbSelectModule,
+    NbBadgeModule,
     NbButtonModule,
     NbIconModule,
     NbTooltipModule,
