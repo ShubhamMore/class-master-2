@@ -1,15 +1,13 @@
+import { DateService } from './../../../../../services/shared-services/date.service';
 import { BatchService } from './../../../../../services/batch.service';
 import { CourseService } from './../../../../../services/course.service';
 import { BatchModel } from './../../../../../models/batch.model';
 import { CourseModel } from './../../../../../models/course.model';
 import { CategoryModel, BranchModel } from './../../../../../models/branch.model';
-import { ExamModel } from './../../../../../models/exam.model';
-import { ExamService } from './../../../../../services/exam.service';
 import { Component, OnInit } from '@angular/core';
 import { BranchService } from './../../../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TestModule } from '../test.module';
-import { NbTreeGridSortService, NbToastrService } from '@nebular/theme';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-manage-test',
@@ -20,22 +18,19 @@ export class ManageTestComponent implements OnInit {
   loading: boolean;
   branchId: string;
 
-  exams: ExamModel[];
   categories: CategoryModel[];
   category: string;
   courses: CourseModel[];
   myCourses: CourseModel[];
   course: string;
   batches: BatchModel[];
-  myBatches: BatchModel[];
-  batch: string;
 
   constructor(
     private branchService: BranchService,
+    public dateService: DateService,
     private courseService: CourseService,
     private batchService: BatchService,
     private toastrService: NbToastrService,
-    private examService: ExamService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -47,25 +42,37 @@ export class ManageTestComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
+    this.categories = [];
+    this.courses = [];
+    this.myCourses = [];
+    this.batches = [];
+
+    this.category = '';
+    this.course = '';
+
+    this.getCategories();
+    this.getCourses();
   }
 
   private getCategories() {
-    this.categories = this.branchService.getBranchData().categories;
+    this.branchService.getBranchData().subscribe((branch: BranchModel) => {
+      this.categories = branch.categories;
+    });
 
     if (!this.categories) {
       this.branchService.getBranch(this.branchId).subscribe(
         (branch: BranchModel) => {
           this.branchService.setBranchData(branch);
           this.categories = branch.categories;
-          this.getExams(this.category, this.course);
+          this.getBatches(this.category, this.course);
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          // this.loading = false;
         },
       );
     } else {
-      this.getExams(this.category, this.course);
+      this.getBatches(this.category, this.course);
     }
   }
 
@@ -81,61 +88,43 @@ export class ManageTestComponent implements OnInit {
     this.myCourses = this.courses.filter(
       (course: CourseModel) => course.basicDetails.category === category,
     );
-    this.getExams(this.category, this.course);
+    this.getBatches(this.category, this.course);
   }
 
   onSelectCourse(course: string) {
     this.course = course;
-    this.getExams(this.category, this.course);
+    this.getBatches(this.category, this.course);
   }
 
-  getExams(category: string, course: string) {
+  getBatches(category: string, course: string) {
     this.loading = true;
-    // this.examService.getExams(this.branchId, category, course).subscribe(
-    //   (exams: ExamModel[]) => {
-    //     this.exams = exams;
-    //     this.loading = false;
-    //   },
-    //   (error: any) => {
-    //     this.showToastr('top-right', 'danger', error);
-    //     this.loading = false;
-    //   },
-    // );
-  }
-
-  editExam(id: string) {
-    // this.examService.setExamId(id);
-    this.router.navigate(['../edit'], { relativeTo: this.route, queryParams: { mode: 'edit' } });
-  }
-
-  deleteExam(id: string) {
-    this.examService.deleteExam(id).subscribe(
-      (res: any) => {
-        this.removeExam(id);
-        this.showToastr('top-right', 'success', 'Exam Deleted Successfully');
+    this.batchService.getBatches(this.branchId, category, course).subscribe(
+      (batches: BatchModel[]) => {
+        this.batches = batches;
+        this.loading = false;
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
+        this.loading = false;
       },
     );
   }
 
-  private removeExam(id: string) {
-    const index = this.exams.findIndex((exam: ExamModel) => exam._id === id);
-    if (index >= 0) {
-      this.exams.splice(index, 1);
-    }
-  }
+  manageExam(batch: BatchModel) {
+    this.batchService.setBatchId(batch._id);
+    this.batchService.setBatchData(batch);
 
-  wonExam(id: string) {
-    // this.examService.changeExamStatus(id, 'won').subscribe(
-    //   (res: any) => {
-    //     this.removeExam(id);
-    //   },
-    //   (error: any) => {
-    //     this.showToastr('top-right', 'danger', error);
-    //   },
-    // );
+    this.courseService.setCourseId(batch.course);
+    const myCourse = this.courses.find((curCourse: CourseModel) => curCourse._id === batch.course);
+    this.courseService.setCourseData(myCourse);
+
+    this.branchService.setCategoryId(batch.category);
+    const myCategory = this.categories.find(
+      (curCategory: CategoryModel) => curCategory._id === batch.category,
+    );
+    this.branchService.setCategoryData(myCategory);
+
+    this.router.navigate(['../batch-test'], { relativeTo: this.route });
   }
 
   getCategory(categoryId: string) {

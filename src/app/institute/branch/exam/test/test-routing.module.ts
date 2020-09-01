@@ -1,9 +1,6 @@
-import { AddTestComponent } from './add-test/add-test.component';
-import { ManageTestComponent } from './manage-test/manage-test.component';
 import { TestComponent } from './test.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AddTestScoreComponent } from './add-test-score/add-test-score.component';
 
 const routes: Routes = [
   {
@@ -11,27 +8,20 @@ const routes: Routes = [
     component: TestComponent,
     children: [
       {
-        path: 'manage',
+        path: 'batch',
         loadChildren: () =>
           import('./manage-test/manage-test.module').then((m) => m.ManageTestModule),
       },
+
       {
-        path: 'add',
-        loadChildren: () => import('./add-test/add-test.module').then((m) => m.AddTestModule),
-      },
-      {
-        path: 'edit',
-        loadChildren: () => import('./add-test/add-test.module').then((m) => m.AddTestModule),
-      },
-      {
-        path: 'score',
+        path: 'batch-test',
         loadChildren: () =>
-          import('./add-test-score/add-test-score.module').then((m) => m.AddTestScoreModule),
+          import('./batch-test/batch-test.module').then((m) => m.BatchTestModule),
       },
 
       {
         path: '',
-        redirectTo: 'manage',
+        redirectTo: 'batch',
         pathMatch: 'full',
       },
 

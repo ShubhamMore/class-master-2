@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 import { EmployeeModel } from '../models/employee.model';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
   private employeeId: string;
 
-  private employee: EmployeeModel;
+  private employee = new BehaviorSubject<EmployeeModel>(null);
 
   setEmployeeData(employee: EmployeeModel) {
-    this.employee = employee;
+    this.employee.next(employee);
   }
 
   getEmployeeData() {
@@ -19,7 +19,7 @@ export class EmployeeService {
   }
 
   deleteEmployeeData() {
-    this.employee = null;
+    this.employee.next(null);
   }
 
   setEmployeeId(employeeId: string) {

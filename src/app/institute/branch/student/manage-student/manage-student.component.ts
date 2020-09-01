@@ -61,7 +61,9 @@ export class ManageStudentComponent implements OnInit {
   }
 
   private getCategories() {
-    this.categories = this.branchService.getBranchData().categories;
+    this.branchService.getBranchData().subscribe((branch: BranchModel) => {
+      this.categories = branch.categories;
+    });
 
     if (!this.categories) {
       this.branchService.getBranch(this.branchId).subscribe(

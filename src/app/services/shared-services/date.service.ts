@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 
+export class Month {
+  constructor(public monthNo: string, public month: string) {}
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -9,6 +13,8 @@ export class DateService {
   private dateInMilliseconds: number;
   private dateTimeString: string;
   private dateTimeISOString: string;
+  private months: Month[];
+  private years: string[];
 
   constructor() {
     this.date = new Date();
@@ -16,6 +22,34 @@ export class DateService {
     this.dateInMilliseconds = this.date.getTime();
     this.dateTimeString = this.convertToDateTimeString(this.date);
     this.dateTimeISOString = this.convertToISOString(this.date);
+
+    this.months = [
+      { monthNo: '01', month: 'Jan' },
+      { monthNo: '02', month: 'Feb' },
+      { monthNo: '03', month: 'Mar' },
+      { monthNo: '04', month: 'Apr' },
+      { monthNo: '05', month: 'May' },
+      { monthNo: '06', month: 'Jun' },
+      { monthNo: '07', month: 'Jul' },
+      { monthNo: '08', month: 'Aug' },
+      { monthNo: '09', month: 'Sep' },
+      { monthNo: '10', month: 'Oct' },
+      { monthNo: '11', month: 'Nov' },
+      { monthNo: '12', month: 'Dec' },
+    ];
+
+    this.years = [];
+    for (let year = 2018; year <= this.date.getFullYear(); year++) {
+      this.years.push(year.toString());
+    }
+  }
+
+  getMonths() {
+    return this.months;
+  }
+
+  getYears() {
+    return this.years;
   }
 
   getDate() {

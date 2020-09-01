@@ -100,7 +100,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Schedule Classroom Test',
-        link: '/institute/branch/exam/test/manage',
+        link: '/institute/branch/exam/test/batch',
         hidden: true,
       },
       {

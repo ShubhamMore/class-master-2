@@ -1,14 +1,14 @@
-import { AddTestScoreComponent } from './add-test-score.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ManageBatchTestComponent } from './manage-batch-test.component';
 
 const routes: Routes = [
-  { path: '', component: AddTestScoreComponent },
+  { path: '', component: ManageBatchTestComponent },
 
   {
     path: 'page-not-found',
     loadChildren: () =>
-      import('../../../../../shared/page-not-found/page-not-found.module').then(
+      import('../../../../../../shared/page-not-found/page-not-found.module').then(
         (m) => m.PageNotFoundModule,
       ),
   },
@@ -24,4 +24,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AddTestScoreRoutingModule {}
+export class ManageBatchTestRoutingModule {}

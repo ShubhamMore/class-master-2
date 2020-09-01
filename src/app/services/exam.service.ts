@@ -1,72 +1,39 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 import { ExamModel } from '../models/exam.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExamService {
-  exam: ExamModel;
+  private examId: string;
 
-  private examSearchData: any = {
-    branch: '',
-    category: '',
-    course: '',
-    batch: '',
-    subject: '',
-    month: null,
-    year: null,
-  };
+  private exam = new BehaviorSubject<ExamModel>(null);
 
-  setBranch(branch: string) {
-    this.examSearchData.branch = branch;
-  }
-  getBranch() {
-    return this.examSearchData.branch;
+  setExamData(exam: ExamModel) {
+    this.exam.next(exam);
   }
 
-  setCategory(category: string) {
-    this.examSearchData.category = category;
-  }
-  getCategory() {
-    return this.examSearchData.category;
+  getExamData() {
+    return this.exam;
   }
 
-  setCourse(course: string) {
-    this.examSearchData.course = course;
-  }
-  getCourse() {
-    return this.examSearchData.course;
+  deleteExamData() {
+    this.exam.next(null);
   }
 
-  setBatch(batch: string) {
-    this.examSearchData.batch = batch;
-  }
-  getBatch() {
-    return this.examSearchData.batch;
+  setExamId(examId: string) {
+    this.examId = examId;
   }
 
-  setSubject(subject: string) {
-    this.examSearchData.subject = subject;
-  }
-  getSubject() {
-    return this.examSearchData.subject;
+  getExamId() {
+    return this.examId;
   }
 
-  setMonth(month: string) {
-    this.examSearchData.month = month;
-  }
-  getMonth() {
-    return this.examSearchData.month;
-  }
-
-  setYear(year: string) {
-    this.examSearchData.year = year;
-  }
-  getYear() {
-    return this.examSearchData.year;
+  deleteExamId() {
+    this.examId = null;
   }
 
   constructor(private httpService: HttpService) {}
@@ -103,10 +70,14 @@ export class ExamService {
     category: string,
     course: string,
     batch: string,
+    subject: string,
     month: string,
     year: string,
   ) {
-    const data = { api: 'getExams', data: { branch, category, course, batch, month, year } };
+    const data = {
+      api: 'getExams',
+      data: { branch, category, course, batch, subject, month, year },
+    };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -177,8 +148,20 @@ export class ExamService {
     );
   }
 
-  editExam(id: string, exam: ExamModel) {
-    const data = { api: 'editExam', data: { id, exam } };
+  editExam(exam: ExamModel) {
+    const data = { api: 'editExam', data: exam };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  saveStudentsMarks(id: string, marks: any) {
+    const data = { api: 'saveStudentsMarks', data: { id, marks } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

@@ -13,6 +13,7 @@ export class ExamModel {
     public batch: string,
     public subject: string,
     public marks: MarksModel[],
+    public status: boolean,
   ) {}
 }
 

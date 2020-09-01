@@ -1,15 +1,17 @@
+import { CategoryModel } from './../models/branch.model';
 import { BranchModel } from '../models/branch.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class BranchService {
   private branchId: string;
   private categoryId: string;
 
-  private branch: BranchModel;
+  private branch = new BehaviorSubject<BranchModel>(null);
+  private category = new BehaviorSubject<CategoryModel>(null);
 
   setBranchId(branchId: string) {
     this.branchId = branchId;
@@ -36,8 +38,7 @@ export class BranchService {
   }
 
   setBranchData(branch: BranchModel) {
-    this.deleteBranchData();
-    this.branch = branch;
+    this.branch.next(branch);
   }
 
   getBranchData() {
@@ -45,7 +46,19 @@ export class BranchService {
   }
 
   deleteBranchData() {
-    this.branch = null;
+    this.branch.next(null);
+  }
+
+  setCategoryData(category: CategoryModel) {
+    this.category.next(category);
+  }
+
+  getCategoryData() {
+    return this.category;
+  }
+
+  deleteCategoryData() {
+    this.category.next(null);
   }
 
   constructor(private httpService: HttpService) {}
