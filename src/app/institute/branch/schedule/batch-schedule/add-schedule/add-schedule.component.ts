@@ -266,6 +266,17 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
     return '--';
   }
 
+  getRepeatDays() {
+    const repeatDays = [];
+    this.weekDays.forEach((day: string, i: number) => {
+      if (this.repeatDays.includes(i)) {
+        repeatDays.push(day);
+      }
+    });
+
+    return repeatDays.join(', ');
+  }
+
   private showToastr(position: any, status: any, message: string) {
     this.toastrService.show(status, message, {
       position,

@@ -390,6 +390,24 @@
                       <th>Topic</th>
                       <td>{{ scheduleForm.value.topic }}</td>
                     </tr>
+                    <tr>
+                      <th>Session Type</th>
+                      <td>{{ scheduleForm.value.sessionType }}</td>
+                    </tr>
+                    <tr>
+                      <th>Repeat</th>
+                      <td>{{ repeat ? 'Yes' : 'No' }}</td>
+                    </tr>
+                    <ng-container *ngIf="repeat">
+                      <tr>
+                        <th>Repeat Days</th>
+                        <td>{{ getRepeatDays() }}</td>
+                      </tr>
+                      <tr>
+                        <th>Repeat Up To</th>
+                        <td>{{ repeatUpTo }}</td>
+                      </tr>
+                    </ng-container>
                   </tbody>
                 </table>
               </div>
