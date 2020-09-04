@@ -397,7 +397,8 @@ export class AddStudentComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    const type = this.studentService.getStudentType();
+    this.router.navigate(['../'], { relativeTo: this.route, queryParams: { type } });
   }
 
   ngOnDestroy() {

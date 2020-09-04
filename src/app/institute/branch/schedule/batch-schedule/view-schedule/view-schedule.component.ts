@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BranchService } from './../../../../services/branch.service';
+import { BranchService } from './../../../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -13,7 +13,6 @@ export class ViewScheduleComponent implements OnInit {
 
   constructor(
     private branchService: BranchService,
-
     private router: Router,
     private route: ActivatedRoute,
   ) {}

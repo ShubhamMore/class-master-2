@@ -1,0 +1,109 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>
+          Schedule of <small>{{ batch.basicDetails.batchName }}</small>
+        </h3>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <button nbButton fullWidth (click)="addSchedule()" size="small">Add Schedule</button>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-card>
+      <nb-card-header>
+        <div class="row">
+          <div class="col-md-3 pt-2">
+            <div class="btn-group">
+              <button nbButton status="primary" size="small" (click)="previous()">
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+              </button>
+              <button nbButton status="primary" size="small" (click)="goToToday()">
+                Today
+              </button>
+              <button nbButton status="primary" size="small" (click)="next()">
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-5 pt-2">
+            <h5 class="text-center">{{ headerDate() }}</h5>
+          </div>
+
+          <div class="col-md-4 pt-2">
+            <div class="btn-group">
+              <button
+                nbButton
+                status="primary"
+                size="small"
+                (click)="changeScheduleCalenderType(0)"
+              >
+                Month
+              </button>
+              <button
+                nbButton
+                status="primary"
+                size="small"
+                (click)="changeScheduleCalenderType(1)"
+              >
+                Week
+              </button>
+              <button
+                nbButton
+                status="primary"
+                size="small"
+                (click)="changeScheduleCalenderType(2)"
+              >
+                Day
+              </button>
+            </div>
+          </div>
+        </div>
+      </nb-card-header>
+    </nb-card>
+
+    <nb-accordion multi>
+      <nb-accordion-item *ngFor="let day of days; let i = index">
+        <nb-accordion-item-header>
+          {{ day }}
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div
+            class="table-responsive"
+            *ngIf="getFilteredSchedule(day).length > 0; else noSchedule"
+          >
+            <table class="table">
+              <tr *ngFor="let schedule of getFilteredSchedule(day)">
+                <td>{{ getTime(schedule.startTime, schedule.endTime) }}</td>
+                <td>{{ getSubject(schedule.subject) }}</td>
+                <td>{{ schedule.topic }}</td>
+                <td>{{ getTeacher(schedule.teacher) }}</td>
+                <td>
+                  <button status="basic" nbButton size="small" (click)="editSchedule(schedule)">
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <button
+                    status="danger"
+                    nbButton
+                    size="small"
+                    (click)="deleteSchedule(schedule._id)"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <ng-template #noSchedule>
+            <p class="text-center">No Schedule</p>
+          </ng-template>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+  </nb-card-body>
+</nb-card>

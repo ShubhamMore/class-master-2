@@ -8,32 +8,18 @@ const routes: Routes = [
     component: ScheduleComponent,
     children: [
       {
-        path: 'manage',
+        path: 'batch',
         loadChildren: () =>
           import('./manage-schedule/manage-schedule.module').then((m) => m.ManageScheduleModule),
       },
-
       {
-        path: 'add',
+        path: 'batch-schedule',
         loadChildren: () =>
-          import('./add-schedule/add-schedule.module').then((m) => m.AddScheduleModule),
+          import('./batch-schedule/batch-schedule.module').then((m) => m.BatchScheduleModule),
       },
-
-      {
-        path: 'edit',
-        loadChildren: () =>
-          import('./add-schedule/add-schedule.module').then((m) => m.AddScheduleModule),
-      },
-
-      {
-        path: 'view',
-        loadChildren: () =>
-          import('./view-schedule/view-schedule.module').then((m) => m.ViewScheduleModule),
-      },
-
       {
         path: '',
-        redirectTo: 'manage',
+        redirectTo: 'batch',
         pathMatch: 'full',
       },
 

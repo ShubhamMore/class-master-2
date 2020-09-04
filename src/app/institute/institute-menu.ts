@@ -80,7 +80,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Schedule Class',
     icon: '',
-    link: '/institute/branch/schedule/manage',
+    link: '/institute/branch/schedule/batch',
     hidden: true,
   },
 

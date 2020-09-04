@@ -50,6 +50,7 @@ export class ManageLeadComponent implements OnInit {
 
     this.route.queryParams.subscribe((param: Params) => {
       this.type = param.type;
+      this.leadService.setLeadType(this.type);
     });
 
     if (this.type !== 'active' && this.type !== 'inactive') {

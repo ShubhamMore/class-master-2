@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 import { BranchEmployeeModel } from '../models/branch-employee.model';
 
 @Injectable({ providedIn: 'root' })
 export class BranchEmployeeService {
   private branchEmployeeId: string;
-  private branchEmployee: BranchEmployeeModel;
+  private branchEmployee = new BehaviorSubject<BranchEmployeeModel>(null);
+  private branchEmployees = new BehaviorSubject<BranchEmployeeModel[]>([]);
 
   setBranchEmployeeData(branchEmployee: BranchEmployeeModel) {
-    this.branchEmployee = branchEmployee;
+    this.branchEmployee.next(branchEmployee);
   }
 
   getBranchEmployeeData() {
@@ -18,7 +19,19 @@ export class BranchEmployeeService {
   }
 
   deleteBranchEmployeeData() {
-    this.branchEmployee = null;
+    this.branchEmployee.next(null);
+  }
+
+  setBranchEmployeesData(branchEmployees: BranchEmployeeModel[]) {
+    this.branchEmployees.next(branchEmployees);
+  }
+
+  getBranchEmployeesData() {
+    return this.branchEmployees;
+  }
+
+  deleteBranchEmployeesData() {
+    this.branchEmployees.next([]);
   }
 
   setBranchEmployeeId(branchEmployeeId: string) {

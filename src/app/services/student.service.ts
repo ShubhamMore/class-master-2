@@ -6,8 +6,21 @@ import { StudentModel } from '../models/Student.model';
 
 @Injectable({ providedIn: 'root' })
 export class StudentService {
+  private studentType: string;
   private studentId: string;
   private student = new BehaviorSubject<StudentModel>(null);
+
+  setStudentType(type: string) {
+    this.studentType = type;
+  }
+
+  getStudentType() {
+    return this.studentType;
+  }
+
+  deleteStudentType() {
+    this.studentType = null;
+  }
 
   setStudentData(student: StudentModel) {
     this.student.next(student);

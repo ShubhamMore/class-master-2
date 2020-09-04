@@ -6,6 +6,8 @@ import { EmployeeModel } from '../models/employee.model';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
+  private employeeType: string;
+
   private employeeId: string;
 
   private employee = new BehaviorSubject<EmployeeModel>(null);
@@ -20,6 +22,18 @@ export class EmployeeService {
 
   deleteEmployeeData() {
     this.employee.next(null);
+  }
+
+  setEmployeeType(employeeType: string) {
+    this.employeeType = employeeType;
+  }
+
+  getEmployeeType() {
+    return this.employeeType;
+  }
+
+  deleteEmployeeType() {
+    this.employeeType = null;
   }
 
   setEmployeeId(employeeId: string) {

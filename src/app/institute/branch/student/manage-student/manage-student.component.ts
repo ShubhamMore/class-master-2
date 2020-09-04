@@ -53,6 +53,8 @@ export class ManageStudentComponent implements OnInit {
       return;
     }
 
+    this.studentService.setStudentType(this.type);
+
     this.branchStudents = [];
     this.categories = [];
     this.category = '';

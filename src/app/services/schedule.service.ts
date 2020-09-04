@@ -1,62 +1,44 @@
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { HttpService } from './shared-services/http.service';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 import { ScheduleModel } from '../models/schedule.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScheduleService {
-  private schedule: ScheduleModel;
-
-  private scheduleSearchData = {
-    branch: '',
-    category: '',
-    course: '',
-    batch: '',
-  };
-
-  constructor(private httpService: HttpService) {}
+  private schedule = new BehaviorSubject<ScheduleModel>(null);
+  private scheduleId: string;
 
   setScheduleData(Schedule: ScheduleModel) {
-    this.schedule = Schedule;
+    this.schedule.next(Schedule);
   }
 
   getScheduleData() {
     return this.schedule;
   }
 
-  setBranch(branch: string) {
-    this.scheduleSearchData.branch = branch;
-  }
-  getBranch() {
-    return this.scheduleSearchData.branch;
+  deleteScheduleData() {
+    this.schedule.next(null);
   }
 
-  setCategory(category: string) {
-    this.scheduleSearchData.category = category;
-  }
-  getCategory() {
-    return this.scheduleSearchData.category;
+  setScheduleId(scheduleId: string) {
+    this.scheduleId = scheduleId;
   }
 
-  setCourse(course: string) {
-    this.scheduleSearchData.course = course;
-  }
-  getCourse() {
-    return this.scheduleSearchData.course;
+  getScheduleId() {
+    return this.scheduleId;
   }
 
-  setBatch(batch: string) {
-    this.scheduleSearchData.batch = batch;
-  }
-  getBatch() {
-    return this.scheduleSearchData.batch;
+  deleteScheduleId() {
+    this.scheduleId = null;
   }
 
-  addSchedule(schedule: any) {
-    const data = { api: 'newSchedule', data: schedule };
+  constructor(private httpService: HttpService) {}
+
+  addSchedule(schedule: any, scheduleRepeat: any) {
+    const data = { api: 'newSchedule', data: { schedule, scheduleRepeat } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -79,8 +61,18 @@ export class ScheduleService {
     );
   }
 
-  getAllSchedules(branch: string, category: string, course: string, batch: string) {
-    const data = { api: 'getAllSchedules', data: { branch, category, course, batch } };
+  getAllSchedules(
+    branch: string,
+    category: string,
+    course: string,
+    batch: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    const data = {
+      api: 'getAllSchedule',
+      data: { branch, category, course, batch, startDate, endDate },
+    };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

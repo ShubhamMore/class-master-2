@@ -8,11 +8,25 @@ import { LeadModel } from '../models/Lead.model';
   providedIn: 'root',
 })
 export class LeadService {
+  private leadType: string;
+
   private leadId: string;
   private lead = new BehaviorSubject<LeadModel>(null);
 
   setLeadData(lead: LeadModel) {
     this.lead.next(lead);
+  }
+
+  getLeadType() {
+    return this.leadType;
+  }
+
+  setLeadType(leadType: string) {
+    this.leadType = leadType;
+  }
+
+  deleteLeadType() {
+    this.leadType = null;
   }
 
   getLeadData() {

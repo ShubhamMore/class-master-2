@@ -47,6 +47,8 @@ export class ManageEmployeeComponent implements OnInit {
       return;
     }
 
+    this.employeeService.setEmployeeType(this.type);
+
     this.branchEmployees = [];
 
     this.branchEmployeeService.getBranchEmployees(this.branchId, this.type).subscribe(

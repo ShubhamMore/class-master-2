@@ -1,3 +1,4 @@
+import { LeadService } from './../../../services/lead.service';
 import { CourseModel } from './../../../models/course.model';
 import { CourseService } from './../../../services/course.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -16,6 +17,7 @@ export class LeadComponent implements OnInit, OnDestroy {
   constructor(
     private branchService: BranchService,
     private courseService: CourseService,
+    private leadService: LeadService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -42,5 +44,6 @@ export class LeadComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.courseService.deleteCoursesData();
+    this.leadService.deleteLeadType();
   }
 }

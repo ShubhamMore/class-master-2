@@ -38,7 +38,7 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
     this.studentId = this.studentService.getStudentId();
 
     if (!this.branchId && !this.categoryId && !this.studentId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
 
       this.showToastr('top-right', 'danger', 'Student Details Not Available');
       return;
@@ -51,7 +51,7 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
       (err: any) => {
         this.studentService.setStudentData(null);
         this.showToastr('top-right', 'danger', err);
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.back();
       },
     );
 
@@ -62,7 +62,7 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
       (err: any) => {
         this.courseService.setCoursesData(null);
         this.showToastr('top-right', 'danger', err);
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.back();
       },
     );
 
@@ -73,7 +73,7 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
       (err: any) => {
         this.batchService.setBatchesData(null);
         this.showToastr('top-right', 'danger', err);
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.back();
       },
     );
 
@@ -84,7 +84,7 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
       (err: any) => {
         this.discountAndOfferService.setDiscountAndOffersData(null);
         this.showToastr('top-right', 'danger', err);
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.back();
       },
     );
   }
@@ -94,6 +94,11 @@ export class StudentCourseComponent implements OnInit, OnDestroy {
       position,
       status,
     });
+  }
+
+  private back() {
+    const type = this.studentService.getStudentType();
+    this.router.navigate(['../'], { relativeTo: this.route, queryParams: { type } });
   }
 
   ngOnDestroy() {

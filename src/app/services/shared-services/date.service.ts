@@ -15,6 +15,7 @@ export class DateService {
   private dateTimeISOString: string;
   private months: Month[];
   private years: string[];
+  private weekDays: string[];
 
   constructor() {
     this.date = new Date();
@@ -38,14 +39,28 @@ export class DateService {
       { monthNo: '12', month: 'Dec' },
     ];
 
+    this.weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+
     this.years = [];
     for (let year = 2018; year <= this.date.getFullYear(); year++) {
       this.years.push(year.toString());
     }
   }
 
+  getWeekDays() {
+    return this.weekDays;
+  }
+
+  getWeekDay(day: number) {
+    return this.weekDays[day];
+  }
+
   getMonths() {
     return this.months;
+  }
+
+  getMonth(month: number) {
+    return this.months[month].month;
   }
 
   getYears() {
@@ -104,6 +119,24 @@ export class DateService {
       '-' +
       date.getDate().toString().padStart(2, '0')
     );
+  }
+
+  reverseDate(date: string) {
+    if (!date) {
+      return '--';
+    }
+    return date.split('-').reverse().join('-');
+  }
+
+  addDaysInDate(date: any, days: number) {
+    if (!date) {
+      return '--';
+    }
+    const curDate = new Date(date);
+    curDate.setDate(curDate.getDate() + (days - 1));
+    const myDate = new Date(curDate);
+
+    return myDate;
   }
 
   convertToISOString(date: any) {

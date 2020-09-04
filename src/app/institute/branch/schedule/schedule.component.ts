@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { BatchModel } from './../../../models/batch.model';
+import { CourseModel } from './../../../models/course.model';
+import { CourseService } from './../../../services/course.service';
+import { BatchService } from './../../../services/batch.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from './../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -7,13 +11,14 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.scss'],
 })
-export class ScheduleComponent implements OnInit {
+export class ScheduleComponent implements OnInit, OnDestroy {
   loading: boolean;
-  branchId: string;
+  private branchId: string;
 
   constructor(
     private branchService: BranchService,
-
+    private courseService: CourseService,
+    private batchService: BatchService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -23,8 +28,27 @@ export class ScheduleComponent implements OnInit {
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
-
       return;
     }
+
+    this.courseService.getCourses(this.branchId, '').subscribe(
+      (courses: CourseModel[]) => {
+        this.courseService.setCoursesData(courses);
+        this.loading = false;
+      },
+      (error: any) => {},
+    );
+
+    this.batchService.getBatches(this.branchId, '', '').subscribe(
+      (batches: BatchModel[]) => {
+        this.batchService.setBatchesData(batches);
+      },
+      (error: any) => {},
+    );
+  }
+
+  ngOnDestroy() {
+    this.courseService.deleteCoursesData();
+    this.batchService.deleteBatchesData();
   }
 }
