@@ -6,6 +6,7 @@ import {
   NbAccordionModule,
   NbFormFieldModule,
   NbIconModule,
+  NbTooltipModule,
 } from '@nebular/theme';
 
 import { NgModule } from '@angular/core';
@@ -19,6 +20,7 @@ import { ManageBatchScheduleRoutingModule } from './manage-batch-schedule-routin
     CommonModule,
     ManageBatchScheduleRoutingModule,
     NbCardModule,
+    NbTooltipModule,
     NbIconModule,
     NbButtonModule,
     NbInputModule,

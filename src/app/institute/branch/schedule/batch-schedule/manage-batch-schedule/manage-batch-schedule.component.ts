@@ -86,12 +86,12 @@ export class ManageBatchScheduleComponent implements OnInit {
   setStartDate() {
     const currentDate = new Date(this.curDate);
     if (this.scheduleCalenderType === 0) {
-      currentDate.setDate(1);
       this.startDate = new Date(currentDate);
     } else if (this.scheduleCalenderType === 1) {
       currentDate.setDate(currentDate.getDate() - currentDate.getDay());
       this.startDate = new Date(currentDate);
     } else {
+      currentDate.setDate(1);
       this.startDate = new Date(currentDate);
     }
     this.calcNoOfDays();
@@ -101,11 +101,11 @@ export class ManageBatchScheduleComponent implements OnInit {
   calcNoOfDays() {
     let noOfDays: number;
     if (this.scheduleCalenderType === 0) {
-      noOfDays = this.daysInMonth(this.curMonth, this.curYear);
+      noOfDays = 1;
     } else if (this.scheduleCalenderType === 1) {
       noOfDays = 7;
     } else {
-      noOfDays = 1;
+      noOfDays = this.daysInMonth(this.curMonth, this.curYear);
     }
     this.noOfDays = noOfDays;
 
@@ -124,7 +124,7 @@ export class ManageBatchScheduleComponent implements OnInit {
   headerDate(): string {
     let headerDate: string;
     if (this.scheduleCalenderType === 0) {
-      headerDate = this.dateService.getMonth(this.curMonth) + ' ' + this.curYear;
+      headerDate = this.curDate.toString().substring(4, 15);
     } else if (this.scheduleCalenderType === 1) {
       const currentDate = this.curDate;
       currentDate.setDate(currentDate.getDate() - currentDate.getDay());
@@ -144,7 +144,7 @@ export class ManageBatchScheduleComponent implements OnInit {
 
       headerDate = firstDay + ' - ' + lastDay;
     } else {
-      headerDate = this.curDate.toString().substring(4, 15);
+      headerDate = this.dateService.getMonth(this.curMonth) + ' ' + this.curYear;
     }
     return headerDate;
   }
@@ -192,22 +192,22 @@ export class ManageBatchScheduleComponent implements OnInit {
 
   next() {
     if (this.scheduleCalenderType === 0) {
-      this.nextMonth();
+      this.nextDay();
     } else if (this.scheduleCalenderType === 1) {
       this.nextWeek();
     } else {
-      this.nextDay();
+      this.nextMonth();
     }
     this.setStartDate();
   }
 
   previous() {
     if (this.scheduleCalenderType === 0) {
-      this.previousMonth();
+      this.previousDay();
     } else if (this.scheduleCalenderType === 1) {
       this.previousWeek();
     } else {
-      this.previousDay();
+      this.previousMonth();
     }
     this.setStartDate();
   }
@@ -233,7 +233,7 @@ export class ManageBatchScheduleComponent implements OnInit {
   }
 
   getSubject(subject: string) {
-    const mySubject = this.batch.subjects.find(
+    const mySubject = this.course.subjects.find(
       (curSubject: SubjectModel) => curSubject._id === subject,
     );
 
@@ -248,7 +248,13 @@ export class ManageBatchScheduleComponent implements OnInit {
     this.router.navigate(['../add'], { relativeTo: this.route });
   }
 
+  addScheduleOfDay(day: string) {
+    this.scheduleService.setScheduleDay(day);
+    this.router.navigate(['../add'], { relativeTo: this.route, queryParams: { mode: 'date' } });
+  }
+
   editSchedule(schedule: ScheduleModel) {
+    this.scheduleService.setScheduleId(schedule._id);
     this.scheduleService.setScheduleData(schedule);
     this.router.navigate(['../edit'], { relativeTo: this.route, queryParams: { mode: 'edit' } });
   }
@@ -297,7 +303,6 @@ export class ManageBatchScheduleComponent implements OnInit {
 
   getFilteredSchedule(date: any) {
     date = this.dateService.convertToDateString(date);
-    date = this.dateService.reverseDate(date);
     const schedules: ScheduleModel[] = this.schedules.filter(
       (schedule: ScheduleModel) => schedule.date === date,
     );

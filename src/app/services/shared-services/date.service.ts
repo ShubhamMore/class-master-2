@@ -8,6 +8,7 @@ export class Month {
   providedIn: 'root',
 })
 export class DateService {
+  private oneDayInMilliseconds: number;
   private date: Date;
   private dateString: string;
   private dateInMilliseconds: number;
@@ -19,6 +20,7 @@ export class DateService {
 
   constructor() {
     this.date = new Date();
+    this.oneDayInMilliseconds = 24 * 60 * 60 * 1000;
     this.dateString = this.convertToDateString(this.date);
     this.dateInMilliseconds = this.date.getTime();
     this.dateTimeString = this.convertToDateTimeString(this.date);
@@ -53,6 +55,14 @@ export class DateService {
 
   getWeekDay(day: number) {
     return this.weekDays[day];
+  }
+
+  getDay(date: any) {
+    if (!date) {
+      return '--';
+    }
+    date = new Date(date);
+    return this.weekDays[date.getDay()];
   }
 
   getMonths() {
@@ -134,6 +144,7 @@ export class DateService {
     }
     const curDate = new Date(date);
     curDate.setDate(curDate.getDate() + (days - 1));
+
     const myDate = new Date(curDate);
 
     return myDate;
@@ -177,7 +188,7 @@ export class DateService {
     const meridiem = hours >= 12 ? 'PM' : 'AM';
     if (hours === 0) {
       hours = 12;
-    } else if (hours >= 12) {
+    } else if (hours > 12) {
       hours -= 12;
     }
 
@@ -194,5 +205,10 @@ export class DateService {
 
   compareDates(date1: any, date2: any): boolean {
     return this.convertToDate(date1) <= this.convertToDate(date2);
+  }
+
+  dateDifferenceInDays(date1: any, date2: any) {
+    const dateDifference = this.dateToMilliseconds(date2) - this.dateToMilliseconds(date1);
+    return dateDifference / this.oneDayInMilliseconds;
   }
 }

@@ -8,7 +8,7 @@ import { BatchModel } from './../../../../../models/batch.model';
 import { CourseModel, SubjectModel } from './../../../../../models/course.model';
 import { CategoryModel } from './../../../../../models/branch.model';
 import { ScheduleModel } from './../../../../../models/schedule.model';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { BranchService } from './../../../../../services/branch.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -28,11 +28,17 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
   course: CourseModel;
   batch: BatchModel;
   scheduleForm: FormGroup;
+
   weekDays: string[];
   repeat: boolean;
   repeatUpTo: string;
   repeatDays: number[];
   scheduleId: string;
+  repeatSchedules: any[];
+  repeatSchedule: any;
+  repeatScheduleEdit: boolean;
+  repeatScheduleIndex: number;
+
   schedule: ScheduleModel;
   subjects: SubjectModel[];
   teachers: BranchEmployeeModel[];
@@ -70,13 +76,13 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
 
     this.scheduleId = this.scheduleService.getScheduleId();
 
-    if (mode && mode !== 'edit') {
+    if (mode && !['edit', 'date'].includes(mode)) {
       this.showToastr('top-right', 'danger', 'Invalid Route');
-      // this.router.navigate(['../page-not-found'], { relativeTo: this.route });
+      this.router.navigate(['../'], { relativeTo: this.route });
       return;
-    } else if (mode && !this.scheduleId) {
+    } else if (mode && mode === 'edit' && !this.scheduleId) {
       this.showToastr('top-right', 'danger', 'Schedule Not Found');
-      // this.router.navigate(['../page-not-found'], { relativeTo: this.route });
+      // this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
 
@@ -96,7 +102,16 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
     this.teachers = [];
     this.weekDays = [];
     this.repeatDays = [];
+    this.repeatSchedules = [];
     this.repeat = false;
+    this.repeatScheduleEdit = false;
+
+    this.repeatUpTo = this.dateService.convertToDateString(
+      this.dateService.addDaysInDate(
+        this.batch.basicDetails.startDate,
+        +this.course.basicDetails.duration * 30,
+      ),
+    );
 
     this.repeatUpToTouched = false;
     this.repeatDaysTouched = false;
@@ -118,19 +133,25 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
       this.subjects.push(mySubject);
     });
 
+    let day: string;
+    if (mode && mode === 'date') {
+      const date = this.scheduleService.getScheduleDay();
+      day = this.dateService.convertToDateString(date);
+    }
+
     this.scheduleForm = new FormGroup({
-      date: new FormControl(this.dateService.getDateString(), {
+      date: new FormControl(day ? day : this.dateService.getDateString(), {
         validators: [Validators.required],
       }),
       startTime: new FormControl(null, { validators: [Validators.required] }),
       endTime: new FormControl(null, { validators: [Validators.required] }),
-      subject: new FormControl(null, { validators: [Validators.required] }),
-      teacher: new FormControl(null, { validators: [Validators.required] }),
+      subject: new FormControl('', { validators: [Validators.required] }),
+      teacher: new FormControl('', { validators: [Validators.required] }),
       topic: new FormControl(null, { validators: [Validators.required] }),
       sessionType: new FormControl('classroom', { validators: [Validators.required] }),
     });
 
-    if (mode && this.scheduleId) {
+    if (mode && mode === 'edit' && this.scheduleId) {
       this.scheduleService.getSchedule(this.scheduleId).subscribe(
         (schedule: ScheduleModel) => {
           this.schedule = schedule;
@@ -157,8 +178,86 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
     }
   }
 
+  getSchedule() {
+    const schedule: any = this.scheduleForm.value;
+    schedule.branch = this.branchId;
+    schedule.category = this.category._id;
+    schedule.course = this.course._id;
+    schedule.batch = this.batch._id;
+    return schedule;
+  }
+
+  CalculateRepeatSchedule() {
+    const schedule: any = this.getSchedule();
+
+    this.repeatSchedules = [];
+
+    this.repeatSchedules.push(schedule);
+
+    if (this.repeat && this.repeatUpTo && this.repeatDays.length > 0) {
+      const day = 24 * 60 * 60 * 1000; // 1 Day mille-seconds
+
+      let scheduleDateInMS = this.dateService.dateToMilliseconds(schedule.date);
+      const repeatUpToDateInMS = this.dateService.dateToMilliseconds(this.repeatUpTo);
+
+      const noOfDays = (repeatUpToDateInMS - scheduleDateInMS) / day;
+
+      for (let i = 0; i < noOfDays; i++) {
+        scheduleDateInMS += day;
+        const date = new Date(scheduleDateInMS);
+        if (this.repeatDays.includes(date.getDay())) {
+          const newSchedule: any = {
+            startTime: schedule.startTime,
+            endTime: schedule.endTime,
+            subject: schedule.subject,
+            topic: schedule.topic,
+            teacher: schedule.teacher,
+            branch: schedule.branch,
+            category: schedule.category,
+            course: schedule.course,
+            batch: schedule.batch,
+            sessionType: schedule.sessionType,
+          };
+          newSchedule.date = this.dateService.convertToDateString(date);
+          this.repeatSchedules.push(newSchedule);
+        }
+      }
+    }
+  }
+
+  removeRepeatSchedule(i: number) {
+    this.repeatSchedules.splice(i, 1);
+  }
+
+  editRepeatSchedule(schedule: any, i: number) {
+    this.repeatSchedule = schedule;
+    this.repeatScheduleIndex = i;
+    this.repeatScheduleEdit = true;
+  }
+
+  cloneRepeatSchedule(schedule: any, i: number) {
+    this.repeatSchedule = schedule;
+    this.repeatScheduleIndex = i;
+  }
+
+  saveRepeatSchedule(schedule: any) {
+    if (this.repeatScheduleEdit) {
+      this.repeatSchedules[this.repeatScheduleIndex] = schedule;
+    } else {
+      this.repeatSchedules.splice(this.repeatScheduleIndex + 1, 0, schedule);
+    }
+    this.cancelRepeatSchedule();
+  }
+
+  cancelRepeatSchedule() {
+    this.repeatScheduleIndex = null;
+    this.repeatSchedule = null;
+    this.repeatScheduleEdit = false;
+  }
+
   onChangeRepeatUpToDate() {
     this.repeatUpToTouched = true;
+    this.CalculateRepeatSchedule();
   }
 
   onSelectRepeatDay(checked: any, day: number) {
@@ -169,6 +268,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
       const i = this.repeatDays.indexOf(day);
       this.repeatDays.splice(i, 1);
     }
+    this.CalculateRepeatSchedule();
   }
 
   previousStep() {
@@ -182,6 +282,8 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.CalculateRepeatSchedule();
+
     this.stepper.next();
   }
 
@@ -193,8 +295,6 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
       this.showToastr('top-right', 'danger', 'At least one Repeat Day is Required');
       return;
     }
-
-    this.repeatDays.sort();
 
     this.stepper.next();
   }
@@ -208,20 +308,8 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
 
     this.loading = true;
 
-    const schedule: any = this.scheduleForm.value;
-    schedule.branch = this.branchId;
-    schedule.category = this.category._id;
-    schedule.course = this.course._id;
-    schedule.batch = this.batch._id;
-
     if (!this.schedule) {
-      const scheduleRepeat: any = {
-        repeat: this.repeat,
-        repeatUpTo: this.repeatUpTo,
-        repeatDays: this.repeatDays,
-      };
-
-      this.scheduleService.addSchedule(schedule, scheduleRepeat).subscribe(
+      this.scheduleService.addSchedule(this.repeatSchedules).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Schedule Added Successfully!');
           this.back();
@@ -232,8 +320,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
         },
       );
     } else {
-      schedule._id = this.schedule._id;
-      this.scheduleService.editSchedule(schedule).subscribe(
+      this.scheduleService.editSchedule(this.scheduleId, this.repeatSchedules).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Schedule Updated Successfully!');
           this.back();
@@ -290,6 +377,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.scheduleService.deleteScheduleId();
+    this.scheduleService.deleteScheduleDay();
     this.scheduleService.deleteScheduleData();
   }
 }

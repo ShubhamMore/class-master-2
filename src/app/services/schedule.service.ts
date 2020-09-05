@@ -10,6 +10,7 @@ import { ScheduleModel } from '../models/schedule.model';
 export class ScheduleService {
   private schedule = new BehaviorSubject<ScheduleModel>(null);
   private scheduleId: string;
+  private scheduleDay: string;
 
   setScheduleData(Schedule: ScheduleModel) {
     this.schedule.next(Schedule);
@@ -35,10 +36,22 @@ export class ScheduleService {
     this.scheduleId = null;
   }
 
+  setScheduleDay(scheduleDay: string) {
+    this.scheduleDay = scheduleDay;
+  }
+
+  getScheduleDay() {
+    return this.scheduleDay;
+  }
+
+  deleteScheduleDay() {
+    this.scheduleDay = null;
+  }
+
   constructor(private httpService: HttpService) {}
 
-  addSchedule(schedule: any, scheduleRepeat: any) {
-    const data = { api: 'newSchedule', data: { schedule, scheduleRepeat } };
+  addSchedule(schedules: any[]) {
+    const data = { api: 'newSchedule', data: schedules };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -83,8 +96,8 @@ export class ScheduleService {
     );
   }
 
-  getSchedule(schedule: string) {
-    const data = { api: 'getSchedule', data: { schedule } };
+  getSchedule(id: string) {
+    const data = { api: 'getSchedule', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -107,8 +120,8 @@ export class ScheduleService {
     );
   }
 
-  editSchedule(schedule: ScheduleModel) {
-    const data = { api: 'editSchedule', data: schedule };
+  editSchedule(id: string, schedules: any[]) {
+    const data = { api: 'editSchedule', data: { id, schedules } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -119,8 +132,8 @@ export class ScheduleService {
     );
   }
 
-  deleteSchedule(schedule: string) {
-    const data = { api: 'deleteSchedule', data: { schedule } };
+  deleteSchedule(id: string) {
+    const data = { api: 'deleteSchedule', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

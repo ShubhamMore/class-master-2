@@ -7,7 +7,9 @@
         </h3>
       </div>
       <div class="col-md-3 col-sm-4">
-        <button nbButton fullWidth (click)="addSchedule()" size="small">Add Schedule</button>
+        <button nbButton fullWidth (click)="addSchedule()" status="primary" size="small">
+          Add Schedule
+        </button>
       </div>
     </div>
   </nb-card-header>
@@ -41,7 +43,7 @@
                 size="small"
                 (click)="changeScheduleCalenderType(0)"
               >
-                Month
+                Day
               </button>
               <button
                 nbButton
@@ -57,7 +59,7 @@
                 size="small"
                 (click)="changeScheduleCalenderType(2)"
               >
-                Day
+                Month
               </button>
             </div>
           </div>
@@ -65,10 +67,23 @@
       </nb-card-header>
     </nb-card>
 
-    <nb-accordion multi>
+    <nb-accordion status="basic" multi>
       <nb-accordion-item *ngFor="let day of days; let i = index">
         <nb-accordion-item-header>
-          {{ day }}
+          <div class="row accordion-header-item">
+            <div class="col-12">
+              <button
+                nbButton
+                class="float-right"
+                status="primary"
+                size="tiny"
+                (click)="addScheduleOfDay(day)"
+              >
+                <nb-icon nbTooltip="Add Schedule" icon="plus-outline"></nb-icon>
+              </button>
+              <span>{{ day }}</span>
+            </div>
+          </div>
         </nb-accordion-item-header>
         <nb-accordion-item-body>
           <div
