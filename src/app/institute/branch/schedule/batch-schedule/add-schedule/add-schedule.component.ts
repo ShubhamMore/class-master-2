@@ -184,7 +184,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
     schedule.category = this.category._id;
     schedule.course = this.course._id;
     schedule.batch = this.batch._id;
-    return schedule;
+    return { ...schedule };
   }
 
   CalculateRepeatSchedule() {
@@ -207,16 +207,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
         const date = new Date(scheduleDateInMS);
         if (this.repeatDays.includes(date.getDay())) {
           const newSchedule: any = {
-            startTime: schedule.startTime,
-            endTime: schedule.endTime,
-            subject: schedule.subject,
-            topic: schedule.topic,
-            teacher: schedule.teacher,
-            branch: schedule.branch,
-            category: schedule.category,
-            course: schedule.course,
-            batch: schedule.batch,
-            sessionType: schedule.sessionType,
+            ...schedule,
           };
           newSchedule.date = this.dateService.convertToDateString(date);
           this.repeatSchedules.push(newSchedule);

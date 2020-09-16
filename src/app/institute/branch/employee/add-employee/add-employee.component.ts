@@ -45,7 +45,6 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
     private toastrService: NbToastrService,
     private branchEmployeeService: BranchEmployeeService,
     private encryptService: EncryptService,
-
     private router: Router,
     private route: ActivatedRoute,
   ) {

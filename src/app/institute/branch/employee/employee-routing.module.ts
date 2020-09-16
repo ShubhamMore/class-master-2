@@ -26,6 +26,14 @@ const routes: Routes = [
       },
 
       {
+        path: 'salary',
+        loadChildren: () =>
+          import('./manage-employee-salary/manage-employee-salary.module').then(
+            (m) => m.ManageEmployeeSalaryModule,
+          ),
+      },
+
+      {
         path: '',
         redirectTo: 'manage?type=active',
         pathMatch: 'full',

@@ -86,6 +86,18 @@ export class EmployeeService {
     );
   }
 
+  getEmployeeByIMSId(id: string) {
+    const data = { api: 'getEmployeeByIMSId', data: { id } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   searchEmployee(employeeId: string) {
     const data = { api: 'searchEmployee', data: { employeeId } };
     return this.httpService.httpPost(data).pipe(

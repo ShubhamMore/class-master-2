@@ -1,14 +1,40 @@
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { HttpService } from './shared-services/http.service';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 import { EmployeeSalaryModel } from '../models/employee-salary.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeSalaryService {
-  employeeSalary: EmployeeSalaryModel;
+  private employeeSalaryId: string;
+
+  private employeeSalary = new BehaviorSubject<EmployeeSalaryModel>(null);
+
+  setEmployeeSalaryData(employeeSalary: EmployeeSalaryModel) {
+    this.employeeSalary.next(employeeSalary);
+  }
+
+  getEmployeeSalaryData() {
+    return this.employeeSalary;
+  }
+
+  deleteEmployeeSalaryData() {
+    this.employeeSalary.next(null);
+  }
+
+  setEmployeeSalaryId(employeeSalaryId: string) {
+    this.employeeSalaryId = employeeSalaryId;
+  }
+
+  getEmployeeSalaryId() {
+    return this.employeeSalaryId;
+  }
+
+  deleteEmployeeSalaryId() {
+    this.employeeSalaryId = null;
+  }
 
   constructor(private httpService: HttpService) {}
 
@@ -36,8 +62,8 @@ export class EmployeeSalaryService {
     );
   }
 
-  getAllSalaries(branch: string, employee: string) {
-    const data = { api: 'getAllSalaries', data: { branch, employee } };
+  getBranchEmployeeSalaries(branch: string, employee: string, month: string, year: string) {
+    const data = { api: 'getBranchEmployeeSalaries', data: { branch, employee, month, year } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -48,8 +74,8 @@ export class EmployeeSalaryService {
     );
   }
 
-  getAllSalariesForEmployee(branch: string, employee: string) {
-    const data = { api: 'getAllSalariesForEmployee', data: { branch, employee } };
+  getEmployeeSalaries(employee: string, month: string, year: string) {
+    const data = { api: 'getEmployeeSalaries', data: { employee, month, year } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -60,8 +86,8 @@ export class EmployeeSalaryService {
     );
   }
 
-  getEmployeeSalary(employeeSalary: string) {
-    const data = { api: 'getEmployeeSalary', data: { employeeSalary } };
+  getEmployeeSalary(id: string) {
+    const data = { api: 'getEmployeeSalary', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -72,8 +98,8 @@ export class EmployeeSalaryService {
     );
   }
 
-  deleteEmployeeSalary(employeeSalary: string) {
-    const data = { api: 'deleteEmployeeSalary', data: { employeeSalary } };
+  deleteEmployeeSalary(id: string) {
+    const data = { api: 'deleteEmployeeSalary', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

@@ -68,11 +68,11 @@ export class ManageEmployeeComponent implements OnInit {
     this.router.navigate(['../edit'], { relativeTo: this.route, queryParams: { mode: 'edit' } });
   }
 
-  branchEmployeeSalary(id: string, employee: string) {
-    this.employeeService.setEmployeeId(employee);
-    this.branchEmployeeService.setBranchEmployeeId(id);
+  branchEmployeeSalary(branchEmployee: BranchEmployeeModel) {
+    this.branchEmployeeService.setBranchEmployeeData(branchEmployee);
     this.router.navigate(['../salary'], { relativeTo: this.route });
   }
+  d;
 
   changeBranchEmployeeStatus(id: string, status: boolean, i: number) {
     this.branchEmployeeService.changeBranchEmployeeStatus(id, status).subscribe(
