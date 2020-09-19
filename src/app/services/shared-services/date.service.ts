@@ -69,12 +69,29 @@ export class DateService {
     return this.months;
   }
 
+  getMonthByMonthNumber(monthNo: string) {
+    const month: Month = this.months.find((curMonth: Month) => curMonth.monthNo === monthNo);
+    if (!month) {
+      return '--';
+    }
+    return month.month;
+  }
+
   getMonth(month: number) {
     return this.months[month].month;
   }
 
+  getCurrentMonth(): string {
+    const month = this.date.getMonth();
+    return (month + 1).toString().padStart(2, '0');
+  }
+
   getYears() {
     return this.years;
+  }
+
+  getCurrentYear(): string {
+    return this.date.getFullYear().toString();
   }
 
   getDate() {

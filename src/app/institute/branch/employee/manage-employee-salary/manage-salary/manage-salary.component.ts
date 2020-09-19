@@ -82,7 +82,7 @@ export class ManageSalaryComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.employeeSalaryService
-      .getBranchEmployeeSalaries(this.branchId, this.employee._id, this.month, this.year)
+      .getBranchEmployeeSalaries(this.branchId, this.employee.imsMasterId, this.month, this.year)
       .subscribe(
         (employeeSalaries: EmployeeSalaryModel[]) => {
           this.employeeSalaries = employeeSalaries;
@@ -99,10 +99,10 @@ export class ManageSalaryComponent implements OnInit, OnDestroy {
     this.router.navigate(['./add'], { relativeTo: this.route });
   }
 
-  editEmployeeSalary(employeeSalary: EmployeeSalaryModel) {
+  viewEmployeeSalary(employeeSalary: EmployeeSalaryModel) {
     this.employeeSalaryService.setEmployeeSalaryId(employeeSalary._id);
     this.employeeSalaryService.setEmployeeSalaryData(employeeSalary);
-    this.router.navigate(['./edit'], { relativeTo: this.route, queryParams: { mode: 'edit' } });
+    this.router.navigate(['./view'], { relativeTo: this.route });
   }
 
   deleteEmployeeSalary(employeeSalary: string, i: number) {

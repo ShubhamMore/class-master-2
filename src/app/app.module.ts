@@ -1,3 +1,4 @@
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
@@ -28,7 +29,7 @@ import {
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-
+    NbEvaIconsModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),

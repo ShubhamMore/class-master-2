@@ -58,28 +58,31 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Title</th>
                   <th>Date</th>
-                  <th>Category</th>
-                  <th>Course</th>
+                  <th>Month/Year</th>
+                  <th>Net Salary</th>
                   <th colspan="3">Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let employeeSalary of employeeSalaries; let i = index">
                   <td>{{ i + 1 }}</td>
-                  <td>{{ employeeSalary.employeeSalaryTitle }}</td>
                   <td>{{ dateService.formatDate(employeeSalary.date) }}</td>
-                  <td>{{ category.category }}</td>
-                  <td>{{ course.basicDetails.courseName }}</td>
+                  <td>
+                    {{ dateService.getMonthByMonthNumber(employeeSalary.month) }}
+                    <span>&nbsp;</span>
+                    {{ employeeSalary.year }}
+                  </td>
+                  <td>{{ employeeSalary.netSalary }}</td>
+
                   <td>
                     <button
                       nbButton
                       status="primary"
                       size="small"
-                      (click)="editEmployeeSalary(employeeSalary)"
+                      (click)="viewEmployeeSalary(employeeSalary)"
                     >
-                      Edit
+                      View
                     </button>
                   </td>
 
@@ -95,6 +98,7 @@
                       {{ employeeSalary.status ? 'Inactive' : 'Active' }}
                     </button>
                   </td>
+
                   <td>
                     <button
                       nbButton

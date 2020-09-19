@@ -13,11 +13,6 @@ const routes: Routes = [
       },
 
       {
-        path: 'edit',
-        loadChildren: () => import('./add-salary/add-salary.module').then((m) => m.AddSalaryModule),
-      },
-
-      {
         path: 'view',
         loadChildren: () =>
           import('./view-salary-receipt/view-salary-receipt.module').then(
