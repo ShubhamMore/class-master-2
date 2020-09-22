@@ -1,13 +1,13 @@
-import { BranchService } from './../../../services/branch.service';
 import { Component, OnInit } from '@angular/core';
+import { BranchService } from './../../../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'ngx-attendance',
-  templateUrl: './attendance.component.html',
-  styleUrls: ['./attendance.component.scss'],
+  selector: 'ngx-add-attendance',
+  templateUrl: './add-attendance.component.html',
+  styleUrls: ['./add-attendance.component.scss'],
 })
-export class AttendanceComponent implements OnInit {
+export class AddAttendanceComponent implements OnInit {
   loading: boolean;
   branchId: string;
 

@@ -1,17 +1,17 @@
-import { ManageAttendanceComponent } from './manage-attendance.component';
+import { ViewStudyMaterialComponent } from './view-study-material.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
     path: '',
-    component: ManageAttendanceComponent,
+    component: ViewStudyMaterialComponent,
   },
 
   {
     path: 'page-not-found',
     loadChildren: () =>
-      import('../../../../shared/page-not-found/page-not-found.module').then(
+      import('../../../../../shared/page-not-found/page-not-found.module').then(
         (m) => m.PageNotFoundModule,
       ),
   },
@@ -23,4 +23,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ManageAttendanceRoutingModule {}
+export class ViewStudyMaterialRoutingModule {}

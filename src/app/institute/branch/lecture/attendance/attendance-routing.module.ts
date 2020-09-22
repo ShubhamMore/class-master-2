@@ -33,7 +33,7 @@ const routes: Routes = [
       {
         path: 'page-not-found',
         loadChildren: () =>
-          import('../../../shared/page-not-found/page-not-found.module').then(
+          import('../../../../shared/page-not-found/page-not-found.module').then(
             (m) => m.PageNotFoundModule,
           ),
       },

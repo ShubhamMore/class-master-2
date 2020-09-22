@@ -24,9 +24,9 @@ const routes: Routes = [
       },
 
       {
-        path: 'attendance',
+        path: 'lecture',
         loadChildren: () =>
-          import('./attendance/attendance.module').then((m) => m.AttendanceModule),
+          import('./lecture/lecture.module').then((m) => m.LectureModule),
       },
 
       {

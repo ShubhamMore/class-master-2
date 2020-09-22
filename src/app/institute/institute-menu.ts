@@ -79,16 +79,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 6
   {
     title: 'Schedule Class',
-    icon: '',
+    icon: 'calendar-outline',
     link: '/institute/branch/schedule/batch',
     hidden: true,
   },
 
   // 7
   {
-    title: 'Student Attendance',
-    icon: '',
-    link: '/institute/branch/attendance/manage',
+    title: 'Lecture Management',
+    icon: 'book-open-outline',
+    link: '/institute/branch/lecture/batch',
     hidden: true,
   },
 
