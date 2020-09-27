@@ -1,1 +1,36 @@
-<p>manage-lecture works!</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>
+          Lecture of <small>{{ batch.basicDetails.batchName }}</small>
+        </h3>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive" *ngIf="lectures.length > 0; else noLecture">
+      <table class="table">
+        <tr *ngFor="let lecture of lectures">
+          <td>{{ getTime(lecture.startTime, lecture.endTime) }}</td>
+          <td>{{ getSubject(lecture.subject) }}</td>
+          <td>{{ lecture.topic }}</td>
+          <td>{{ getTeacher(lecture.teacher) }}</td>
+          <td>
+            <button status="basic" nbButton size="small" (click)="markAttendance(lecture)">
+              Attendance
+            </button>
+          </td>
+          <td>
+            <button status="danger" nbButton size="small" (click)="lectureMaterial(lecture._id)">
+              Study Material
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <ng-template #noLecture>
+      <p class="text-center">No Lecture</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

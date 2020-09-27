@@ -12,6 +12,7 @@ export class BranchService {
 
   private branch = new BehaviorSubject<BranchModel>(null);
   private category = new BehaviorSubject<CategoryModel>(null);
+  private categories = new BehaviorSubject<CategoryModel[]>([]);
 
   setBranchId(branchId: string) {
     this.branchId = branchId;
@@ -61,10 +62,35 @@ export class BranchService {
     this.category.next(null);
   }
 
+  setCategoriesData(categories: CategoryModel[]) {
+    this.categories.next(categories);
+  }
+
+  getCategoriesData() {
+    return this.categories;
+  }
+
+  deleteCategoriesData() {
+    this.categories.next([]);
+  }
+
   constructor(private httpService: HttpService) {}
 
   getBranches(imsMasterId: any) {
     const data = { api: 'getBranches', data: { imsMasterId } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
+
+  getBranchCoursesAndBatches(branchId: string) {
+    const data = { api: 'getBranchCoursesAndBatches', data: { branch: branchId } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

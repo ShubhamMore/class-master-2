@@ -1,3 +1,12 @@
+import {
+  NbCardModule,
+  NbIconModule,
+  NbButtonModule,
+  NbInputModule,
+  NbTooltipModule,
+  NbAccordionModule,
+  NbFormFieldModule,
+} from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -6,6 +15,16 @@ import { ManageLectureComponent } from './manage-lecture.component';
 
 @NgModule({
   declarations: [ManageLectureComponent],
-  imports: [CommonModule, ManageLectureRoutingModule],
+  imports: [
+    CommonModule,
+    ManageLectureRoutingModule,
+    NbCardModule,
+    NbTooltipModule,
+    NbIconModule,
+    NbButtonModule,
+    NbInputModule,
+    NbAccordionModule,
+    NbFormFieldModule,
+  ],
 })
 export class ManageLectureModule {}
