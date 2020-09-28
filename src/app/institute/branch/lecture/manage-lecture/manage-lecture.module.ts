@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import {
   NbCardModule,
   NbIconModule,
@@ -25,6 +26,7 @@ import { ManageLectureComponent } from './manage-lecture.component';
     NbInputModule,
     NbAccordionModule,
     NbFormFieldModule,
+    FormsModule,
   ],
 })
 export class ManageLectureModule {}

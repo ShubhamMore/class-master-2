@@ -93,11 +93,16 @@ export class ManageLectureComponent implements OnInit {
     this.lectureService.setLectureData(lecture);
     this.router.navigate(['../attendance'], {
       relativeTo: this.route,
-      queryParams: { mode: 'edit' },
     });
   }
 
-  lectureMaterial(id: string) {}
+  lectureMaterial(lecture: LectureModel) {
+    this.lectureService.setLectureId(lecture._id);
+    this.lectureService.setLectureData(lecture);
+    this.router.navigate(['../material'], {
+      relativeTo: this.route,
+    });
+  }
 
   getLecture() {
     this.loading = true;
@@ -113,6 +118,12 @@ export class ManageLectureComponent implements OnInit {
           this.loading = false;
         },
       );
+  }
+
+  dateChanged() {
+    if (this.date) {
+      this.getLecture();
+    }
   }
 
   private showToastr(position: any, status: any, message: string) {

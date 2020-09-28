@@ -8,7 +8,7 @@ export class ScheduleModel {
     public subject: string,
     public date: string,
     public startTime: string,
-    public endTime: number,
+    public endTime: string,
     public topic: string,
     public teacher: string,
     public sessionType: string,

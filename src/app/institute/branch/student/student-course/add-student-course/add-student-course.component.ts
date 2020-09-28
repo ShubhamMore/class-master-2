@@ -222,7 +222,7 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
               (installment: InstallmentModel, i: number) => {
                 this.addStudentCourseInstallment(installment);
                 if (installment.receiptId) {
-                  this.getStudentCourseInstallments()[i].get('installmentDate').disable();
+                  // this.getStudentCourseInstallments()[i].get('installmentDate').disable();
                 }
               },
             );

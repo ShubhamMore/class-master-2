@@ -1,1 +1,78 @@
-<router-outlet></router-outlet>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-4 col-sm-6 col-12">
+        <span><strong>Date: </strong>{{ dateService.formatDate(lecture.date) }}</span>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <span><strong>Time: </strong>{{ getTime(lecture.startTime, lecture.endTime) }}</span>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <span><strong>Course: </strong>{{ course.basicDetails.courseName }}</span>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <span><strong>Batch: </strong>{{ batch.basicDetails.batchName }}</span>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <span><strong>Subject: </strong>{{ getSubject(lecture.subject) }}</span>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <span><strong>Lecture Topic: </strong>{{ lecture.topic }}</span>
+      </div>
+    </div>
+  </nb-card-header>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <h4>ATTENDANCE RECORDING</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12" *ngIf="students.length > 0; else noStudents">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Student Name</th>
+                <th>Roll Number</th>
+                <th>Mark Attendance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let student of students; let i = index">
+                <td>{{ student.name }}</td>
+                <td>{{ student.rollNumber }}</td>
+                <td class="text-center">
+                  <div class="mark-attendance-selector">
+                    <label>
+                      <input
+                        type="checkbox"
+                        [id]="student.student"
+                        class="mark-attendance"
+                        [checked]="student.attendance"
+                        (change)="onChangeAttendance($event.target.checked, i)"
+                      />
+                      <label [for]="student.student">{{ student.attendance ? 'P' : 'A' }}</label>
+                    </label>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="col-12 text-right">
+        <button type="button" nbButton status="primary" size="small" (click)="saveAttendance()">
+          Save
+        </button>
+      </div>
+    </div>
+    <ng-template #noStudents>
+      <p class="text-center">No Students Found</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

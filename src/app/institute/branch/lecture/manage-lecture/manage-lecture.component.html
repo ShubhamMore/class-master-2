@@ -3,12 +3,15 @@
     <div class="row">
       <div class="col-md-9 col-sm-8">
         <h3>
-          Lecture of <small>{{ batch.basicDetails.batchName }}</small>
+          Lecture of <small *ngIf="batch">{{ batch.basicDetails.batchName }}</small>
         </h3>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <input type="date" nbInput fullWidth [(ngModel)]="date" (change)="dateChanged()" />
       </div>
     </div>
   </nb-card-header>
-  <nb-card-body>
+  <nb-card-body *ngIf="!loading; else loadingTemplate">
     <div class="table-responsive" *ngIf="lectures.length > 0; else noLecture">
       <table class="table">
         <tr *ngFor="let lecture of lectures">
@@ -17,12 +20,12 @@
           <td>{{ lecture.topic }}</td>
           <td>{{ getTeacher(lecture.teacher) }}</td>
           <td>
-            <button status="basic" nbButton size="small" (click)="markAttendance(lecture)">
+            <button status="primary" nbButton size="small" (click)="markAttendance(lecture)">
               Attendance
             </button>
           </td>
           <td>
-            <button status="danger" nbButton size="small" (click)="lectureMaterial(lecture._id)">
+            <button status="warning" nbButton size="small" (click)="lectureMaterial(lecture)">
               Study Material
             </button>
           </td>
@@ -34,3 +37,7 @@
     </ng-template>
   </nb-card-body>
 </nb-card>
+
+<ng-template #loadingTemplate>
+  <p class="text-center">Loading...</p>
+</ng-template>
