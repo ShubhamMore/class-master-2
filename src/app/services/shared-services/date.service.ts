@@ -95,7 +95,8 @@ export class DateService {
   }
 
   getDate() {
-    return this.date;
+    const date = new Date(this.date);
+    return date;
   }
 
   getDateString() {
