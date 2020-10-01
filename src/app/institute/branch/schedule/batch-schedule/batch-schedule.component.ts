@@ -1,4 +1,4 @@
-import { BranchEmployeeModel } from './../../../../models/branch-employee.model';
+import { EmployeeNameIdModel } from './../../../../models/branch-employee.model';
 import { BranchEmployeeService } from './../../../../services/branch-employee.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BatchService } from './../../../../services/batch.service';
@@ -32,9 +32,9 @@ export class BatchScheduleComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.branchEmployeeService.getBranchEmployeesForBatch(this.branchId, 'teacher').subscribe(
-      (employees: BranchEmployeeModel[]) => {
-        this.branchEmployeeService.setBranchEmployeesData(employees);
+    this.branchEmployeeService.getBranchEmployeeNameIdsForBatch(this.branchId, 'teacher').subscribe(
+      (employees: EmployeeNameIdModel[]) => {
+        this.branchEmployeeService.setBranchEmployeeNameIdsData(employees);
         this.loading = false;
       },
       (error: any) => {
@@ -53,6 +53,6 @@ export class BatchScheduleComponent implements OnInit, OnDestroy {
     this.batchService.deleteBatchId();
     this.batchService.deleteBatchData();
 
-    this.branchEmployeeService.deleteBranchEmployeesData();
+    this.branchEmployeeService.deleteBranchEmployeeNameIdsData();
   }
 }

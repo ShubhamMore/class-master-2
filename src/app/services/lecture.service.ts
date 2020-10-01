@@ -9,7 +9,16 @@ import { ScheduleModel } from '../models/schedule.model';
 })
 export class LectureService {
   private lecture = new BehaviorSubject<ScheduleModel>(null);
-  private lectureId: string;
+  private lectureId: string = null;
+  private date: string = null;
+
+  getSearchDate() {
+    return this.date;
+  }
+
+  setSearchDate(date: string) {
+    this.date = date;
+  }
 
   setLectureData(Lecture: ScheduleModel) {
     this.lecture.next(Lecture);

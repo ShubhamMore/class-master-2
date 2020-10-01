@@ -1,3 +1,4 @@
+import { EmployeeNameIdModel } from './../models/branch-employee.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
@@ -9,6 +10,7 @@ export class BranchEmployeeService {
   private branchEmployeeId: string;
   private branchEmployee = new BehaviorSubject<BranchEmployeeModel>(null);
   private branchEmployees = new BehaviorSubject<BranchEmployeeModel[]>([]);
+  private branchEmployeeNameIds = new BehaviorSubject<EmployeeNameIdModel[]>([]);
 
   setBranchEmployeeData(branchEmployee: BranchEmployeeModel) {
     this.branchEmployee.next(branchEmployee);
@@ -32,6 +34,18 @@ export class BranchEmployeeService {
 
   deleteBranchEmployeesData() {
     this.branchEmployees.next([]);
+  }
+
+  setBranchEmployeeNameIdsData(branchEmployeeNameIds: EmployeeNameIdModel[]) {
+    this.branchEmployeeNameIds.next(branchEmployeeNameIds);
+  }
+
+  getBranchEmployeeNameIdsData() {
+    return this.branchEmployeeNameIds;
+  }
+
+  deleteBranchEmployeeNameIdsData() {
+    this.branchEmployeeNameIds.next([]);
   }
 
   setBranchEmployeeId(branchEmployeeId: string) {
@@ -62,6 +76,18 @@ export class BranchEmployeeService {
 
   getBranchEmployeesForBatch(branch: string, role: string) {
     const data = { api: 'getBranchEmployeesForBatch', data: { branch, role } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  getBranchEmployeeNameIdsForBatch(branch: string, role: string) {
+    const data = { api: 'getBranchEmployeeNameIdsForBatch', data: { branch, role } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

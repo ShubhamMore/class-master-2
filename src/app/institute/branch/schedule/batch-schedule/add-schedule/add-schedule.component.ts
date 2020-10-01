@@ -1,5 +1,8 @@
 import { BranchEmployeeService } from './../../../../../services/branch-employee.service';
-import { BranchEmployeeModel } from './../../../../../models/branch-employee.model';
+import {
+  BranchEmployeeModel,
+  EmployeeNameIdModel,
+} from './../../../../../models/branch-employee.model';
 import { ScheduleService } from './../../../../../services/schedule.service';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { BatchService } from './../../../../../services/batch.service';
@@ -41,7 +44,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
 
   schedule: ScheduleModel;
   subjects: SubjectModel[];
-  teachers: BranchEmployeeModel[];
+  teachers: EmployeeNameIdModel[];
 
   repeatUpToTouched: boolean;
   repeatDaysTouched: boolean;
@@ -121,8 +124,8 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
     this.weekDays = this.dateService.getWeekDays();
 
     this.branchEmployeeService
-      .getBranchEmployeesData()
-      .subscribe((employees: BranchEmployeeModel[]) => {
+      .getBranchEmployeeNameIdsData()
+      .subscribe((employees: EmployeeNameIdModel[]) => {
         this.teachers = employees;
       });
 
@@ -335,10 +338,10 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
 
   getTeacher(teacherId: string) {
     const teacher = this.teachers.find(
-      (curTeacher: BranchEmployeeModel) => curTeacher.employee === teacherId,
+      (curTeacher: EmployeeNameIdModel) => curTeacher.employee === teacherId,
     );
     if (teacher) {
-      return teacher.employee;
+      return teacher.name;
     }
 
     return '--';

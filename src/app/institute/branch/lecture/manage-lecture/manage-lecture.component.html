@@ -18,7 +18,7 @@
           <td>{{ getTime(lecture.startTime, lecture.endTime) }}</td>
           <td>{{ getSubject(lecture.subject) }}</td>
           <td>{{ lecture.topic }}</td>
-          <td>{{ getTeacher(lecture.teacher) }}</td>
+          <td>{{ lecture.teacher }}</td>
           <td>
             <button status="primary" nbButton size="small" (click)="markAttendance(lecture)">
               Attendance

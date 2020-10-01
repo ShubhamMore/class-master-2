@@ -59,7 +59,10 @@ export class ManageLectureComponent implements OnInit {
       this.batch = batch;
     });
 
-    this.date = this.dateService.getDateString();
+    this.date = this.lectureService.getSearchDate();
+    if (!this.date) {
+      this.date = this.dateService.getDateString();
+    }
 
     this.lectures = [];
 
@@ -70,10 +73,6 @@ export class ManageLectureComponent implements OnInit {
     startTime = this.dateService.formatTime(startTime);
     endTime = this.dateService.formatTime(endTime);
     return startTime + ' - ' + endTime;
-  }
-
-  getTeacher(teacher: string) {
-    return teacher;
   }
 
   getSubject(subject: string) {
@@ -122,6 +121,7 @@ export class ManageLectureComponent implements OnInit {
 
   dateChanged() {
     if (this.date) {
+      this.lectureService.setSearchDate(this.date);
       this.getLecture();
     }
   }

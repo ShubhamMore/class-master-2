@@ -219,7 +219,7 @@
                     >
                       <nb-option value="">Select Teacher</nb-option>
                       <nb-option *ngFor="let teacher of teachers" [value]="teacher.employee">{{
-                        teacher.employee
+                        teacher.name
                       }}</nb-option>
                     </nb-select>
                     <ng-container
@@ -486,6 +486,10 @@
                     <tr>
                       <th>Topic</th>
                       <td>{{ scheduleForm.value.topic }}</td>
+                    </tr>
+                    <tr>
+                      <th>Teacher</th>
+                      <td>{{ getTeacher(scheduleForm.value.teacher) }}</td>
                     </tr>
                     <tr>
                       <th>Session Type</th>
