@@ -17,6 +17,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'settings',
+        loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
+        canActivate: [],
+      },
+
+      {
         path: 'home',
         loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
         canActivate: [],

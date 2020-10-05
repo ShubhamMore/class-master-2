@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   branches: any[];
 
-  userMenu = [{ title: 'Profile', link: '/institute/profile' }];
+  userMenu: any[];
 
   constructor(
     private sidebarService: NbSidebarService,
@@ -40,7 +40,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.branches = [];
+    this.userMenu = [];
     this.user = this.authService.getUserData();
+    if (this.user.userRole === 'institute') {
+      this.userMenu = [
+        { title: 'Profile', link: '/institute/profile' },
+        { title: 'Settings', link: '/institute/settings' },
+      ];
+    }
+
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService
       .onMediaQueryChange()

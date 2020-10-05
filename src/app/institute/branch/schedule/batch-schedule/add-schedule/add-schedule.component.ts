@@ -181,6 +181,13 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
     }
   }
 
+  onSelectSubject(subject: any) {
+    const mySubject = this.batch.subjects.find((curSubject: any) => curSubject.subject === subject);
+    if (mySubject && mySubject.teacher) {
+      this.scheduleForm.patchValue({ teacher: mySubject.teacher });
+    }
+  }
+
   getSchedule() {
     const schedule: any = this.scheduleForm.value;
     schedule.branch = this.branchId;

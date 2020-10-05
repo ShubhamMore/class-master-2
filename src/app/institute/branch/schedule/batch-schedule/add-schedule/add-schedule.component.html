@@ -147,6 +147,7 @@
                             : 'success'
                           : 'basic'
                       "
+                      (selectedChange)="onSelectSubject($event)"
                     >
                       <nb-option value="">Select Subject</nb-option>
                       <nb-option *ngFor="let subject of subjects" [value]="subject._id">{{
