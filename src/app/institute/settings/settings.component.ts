@@ -73,8 +73,6 @@ export class SettingsComponent implements OnInit {
       secretKey: this.zoomKeysForm.value.secretToken,
     };
 
-    console.log(keys);
-
     this.instituteKeysService.saveInstituteZoomKeys(keys).subscribe(
       (res: any) => {
         this.instituteKeysService.getZoomAuthLink().subscribe((data: any) => {
@@ -106,8 +104,6 @@ export class SettingsComponent implements OnInit {
       accessKey: this.paymentGatewayKeysForm.value.accessToken,
       secretKey: this.paymentGatewayKeysForm.value.secretToken,
     };
-
-    console.log(keys);
 
     this.instituteKeysService.saveInstitutePaymentGatewayKeys(keys).subscribe(
       (res: any) => {
