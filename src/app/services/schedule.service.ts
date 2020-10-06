@@ -120,8 +120,8 @@ export class ScheduleService {
     );
   }
 
-  editSchedule(id: string, schedules: any[]) {
-    const data = { api: 'editSchedule', data: { id, schedules } };
+  editSchedule(schedule: any) {
+    const data = { api: 'editSchedule', data: schedule };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

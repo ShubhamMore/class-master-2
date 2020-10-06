@@ -75,12 +75,15 @@ export class SettingsComponent implements OnInit {
 
     this.instituteKeysService.saveInstituteZoomKeys(keys).subscribe(
       (res: any) => {
-        this.instituteKeysService.getZoomAuthLink().subscribe((data: any) => {
-          window.open(
-            data.authLink,
+        this.instituteKeysService.getZoomAuthLink().subscribe((responce: any) => {
+          const popup = window.open(
+            responce.authLink,
             '_blank',
-            'toolbar,scrollbars,resizable,top=500,left=500,width=400,height=400',
+            'toolbar,scrollbars,resizable,top=200,left=500,width=400,height=400',
           );
+          setTimeout(() => {
+            popup.close();
+          }, 3000);
         });
 
         this.showToastr('top-right', 'success', 'Institute Zoom Keys Saved Successfully!');

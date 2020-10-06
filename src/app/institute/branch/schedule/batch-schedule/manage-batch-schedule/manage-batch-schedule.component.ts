@@ -263,7 +263,7 @@ export class ManageBatchScheduleComponent implements OnInit {
     this.scheduleService.deleteSchedule(id).subscribe(
       (res: any) => {
         const index = this.schedules.findIndex((schedule: ScheduleModel) => schedule._id === id);
-        if (index > 0) {
+        if (index >= 0) {
           this.schedules.splice(index, 1);
           this.showToastr('top-right', 'success', 'Schedule Deleted Successfully');
         }

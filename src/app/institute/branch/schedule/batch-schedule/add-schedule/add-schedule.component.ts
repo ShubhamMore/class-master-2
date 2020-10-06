@@ -283,13 +283,17 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.CalculateRepeatSchedule();
+    if (!this.schedule) {
+      this.CalculateRepeatSchedule();
+    }
 
     this.stepper.next();
   }
 
   submitScheduleRepeatForm() {
-    if (this.repeat && !this.repeatUpTo) {
+    if (this.schedule) {
+      return;
+    } else if (this.repeat && !this.repeatUpTo) {
       this.showToastr('top-right', 'danger', 'Receipt Up To date is Required');
       return;
     } else if (this.repeat && this.repeatDays.length === 0) {
@@ -321,9 +325,12 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
         },
       );
     } else {
-      this.scheduleService.editSchedule(this.scheduleId, this.repeatSchedules).subscribe(
+      const schedule: any = this.getSchedule();
+      schedule._id = this.scheduleId;
+
+      this.scheduleService.editSchedule(schedule).subscribe(
         (res: any) => {
-          this.showToastr('top-right', 'success', 'New Schedule Updated Successfully!');
+          this.showToastr('top-right', 'success', 'Schedule Updated Successfully!');
           this.back();
         },
         (error: any) => {

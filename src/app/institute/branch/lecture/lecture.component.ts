@@ -1,3 +1,4 @@
+import { LectureService } from './../../../services/lecture.service';
 import { BranchEmployeeService } from './../../../services/branch-employee.service';
 import { BranchEmployeeModel } from './../../../models/branch-employee.model';
 import { BatchModel } from './../../../models/batch.model';
@@ -20,6 +21,7 @@ export class LectureComponent implements OnInit, OnDestroy {
   constructor(
     private branchService: BranchService,
     private branchEmployeeService: BranchEmployeeService,
+    private lectureService: LectureService,
     private courseService: CourseService,
     private batchService: BatchService,
     private router: Router,
@@ -63,5 +65,6 @@ export class LectureComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.courseService.deleteCoursesData();
     this.batchService.deleteBatchesData();
+    this.lectureService.setSearchDate(null);
   }
 }

@@ -289,7 +289,7 @@
             </form>
           </nb-step>
 
-          <nb-step label="Schedule Repeat">
+          <nb-step label="Schedule Repeat" *ngIf="!schedule">
             <form (submit)="submitScheduleRepeatForm()">
               <div class="row" *ngIf="!schedule">
                 <div class="col-12">
