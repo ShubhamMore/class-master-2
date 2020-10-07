@@ -16,7 +16,16 @@
 <div class="header-container">
   <nb-actions size="small">
     <nb-action class="control-item" icon="email-outline"></nb-action>
-    <nb-action class="control-item" icon="bell-outline"></nb-action>
+    <nb-action
+      class="control-item"
+      icon="bell-outline"
+      [nbPopover]="notificationPopup"
+      nbPopoverPlacement="bottom"
+      [badgeText]="unseenNotificationCount"
+      badgePosition="top right"
+      badgeStatus="danger"
+      *ngIf="user.role !== 'admin'"
+    ></nb-action>
     <nb-action class="control-item" icon="power-outline" (click)="logOut()"></nb-action>
     <nb-action class="user-action" *nbIsGranted="['view', 'user']">
       <nb-user
@@ -28,3 +37,70 @@
     </nb-action>
   </nb-actions>
 </div>
+
+<ng-template #notificationPopup>
+  <div class="notification-popup">
+    <nb-list *ngIf="notifications && notifications.length > 0; else noNotifications">
+      <nb-list-item
+        *ngFor="let notification of notifications; let i = index"
+        [ngClass]="notification.status ? 'new-notification' : ''"
+      >
+        <div class="row">
+          <div class="col-10">
+            <h6>
+              <span
+                class="pointer"
+                (click)="openNotificationBox(notification, i, notificationDialog)"
+              >
+                {{ getNotificationLimitedTitle(notification.title) }}
+              </span>
+              <span>&nbsp;&nbsp;</span>
+              <small>{{ dateService.getUpToTime(notification.date) }} ago</small>
+            </h6>
+          </div>
+          <div class="col-2">
+            <span class="delete-notification pointer float-right">
+              <i
+                (click)="deleteNotification(notification._id, notification.status, i)"
+                class="fa fa-trash"
+                aria-hidden="true"
+              >
+              </i>
+            </span>
+          </div>
+          <div class="col-12">
+            <span class="notification-text">
+              {{ getNotificationLimitedMessage(notification.message) }}
+            </span>
+          </div>
+        </div>
+      </nb-list-item>
+    </nb-list>
+  </div>
+</ng-template>
+
+<ng-template #notificationDialog let-notification let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>
+      <h4>
+        <span>{{ notification.title }}</span>
+        <br />
+        <small>{{ dateService.convertToDateTimeHourString(notification.date) }}</small>
+      </h4>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="notification-modal">
+        {{ notification.message }}
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button class="float-right" nbButton size="small" status="primary" (click)="ref.close()">
+        Close
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #noNotifications>
+  <p class="mt-2 mb-2 text-center">No Notifications Found</p>
+</ng-template>

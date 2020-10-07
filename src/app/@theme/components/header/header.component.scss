@@ -68,3 +68,38 @@
     }
   }
 }
+
+.notification-popup {
+  width: 20rem;
+  max-height: 40rem;
+  overflow-y: auto;
+}
+
+.notification {
+  width: 15rem;
+}
+
+.new-notification {
+  background-color: rgba(170, 170, 170, 0.8);
+  padding: 0.25rem 1rem;
+}
+
+.notification-modal {
+  display: block;
+}
+
+.delete-notification {
+  color: #000;
+  transition: all 0.25s;
+}
+
+.delete-notification:hover {
+  color: #f00;
+  transform: scale(1.1);
+}
+
+.notification-text {
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+}
