@@ -76,11 +76,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.getNotifications();
 
+    this.userMenu = [{ title: 'Profile', link: '/' + this.user.userRole + '/profile' }];
+
     if (this.user.userRole === 'institute') {
-      this.userMenu = [
-        { title: 'Profile', link: '/institute/profile' },
-        { title: 'Settings', link: '/institute/settings' },
-      ];
+      this.userMenu.push({ title: 'Settings', link: '/institute/settings' });
     }
 
     this.branchService.getBranchesData().subscribe((branches: BranchModel[]) => {

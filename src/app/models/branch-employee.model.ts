@@ -7,6 +7,7 @@ export class BranchEmployeeModel {
     public role: string,
     public basicSalary: string,
     public status: boolean,
+    public name?: string,
   ) {}
 }
 

@@ -51,7 +51,7 @@ export class ManageEmployeeComponent implements OnInit {
 
     this.branchEmployees = [];
 
-    this.branchEmployeeService.getBranchEmployees(this.branchId, this.type).subscribe(
+    this.branchEmployeeService.getBranchEmployeeNameIds(this.branchId, this.type).subscribe(
       (branchEmployees: BranchEmployeeModel[]) => {
         this.branchEmployees = branchEmployees;
         this.loading = false;

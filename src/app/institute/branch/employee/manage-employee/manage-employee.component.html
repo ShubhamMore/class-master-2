@@ -23,7 +23,7 @@
               <tbody>
                 <tr *ngFor="let branchEmployee of branchEmployees; let i = index">
                   <td>{{ i + 1 }}</td>
-                  <td>{{ branchEmployee.employee }}</td>
+                  <td>{{ branchEmployee.name }}</td>
                   <td>{{ branchEmployee.role | uppercase }}</td>
                   <td>
                     <button

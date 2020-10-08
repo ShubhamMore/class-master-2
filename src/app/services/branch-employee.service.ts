@@ -86,6 +86,18 @@ export class BranchEmployeeService {
     );
   }
 
+  getBranchEmployeeNameIds(branch: string, type: string) {
+    const data = { api: 'getBranchEmployeeNameIds', data: { branch, type } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getBranchEmployeeNameIdsForBatch(branch: string, role: string) {
     const data = { api: 'getBranchEmployeeNameIdsForBatch', data: { branch, role } };
     return this.httpService.httpPost(data).pipe(

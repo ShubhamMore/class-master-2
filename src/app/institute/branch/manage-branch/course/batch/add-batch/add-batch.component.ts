@@ -1,4 +1,4 @@
-import { BranchEmployeeModel } from './../../../../../../models/branch-employee.model'; // To be removed
+import { EmployeeNameIdModel } from './../../../../../../models/branch-employee.model'; // To be removed
 import { CourseService } from './../../../../../../services/course.service';
 import { SubjectModel, CourseModel } from './../../../../../../models/course.model';
 import { BatchModel, BatchSubjectModel } from './../../../../../../models/batch.model';
@@ -30,7 +30,7 @@ export class AddBatchComponent implements OnInit, OnDestroy {
   private batchId: string;
   batch: BatchModel;
   course: CourseModel;
-  teachers: BranchEmployeeModel[];
+  teachers: EmployeeNameIdModel[];
   subjects: SubjectModel[];
   batchBasicDetailsForm: FormGroup;
   batchSubjectForm: FormGroup;
@@ -121,8 +121,8 @@ export class AddBatchComponent implements OnInit, OnDestroy {
       this.addBatchSubject(batchSubject);
     });
 
-    this.branchEmployeeService.getBranchEmployeesForBatch(this.branchId, 'teacher').subscribe(
-      (teachers: BranchEmployeeModel[]) => {
+    this.branchEmployeeService.getBranchEmployeeNameIdsForBatch(this.branchId, 'teacher').subscribe(
+      (teachers: EmployeeNameIdModel[]) => {
         this.teachers = teachers;
 
         if (this.batchId) {
@@ -154,7 +154,7 @@ export class AddBatchComponent implements OnInit, OnDestroy {
                   this.getBatchSubjects().controls[i].get('_id').setValue(subject._id);
                   if (
                     teachers.find(
-                      (curTeacher: BranchEmployeeModel) => curTeacher.employee === subject.teacher,
+                      (curTeacher: EmployeeNameIdModel) => curTeacher.employee === subject.teacher,
                     )
                   ) {
                     teacher = subject.teacher;
@@ -243,10 +243,10 @@ export class AddBatchComponent implements OnInit, OnDestroy {
 
   getTeacherName(id: string) {
     const teacher = this.teachers.find(
-      (curTeacher: BranchEmployeeModel) => curTeacher.employee === id,
+      (curTeacher: EmployeeNameIdModel) => curTeacher.employee === id,
     );
     if (teacher) {
-      return teacher.employee;
+      return teacher.name;
     }
 
     return '--';
