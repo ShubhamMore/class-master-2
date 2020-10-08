@@ -54,6 +54,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.socketService.setupSocketConnection();
+
     this.branchId = '';
     this.branches = [];
     this.userMenu = [];
@@ -68,7 +70,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // },
     ];
     this.unseenNotificationCount = 0;
+
     this.user = this.authService.getUserData();
+    this.socket = this.socketService.getSocket();
 
     this.getNotifications();
 
@@ -86,9 +90,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.branchService.getSelectedBranchId().subscribe((branchId: string) => {
       this.branchId = branchId;
     });
-
-    this.socketService.setupSocketConnection();
-    this.socket = this.socketService.getSocket();
 
     // Listening to notifications
     this.socket.on('notify', (notification: NotificationModel) => {
@@ -109,7 +110,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   changeSelectBranch(id: string) {
     if (id !== '') {
       this.branchService.setBranchId(id);
-      this.router.navigate(['/institute/branch/dashboard'], { relativeTo: this.route });
+      this.router.navigate(['/' + this.user.userRole + '/branch/dashboard'], {
+        relativeTo: this.route,
+      });
     }
   }
 
