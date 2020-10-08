@@ -11,7 +11,7 @@ Get material ngx-admin integrated with backend technology of your choice. [Check
 
 ## Key features
 
-- The most popular and trusted Angular open source dashboard template is out there. Used by hundreds of thousands developers worldwide and Fortune 500 companies*.
+- The most popular and trusted Angular open source dashboard template is out there. Used by hundreds of thousands developers worldwide and Fortune 500 companies\*.
 - Over 40+ Angular Components and 60+ Usage Examples. Kick off your project and save money by using ngx-admin.
 - Already using ngx-admin and willing to switch to material theme? Material theme is backward-compatible. Check out the article describing how to do that.
 - ngx-admin material works perfectly with Angular Material and Nebular. Take the best from both!
@@ -19,15 +19,18 @@ Get material ngx-admin integrated with backend technology of your choice. [Check
 ### To use material theme checkout `feat/material-theme` branch
 
 # Admin template based on Angular 9+ and <a href="https://github.com/akveo/nebular">Nebular</a>
+
 <a target="_blank" href="https://hubs.ly/H0n4Sw20"><img src="https://i.imgur.com/mFdqvgG.png"/></a>
 
 ### Backend Integration Bundles
+
 Easy way to integrate ngx-admin with any backend (PHP, .Net, .Net Core, Java etc. )
 <a href="https://hubs.ly/H0qwyl60"><img src="https://i.imgur.com/qbtASmP.png"></a>
 
 [Check out our Store](https://hubs.ly/H0qwyl60) for ready to use Backend Bundles.
 
 ### Free Bundles
+
 <a href="https://hubs.ly/H0rD0XL0"><img src="https://i.imgur.com/NzTDxRG.png"></a>
 
 [Download ngx-admin with .net backend for FREE!](https://hubs.ly/H0rvhPL0)
@@ -35,16 +38,16 @@ Easy way to integrate ngx-admin with any backend (PHP, .Net, .Net Core, Java etc
 ### With 6 stunning visual themes
 
 | <a target="_blank" href="https://hubs.ly/H0nxM3b0"><img src="https://i.imgur.com/67YAlhf.png"/></a> | <a target="_blank" href="https://hubs.ly/H0nxNmv0"><img src="https://i.imgur.com/aQzw0hD.png"/></a> |
-| --- | --- |
-|  Material Dark | Material Light |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Material Dark                                                                                       | Material Light                                                                                      |
 
 | <a target="_blank" href="https://hubs.ly/H0n4Th20"><img src="https://i.imgur.com/9UkTGgr.png"/></a> | <a target="_blank" href="https://hubs.ly/H0n4Tgv0"><img src="https://i.imgur.com/Kn3xDKQ.png"/></a> |
-| --- | --- |
-|  Dark| Default |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Dark                                                                                                | Default                                                                                             |
 
 | <a target="_blank" href="https://hubs.ly/H0n4Tj80"><img src="https://i.imgur.com/iJu2YDF.png"/></a> | <a target="_blank" href="https://hubs.ly/H0n4TDQ0"><img src="https://i.imgur.com/GpUt6NW.png"/></a> |
-| --- | --- |
-| Cosmic  | Corporate |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Cosmic                                                                                              | Corporate                                                                                           |
 
 ### What's included:
 
@@ -63,12 +66,15 @@ Easy way to integrate ngx-admin with any backend (PHP, .Net, .Net Core, Java etc
 <a target="_blank" href="https://hubs.ly/H0n4Tk70">Live Demo</a>
 
 ## Documentation
+
 This template is using [Nebular](https://github.com/akveo/nebular) modules set, [here you can find documentation and other useful articles](https://hubs.ly/H0n4ZPt0).
 
 ### Empty starter kit
+
 Don't need all the pages and modules and just looking for an empty starter kit for your next project? Check out our [starter-kit branch](https://github.com/akveo/ngx-admin/tree/starter-kit).
 
 ## BrowserStack
+
 This project runs its tests on multiple desktop and mobile browsers using [BrowserStack](http://www.browserstack.com).
 
 <img src="https://cloud.githubusercontent.com/assets/131406/22254249/534d889e-e254-11e6-8427-a759fb23b7bd.png" height="40" />
@@ -79,14 +85,17 @@ This project runs its tests on multiple desktop and mobile browsers using [Brows
 - [Nebular](https://github.com/akveo/nebular) - Angular Components, Auth and Security
 
 ### How can I support developers?
+
 - Star our GitHub repo :star:
 - Create pull requests, submit bugs, suggest new features or documentation updates :wrench:
 - Follow us on [Twitter](https://twitter.com/akveo_inc) :feet:
 - Like our page on [Facebook](https://www.facebook.com/akveo/) :thumbsup:
 
-### Looking for engineering services? 
+### Looking for engineering services?
+
 Visit [our homepage](https://hubs.ly/H0n4YJt0) or simply leave us a message to [contact@akveo.com](mailto:contact@akveo.com). We will be happy to work with you!
 
 ### From Developers
+
 Made with :heart: by [Akveo team](https://hubs.ly/H0n4YwQ0). Follow us on [Twitter](https://twitter.com/akveo_inc) to get the latest news first!
 We're always happy to receive your feedback!

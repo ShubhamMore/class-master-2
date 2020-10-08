@@ -15,8 +15,7 @@ const routes: Routes = [
 
       {
         path: 'batch-test',
-        loadChildren: () =>
-          import('./batch-test/batch-test.module').then((m) => m.BatchTestModule),
+        loadChildren: () => import('./batch-test/batch-test.module').then((m) => m.BatchTestModule),
       },
 
       {

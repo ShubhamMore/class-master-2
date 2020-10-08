@@ -191,8 +191,9 @@
                   : 'basic'
               "
             >
-              <nb-option *ngFor="let role of roles" [value]="role">{{role| uppercase}}</nb-option>
-
+              <nb-option *ngFor="let role of roles" [value]="role">{{
+                role | uppercase
+              }}</nb-option>
             </nb-select>
             <ng-container *ngIf="form.get('userRole').invalid && form.get('userRole').touched">
               <p class="caption status-danger" *ngIf="form.get('userRole').errors?.required">
