@@ -14,8 +14,6 @@ export class ManageInstituteComponent implements OnInit {
   loading: boolean;
   branches: BranchModel[];
 
-  user: any;
-
   constructor(
     private menuService: MenuService,
     private authService: AuthService,
@@ -29,8 +27,8 @@ export class ManageInstituteComponent implements OnInit {
     this.branches = [];
     this.menuService.hideMenu();
     this.branchService.setBranchId('');
-    this.user = this.authService.getUserData();
-    this.branchService.getBranches(this.user.imsMasterId).subscribe(
+
+    this.branchService.getBranches().subscribe(
       (branches: BranchModel[]) => {
         this.branches = branches;
         this.loading = false;

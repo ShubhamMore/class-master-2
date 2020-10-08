@@ -56,7 +56,9 @@ export class BatchLectureComponent implements OnInit {
 
   private getCategories() {
     this.branchService.getBranchData().subscribe((branch: BranchModel) => {
-      this.categories = branch.categories;
+      if (branch) {
+        this.categories = branch.categories;
+      }
     });
 
     if (!this.categories) {

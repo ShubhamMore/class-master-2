@@ -122,6 +122,18 @@ export class BranchEmployeeService {
     );
   }
 
+  getBranchEmployeeRole(branch: string) {
+    const data = { api: 'getBranchEmployeeRole', data: { branch } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getBranchEmployeeForSalary(id: string, employee: string) {
     const data = { api: 'getBranchEmployeeForSalary', data: { id, employee } };
     return this.httpService.httpPost(data).pipe(

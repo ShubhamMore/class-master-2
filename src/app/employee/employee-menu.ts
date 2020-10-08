@@ -5,7 +5,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Home',
     icon: 'home',
-    link: '/institute/home',
+    link: '/employee/home',
     home: true,
     hidden: false,
   },
@@ -14,7 +14,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Dashboard',
     icon: '',
-    link: '/institute/branch/dashboard',
+    link: '/employee/branch/dashboard',
     hidden: true,
   },
 
@@ -26,17 +26,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Receipt Details',
-        link: '/institute/branch/manage-branch/receipt',
+        link: '/employee/branch/manage-branch/receipt',
         hidden: true,
       },
       {
         title: 'Course',
-        link: '/institute/branch/manage-branch/course',
+        link: '/employee/branch/manage-branch/course',
         hidden: true,
       },
       {
         title: 'Discount & Offers',
-        link: '/institute/branch/manage-branch/discount-and-offers',
+        link: '/employee/branch/manage-branch/discount-and-offers',
         hidden: true,
       },
     ],
@@ -50,18 +50,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Add Student',
-        link: '/institute/branch/student/add',
+        link: '/employee/branch/student/add',
         hidden: true,
       },
       {
         title: 'Active Students',
-        link: '/institute/branch/student/manage',
+        link: '/employee/branch/student/manage',
         queryParams: { type: 'active' },
         hidden: true,
       },
       {
         title: 'Inactive Students',
-        link: '/institute/branch/student/manage',
+        link: '/employee/branch/student/manage',
         queryParams: { type: 'inactive' },
         hidden: true,
       },
@@ -72,7 +72,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Schedule Class',
     icon: 'calendar-outline',
-    link: '/institute/branch/schedule/batch',
+    link: '/employee/branch/schedule/batch',
     hidden: true,
   },
 
@@ -80,7 +80,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Lecture Management',
     icon: 'book-open-outline',
-    link: '/institute/branch/lecture/batch',
+    link: '/employee/branch/lecture/batch',
     hidden: true,
   },
 
@@ -92,12 +92,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Schedule Classroom Test',
-        link: '/institute/branch/exam/test/batch',
+        link: '/employee/branch/exam/test/batch',
         hidden: true,
       },
       {
         title: 'Schedule Online Exam',
-        link: '/institute/branch/exam/online-test/manage',
+        link: '/employee/branch/exam/online-test/manage',
         hidden: true,
       },
     ],
@@ -111,18 +111,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Add Employee',
-        link: '/institute/branch/employee/add',
+        link: '/employee/branch/employee/add',
         hidden: true,
       },
       {
         title: 'Active Employees',
-        link: '/institute/branch/employee/manage',
+        link: '/employee/branch/employee/manage',
         queryParams: { type: 'active' },
         hidden: true,
       },
       {
         title: 'Inactive Employees',
-        link: '/institute/branch/employee/manage',
+        link: '/employee/branch/employee/manage',
         queryParams: { type: 'inactive' },
         hidden: true,
       },
@@ -137,17 +137,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Add Lead',
-        link: '/institute/branch/lead/add',
+        link: '/employee/branch/lead/add',
         hidden: true,
       },
       {
         title: 'Active Leads',
-        link: '/institute/branch/lead/manage',
+        link: '/employee/branch/lead/manage',
         queryParams: { type: 'active' },
       },
       {
         title: 'Close Leads',
-        link: '/institute/branch/lead/manage',
+        link: '/employee/branch/lead/manage',
         queryParams: { type: 'inactive' },
       },
     ],
@@ -157,7 +157,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Budget Management',
     icon: '',
-    link: '/institute/branch/budget/manage',
+    link: '/employee/branch/budget/manage',
     hidden: true,
   },
 ];

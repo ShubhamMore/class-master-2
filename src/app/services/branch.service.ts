@@ -99,8 +99,8 @@ export class BranchService {
 
   constructor(private httpService: HttpService) {}
 
-  getBranches(imsMasterId: any) {
-    const data = { api: 'getBranches', data: { imsMasterId } };
+  getBranches() {
+    const data = { api: 'getBranches', data: {} };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -123,8 +123,8 @@ export class BranchService {
     );
   }
 
-  getBranchesForEmployee(imsMasterId: any) {
-    const data = { api: 'getBranches', data: { imsMasterId } };
+  getBranchesForEmployee() {
+    const data = { api: 'getBranchesForEmployee', data: {} };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

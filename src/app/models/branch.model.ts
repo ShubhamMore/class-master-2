@@ -4,8 +4,8 @@ export class BranchModel {
     public basicDetails: BranchBasicDetailsModel,
     public address: BranchAddressModel,
     public categories: CategoryModel[],
-    public currentPlanDetails: BranchPlanDetailsModel,
-    public status: boolean,
+    public currentPlanDetails?: BranchPlanDetailsModel,
+    public status?: boolean,
   ) {}
 }
 

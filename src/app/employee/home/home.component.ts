@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   loading: boolean;
-  user: any;
+
   branches: BranchModel[];
 
   constructor(
@@ -26,10 +26,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.branches = [];
-    this.menuService.hideMenu();
+    this.menuService.hideMenus();
     this.branchService.setBranchId('');
-    this.user = this.authService.getUserData();
-    this.branchService.getBranches(this.user.imsMasterId).subscribe(
+
+    this.branchService.getBranchesForEmployee().subscribe(
       (branches: BranchModel[]) => {
         this.branches = branches;
         this.branchService.setBranchesData(branches);

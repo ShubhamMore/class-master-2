@@ -1,3 +1,4 @@
+import { RoleService } from './../services/role.service';
 import { NbMenuItem } from '@nebular/theme';
 import { Injectable } from '@angular/core';
 import { MENU_ITEMS } from './employee-menu';
@@ -5,30 +6,45 @@ import { MENU_ITEMS } from './employee-menu';
 @Injectable()
 export class MenuService {
   private menuItems: NbMenuItem[] = [];
+  private role: string;
 
   getMenuItems() {
     return this.menuItems;
   }
 
-  constructor() {}
+  constructor(private roleService: RoleService) {
+    roleService.getEmployeeRole().subscribe((role: string) => {
+      this.role = role;
+    });
+  }
 
   setMenuItemSequence() {
     this.menuItems = [];
-    this.menuItems.push(MENU_ITEMS[0]);
-    this.menuItems.push(MENU_ITEMS[1]);
-    this.menuItems.push(MENU_ITEMS[2]);
-    this.menuItems.push(MENU_ITEMS[3]);
-    this.menuItems.push(MENU_ITEMS[4]);
-    this.menuItems.push(MENU_ITEMS[5]);
-    this.menuItems.push(MENU_ITEMS[6]);
-    this.menuItems.push(MENU_ITEMS[7]);
-    this.menuItems.push(MENU_ITEMS[8]);
-    this.menuItems.push(MENU_ITEMS[9]);
+    this.menuItems.push(MENU_ITEMS[0]); // home
+    this.menuItems.push(MENU_ITEMS[1]); // dashboard
+    this.menuItems.push(MENU_ITEMS[2]); // branch management
+    this.menuItems.push(MENU_ITEMS[3]); // student management
+    this.menuItems.push(MENU_ITEMS[4]); // schedule management
+    this.menuItems.push(MENU_ITEMS[5]); // lecture management
+    this.menuItems.push(MENU_ITEMS[6]); // exam management
+    this.menuItems.push(MENU_ITEMS[7]); // employee management
+    this.menuItems.push(MENU_ITEMS[8]); // lead management
+    this.menuItems.push(MENU_ITEMS[9]); // budget managements
   }
 
-  hideMenu() {
+  showHideMenu(i: number, status: boolean) {
+    const menuItem = MENU_ITEMS[i];
+    menuItem.hidden = status;
+    if (menuItem.children) {
+      MENU_ITEMS[i].children.map((menuItemChildren: NbMenuItem) => {
+        menuItemChildren.hidden = status;
+      });
+    }
+  }
+
+  hideMenus() {
     this.menuItems = MENU_ITEMS.map((menuItem: NbMenuItem, i: number) => {
-      if (i !== 0 && i !== 1) {
+      if (i !== 0) {
         menuItem.hidden = true;
         if (menuItem.children) {
           menuItem.children.map((menuItemChildren: NbMenuItem) => {
@@ -40,15 +56,40 @@ export class MenuService {
     });
   }
 
-  showMenu() {
-    this.menuItems = MENU_ITEMS.map((menuItem: NbMenuItem, i: number) => {
-      menuItem.hidden = false;
-      if (menuItem.children) {
-        menuItem.children.map((menuItemChildren: NbMenuItem) => {
-          menuItemChildren.hidden = false;
-        });
-      }
-      return menuItem;
-    });
+  showMenus() {
+    this.showHideMenu(0, false);
+    if (this.role) {
+      this.showHideMenu(1, false);
+    }
+    if (this.role === 'manager') {
+      this.showHideMenu(2, false);
+      this.showHideMenu(3, false);
+      this.showHideMenu(4, false);
+      this.showHideMenu(5, false);
+      this.showHideMenu(6, false);
+      this.showHideMenu(7, false);
+      this.showHideMenu(8, false);
+      this.showHideMenu(9, false);
+    } else if (this.role === 'teacher') {
+      this.showHideMenu(2, true);
+      this.showHideMenu(3, true);
+      this.showHideMenu(4, false);
+      this.showHideMenu(5, false);
+      this.showHideMenu(6, false);
+      this.showHideMenu(7, true);
+      this.showHideMenu(8, true);
+      this.showHideMenu(9, true);
+    } else if (this.role === 'councillor') {
+      this.showHideMenu(2, true);
+      this.showHideMenu(3, true);
+      this.showHideMenu(4, false);
+      this.showHideMenu(5, false);
+      this.showHideMenu(6, false);
+      this.showHideMenu(7, true);
+      this.showHideMenu(8, true);
+      this.showHideMenu(9, true);
+    } else {
+      this.hideMenus();
+    }
   }
 }
