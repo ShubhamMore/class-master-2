@@ -7,9 +7,16 @@
       ><img src="../../../../assets/brand/class-master.png" width="75%" alt="IMS Master"
     /></a>
   </div>
-  <nb-select selected="" (selectedChange)="changeSelect($event)" status="primary">
+  <nb-select
+    [selected]="branchId"
+    size="medium"
+    (selectedChange)="changeSelectBranch($event)"
+    status="primary"
+  >
     <nb-option value="">Select Institute</nb-option>
-    <nb-option *ngFor="let branch of branches" [value]="branch._id">{{ branch.name }}</nb-option>
+    <nb-option *ngFor="let branch of branches" [value]="branch._id">{{
+      branch.basicDetails.branchName
+    }}</nb-option>
   </nb-select>
 </div>
 
@@ -60,17 +67,25 @@
           </div>
           <div class="col-2">
             <span class="delete-notification pointer float-right">
-              <i
-                (click)="deleteNotification(notification._id, notification.status, i)"
-                class="fa fa-trash"
-                aria-hidden="true"
-              >
-              </i>
+              <nb-icon
+                icon="trash-2-outline"
+                nbTooltip="Delete"
+                (click)="openNotificationBox(notification, i, notificationDialog)"
+              ></nb-icon>
             </span>
           </div>
-          <div class="col-12">
+          <div class="col-10">
             <span class="notification-text">
               {{ getNotificationLimitedMessage(notification.message) }}
+            </span>
+          </div>
+          <div class="col-2">
+            <span class="view-notification pointer float-right">
+              <nb-icon
+                nbTooltip="Show more.."
+                icon="arrow-circle-right-outline"
+                (click)="openNotificationBox(notification, i, notificationDialog)"
+              ></nb-icon>
             </span>
           </div>
         </div>

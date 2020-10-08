@@ -249,28 +249,27 @@ export class DateService {
   getUpToTime(date: any): string {
     date = new Date(date).getTime();
     const curDate = this.getDateInMilliseconds();
-    const timeDifference = Math.round((curDate - date) / 1000);
-
+    const timeDifference = Math.round((curDate - date) / 1000); // 1 sec  = 1000 ms
     if (timeDifference >= 0 && timeDifference < 60) {
-      return timeDifference + ' sec';
+      return timeDifference + ' sec'; // 1 sec  = 1000 ms
     } else if (timeDifference >= 60 && timeDifference < 3600) {
-      const difference = Math.round(timeDifference / 60);
-      return difference + difference <= 1 ? ' min' : ' mins';
+      const difference = Math.round(timeDifference / 60); // 1 min = 60 sec
+      return difference + (difference <= 1 ? ' min' : ' mins');
     } else if (timeDifference >= 3600 && timeDifference < 86400) {
-      const difference = Math.round(timeDifference / (60 * 24));
-      return difference + difference <= 1 ? ' hr' : ' hrs';
+      const difference = Math.round(timeDifference / (60 * 60)); // 1 hr = 60 m
+      return difference + (difference <= 1 ? ' hr' : ' hrs');
     } else if (timeDifference >= 86400 && timeDifference < 604800) {
-      const difference = Math.round(timeDifference / (60 * 24 * 7));
-      return difference + difference <= 1 ? ' day' : ' days';
+      const difference = Math.round(timeDifference / (60 * 60 * 24)); // 1 day = 24 hr
+      return difference + (difference <= 1 ? ' day' : ' days');
     } else if (timeDifference >= 604800 && timeDifference < 2630880) {
-      const difference = Math.round(timeDifference / (60 * 24 * 7 * 4.35));
-      return difference + difference <= 1 ? ' week' : ' weeks';
+      const difference = Math.round(timeDifference / (60 * 60 * 24 * 7)); // 1 week = 7 day
+      return difference + (difference <= 1 ? ' week' : ' weeks');
     } else if (timeDifference >= 2630880 && timeDifference < 31570560) {
-      const difference = Math.round(timeDifference / (60 * 60 * 7 * 4.35 * 12));
-      return difference + difference <= 1 ? ' month' : ' months';
+      const difference = Math.round(timeDifference / (60 * 60 * 24 * 7 * 4.35)); // 1 month = 4.35 weeks
+      return difference + (difference <= 1 ? ' month' : ' months');
     } else if (timeDifference >= 31570560) {
-      const difference = Math.round(timeDifference / (60 * 60 * 7 * 4.35 * 12));
-      return difference + difference <= 1 ? ' year' : ' years';
+      const difference = Math.round(timeDifference / (60 * 60 * 24 * 7 * 4.35 * 12)); // 1 year = 12 months
+      return difference + (difference <= 1 ? ' year' : ' years');
     } else {
       return '';
     }

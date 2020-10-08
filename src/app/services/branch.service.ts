@@ -8,14 +8,17 @@ import { throwError, BehaviorSubject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class BranchService {
   private branchId: string;
+  private selectedBranchId = new BehaviorSubject<string>(null);
   private categoryId: string;
 
   private branch = new BehaviorSubject<BranchModel>(null);
+  private branches = new BehaviorSubject<BranchModel[]>([]);
   private category = new BehaviorSubject<CategoryModel>(null);
   private categories = new BehaviorSubject<CategoryModel[]>([]);
 
   setBranchId(branchId: string) {
     this.branchId = branchId;
+    this.setSelectedBranchId(branchId);
   }
 
   deleteBranchId() {
@@ -24,6 +27,14 @@ export class BranchService {
 
   getBranchId() {
     return this.branchId;
+  }
+
+  setSelectedBranchId(branchId: string) {
+    this.selectedBranchId.next(branchId);
+  }
+
+  getSelectedBranchId() {
+    return this.selectedBranchId;
   }
 
   setCategoryId(categoryId: string) {
@@ -48,6 +59,18 @@ export class BranchService {
 
   deleteBranchData() {
     this.branch.next(null);
+  }
+
+  setBranchesData(branches: BranchModel[]) {
+    this.branches.next(branches);
+  }
+
+  getBranchesData() {
+    return this.branches;
+  }
+
+  deleteBranchesData() {
+    this.branches.next(null);
   }
 
   setCategoryData(category: CategoryModel) {
@@ -87,7 +110,6 @@ export class BranchService {
       }),
     );
   }
-
 
   getBranchCoursesAndBatches(branchId: string) {
     const data = { api: 'getBranchCoursesAndBatches', data: { branch: branchId } };

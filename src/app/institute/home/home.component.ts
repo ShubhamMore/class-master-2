@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
     this.branchService.getBranches(this.user.imsMasterId).subscribe(
       (branches: BranchModel[]) => {
         this.branches = branches;
+        this.branchService.setBranchesData(branches);
         this.loading = false;
       },
       (err: any) => {

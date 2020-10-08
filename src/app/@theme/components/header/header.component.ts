@@ -1,7 +1,8 @@
+import { BranchModel } from './../../../models/branch.model';
 import { DateService } from './../../../services/shared-services/date.service';
 import { NotificationService } from './../../../services/notification.service';
 import { NotificationModel } from './../../../models/notification.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BranchService } from './../../../services/branch.service';
 import { SocketService } from './../../../services/socket.service';
 import { AuthService } from './../../../authentication/auth/auth-service/auth.service';
@@ -28,7 +29,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userPictureOnly: boolean = false;
   user: any;
 
-  branches: any[];
+  branchId: string;
+  branches: BranchModel[];
   userMenu: any[];
 
   notifications: NotificationModel[];
@@ -41,6 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private dialogService: NbDialogService,
     public dateService: DateService,
     private router: Router,
+    private route: ActivatedRoute,
     private menuService: NbMenuService,
     private themeService: NbThemeService,
     private layoutService: LayoutService,
@@ -51,6 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.branchId = '';
     this.branches = [];
     this.userMenu = [];
     this.notifications = [
@@ -59,7 +63,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       //   title: 'My Title',
       //   message:
       //     'My Message My Message My Message My Message My Message My Message My Message My Message ',
-      //   date: new Date().getTime(),
+      //   date: 1602139523275,
       //   status: true,
       // },
     ];
@@ -75,8 +79,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
       ];
     }
 
+    this.branchService.getBranchesData().subscribe((branches: BranchModel[]) => {
+      this.branches = branches;
+    });
+
+    this.branchService.getSelectedBranchId().subscribe((branchId: string) => {
+      this.branchId = branchId;
+    });
+
     this.socketService.setupSocketConnection();
     this.socket = this.socketService.getSocket();
+
+    // Listening to notifications
+    this.socket.on('notify', (notification: NotificationModel) => {
+      this.unseenNotificationCount++;
+      this.notifications.splice(0, 0, notification);
+    });
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService
@@ -88,9 +106,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((isLessThanXl: boolean) => (this.userPictureOnly = isLessThanXl));
   }
 
-  changeSelect(e: any) {
-    if (e !== '') {
-      this.router.navigate(['/institute/branch/dashboard']);
+  changeSelectBranch(id: string) {
+    if (id !== '') {
+      this.branchService.setBranchId(id);
+      this.router.navigate(['/institute/branch/dashboard'], { relativeTo: this.route });
     }
   }
 

@@ -94,7 +94,7 @@
 }
 
 .delete-notification:hover {
-  color: #f00;
+  color: #ff3d71;
   transform: scale(1.1);
 }
 
@@ -102,4 +102,14 @@
   overflow: hidden;
   display: inline-block;
   white-space: nowrap;
+}
+
+.view-notification {
+  color: #000;
+  transition: all 0.25s;
+}
+
+.view-notification:hover {
+  color: #00d68f;
+  transform: scale(1.1);
 }
