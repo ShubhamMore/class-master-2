@@ -1,0 +1,114 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>Exam Score</h3>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <button class="float-right" nbButton status="warning" size="tiny" (click)="back()">
+          Back
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <nb-card>
+      <nb-card-header>
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <span><strong>Exam Title: </strong>{{ exam.examTitle }}</span>
+            <br />
+            <span><strong>Date: </strong>{{ dateService.formatDate(exam.date) }}</span>
+            <br />
+            <span><strong>Time: </strong>{{ dateService.formatTime(exam.time) }}</span>
+            <br />
+            <span><strong>Duration: </strong>{{ exam.duration }} Min</span>
+          </div>
+          <div class="col-md-6 col-12">
+            <span><strong>Category: </strong>{{ category.category }}</span>
+            <br />
+            <span><strong>Course: </strong>{{ course.basicDetails.courseName }}</span>
+            <br />
+            <span><strong>Batch: </strong>{{ batch.basicDetails.batchName }}</span>
+            <br />
+            <span><strong>Subject: </strong>{{ getSubject(exam.subject) }}</span>
+          </div>
+        </div>
+      </nb-card-header>
+    </nb-card>
+
+    <div
+      class="table-responsive"
+      *ngIf="studentMarksForm.get('marks')['controls'].length > 0; else noStudentMarks"
+    >
+      <form [formGroup]="studentMarksForm" (submit)="saveMarks()">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Student</th>
+              <th>Marks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container
+              *ngFor="let studentMarks of studentMarksForm.get('marks')['controls']; let i = index"
+            >
+              <tr [formGroup]="studentMarks">
+                <td>{{ getStudent(studentMarks.value.student) }}</td>
+                <td>
+                  <div class="form-control-group">
+                    <input
+                      type="number"
+                      nbInput
+                      id="input-marks"
+                      name="marks"
+                      placeholder="marks"
+                      formControlName="marks"
+                      autofocus
+                      fullWidth
+                      [status]="
+                        studentMarks.get('marks').touched
+                          ? studentMarks.get('marks').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+
+                    <ng-container
+                      *ngIf="studentMarks.get('marks').invalid && studentMarks.get('marks').touched"
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="studentMarks.get('marks').errors?.required"
+                      >
+                        Enter {{ getStudent(studentMarks.value.student) }} Marks
+                      </p>
+                    </ng-container>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+
+        <hr />
+
+        <div class="row">
+          <div class="col-12">
+            <button class="float-right" type="submit" nbButton status="primary" size="medium">
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <ng-template #noStudentMarks>
+      <p class="text-center mt-5 mb-5">
+        No Students Found
+      </p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

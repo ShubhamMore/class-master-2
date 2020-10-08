@@ -1,0 +1,538 @@
+<ngx-repeat-schedule
+  *ngIf="repeatSchedule"
+  [subjects]="subjects"
+  [teachers]="teachers"
+  [repeatSchedule]="repeatSchedule"
+  (close)="cancelRepeatSchedule()"
+  (submit)="saveRepeatSchedule($event)"
+></ngx-repeat-schedule>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-9">
+        <h3>{{ schedule ? 'Edit' : 'Add' }} Schedule</h3>
+      </div>
+      <div class="col-3">
+        <button class="float-right" nbButton size="tiny" status="warning" (click)="back()">
+          Back
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <nb-stepper #stepper [linear]="true" [disableStepNavigation]="true">
+          <nb-step [stepControl]="scheduleForm" label="Schedule Details">
+            <form [formGroup]="scheduleForm" (submit)="submitScheduleForm()">
+              <div class="row">
+                <div class="col-md-4 col-sm-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-date">Date:</label>
+                    <input
+                      type="date"
+                      nbInput
+                      id="input-date"
+                      name="date"
+                      [min]="schedule ? schedule.date : dateService.getDateString()"
+                      formControlName="date"
+                      placeholder="Date"
+                      fullWidth
+                      [status]="
+                        scheduleForm.get('date').touched
+                          ? scheduleForm.get('date').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="scheduleForm.get('date').invalid && scheduleForm.get('date').touched"
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="scheduleForm.get('date').errors?.required"
+                      >
+                        Date is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-schedule-title">Schedule Start Time:</label>
+                    <input
+                      type="time"
+                      nbInput
+                      id="input-schedule-title"
+                      name="title"
+                      formControlName="startTime"
+                      placeholder="Schedule Start Time"
+                      fullWidth
+                      [status]="
+                        scheduleForm.get('startTime').touched
+                          ? scheduleForm.get('startTime').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="
+                        scheduleForm.get('startTime').invalid &&
+                        scheduleForm.get('startTime').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="scheduleForm.get('startTime').errors?.required"
+                      >
+                        Schedule Start Time is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-schedule-end-time">Schedule End Time:</label>
+                    <input
+                      type="time"
+                      nbInput
+                      id="input-schedule-end-time"
+                      name="endTime"
+                      min="0"
+                      formControlName="endTime"
+                      placeholder="Schedule End Time"
+                      fullWidth
+                      [status]="
+                        scheduleForm.get('endTime').touched
+                          ? scheduleForm.get('endTime').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="
+                        scheduleForm.get('endTime').invalid && scheduleForm.get('endTime').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="scheduleForm.get('endTime').errors?.required"
+                      >
+                        Schedule End Time is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-subject">Subject:</label>
+                    <nb-select
+                      id="input-subject"
+                      name="subject"
+                      formControlName="subject"
+                      placeholder="Subject"
+                      fullWidth
+                      [status]="
+                        scheduleForm.get('subject').touched
+                          ? scheduleForm.get('subject').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                      (selectedChange)="onSelectSubject($event)"
+                    >
+                      <nb-option value="">Select Subject</nb-option>
+                      <nb-option *ngFor="let subject of subjects" [value]="subject._id">{{
+                        subject.subject
+                      }}</nb-option>
+                    </nb-select>
+                    <ng-container
+                      *ngIf="
+                        scheduleForm.get('subject').invalid && scheduleForm.get('subject').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="scheduleForm.get('subject').errors?.required"
+                      >
+                        Subject is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-topic">Topic:</label>
+                    <input
+                      type="text"
+                      nbInput
+                      id="input-topic"
+                      name="topic"
+                      formControlName="topic"
+                      placeholder="Topic"
+                      fullWidth
+                      [status]="
+                        scheduleForm.get('topic').touched
+                          ? scheduleForm.get('topic').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="scheduleForm.get('topic').invalid && scheduleForm.get('topic').touched"
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="scheduleForm.get('topic').errors?.required"
+                      >
+                        Topic is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-teacher">Teacher:</label>
+                    <nb-select
+                      id="input-teacher"
+                      name="teacher"
+                      formControlName="teacher"
+                      placeholder="Teacher"
+                      fullWidth
+                      [status]="
+                        scheduleForm.get('teacher').touched
+                          ? scheduleForm.get('teacher').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    >
+                      <nb-option value="">Select Teacher</nb-option>
+                      <nb-option *ngFor="let teacher of teachers" [value]="teacher.employee">{{
+                        teacher.name
+                      }}</nb-option>
+                    </nb-select>
+                    <ng-container
+                      *ngIf="
+                        scheduleForm.get('teacher').invalid && scheduleForm.get('teacher').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="scheduleForm.get('teacher').errors?.required"
+                      >
+                        Teacher is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-session-type">Session Type:</label>
+                    <nb-select
+                      id="input-session-type"
+                      name="sessionType"
+                      formControlName="sessionType"
+                      placeholder="sessionType"
+                      fullWidth
+                      [status]="
+                        scheduleForm.get('sessionType').touched
+                          ? scheduleForm.get('sessionType').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    >
+                      <nb-option value="classroom">
+                        Class Room
+                      </nb-option>
+                      <nb-option value="online">
+                        Online
+                      </nb-option>
+                    </nb-select>
+                    <ng-container
+                      *ngIf="
+                        scheduleForm.get('sessionType').invalid &&
+                        scheduleForm.get('sessionType').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="scheduleForm.get('sessionType').errors?.required"
+                      >
+                        Session Type is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-12">
+                  <button type="submit" class="float-right" nbButton status="basic" size="medium">
+                    Next
+                  </button>
+                </div>
+              </div>
+            </form>
+          </nb-step>
+
+          <nb-step label="Schedule Repeat" *ngIf="!schedule">
+            <form (submit)="submitScheduleRepeatForm()">
+              <div class="row" *ngIf="!schedule">
+                <div class="col-12">
+                  <div class="form-control-group">
+                    <nb-checkbox
+                      id="input-session-repeat"
+                      name="repeat"
+                      [(ngModel)]="repeat"
+                      placeholder="repeat"
+                    >
+                      Repeat This Schedule for Another Days
+                    </nb-checkbox>
+                  </div>
+                </div>
+              </div>
+
+              <br />
+
+              <div class="row" *ngIf="repeat && !schedule">
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-repeat-days">Select Repeat Days: </label>
+                    <div class="week-day-selector">
+                      <label *ngFor="let day of weekDays; let i = index">
+                        <input
+                          type="checkbox"
+                          [id]="weekDays[i]"
+                          class="weekday"
+                          (change)="onSelectRepeatDay($event.target.checked, i)"
+                        />
+                        <label [for]="weekDays[i]">{{ weekDays[i] }}</label>
+                      </label>
+                    </div>
+                    <ng-container *ngIf="repeat && repeatDaysTouched">
+                      <p class="caption status-danger" *ngIf="repeatDays.length === 0">
+                        *Please Select Repeat Day!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-repeat-up-to">Repeat up To:</label>
+                    <input
+                      type="date"
+                      nbInput
+                      id="input-repeat-up-to"
+                      name="repeatUpTo"
+                      [min]="scheduleForm.value.date"
+                      [(ngModel)]="repeatUpTo"
+                      placeholder="Date"
+                      fullWidth
+                      [status]="
+                        repeat && repeatUpToTouched ? (!repeatUpTo ? 'danger' : 'success') : 'basic'
+                      "
+                      (change)="onChangeRepeatUpToDate()"
+                    />
+                    <ng-container *ngIf="repeat && repeatUpToTouched">
+                      <p class="caption status-danger" *ngIf="!repeatUpTo">
+                        *Repeat Up To Date is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div
+                    class="table-responsive"
+                    *ngIf="repeatSchedules.length > 0; else noRepeatSchedule"
+                  >
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Day</th>
+                          <th>Date</th>
+                          <th>Time</th>
+                          <th>Subject</th>
+                          <th>Teacher</th>
+                          <th colspan="3">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let schedule of repeatSchedules; let i = index">
+                          <td>{{ i + 1 }}</td>
+                          <td>{{ dateService.getDay(schedule.date) }}</td>
+                          <td>{{ dateService.formatDate(schedule.date) }}</td>
+                          <td>
+                            {{ dateService.formatTime(schedule.startTime) }} -
+                            {{ dateService.formatTime(schedule.endTime) }}
+                          </td>
+                          <td>
+                            {{ getSubject(schedule.subject) }}
+                          </td>
+                          <td>
+                            {{ getTeacher(schedule.teacher) }}
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              nbTooltip="Edit"
+                              nbButton
+                              size="tiny"
+                              status="basic"
+                              (click)="editRepeatSchedule(schedule, i)"
+                            >
+                              <nb-icon icon="edit-outline"></nb-icon>
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              nbTooltip="Clone"
+                              nbButton
+                              size="tiny"
+                              status="primary"
+                              (click)="cloneRepeatSchedule(schedule, i)"
+                            >
+                              <nb-icon icon="copy-outline"></nb-icon>
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              *ngIf="i !== 0"
+                              type="button"
+                              nbTooltip="Remove"
+                              nbButton
+                              size="tiny"
+                              status="danger"
+                              (click)="removeRepeatSchedule(i)"
+                            >
+                              <nb-icon icon="close-outline"></nb-icon>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <ng-template #noRepeatSchedule>
+                    <p class="text-center">
+                      {{
+                        repeatDays.length === 0
+                          ? 'Select Repeat Day'
+                          : !repeatUpTo
+                          ? 'Select Repeat Up To Date'
+                          : 'No Repeat Schedule'
+                      }}
+                    </p>
+                  </ng-template>
+                </div>
+              </div>
+
+              <hr />
+
+              <div class="row">
+                <div class="col-sm-6 text-left">
+                  <button type="button" class="" size="medium" nbButton (click)="previousStep()">
+                    <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                    <span>prev</span>
+                  </button>
+                </div>
+                <div class="col-sm-6 text-left">
+                  <button type="submit" class="float-right" nbButton status="basic" size="medium">
+                    Next
+                  </button>
+                </div>
+              </div>
+            </form>
+          </nb-step>
+
+          <nb-step label="Submit">
+            <div class="step-container">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <th>Date</th>
+                      <td>{{ dateService.formatDate(scheduleForm.value.date) }}</td>
+                    </tr>
+                    <tr>
+                      <th>Schedule Start Time</th>
+                      <td>{{ scheduleForm.value.startTime }}</td>
+                    </tr>
+                    <tr>
+                      <th>Schedule End Time</th>
+                      <td>{{ scheduleForm.value.endTime }}</td>
+                    </tr>
+                    <tr>
+                      <th>Subject</th>
+                      <td>{{ getSubject(scheduleForm.value.subject) }}</td>
+                    </tr>
+                    <tr>
+                      <th>Topic</th>
+                      <td>{{ scheduleForm.value.topic }}</td>
+                    </tr>
+                    <tr>
+                      <th>Teacher</th>
+                      <td>{{ getTeacher(scheduleForm.value.teacher) }}</td>
+                    </tr>
+                    <tr>
+                      <th>Session Type</th>
+                      <td>{{ scheduleForm.value.sessionType }}</td>
+                    </tr>
+                    <tr>
+                      <th>Repeat</th>
+                      <td>{{ repeat ? 'Yes' : 'No' }}</td>
+                    </tr>
+                    <ng-container *ngIf="repeat">
+                      <tr>
+                        <th>Repeat Days</th>
+                        <td>{{ getRepeatDays() }}</td>
+                      </tr>
+                      <tr>
+                        <th>Repeat Up To</th>
+                        <td>{{ dateService.formatDate(repeatUpTo) }}</td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+
+              <hr />
+
+              <div class="row">
+                <div class="col-sm-6 text-left">
+                  <button type="button" size="medium" class="" nbButton (click)="previousStep()">
+                    <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                    <span>prev</span>
+                  </button>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <button type="button" nbButton size="medium" (click)="saveSchedule()">
+                    <span>Submit</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nb-step>
+        </nb-stepper>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

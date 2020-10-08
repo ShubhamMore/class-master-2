@@ -1,0 +1,137 @@
+<nb-card *ngIf="!loading">
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>Add Material</h3>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <button
+          nbButton
+          type="button"
+          size="medium"
+          fullWidth
+          size="small"
+          status="primary"
+          (click)="saveCourseMaterial()"
+        >
+          Upload&nbsp;
+          <nb-icon icon="arrow-circle-up-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-control-group">
+          <label class="label" for="input-subject">Select Subject :</label>
+          <nb-select
+            type="text"
+            id="input-subject"
+            name="subject"
+            placeholder="Select Subject"
+            fullWidth
+            [selected]="subject"
+            (selectedChange)="onSelectSubject($event)"
+            [status]="invalidSubject ? (subject === '' ? 'danger' : 'success') : 'basic'"
+            *ngIf="course"
+          >
+            <nb-option value="">Select Subject</nb-option>
+            <nb-option *ngFor="let subject of course.subjects" [value]="subject._id">{{
+              subject.subject
+            }}</nb-option>
+          </nb-select>
+
+          <ng-container *ngIf="invalidSubject">
+            <p class="caption status-danger" *ngIf="subject === ''">
+              Subject is required!
+            </p>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-control-group">
+          <label class="label" for="input-subject"
+            >Click on Following Button to Select Course Material Files</label
+          >
+          <input
+            type="file"
+            nbInput
+            id="input-file"
+            name="file"
+            placeholder="Select File"
+            fullWidth
+            #filePicker
+            (change)="onFilePicked($event)"
+            multiple
+            hidden
+          />
+          <button
+            nbButton
+            type="button"
+            fullWidth
+            size="small"
+            status="warning"
+            id="files"
+            (click)="filePicker.click()"
+          >
+            Click Here to Pick Files
+          </button>
+
+          <ng-container *ngIf="invalidFile">
+            <p class="caption status-danger">
+              *Please Select a Valid File (*.pdf, '*.jpg, *.png, *.jpeg, *.mp4)
+            </p>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <h4 class="text-center">File/s To Upload</h4>
+
+    <div class="row">
+      <div class="col-md-10 mx-auto">
+        <div class="table-responsive" *ngIf="uploadCourseMaterials.length > 0; else noFiles">
+          <table class="table table-sm table-hover">
+            <thead class="table-heading">
+              <tr class="table-row">
+                <th class="table-heading-data">ID</th>
+                <th class="table-heading-data">Content File</th>
+                <th class="table-heading-data text-center">Remove</th>
+              </tr>
+            </thead>
+            <tbody class="table-body">
+              <tr class="table-row" *ngFor="let file of uploadCourseMaterials; let i = index">
+                <td class="table-data">{{ i + 1 }}</td>
+                <td class="table-data">
+                  <span class="mr-2">
+                    {{ file.name }}
+                  </span>
+                </td>
+                <td class="table-data text-center">
+                  <button
+                    type="button"
+                    nbButton
+                    shape="round"
+                    (click)="removeFile(i)"
+                    status="danger"
+                    size="tiny"
+                    nbTooltip="Remove {{ file.name }}"
+                  >
+                    <nb-icon icon="close-outline"></nb-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #noFiles>
+          No Files Selected, Please Select Files to Upload
+        </ng-template>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

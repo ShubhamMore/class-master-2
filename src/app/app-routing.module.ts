@@ -14,13 +14,13 @@ export const routes: Routes = [
 
   {
     path: 'employee',
-    loadChildren: () => import('./institute/institute.module').then((m) => m.InstituteModule),
+    loadChildren: () => import('./employee/employee.module').then((m) => m.EmployeeModule),
     canActivate: [EmployeeAuthGuard],
   },
 
   {
     path: 'student',
-    loadChildren: () => import('./institute/institute.module').then((m) => m.InstituteModule),
+    loadChildren: () => import('./student/student.module').then((m) => m.StudentModule),
     canActivate: [StudentAuthGuard],
   },
 

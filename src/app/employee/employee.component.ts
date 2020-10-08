@@ -1,30 +1,24 @@
-import { BranchService } from './../services/branch.service';
+import { NbMenuItem } from '@nebular/theme';
+import { MenuService } from './menu.service';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-employee',
-  templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss'],
+  template: `
+    <ngx-one-column-layout>
+      <nb-menu [items]="menu"></nb-menu>
+      <router-outlet></router-outlet>
+    </ngx-one-column-layout>
+  `,
 })
 export class EmployeeComponent implements OnInit {
-  loading: boolean;
-  branchId: string;
+  menu: NbMenuItem[] = [];
 
-  constructor(
-    private branchService: BranchService,
-
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {}
+  constructor(private menuService: MenuService) {}
 
   ngOnInit(): void {
-    this.loading = true;
-    this.branchId = this.branchService.getBranchId();
-    if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
-
-      return;
-    }
+    this.menuService.setMenuItemSequence();
+    this.menu = this.menuService.getMenuItems();
   }
 }

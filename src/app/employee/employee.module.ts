@@ -1,11 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { EmployeeRoutingModule } from './employee-routing.module';
 import { EmployeeComponent } from './employee.component';
+import { MenuService } from './menu.service';
+import { NgModule } from '@angular/core';
+import { NbMenuModule } from '@nebular/theme';
+
+import { ThemeModule } from './../@theme/theme.module';
+import { EmployeeRoutingModule } from './employee-routing.module';
 
 @NgModule({
+  imports: [EmployeeRoutingModule, ThemeModule, NbMenuModule],
   declarations: [EmployeeComponent],
-  imports: [CommonModule, EmployeeRoutingModule],
+  providers: [MenuService],
 })
 export class EmployeeModule {}

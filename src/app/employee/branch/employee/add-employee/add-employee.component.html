@@ -1,0 +1,452 @@
+<nb-card>
+  <nb-card-header>
+    <button
+      type="button"
+      class="float-right"
+      nbButton
+      status="warning"
+      size="tiny"
+      (click)="back()"
+    >
+      Back
+    </button>
+    <h3 class="">
+      {{ !employee ? 'Add New' : 'Edit' + ' Employee ' + (employee.name | uppercase) }}
+    </h3>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper #stepper [linear]="true" [disableStepNavigation]="true">
+      <nb-step [stepControl]="employeeForm" label="Basic Details">
+        <div class="row">
+          <div class="col-md-12" *ngIf="!employee">
+            <nb-checkbox
+              id="input-already-registered"
+              name="alreadyRegistered"
+              [checked]="alreadyRegisteredUser"
+              (checkedChange)="alreadyRegister($event)"
+              >Already Registered Employee</nb-checkbox
+            >
+          </div>
+          <div class="col-md-6 col-sm-8" *ngIf="alreadyRegisteredUser || employee">
+            <form class="" (submit)="searchEmployee()" [formGroup]="employeeSearchForm">
+              <div class="form-control-group">
+                <label class="label" for="input-employee-employee-id">Employee Id:</label>
+                <nb-form-field>
+                  <input
+                    type="text"
+                    nbInput
+                    id="input-employee-id"
+                    employeeId="employeeId"
+                    formControlName="employeeId"
+                    placeholder="Employee Email or IMS Master Id"
+                    fullWidth
+                    [status]="
+                      employeeSearchForm.get('employeeId').touched
+                        ? employeeSearchForm.get('employeeId').invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                  <button nbSuffix nbTooltip="Fetch" nbButton ghost type="submit" *ngIf="!employee">
+                    <nb-icon icon="arrow-circle-right-outline" status="success"> </nb-icon>
+                  </button>
+                </nb-form-field>
+
+                <ng-container
+                  *ngIf="
+                    employeeSearchForm.get('employeeId').invalid &&
+                    employeeSearchForm.get('employeeId').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="employeeSearchForm.get('employeeId').errors?.required"
+                  >
+                    Employee Id is required!
+                  </p>
+                </ng-container>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <form
+          class=""
+          (submit)="employeeFormSubmit()"
+          [formGroup]="employeeForm"
+          *ngIf="!alreadyRegisteredUser"
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-employee-employee-name">Employee Name:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-employee-name"
+                  name="name"
+                  formControlName="name"
+                  placeholder="Employee Name"
+                  minlength="3"
+                  maxlength="30"
+                  fullWidth
+                  [status]="
+                    employeeForm.get('name').touched
+                      ? employeeForm.get('name').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="employeeForm.get('name').invalid && employeeForm.get('name').touched"
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="employeeForm.get('name').errors?.required"
+                  >
+                    Employee name is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="employeeForm.get('name').errors?.minlength"
+                  >
+                    Employee Name should contain minimum 3 characters
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-email">Email address:</label>
+                <input
+                  type="email"
+                  nbInput
+                  id="input-email"
+                  name="email"
+                  formControlName="email"
+                  placeholder="Email address"
+                  fullWidth
+                  [status]="
+                    employeeForm.get('email').touched
+                      ? employeeForm.get('email').invalid || userExist
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (input)="checkUser()"
+                />
+                <ng-container
+                  *ngIf="
+                    (employeeForm.get('email').invalid || userExist) &&
+                    employeeForm.get('email').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="employeeForm.get('email').errors?.required"
+                  >
+                    Email is required!
+                  </p>
+                  <p class="caption status-danger" *ngIf="employeeForm.get('email').errors?.email">
+                    Email should be the real one!
+                  </p>
+                  <p class="caption status-danger" *ngIf="userExist">
+                    Email Already registered, Please try another Email!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-phone">Phone:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-phone"
+                  name="phone"
+                  formControlName="phone"
+                  placeholder="phone"
+                  minlength="10"
+                  maxlength="10"
+                  min="1000000000"
+                  max="9999999999"
+                  fullWidth
+                  [status]="
+                    employeeForm.get('phone').touched
+                      ? employeeForm.get('phone').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="employeeForm.get('phone').invalid && employeeForm.get('phone').touched"
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="employeeForm.get('phone').errors?.required"
+                  >
+                    Phone is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="
+                      employeeForm.get('phone').errors?.minlength ||
+                      employeeForm.get('phone').errors?.maxlength ||
+                      employeeForm.get('phone').errors?.min ||
+                      employeeForm.get('phone').errors?.max
+                    "
+                  >
+                    Phone should contain 10 digits
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-birth-date">Birth Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-birth-date"
+                  name="birthDate"
+                  [max]="dateService.getDateString()"
+                  formControlName="birthDate"
+                  placeholder="Birth Date"
+                  fullWidth
+                />
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-address">Address:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-address"
+                  name="address"
+                  formControlName="address"
+                  placeholder="Address (Optional)"
+                  fullWidth
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-qualification">Qualification:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-qualification"
+                  name="qualification"
+                  formControlName="qualification"
+                  placeholder="Qualification (Optional)"
+                  fullWidth
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <button nbButton type="submit">
+                <span>Next</span>
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step [stepControl]="branchEmployeeForm" label="Enrollment Details">
+        <form
+          [formGroup]="branchEmployeeForm"
+          (ngSubmit)="branchEmployeeFormSubmit()"
+          class="step-container"
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-employee-role">Role:</label>
+                <nb-select
+                  id="input-role"
+                  name="role"
+                  formControlName="role"
+                  placeholder="Select Role"
+                  fullWidth
+                  [status]="
+                    branchEmployeeForm.get('role').touched
+                      ? branchEmployeeForm.get('role').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="">Select Role</nb-option>
+                  <nb-option *ngFor="let role of roles" [value]="role">{{
+                    role | uppercase
+                  }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="
+                    branchEmployeeForm.get('role').invalid && branchEmployeeForm.get('role').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchEmployeeForm.get('role').errors?.required"
+                  >
+                    Employee Role is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-basic-salary">Basic Salary:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-basic-salary"
+                  name="basicSalary"
+                  formControlName="basicSalary"
+                  placeholder="basicSalary"
+                  min="0"
+                  fullWidth
+                  [status]="
+                    branchEmployeeForm.get('basicSalary').touched
+                      ? branchEmployeeForm.get('basicSalary').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    branchEmployeeForm.get('basicSalary').invalid &&
+                    branchEmployeeForm.get('basicSalary').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchEmployeeForm.get('basicSalary').errors?.required"
+                  >
+                    Basic Salary is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="branchEmployeeForm.get('basicSalary').errors?.min"
+                  >
+                    Basic Salary should be more than 0
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-description">Description:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-description"
+                  name="description"
+                  formControlName="description"
+                  placeholder="Description (Optional)"
+                  fullWidth
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button type="button" class="" nbButton (click)="previousStep()">
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton type="submit">
+                <span>Next</span><nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step label="Submit">
+        <div class="step-container">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                <tr *ngIf="employeeSearchForm.value.employeeId">
+                  <th>IMS Id</th>
+                  <td>{{ employeeSearchForm.value.employeeId }}</td>
+                </tr>
+                <tr>
+                  <th>Employee Name</th>
+                  <td>{{ employeeForm.value.name }}</td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td>{{ employeeForm.value.email }}</td>
+                </tr>
+                <tr>
+                  <th>Phone</th>
+                  <td>{{ employeeForm.value.phone }}</td>
+                </tr>
+                <tr>
+                  <th>Address</th>
+                  <td>{{ employeeForm.value.address }}</td>
+                </tr>
+                <tr>
+                  <th>Qualification</th>
+                  <td>{{ employeeForm.value.qualification }}</td>
+                </tr>
+                <tr>
+                  <th>Role</th>
+                  <td>{{ branchEmployeeForm.value.role | uppercase }}</td>
+                </tr>
+                <tr>
+                  <th>Basic Salary</th>
+                  <td>{{ branchEmployeeForm.value.basicSalary }}</td>
+                </tr>
+                <tr>
+                  <th>Description</th>
+                  <td>{{ branchEmployeeForm.value.description }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button type="button" class="" nbButton (click)="previousStep()">
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton (click)="saveEmployee()"><span>Submit</span></button>
+            </div>
+          </div>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

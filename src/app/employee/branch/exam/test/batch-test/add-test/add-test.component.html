@@ -1,0 +1,342 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-9">
+        <h3>{{ exam ? 'Edit' : 'Add' }} Test</h3>
+      </div>
+      <div class="col-3">
+        <button class="float-right" nbButton size="tiny" status="warning" (click)="back()">
+          Back
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <nb-stepper #stepper [linear]="true" [disableStepNavigation]="true">
+          <nb-step [stepControl]="examForm" label="Exam Details">
+            <form [formGroup]="examForm" (submit)="submitExamForm()">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-exam-title">Exam Title:</label>
+                    <input
+                      type="text"
+                      nbInput
+                      id="input-exam-title"
+                      name="title"
+                      formControlName="examTitle"
+                      placeholder="Exam Title"
+                      fullWidth
+                      [status]="
+                        examForm.get('examTitle').touched
+                          ? examForm.get('examTitle').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="examForm.get('examTitle').invalid && examForm.get('examTitle').touched"
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="examForm.get('examTitle').errors?.required"
+                      >
+                        Exam title is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-subject">Subject:</label>
+                    <nb-select
+                      id="input-subject"
+                      name="subject"
+                      formControlName="subject"
+                      placeholder="Subject"
+                      fullWidth
+                      [status]="
+                        examForm.get('subject').touched
+                          ? examForm.get('subject').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    >
+                      <nb-option value="">Select Subject</nb-option>
+                      <nb-option *ngFor="let subject of subjects" [value]="subject._id">{{
+                        subject.subject
+                      }}</nb-option>
+                    </nb-select>
+                    <ng-container
+                      *ngIf="examForm.get('subject').invalid && examForm.get('subject').touched"
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="examForm.get('subject').errors?.required"
+                      >
+                        Subject is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-exam-out-of-marks">Out of Marks:</label>
+                    <input
+                      type="number"
+                      nbInput
+                      id="input-exam-out-of-marks"
+                      name="outOfMarks"
+                      min="0"
+                      formControlName="outOfMarks"
+                      placeholder="Out of Marks"
+                      fullWidth
+                      [status]="
+                        examForm.get('outOfMarks').touched
+                          ? examForm.get('outOfMarks').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="
+                        examForm.get('outOfMarks').invalid && examForm.get('outOfMarks').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="examForm.get('outOfMarks').errors?.required"
+                      >
+                        Out of Marks is required!
+                      </p>
+                      <p
+                        class="caption status-danger"
+                        *ngIf="examForm.get('outOfMarks').errors?.min"
+                      >
+                        Out of Marks should be greater than 0
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-exam-passing-marks">Passing Marks:</label>
+                    <input
+                      type="number"
+                      nbInput
+                      id="input-exam-passing-marks"
+                      name="passingMarks"
+                      min="0"
+                      formControlName="passingMarks"
+                      placeholder="Passing Marks"
+                      fullWidth
+                      [status]="
+                        examForm.get('passingMarks').touched
+                          ? examForm.get('passingMarks').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="
+                        examForm.get('passingMarks').invalid && examForm.get('passingMarks').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="examForm.get('passingMarks').errors?.required"
+                      >
+                        Passing Marks is required!
+                      </p>
+                      <p
+                        class="caption status-danger"
+                        *ngIf="examForm.get('passingMarks').errors?.min"
+                      >
+                        Passing Marks should be greater than 0
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-date">Date:</label>
+                    <input
+                      type="date"
+                      nbInput
+                      id="input-date"
+                      name="date"
+                      [min]="exam ? exam.date : dateService.getDateString()"
+                      formControlName="date"
+                      placeholder="Date"
+                      fullWidth
+                      [status]="
+                        examForm.get('date').touched
+                          ? examForm.get('date').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="examForm.get('date').invalid && examForm.get('date').touched"
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="examForm.get('date').errors?.required"
+                      >
+                        Date is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-time">Time:</label>
+                    <input
+                      type="time"
+                      step="300"
+                      nbInput
+                      id="input-time"
+                      name="time"
+                      formControlName="time"
+                      placeholder="Time"
+                      fullWidth
+                      [status]="
+                        examForm.get('time').touched
+                          ? examForm.get('time').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="examForm.get('time').invalid && examForm.get('time').touched"
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="examForm.get('time').errors?.required"
+                      >
+                        Time is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-duration">Duration (in Min):</label>
+                    <input
+                      type="number"
+                      nbInput
+                      id="input-duration"
+                      name="duration"
+                      min="0"
+                      formControlName="duration"
+                      placeholder="Duration (in Min)"
+                      fullWidth
+                      [status]="
+                        examForm.get('duration').touched
+                          ? examForm.get('duration').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="examForm.get('duration').invalid && examForm.get('duration').touched"
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="examForm.get('duration').errors?.required"
+                      >
+                        Duration is required!
+                      </p>
+                      <p class="caption status-danger" *ngIf="examForm.get('duration').errors?.min">
+                        Duration should be greater than 0
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+
+              <hr />
+              <div class="row">
+                <div class="col-12">
+                  <button type="submit" class="float-right" nbButton status="basic" size="small">
+                    Next
+                  </button>
+                </div>
+              </div>
+            </form>
+          </nb-step>
+
+          <nb-step label="Submit">
+            <div class="step-container">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <th>Exam Title</th>
+                      <td>{{ examForm.value.examTitle }}</td>
+                    </tr>
+                    <tr>
+                      <th>Subject</th>
+                      <td>{{ getSubject(examForm.value.subject) }}</td>
+                    </tr>
+                    <tr>
+                      <th>Out of Marks</th>
+                      <td>{{ examForm.value.outOfMarks }}</td>
+                    </tr>
+                    <tr>
+                      <th>Passing Marks</th>
+                      <td>{{ examForm.value.passingMarks }}</td>
+                    </tr>
+                    <tr>
+                      <th>Date</th>
+                      <td>{{ dateService.formatDate(examForm.value.date) }}</td>
+                    </tr>
+                    <tr>
+                      <th>Time</th>
+                      <td>{{ dateService.formatTime(examForm.value.time) }}</td>
+                    </tr>
+                    <tr>
+                      <th>Duration (in Min)</th>
+                      <td>{{ examForm.value.duration }} Min</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <hr />
+
+              <div class="row">
+                <div class="col-md-6 text-left">
+                  <button type="button" class="" nbButton (click)="previousStep()">
+                    <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                    <span>prev</span>
+                  </button>
+                </div>
+                <div class="col-md-6 text-right">
+                  <button nbButton size="medium" (click)="saveExam()"><span>Submit</span></button>
+                </div>
+              </div>
+            </div>
+          </nb-step>
+        </nb-stepper>
+        <form [formGroup]="examForm" size="medium" (submit)="saveExam()"></form>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

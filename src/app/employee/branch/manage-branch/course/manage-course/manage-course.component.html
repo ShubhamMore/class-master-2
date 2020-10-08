@@ -1,0 +1,118 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>Courses</h3>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <button nbButton status="primary" fullWidth size="small" (click)="addCourse()">
+          Add Course <nb-icon icon="plus-circle-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9">
+        <h5>Select Category</h5>
+      </div>
+      <div class="col-md-3">
+        <nb-select
+          id="select-category"
+          name="category"
+          [selected]="category"
+          fullWidth
+          placeholder="Select Category"
+          (selectedChange)="getCourses($event)"
+        >
+          <nb-option value="">All</nb-option>
+          <nb-option *ngFor="let category of categories" [value]="category._id">{{
+            category.category
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="body-container">
+    <div class="row">
+      <div class="col-md-12">
+        <ng-container *ngIf="!loading; else loadingData">
+          <div class="table-responsive" *ngIf="courses.length > 0; else noCourses">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Course</th>
+                  <th>Category</th>
+                  <th>Fees</th>
+                  <th colspan="4">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let course of courses; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ course.basicDetails.courseName }}</td>
+                  <td>{{ getCategory(course.basicDetails.category) }}</td>
+                  <td>{{ course.feeDetails.totalFees }}</td>
+                  <td>
+                    <button
+                      class="mr-3"
+                      nbButton
+                      status="info"
+                      size="small"
+                      (click)="courseBatches(course)"
+                    >
+                      Batches
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      class="mr-3"
+                      nbButton
+                      status="success"
+                      size="small"
+                      (click)="courseMaterial(course)"
+                    >
+                      Course Material
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      class="mr-3"
+                      nbButton
+                      status="basic"
+                      size="small"
+                      (click)="editCourse(course._id)"
+                    >
+                      Edit
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      class=""
+                      nbButton
+                      [status]="!course.status ? 'warning' : 'danger'"
+                      size="small"
+                      (click)="changeCourseStatus(course._id, !course.status, i)"
+                    >
+                      {{ !course.status ? 'Activate' : 'Deactivate' }}
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noCourses>
+            <p class="text-center">No Courses Available</p>
+          </ng-template>
+        </ng-container>
+        <ng-template #loadingData>
+          <p class="text-center">Loading...</p>
+        </ng-template>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

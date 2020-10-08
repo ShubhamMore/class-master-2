@@ -1,0 +1,130 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>Classroom Exams</h3>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <button nbButton size="small" fullWidth status="primary" (click)="addExam()">
+          Add Exam <nb-icon icon="plus-circle-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-3 col-sm-4"></div>
+
+      <div class="col-md-3 col-sm-4">
+        <nb-select
+          id="select-subject"
+          name="subject"
+          [selected]="subject"
+          fullWidth
+          placeholder="All Subjects"
+          (selectedChange)="onSelectSubject($event)"
+        >
+          <nb-option value="">All Subjects</nb-option>
+          <nb-option *ngFor="let subject of subjects" [value]="subject._id">{{
+            subject.subject
+          }}</nb-option>
+        </nb-select>
+      </div>
+
+      <div class="col-md-3 col-sm-4">
+        <nb-select
+          id="select-year"
+          name="year"
+          [selected]="year"
+          fullWidth
+          placeholder="All Years"
+          (selectedChange)="onSelectYear($event)"
+        >
+          <nb-option value="">All Years</nb-option>
+          <nb-option *ngFor="let year of years" [value]="year">{{ year }}</nb-option>
+        </nb-select>
+      </div>
+
+      <div class="col-md-3 col-sm-4">
+        <nb-select
+          id="select-month"
+          name="month"
+          [selected]="month"
+          fullWidth
+          placeholder="All Months"
+          (selectedChange)="onSelectMonth($event)"
+        >
+          <nb-option value="">All Months</nb-option>
+          <nb-option *ngFor="let month of months" [value]="month.monthNo">{{
+            month.month
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="body-container">
+    <div class="row">
+      <div class="col-md-12">
+        <ng-container *ngIf="!loading; else loadingData">
+          <div class="table-responsive" *ngIf="exams.length > 0; else noBatches">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Date</th>
+                  <th>Category</th>
+                  <th>Course</th>
+                  <th colspan="4">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let exam of exams; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ exam.examTitle }}</td>
+                  <td>{{ dateService.formatDate(exam.date) }}</td>
+                  <td>{{ category.category }}</td>
+                  <td>{{ course.basicDetails.courseName }}</td>
+                  <td>
+                    <button nbButton status="primary" size="small" (click)="editExam(exam)">
+                      Edit
+                    </button>
+                  </td>
+                  <td>
+                    <button nbButton status="warning" size="small" (click)="addExamScore(exam)">
+                      Score
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      nbButton
+                      [status]="exam.status ? 'success' : 'danger'"
+                      size="small"
+                      (click)="changeExamStatus(exam._id, !exam.status, i)"
+                    >
+                      {{ exam.status ? 'Inactive' : 'Active' }}
+                    </button>
+                  </td>
+                  <td>
+                    <button nbButton status="danger" size="small" (click)="deleteExam(exam._id, i)">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noBatches>
+            <p class="text-center">No Exams Available</p>
+          </ng-template>
+        </ng-container>
+        <ng-template #loadingData>
+          <p class="text-center">Loading...</p>
+        </ng-template>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,483 @@
+<nb-card>
+  <nb-card-header>
+    <button class="float-right" nbButton status="warning" size="tiny" (click)="back()">
+      Back
+    </button>
+    <h3 class="">
+      {{
+        !course ? 'Add New Course' : 'Edit Course ' + (course.basicDetails.courseName | uppercase)
+      }}
+    </h3>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper #stepper [linear]="true">
+      <nb-step [stepControl]="courseBasicDetailsForm" label="Basic Details">
+        <form class="" (submit)="submitBasicDetails()" [formGroup]="courseBasicDetailsForm">
+          <h6>Course Details:</h6>
+          <div class="row">
+            <div class="col-md-5">
+              <div class="form-control-group">
+                <label class="label" for="input -course-name">Course Name:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-course-name"
+                  name="courseName"
+                  formControlName="courseName"
+                  placeholder="Course Name"
+                  minlength="3"
+                  maxlength="30"
+                  fullWidth
+                  [status]="
+                    courseBasicDetailsForm.get('courseName').touched
+                      ? courseBasicDetailsForm.get('courseName').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+
+                <ng-container
+                  *ngIf="
+                    courseBasicDetailsForm.get('courseName').invalid &&
+                    courseBasicDetailsForm.get('courseName').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="courseBasicDetailsForm.get('courseName').errors?.required"
+                  >
+                    Course Name is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="courseBasicDetailsForm.get('courseName').errors?.minlength"
+                  >
+                    Course Name should contain minimum 3 characters
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-control-group">
+                <label class="label" for="input-duration">Course Duration:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-duration"
+                  name="duration"
+                  min="1"
+                  maxlength="2"
+                  formControlName="duration"
+                  placeholder="Duration (in Months)"
+                  fullWidth
+                  [status]="
+                    courseBasicDetailsForm.get('duration').touched
+                      ? courseBasicDetailsForm.get('duration').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    courseBasicDetailsForm.get('duration').invalid &&
+                    courseBasicDetailsForm.get('duration').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="courseBasicDetailsForm.get('duration').errors?.required"
+                  >
+                    Course Duration is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="courseBasicDetailsForm.get('duration').errors?.min"
+                  >
+                    Course Duration should be greater than 1
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-billing-category">Category:</label>
+                <nb-select
+                  id="input-category"
+                  name="category"
+                  formControlName="category"
+                  placeholder="Select Category"
+                  fullWidth
+                  [status]="
+                    courseBasicDetailsForm.get('category').touched
+                      ? courseBasicDetailsForm.get('category').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="">Select Category</nb-option>
+                  <nb-option *ngFor="let category of categories" [value]="category._id">{{
+                    category.category
+                  }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="
+                    courseBasicDetailsForm.get('category').invalid &&
+                    courseBasicDetailsForm.get('category').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="courseBasicDetailsForm.get('category').errors?.required"
+                  >
+                    Branch Category is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-billing-description">Description:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-description"
+                  name="description"
+                  formControlName="description"
+                  placeholder="Description (Optional)"
+                  fullWidth
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <button nbButton type="submit">
+                <span>Next</span>
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step [stepControl]="courseSubjectForm" label="Subject Details">
+        <form [formGroup]="courseSubjectForm" (ngSubmit)="submitSubjects()" class="step-container">
+          <div class="row">
+            <div class="col-md-9 col-sm-8">
+              <p>Click on following button to add more Subjects</p>
+            </div>
+            <div class="col-md-3 col-sm-4 mb-3">
+              <button type="button" nbButton fullWidth size="small" (click)="generateSubject()">
+                Add Subject
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div
+              class="col-md-6"
+              *ngFor="let subject of courseSubjectForm.get('subjects')['controls']; let i = index"
+            >
+              <div class="form-control-group" [formGroup]="subject">
+                <label class="label" for="input-subject-{{ i }}">Subject {{ i + 1 }}:</label>
+                <nb-form-field>
+                  <input
+                    type="text"
+                    nbInput
+                    id="input-subject-{{ i }}"
+                    name="subject-{{ i }}"
+                    formControlName="subject"
+                    placeholder="Subject {{ i + 1 }}"
+                    fullWidth
+                    [status]="
+                      subject.get('subject').touched
+                        ? subject.get('subject').invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                  <button nbSuffix nbButton ghost (click)="deleteSubject()" *ngIf="i !== 0">
+                    <nb-icon icon="minus-outline" status="danger"> </nb-icon>
+                  </button>
+                </nb-form-field>
+                <ng-container
+                  *ngIf="subject.get('subject').invalid && subject.get('subject').touched"
+                >
+                  <p class="caption status-danger" *ngIf="subject.get('subject').errors?.required">
+                    Subject {{ i + 1 }} is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button class="" nbButton nbStepperPrevious>
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton type="submit">
+                <span>Next</span><nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step [stepControl]="courseFeeDetailsForm" label="Fee Details">
+        <form
+          [formGroup]="courseFeeDetailsForm"
+          (ngSubmit)="submitFeeDetails()"
+          class="step-container"
+        >
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-control-group">
+                <label class="label" for="input-fees">Fees:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-fees"
+                  name="fees"
+                  min="0"
+                  formControlName="fees"
+                  placeholder="fees"
+                  fullWidth
+                  [status]="
+                    courseFeeDetailsForm.get('fees').touched
+                      ? courseFeeDetailsForm.get('fees').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (input)="calculateTotal()"
+                />
+                <ng-container
+                  *ngIf="
+                    courseFeeDetailsForm.get('fees').invalid &&
+                    courseFeeDetailsForm.get('fees').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="courseFeeDetailsForm.get('fees').errors?.required"
+                  >
+                    Fee is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="courseFeeDetailsForm.get('fees').errors?.min"
+                  >
+                    Fee amount should be greater than 0
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-control-group mt-4">
+                <nb-checkbox
+                  id="input-inclusive-GST"
+                  name="inclusiveGST"
+                  [checked]="inclusiveGST"
+                  (checkedChange)="inclusiveGSTChanged($event)"
+                >
+                  Inclusive GST
+                </nb-checkbox>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-control-group">
+                <label class="label" for="input-gst">GST (in %):</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-gst"
+                  name="gst"
+                  min="0"
+                  max="100"
+                  maxlength="3"
+                  formControlName="gst"
+                  placeholder="GST (in %)"
+                  fullWidth
+                  [status]="
+                    courseFeeDetailsForm.get('gst').touched &&
+                    courseFeeDetailsForm.get('gst').invalid
+                      ? 'danger'
+                      : 'basic'
+                  "
+                  (input)="calculateTotal()"
+                />
+                <ng-container
+                  *ngIf="
+                    courseFeeDetailsForm.get('gst').invalid &&
+                    courseFeeDetailsForm.get('gst').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="courseFeeDetailsForm.get('gst').errors?.required"
+                  >
+                    GST is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="
+                      courseFeeDetailsForm.get('gst').errors?.max ||
+                      courseFeeDetailsForm.get('gst').errors?.maxLength ||
+                      courseFeeDetailsForm.get('gst').errors?.min
+                    "
+                  >
+                    GST percentage should be between 0% to 100%
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-control-group">
+                <label class="label" for="input-total-fees">Total Fees:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-total-fees"
+                  name="totalFees"
+                  formControlName="totalFees"
+                  placeholder="Total Fees"
+                  fullWidth
+                  [status]="
+                    courseFeeDetailsForm.get('totalFees').touched &&
+                    courseFeeDetailsForm.get('totalFees').invalid
+                      ? 'danger'
+                      : 'basic'
+                  "
+                  disabled="true"
+                />
+                <ng-container
+                  *ngIf="
+                    courseFeeDetailsForm.get('totalFees').invalid &&
+                    courseFeeDetailsForm.get('totalFees').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="courseFeeDetailsForm.get('totalFees').errors?.required"
+                  >
+                    Total Fee is required, Please enter Fee Amount
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="
+                      courseFeeDetailsForm.get('totalFees').errors?.min ||
+                      courseFeeDetailsForm.get('totalFees').errors?.minLength
+                    "
+                  >
+                    Total Fee amount should be greater than 0
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button class="" nbButton nbStepperPrevious>
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton type="submit">
+                <span>Next</span>
+                <span>
+                  <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step label="Submit">
+        <div class="step-container">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Course Name</th>
+                  <td>{{ courseBasicDetailsForm.value.courseName }}</td>
+                </tr>
+                <tr>
+                  <th>Course Duration</th>
+                  <td>{{ courseBasicDetailsForm.value.duration }}</td>
+                </tr>
+                <tr>
+                  <th>Category</th>
+                  <td>{{ getCategory(courseBasicDetailsForm.value.category) }}</td>
+                </tr>
+                <tr>
+                  <th>Description</th>
+                  <td>{{ courseBasicDetailsForm.value.description }}</td>
+                </tr>
+                <tr>
+                  <th>Subjects</th>
+                  <td>{{ getSubjectsData() }}</td>
+                </tr>
+                <tr>
+                  <th>Fees</th>
+                  <td>{{ courseFeeDetailsForm.value.fees }}</td>
+                </tr>
+                <tr>
+                  <th>GST (in %)</th>
+                  <td>{{ courseFeeDetailsForm.value.gst }} %</td>
+                </tr>
+                <tr>
+                  <th>GST Amount</th>
+                  <td>
+                    {{ inclusiveGST ? getGstAmount() + ' Included in Fee Amount' : getGstAmount() }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Total Fees</th>
+                  <td>{{ courseFeeDetailsForm.value.totalFees }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button class="" nbButton nbStepperPrevious>
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton (click)="saveCourse()"><span>Submit</span></button>
+            </div>
+          </div>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

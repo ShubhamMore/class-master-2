@@ -56,14 +56,14 @@ export class LoginComponent implements OnInit {
 
   authSubscribe() {
     this.authObs.subscribe(
-      (res: any) => {
+      (user: any) => {
         this.loading = false;
         this.showToastr('top-right', 'success', 'Login successful!');
-        if (res.userRole === 'admin') {
-          this.router.navigate(['/admin'], { relativeTo: this.route });
-        } else if (res.userRole === 'employee' || res.userRole === 'institute') {
+        if (user.userRole === 'institute') {
           this.router.navigate(['/institute'], { relativeTo: this.route });
-        } else if (res.userRole === 'student') {
+        } else if (user.userRole === 'employee') {
+          this.router.navigate(['/employee'], { relativeTo: this.route });
+        } else if (user.userRole === 'student') {
           this.router.navigate(['/student'], { relativeTo: this.route });
         } else {
           this.router.navigate(['/login'], {

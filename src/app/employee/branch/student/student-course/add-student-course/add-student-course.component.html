@@ -1,0 +1,861 @@
+<nb-card *ngIf="!loading">
+  <nb-card-header>
+    <button
+      type="button"
+      class="float-right"
+      nbButton
+      status="warning"
+      size="tiny"
+      (click)="back()"
+    >
+      Back
+    </button>
+    <h3 class="">
+      {{ !studentCourse ? 'New Student Course' : 'Edit Student Course' }}
+    </h3>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper #stepper [linear]="true" [disableStepNavigation]="true">
+      <nb-step [stepControl]="studentCourseForm" label="Course Details">
+        <form class="" (submit)="studentCourseFormSubmit()" [formGroup]="studentCourseForm">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-student-course">Course:</label>
+                <nb-select
+                  id="input-student-course"
+                  name="course"
+                  formControlName="course"
+                  placeholder="Select Course"
+                  fullWidth
+                  [status]="
+                    studentCourseForm.get('course').touched
+                      ? studentCourseForm.get('course').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (selectedChange)="onSelectCourse($event)"
+                >
+                  <nb-option value="">Select Course</nb-option>
+                  <nb-option *ngFor="let course of courses" [value]="course._id">{{
+                    course.basicDetails.courseName
+                  }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="
+                    studentCourseForm.get('course').invalid &&
+                    studentCourseForm.get('course').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseForm.get('course').errors?.required"
+                  >
+                    Student Course is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-student-batch">Batch:</label>
+                <nb-select
+                  id="input-student-batch"
+                  name="batch"
+                  formControlName="batch"
+                  placeholder="Select Batch"
+                  fullWidth
+                  [status]="
+                    studentCourseForm.get('batch').touched
+                      ? studentCourseForm.get('batch').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (selectedChange)="onSelectBatch($event)"
+                >
+                  <nb-option value="">Select Batch</nb-option>
+                  <nb-option *ngFor="let batch of courseBatches" [value]="batch._id">{{
+                    batch.basicDetails.batchName
+                  }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="
+                    studentCourseForm.get('batch').invalid && studentCourseForm.get('batch').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseForm.get('batch').errors?.required"
+                  >
+                    Student Batch is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-roll-number">Roll Number:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-roll-number"
+                  name="rollNumber"
+                  formControlName="rollNumber"
+                  min="1"
+                  placeholder="Roll Number"
+                  fullWidth
+                  [status]="
+                    studentCourseForm.get('rollNumber').touched
+                      ? studentCourseForm.get('rollNumber').invalid || rollNumberAlreadyExist
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (input)="checkRollNumber()"
+                />
+                <ng-container
+                  *ngIf="
+                    (studentCourseForm.get('rollNumber').invalid || rollNumberAlreadyExist) &&
+                    studentCourseForm.get('rollNumber').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseForm.get('rollNumber').errors?.required"
+                  >
+                    Roll Number is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseForm.get('rollNumber').errors?.min"
+                  >
+                    Roll Number should be greater than 0
+                  </p>
+                  <p class="caption status-danger" *ngIf="rollNumberAlreadyExist">
+                    This roll number already Exist!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-student-discount">Discount/Offer:</label>
+                <nb-select
+                  id="input-student-discount"
+                  name="discount"
+                  formControlName="discount"
+                  placeholder="Select Discount"
+                  fullWidth
+                  (selectedChange)="onSelectDiscount($event)"
+                >
+                  <nb-option value="">Select Discount</nb-option>
+                  <nb-option *ngFor="let discount of discounts" [value]="discount._id">{{
+                    getDiscount(discount._id)
+                  }}</nb-option>
+                </nb-select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-additional-discount-type"
+                  >Additional Discount Type:</label
+                >
+                <nb-select
+                  id="input-additional-discount-type"
+                  name="additionalDiscountType"
+                  formControlName="additionalDiscountType"
+                  placeholder="Select Discount Type"
+                  fullWidth
+                  [selected]="discountTypes.length > 0 ? discountTypes[0] : ''"
+                  (selectedChange)="changeAdditionalDiscountType()"
+                >
+                  <nb-option *ngFor="let discountType of discountTypes" [value]="discountType">{{
+                    discountType | uppercase
+                  }}</nb-option>
+                </nb-select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-discount-amount">Additional Discount Amount:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-discount-amount"
+                  name="additionalDiscountAmount"
+                  formControlName="additionalDiscountAmount"
+                  placeholder="Discount Amount"
+                  min="0"
+                  fullWidth
+                  [status]="
+                    studentCourseForm.get('additionalDiscountAmount').touched
+                      ? studentCourseForm.get('additionalDiscountAmount').invalid ||
+                        studentCourseForm.hasError('invalidDiscountPercentage')
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (input)="onAdditionalDiscountAmount($event.target.value)"
+                />
+                <ng-container *ngIf="studentCourseForm.get('additionalDiscountAmount').touched">
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseForm.get('additionalDiscountAmount').errors?.min"
+                  >
+                    Discount Amount should be more than or equal to 0
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseForm.hasError('invalidDiscountPercentage')"
+                  >
+                    Discount Percentage should be between 0% to 100%
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-activation-date">Activation Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-activation-date"
+                  name="activationDate"
+                  formControlName="activationDate"
+                  placeholder="Activation Date"
+                  fullWidth
+                  [status]="studentCourseForm.get('activationDate').invalid ? 'danger' : 'success'"
+                />
+                <ng-container *ngIf="studentCourseForm.get('activationDate').invalid">
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseForm.get('activationDate').errors?.required"
+                  >
+                    Activation date is required
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-net-payable">Net Payable:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-net-payable"
+                  name="netPayable"
+                  formControlName="netPayable"
+                  placeholder="Net Payable"
+                  min="0"
+                  fullWidth
+                  [status]="
+                    studentCourseForm.get('netPayable').touched
+                      ? studentCourseForm.get('netPayable').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  disabled="true"
+                />
+                <ng-container
+                  *ngIf="
+                    studentCourseForm.get('netPayable').invalid &&
+                    studentCourseForm.get('netPayable').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseForm.get('netPayable').errors?.required"
+                  >
+                    Net Payable Amount is Required
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseForm.get('netPayable').errors?.min"
+                  >
+                    Net Payable Amount should be greater than 0
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <button nbButton type="submit">
+                <span>Next</span>
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step [stepControl]="studentCourseFeeForm" label="Course Fee Details">
+        <form
+          [formGroup]="studentCourseFeeForm"
+          (ngSubmit)="studentCourseFeeFormSubmit()"
+          class="step-container"
+        >
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-date">Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-date"
+                  name="date"
+                  formControlName="date"
+                  placeholder="Date"
+                  fullWidth
+                  [status]="studentCourseFeeForm.get('date').invalid ? 'danger' : 'success'"
+                />
+                <ng-container *ngIf="studentCourseFeeForm.get('date').invalid">
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseFeeForm.get('date').errors?.required"
+                  >
+                    Date is required
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-course-installment-type">Installment Type:</label>
+                <nb-select
+                  id="input-course-installment-type"
+                  name="installmentType"
+                  formControlName="installmentType"
+                  placeholder="Select Installment Type"
+                  fullWidth
+                  [status]="
+                    studentCourseFeeForm.get('installmentType').touched
+                      ? studentCourseFeeForm.get('installmentType').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (selectedChange)="onSelectInstallmentType($event)"
+                >
+                  <nb-option value="0">Pay Once</nb-option>
+                  <nb-option value="1">Pay Twice</nb-option>
+                  <nb-option value="2">Pay Quarterly</nb-option>
+                  <nb-option value="3">Pay Monthly</nb-option>
+                  <nb-option value="4">Pay Custom</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="
+                    studentCourseFeeForm.get('installmentType').invalid &&
+                    studentCourseFeeForm.get('installmentType').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseFeeForm.get('installmentType').errors?.required"
+                  >
+                    Student Course is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-noOfInstallments">Number of Installments:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-noOfInstallments"
+                  name="noOfInstallments"
+                  formControlName="noOfInstallments"
+                  placeholder="Number of Installments"
+                  min="0"
+                  fullWidth
+                  [status]="
+                    studentCourseFeeForm.get('noOfInstallments').touched
+                      ? studentCourseFeeForm.get('noOfInstallments').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (input)="generateNoOfInstallments($event.target.value)"
+                />
+                <ng-container
+                  *ngIf="
+                    studentCourseFeeForm.get('noOfInstallments').invalid &&
+                    studentCourseFeeForm.get('noOfInstallments').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseFeeForm.get('noOfInstallments').errors?.required"
+                  >
+                    Number of Installments are Required
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseFeeForm.get('noOfInstallments').errors?.min"
+                  >
+                    Number of Installments should be greater than 0
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-pendingAmount">Pending Amount:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-pendingAmount"
+                  name="pendingAmount"
+                  formControlName="pendingAmount"
+                  placeholder="Pending Amount"
+                  min="0"
+                  fullWidth
+                  [status]="
+                    studentCourseFeeForm.get('pendingAmount').invalid ? 'danger' : 'success'
+                  "
+                  disabled="true"
+                />
+                <ng-container *ngIf="studentCourseFeeForm.get('pendingAmount').invalid">
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseFeeForm.get('pendingAmount').errors?.required"
+                  >
+                    Pending Amount is Required
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseFeeForm.get('pendingAmount').errors?.min"
+                  >
+                    Pending Amount should be greater than 0
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-amountCollected">Amount Collected:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-amountCollected"
+                  name="amountCollected"
+                  formControlName="amountCollected"
+                  placeholder="Amount Collected"
+                  min="0"
+                  fullWidth
+                  [status]="
+                    studentCourseFeeForm.get('amountCollected').invalid ? 'danger' : 'success'
+                  "
+                  disabled="true"
+                />
+                <ng-container *ngIf="studentCourseFeeForm.get('amountCollected').invalid">
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseFeeForm.get('amountCollected').errors?.required"
+                  >
+                    Collected Amount is Required
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseFeeForm.get('amountCollected').errors?.min"
+                  >
+                    Collected Amount should be greater than 0
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-totalAmount">Total Payable Amount:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-totalAmount"
+                  name="totalAmount"
+                  formControlName="totalAmount"
+                  placeholder="Total Amount"
+                  min="0"
+                  fullWidth
+                  [status]="studentCourseFeeForm.get('totalAmount').invalid ? 'danger' : 'success'"
+                  disabled="true"
+                />
+                <ng-container *ngIf="studentCourseFeeForm.get('totalAmount').invalid">
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseFeeForm.get('totalAmount').errors?.required"
+                  >
+                    Total Amount is Required
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="studentCourseFeeForm.get('totalAmount').errors?.min"
+                  >
+                    Total Amount should be greater than 0
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button type="button" class="" nbButton (click)="previousStep()">
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton type="submit">
+                <span>Next</span><nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step [stepControl]="studentCourseInstallmentForm" label="Installment Details">
+        <form
+          [formGroup]="studentCourseInstallmentForm"
+          (ngSubmit)="studentCourseInstallmentFormSubmit()"
+          class="step-container"
+        >
+          <div class="row">
+            <div class="col-md-12">
+              <div
+                class="table-responsive"
+                *ngIf="
+                  !!getNoOfInstallments() &&
+                    studentCourseInstallmentForm.get('installments')['controls'].length > 0;
+                  else noInstallments
+                "
+              >
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Installment Number</th>
+                      <th>Installment Date</th>
+                      <th>Installment Amount</th>
+                      <th>Pending Amount after This Installment</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container
+                      *ngFor="
+                        let installment of studentCourseInstallmentForm.get('installments')[
+                          'controls'
+                        ];
+                        let i = index
+                      "
+                    >
+                      <tr [formGroup]="installment">
+                        <td>Installment {{ installment.value.installmentNo }}</td>
+                        <td>
+                          <div class="form-control-group">
+                            <input
+                              type="date"
+                              nbInput
+                              id="input-installmentDate-{{ i }}"
+                              name="installmentDate-{{ i }}"
+                              formControlName="installmentDate"
+                              placeholder="Installment Date"
+                              fullWidth
+                              [min]="getMinInstallmentDate(i)"
+                              [max]="getMaxInstallmentDate(i)"
+                              [status]="
+                                installment.get('installmentDate').touched
+                                  ? installment.get('installmentDate').invalid
+                                    ? 'danger'
+                                    : 'success'
+                                  : 'basic'
+                              "
+                            />
+                            <ng-container
+                              *ngIf="
+                                installment.get('installmentDate').touched &&
+                                installment.get('installmentDate').invalid
+                              "
+                            >
+                              <p
+                                class="caption status-danger"
+                                *ngIf="installment.get('installmentDate').errors?.required"
+                              >
+                                Installment {{ i + 1 }} Date is required
+                              </p>
+                            </ng-container>
+                          </div>
+                        </td>
+
+                        <td>
+                          <div class="form-control-group">
+                            <input
+                              type="number"
+                              nbInput
+                              id="input-installmentAmount-{{ i }}"
+                              name="installmentAmount-{{ i }}"
+                              formControlName="installmentAmount"
+                              placeholder="Installment Amount"
+                              [min]="getMinInstallmentAmount(i)"
+                              [max]="getMaxInstallmentAmount(i)"
+                              fullWidth
+                              [status]="
+                                installment.get('installmentAmount').touched
+                                  ? installment.get('installmentAmount').invalid ||
+                                    installment.hasError('invalidMinInstallmentAmount') ||
+                                    installment.hasError('invalidMaxInstallmentAmount')
+                                    ? 'danger'
+                                    : 'success'
+                                  : 'basic'
+                              "
+                              (input)="customInstallmentAmount($event.target.value, i)"
+                            />
+                            <ng-container *ngIf="installment.get('installmentAmount').touched">
+                              <p
+                                class="caption status-danger"
+                                *ngIf="installment.get('installmentAmount').errors?.required"
+                              >
+                                Installment {{ i + 1 }} Amount is Required
+                              </p>
+                              <p
+                                class="caption status-danger"
+                                *ngIf="installment.hasError('invalidMinInstallmentAmount')"
+                              >
+                                Installment {{ i + 1 }} Amount should be Minimum
+                                {{ getMinInstallmentAmount(i) }}
+                              </p>
+                              <p
+                                class="caption status-danger"
+                                *ngIf="installment.hasError('invalidMaxInstallmentAmount')"
+                              >
+                                Installment {{ i + 1 }} Amount should be Maximum
+                                {{ getMaxInstallmentAmount(i) }}
+                              </p>
+                            </ng-container>
+                          </div>
+                        </td>
+
+                        <td>
+                          <div class="form-control-group">
+                            <input
+                              type="number"
+                              nbInput
+                              id="input-amountPending-{{ i }}"
+                              name="amountPending-{{ i }}"
+                              formControlName="amountPending"
+                              placeholder="Pending Amount"
+                              [min]="getMinInstallmentPendingAmount(i)"
+                              [max]="getMaxInstallmentPendingAmount(i)"
+                              fullWidth
+                              [status]="
+                                installment.get('amountPending').touched
+                                  ? installment.get('amountPending').invalid ||
+                                    installment.hasError('invalidMinInstallmentPendingAmount') ||
+                                    installment.hasError('invalidMaxInstallmentPendingAmount')
+                                    ? 'danger'
+                                    : 'success'
+                                  : 'basic'
+                              "
+                              disabled="true"
+                            />
+                            <ng-container *ngIf="installment.get('amountPending').touched">
+                              <p
+                                class="caption status-danger"
+                                *ngIf="installment.get('amountPending').errors?.required"
+                              >
+                                Installment {{ i + 1 }} Pending Amount is Required
+                              </p>
+                              <p
+                                class="caption status-danger"
+                                *ngIf="installment.hasError('invalidMinInstallmentPendingAmount')"
+                              >
+                                Installment {{ i + 1 }} Pending Amount should be Minimum
+                                {{ getMinInstallmentPendingAmount(i) }}
+                              </p>
+                              <p
+                                class="caption status-danger"
+                                *ngIf="installment.hasError('invalidMaxInstallmentPendingAmount')"
+                              >
+                                Installment {{ i + 1 }} Pending Amount should be Maximum
+                                {{ getMaxInstallmentPendingAmount(i) }}
+                              </p>
+                            </ng-container>
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+              <ng-template #noInstallments>
+                <p class="mt-4 text-center">
+                  No Installments
+                </p>
+              </ng-template>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button type="button" class="" nbButton (click)="previousStep()">
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton type="submit">
+                <span>Next</span><nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step label="Submit">
+        <div class="step-container">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th colspan="2">Course Details</th>
+                </tr>
+                <tr>
+                  <th>Course</th>
+                  <td>{{ getCourse(studentCourseForm.value.course) }}</td>
+                </tr>
+                <tr>
+                  <th>Batch</th>
+                  <td>{{ getBatch(studentCourseForm.value.batch) }}</td>
+                </tr>
+                <tr>
+                  <th>Roll Number</th>
+                  <td>{{ studentCourseForm.value.rollNumber }}</td>
+                </tr>
+                <tr>
+                  <th>Discount</th>
+                  <td>{{ getDiscount(studentCourseForm.value.discount) }}</td>
+                </tr>
+                <tr>
+                  <th>Additional Discount</th>
+                  <td>
+                    {{
+                      studentCourseForm.value.additionalDiscountAmount
+                        ? studentCourseForm.value.additionalDiscountAmount +
+                          (studentCourseForm.value.additionalDiscountType === 'percentage'
+                            ? '%'
+                            : '')
+                        : '--'
+                    }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Net Payable</th>
+                  <td>{{ studentCourseForm.value.netPayable }}</td>
+                </tr>
+                <tr>
+                  <th>Activation Date</th>
+                  <td>{{ dateService.formatDate(studentCourseForm.value.activationDate) }}</td>
+                </tr>
+                <tr>
+                  <th colspan="2">Course Fee Details</th>
+                </tr>
+                <tr>
+                  <th>Date</th>
+                  <td>{{ dateService.formatDate(studentCourseFeeForm.value.date) }}</td>
+                </tr>
+                <tr>
+                  <th>Number of Installments</th>
+                  <td>{{ studentCourseFeeForm.getRawValue().noOfInstallments }}</td>
+                </tr>
+                <tr>
+                  <th>Amount Collected</th>
+                  <td>{{ studentCourseFeeForm.value.amountCollected }}</td>
+                </tr>
+                <tr>
+                  <th>Pending Amount</th>
+                  <td>{{ studentCourseFeeForm.value.pendingAmount }}</td>
+                </tr>
+                <tr>
+                  <th>Total Payable Amount</th>
+                  <td>{{ studentCourseFeeForm.value.totalAmount }}</td>
+                </tr>
+                <tr>
+                  <th colspan="2">Installment Details</th>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <div class="table-responsive">
+                      <table class="table table-sm table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Installment No.</th>
+                            <th>Installment Date</th>
+                            <th>Installment Amount</th>
+                            <th>Pending Amount after Installment</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            *ngFor="
+                              let installment of studentCourseInstallmentForm.get('installments')[
+                                'controls'
+                              ];
+                              let i = index
+                            "
+                          >
+                            <td>Installment {{ installment.value.installmentNo }}</td>
+                            <td>
+                              {{ dateService.formatDate(installment.value.installmentDate) }}
+                            </td>
+                            <td>{{ installment.value.installmentAmount }}</td>
+                            <td>{{ installment.value.amountPending }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button type="button" class="" nbButton (click)="previousStep()">
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton (click)="saveStudentCourse()"><span>Submit</span></button>
+            </div>
+          </div>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

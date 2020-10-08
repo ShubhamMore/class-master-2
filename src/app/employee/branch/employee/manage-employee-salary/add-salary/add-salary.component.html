@@ -1,0 +1,641 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-12">
+        <button
+          type="button"
+          class="float-right"
+          nbButton
+          status="warning"
+          size="tiny"
+          (click)="back()"
+        >
+          Back
+        </button>
+        <h3 class="">
+          Generate Salary
+        </h3>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="!loading">
+      <div class="col-md-4 col-sm-6 col-12"><strong>Name:</strong> {{ employee.name }}</div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <strong>IMS ID:</strong> {{ employee.imsMasterId }}
+      </div>
+      <div class="col-md-4 col-sm-6 col-12"><strong>Email:</strong> {{ employee.email }}</div>
+      <div class="col-md-4 col-sm-6 col-12"><strong>Phone:</strong> {{ employee.phone }}</div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <strong>Role:</strong> {{ branchEmployee.role | uppercase }}
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <strong>Basic Salary:</strong> {{ branchEmployee.basicSalary }}/-
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <nb-stepper #stepper [linear]="true" [disableStepNavigation]="true">
+      <nb-step [stepControl]="salaryForm" label="Salary Details">
+        <form class="" (submit)="salaryFormSubmit()" [formGroup]="salaryForm">
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-date">Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-date"
+                  name="date"
+                  formControlName="date"
+                  placeholder="date"
+                  fullWidth
+                  [status]="
+                    salaryForm.get('date').touched
+                      ? salaryForm.get('date').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="salaryForm.get('date').invalid && salaryForm.get('date').touched"
+                >
+                  <p class="caption status-danger" *ngIf="salaryForm.get('date').errors?.required">
+                    Date is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-month">Select Month:</label>
+                <nb-select fullWidth formControlName="month">
+                  <nb-option *ngFor="let month of months" [value]="month.monthNo">{{
+                    month.month
+                  }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="salaryForm.get('month').invalid && salaryForm.get('month').touched"
+                >
+                  <p class="caption status-danger" *ngIf="salaryForm.get('month').errors?.required">
+                    Please Select Month
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-year">Select Year:</label>
+                <nb-select fullWidth formControlName="year">
+                  <nb-option *ngFor="let year of years" [value]="year">{{ year }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="salaryForm.get('year').invalid && salaryForm.get('year').touched"
+                >
+                  <p class="caption status-danger" *ngIf="salaryForm.get('year').errors?.required">
+                    Please Select Year
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-basic-amount">Basic Amount:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-basic-amount"
+                  name="basicAmount"
+                  formControlName="basicAmount"
+                  placeholder="basicAmount"
+                  min="0"
+                  fullWidth
+                  [status]="
+                    salaryForm.get('basicAmount').touched
+                      ? salaryForm.get('basicAmount').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    salaryForm.get('basicAmount').invalid && salaryForm.get('basicAmount').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="salaryForm.get('basicAmount').errors?.required"
+                  >
+                    Basic Amount is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="salaryForm.get('basicAmount').errors?.min"
+                  >
+                    Basic Amount should be greater than 0!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-8 col-sm-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-description">Description:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-description"
+                  name="description"
+                  formControlName="description"
+                  placeholder="Description"
+                  fullWidth
+                  status="basic"
+                />
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <button nbButton size="small" type="submit">
+                <span>Next</span>
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step label="Earnings/Deductions">
+        <form class="" (submit)="addErnDeduct()" [formGroup]="ernDeductForm">
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-year">Select Definition:</label>
+                <nb-select fullWidth selected="0" (selectedChange)="ernDeductChange($event)">
+                  <nb-option value="0">Earning</nb-option>
+                  <nb-option value="1">Deduction</nb-option>
+                </nb-select>
+              </div>
+            </div>
+
+            <div class="col-md-8 col-sm-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-description"
+                  >{{ ernDeduction ? 'Earning' : 'Deduction' }} Note:</label
+                >
+                <input
+                  type="string"
+                  nbInput
+                  id="input-description"
+                  name="description"
+                  formControlName="description"
+                  [placeholder]="ernDeduction ? 'Earning' : 'Deduction'"
+                  fullWidth
+                  status="basic"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-amount">Amount:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-amount"
+                  name="amount"
+                  formControlName="amount"
+                  placeholder="Amount"
+                  min="0"
+                  fullWidth
+                  [status]="
+                    ernDeductForm.get('amount').touched
+                      ? ernDeductForm.get('amount').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="ernDeductForm.get('amount').invalid && ernDeductForm.get('amount').touched"
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="ernDeductForm.get('amount').errors?.required"
+                  >
+                    Amount is required!
+                  </p>
+                  <p class="caption status-danger" *ngIf="ernDeductForm.get('amount').errors?.min">
+                    Amount should be greater than 0!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-8 col-sm-6 col-12 text-right">
+              <button
+                type="submit"
+                class="mt-4"
+                nbButton
+                size="medium"
+                [status]="ernDeduction ? 'success' : 'danger'"
+              >
+                Add {{ ernDeduction ? 'Earning' : 'Deduction' }}
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <br />
+
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <nb-card status="basic">
+              <nb-card-header>
+                <h5>Earnings</h5>
+              </nb-card-header>
+              <nb-card-body class="ern-deduct-body">
+                <div class="table-responsive" *ngIf="earnings.length > 0; else noEarnings">
+                  <table class="table table-am">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Earning</th>
+                        <th>Amount</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let earning of earnings; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ earning.description }}</td>
+                        <td>{{ earning.amount }}</td>
+                        <td>
+                          <button
+                            nbButton
+                            size="tiny"
+                            outline
+                            status="danger"
+                            shape="round"
+                            (click)="deleteErnDeduct(true, i)"
+                            nbTooltip="Remove Earning"
+                            *ngIf="i !== 0"
+                          >
+                            <nb-icon icon="close-outline"></nb-icon>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th colspan="2">Total</th>
+                        <th colspan="2">{{ totalEarning() }}</th>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+
+          <div class="col-md-6 col-12">
+            <nb-card status="basic">
+              <nb-card-header>
+                <h5>Deductions</h5>
+              </nb-card-header>
+              <nb-card-body class="ern-deduct-body">
+                <div class="table-responsive" *ngIf="deductions.length > 0; else noDeductions">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Deduction</th>
+                        <th>Amount</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let deduction of deductions; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ deduction.description }}</td>
+                        <td>{{ deduction.amount }}</td>
+                        <td>
+                          <button
+                            nbButton
+                            size="tiny"
+                            outline
+                            status="danger"
+                            shape="round"
+                            nbTooltip="Remove Deduction"
+                            (click)="deleteErnDeduct(false, i)"
+                          >
+                            <nb-icon icon="close-outline"></nb-icon>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th colspan="2">Total</th>
+                        <th colspan="2">{{ totalDeduction() }}</th>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+          <div class="col-md-6">
+            <button nbButton size="small" type="button" (click)="previousStep()">
+              <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+              <span>Previous</span>
+            </button>
+          </div>
+          <div class="col-md-6 text-right">
+            <button nbButton size="small" type="button" (click)="ernDeductFormSubmit()">
+              <span>Next</span>
+              <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+            </button>
+          </div>
+        </div>
+      </nb-step>
+
+      <nb-step [stepControl]="paymentDetailsForm" label="Payment Details">
+        <form class="" (submit)="paymentDetailsFormSubmit()" [formGroup]="paymentDetailsForm">
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-generated-by">Generated By:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-generated-by"
+                  name="generatedBy"
+                  formControlName="generatedBy"
+                  placeholder="Generated By"
+                  fullWidth
+                  [status]="
+                    paymentDetailsForm.get('generatedBy').touched
+                      ? paymentDetailsForm.get('generatedBy').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    paymentDetailsForm.get('generatedBy').invalid &&
+                    paymentDetailsForm.get('generatedBy').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="paymentDetailsForm.get('generatedBy').errors?.required"
+                  >
+                    Generated By is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-payment-mode">Payment Mode:</label>
+                <nb-select
+                  id="input-payment-mode"
+                  name="paymentMode"
+                  formControlName="paymentMode"
+                  [status]="
+                    paymentDetailsForm.get('paymentMode').touched
+                      ? paymentDetailsForm.get('paymentMode').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  fullWidth
+                >
+                  <nb-option value="">Select Payment Mode</nb-option>
+                  <nb-option value="cash">Cash</nb-option>
+                  <nb-option value="card">Card</nb-option>
+                  <nb-option value="wallet">Waller</nb-option>
+                  <nb-option value="other">Other</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="
+                    paymentDetailsForm.get('paymentMode').invalid &&
+                    paymentDetailsForm.get('paymentMode').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="paymentDetailsForm.get('paymentMode').errors?.required"
+                  >
+                    Please Select Payment Mode
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-bank-details">Bank Details:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-bank-details"
+                  name="bankDetails"
+                  formControlName="bankDetails"
+                  placeholder="Bank Details"
+                  fullWidth
+                  status="basic"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-transaction-details">Transaction Details:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-transaction-details"
+                  name="transactionDetails"
+                  formControlName="transactionDetails"
+                  placeholder="Transaction Details"
+                  fullWidth
+                  status="basic"
+                />
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button type="button" class="" nbButton size="medium" (click)="previousStep()">
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton size="small" type="submit">
+                <span>Next</span>
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step label="Submit">
+        <div class="step-container">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tr>
+                <th>Date</th>
+                <td>{{ salaryForm.value.date }}</td>
+              </tr>
+              <tr>
+                <th>Month/Year</th>
+                <td>
+                  {{ dateService.getMonthByMonthNumber(salaryForm.value.month) }}
+                  <span>&nbsp;</span>
+                  {{ salaryForm.value.year }}
+                </td>
+              </tr>
+              <tr>
+                <th>Basic Salary</th>
+                <td>{{ branchEmployee.basicSalary }}</td>
+              </tr>
+              <tr>
+                <th>Description</th>
+                <td>{{ salaryForm.value.description ? salaryForm.value.description : '--' }}</td>
+              </tr>
+              <tr>
+                <th>Earnings</th>
+                <td>
+                  <div class="table-responsive" *ngIf="earnings.length > 0; else noEarnings">
+                    <table class="table table-am">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Earning</th>
+                          <th>Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let earning of earnings; let i = index">
+                          <td>{{ i + 1 }}</td>
+                          <td>{{ earning.description }}</td>
+                          <td>{{ earning.amount }}</td>
+                        </tr>
+                        <tr>
+                          <th colspan="2">Total</th>
+                          <th>{{ totalEarning() }}</th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>Deductions</th>
+                <td>
+                  <div class="table-responsive" *ngIf="deductions.length > 0; else noDeductions">
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Deduction</th>
+                          <th>Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let deduction of deductions; let i = index">
+                          <td>{{ i + 1 }}</td>
+                          <td>{{ deduction.description }}</td>
+                          <td>{{ deduction.amount }}</td>
+                        </tr>
+                        <tr>
+                          <th colspan="2">Total</th>
+                          <th>{{ totalDeduction() }}</th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>Generated By</th>
+                <td>{{ paymentDetailsForm.value.generatedBy }}</td>
+              </tr>
+              <tr>
+                <th>Payment Mode</th>
+                <td>{{ paymentDetailsForm.value.paymentMode | uppercase }}</td>
+              </tr>
+              <tr>
+                <th>Bank Details</th>
+                <td>
+                  {{
+                    paymentDetailsForm.value.bankDetails
+                      ? paymentDetailsForm.value.bankDetails
+                      : '--'
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <th>Transaction Details</th>
+                <td>
+                  {{
+                    paymentDetailsForm.value.transactionDetails
+                      ? paymentDetailsForm.value.transactionDetails
+                      : '--'
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <th>Net Salary</th>
+                <td>{{ getNetSalary() }}</td>
+              </tr>
+              <tr>
+                <th>Net Salary in Words</th>
+                <td>{{ getNetSalaryInWords() }}</td>
+              </tr>
+            </table>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button type="button" class="" nbButton size="medium" (click)="previousStep()">
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton (click)="saveEmployee()" size="medium"><span>Submit</span></button>
+            </div>
+          </div>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #noEarnings>
+  <p class="text-center">No Earnings</p>
+</ng-template>
+<ng-template #noDeductions>
+  <p class="text-center">No Deductions</p>
+</ng-template>

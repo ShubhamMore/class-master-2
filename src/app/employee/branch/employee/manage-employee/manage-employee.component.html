@@ -1,0 +1,73 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>{{ type | uppercase }} Employees</h3>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="body-container">
+    <div class="row">
+      <div class="col-md-12">
+        <ng-container *ngIf="!loading; else loadingData">
+          <div class="table-responsive" *ngIf="branchEmployees.length > 0; else noBranchEmployees">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Employee</th>
+                  <th>Role</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let branchEmployee of branchEmployees; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ branchEmployee.name }}</td>
+                  <td>{{ branchEmployee.role | uppercase }}</td>
+                  <td>
+                    <button
+                      class="mr-3"
+                      nbButton
+                      status="basic"
+                      size="small"
+                      (click)="editBranchEmployee(branchEmployee._id, branchEmployee.employee)"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="mr-3"
+                      nbButton
+                      status="success"
+                      size="small"
+                      (click)="branchEmployeeSalary(branchEmployee)"
+                    >
+                      Salary
+                    </button>
+                    <button
+                      class=""
+                      nbButton
+                      [status]="!branchEmployee.status ? 'warning' : 'danger'"
+                      size="small"
+                      (click)="
+                        changeBranchEmployeeStatus(branchEmployee._id, !branchEmployee.status, i)
+                      "
+                    >
+                      {{ !branchEmployee.status ? 'Activate' : 'Deactivate' }}
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noBranchEmployees>
+            <p class="text-center">No Employees Available</p>
+          </ng-template>
+        </ng-container>
+        <ng-template #loadingData>
+          <p class="text-center">Loading...</p>
+        </ng-template>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

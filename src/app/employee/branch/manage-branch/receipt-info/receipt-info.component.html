@@ -1,0 +1,132 @@
+<nb-card>
+  <nb-card-header>
+    <h3 id="title" class="title">Receipt Details</h3>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <form (ngSubmit)="saveBillingDetails()" [formGroup]="billingForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-billing-name">Company Name:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-billing-name"
+                  name="name"
+                  formControlName="name"
+                  placeholder="Company Name"
+                  minlength="5"
+                  maxlength="30"
+                  fullWidth
+                  [status]="
+                    billingForm.get('name').touched
+                      ? billingForm.get('name').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="billingForm.get('name').invalid && billingForm.get('name').touched"
+                >
+                  <p class="caption status-danger" *ngIf="billingForm.get('name').errors?.required">
+                    User Name is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="billingForm.get('name').errors?.minlength"
+                  >
+                    Company Name should contain minimum 5 characters
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-gst-number">GST Number:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-gst-number"
+                  name="gstNumber"
+                  formControlName="gstNumber"
+                  placeholder="GST Number (Optional)"
+                  fullWidth
+                />
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-billing-address">Company Address:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-billing-address"
+                  name="address"
+                  formControlName="address"
+                  placeholder="Company Address"
+                  rows="2"
+                  minlength="10"
+                  maxlength="150"
+                  fullWidth
+                  [status]="
+                    billingForm.get('address').touched
+                      ? billingForm.get('address').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                ></textarea>
+                <ng-container
+                  *ngIf="billingForm.get('address').invalid && billingForm.get('address').touched"
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="billingForm.get('address').errors?.required"
+                  >
+                    Company address is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="billingForm.get('address').errors?.minlength"
+                  >
+                    Company address should be 10 characters
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-terms-conditions">Terms & Conditions:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-terms-conditions"
+                  name="termsAndConditions"
+                  formControlName="termsAndConditions"
+                  placeholder="Terms & Conditions (Optional)"
+                  rows="2"
+                  minlength="25"
+                  fullWidth
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <br />
+
+          <div class="row">
+            <div class="col-12 text-right">
+              <button type="submit" nbButton status="primary" size="small">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

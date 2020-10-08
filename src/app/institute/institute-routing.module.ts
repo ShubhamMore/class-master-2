@@ -1,9 +1,7 @@
+import { InstituteComponent } from './institute.component';
 import { BranchAuthGuard } from './../authentication/auth/guards/branch.auth.guard';
-import { PageNotFoundComponent } from './../shared/page-not-found/page-not-found.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-
-import { InstituteComponent } from './institute.component';
 
 const routes: Routes = [
   {

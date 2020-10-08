@@ -1,0 +1,43 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>
+          Lecture of <small *ngIf="batch">{{ batch.basicDetails.batchName }}</small>
+        </h3>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <input type="date" nbInput fullWidth [(ngModel)]="date" (change)="dateChanged()" />
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body *ngIf="!loading; else loadingTemplate">
+    <div class="table-responsive" *ngIf="lectures.length > 0; else noLecture">
+      <table class="table">
+        <tr *ngFor="let lecture of lectures">
+          <td>{{ getTime(lecture.startTime, lecture.endTime) }}</td>
+          <td>{{ getSubject(lecture.subject) }}</td>
+          <td>{{ lecture.topic }}</td>
+          <td>{{ lecture.teacher }}</td>
+          <td>
+            <button status="primary" nbButton size="small" (click)="markAttendance(lecture)">
+              Attendance
+            </button>
+          </td>
+          <td>
+            <button status="warning" nbButton size="small" (click)="lectureMaterial(lecture)">
+              Study Material
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <ng-template #noLecture>
+      <p class="text-center">No Lecture</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #loadingTemplate>
+  <p class="text-center">Loading...</p>
+</ng-template>

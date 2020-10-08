@@ -1,0 +1,102 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-12">
+        <button
+          type="button"
+          class="float-right"
+          nbButton
+          status="warning"
+          size="tiny"
+          (click)="back()"
+        >
+          Back
+        </button>
+        <h3>
+          Courses
+          <small>of {{ getStudentName() | async | uppercase }}</small>
+        </h3>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="body-container">
+    <div class="row">
+      <div class="col-md-12">
+        <ng-container *ngIf="!loading; else loadingData">
+          <div class="table-responsive" *ngIf="studentCourses.length > 0; else noStudentCourses">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Course</th>
+                  <th>Batch</th>
+                  <th>Roll Number</th>
+                  <th>Activation date</th>
+                  <th>Installments</th>
+                  <th colspan="2">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let studentCourse of studentCourses; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ getCourseName(studentCourse.course) | async }}</td>
+                  <td>{{ getBatchName(studentCourse.batch) | async }}</td>
+                  <td>{{ studentCourse.rollNumber }}</td>
+                  <td>{{ dateService.formatDate(studentCourse.activationDate) }}</td>
+
+                  <td>
+                    <button
+                      nbButton
+                      status="info"
+                      size="small"
+                      (click)="
+                        courseInstallments(
+                          studentCourse._id,
+                          studentCourse.course,
+                          studentCourse.studentCourseInstallment
+                        )
+                      "
+                    >
+                      Installments
+                    </button>
+                  </td>
+
+                  <td>
+                    <button
+                      nbButton
+                      status="basic"
+                      size="small"
+                      (click)="
+                        courseEdit(studentCourse._id, studentCourse.studentCourseInstallment)
+                      "
+                    >
+                      Edit
+                    </button>
+                  </td>
+
+                  <td>
+                    <button
+                      class=""
+                      nbButton
+                      [status]="!studentCourse.status ? 'warning' : 'danger'"
+                      size="small"
+                      (click)="changeCourseStatus(studentCourse._id, !studentCourse.status, i)"
+                    >
+                      {{ !studentCourse.status ? 'Activate' : 'Deactivate' }}
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noStudentCourses>
+            <p class="text-center">No Student Courses Available</p>
+          </ng-template>
+        </ng-container>
+        <ng-template #loadingData>
+          <p class="text-center">Loading...</p>
+        </ng-template>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
