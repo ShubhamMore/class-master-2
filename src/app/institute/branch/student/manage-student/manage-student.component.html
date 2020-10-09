@@ -23,9 +23,30 @@
   </nb-card-header>
   <nb-card-body class="body-container">
     <div class="row">
+      <div class="col-md-6 col-sm-8 col-12">
+        <nb-form-field>
+          <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+          <input
+            type="text"
+            nbInput
+            shape="round"
+            placeholder="Search"
+            fullWidth
+            (input)="searchStudent($event.target.value)"
+          />
+        </nb-form-field>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
       <div class="col-md-12">
         <ng-container *ngIf="!loading; else loadingData">
-          <div class="table-responsive" *ngIf="branchStudents.length > 0; else noBranchStudents">
+          <div
+            class="table-responsive"
+            *ngIf="filteredBranchStudents.length > 0; else noBranchStudents"
+          >
             <table class="table">
               <thead>
                 <tr>
@@ -38,9 +59,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let branchStudent of branchStudents; let i = index">
+                <tr *ngFor="let branchStudent of filteredBranchStudents; let i = index">
                   <td>{{ i + 1 }}</td>
-                  <td>{{ branchStudent.student }}</td>
+                  <td>{{ branchStudent.name }}</td>
                   <td>{{ getCategory(branchStudent.category) }}</td>
 
                   <td>

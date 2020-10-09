@@ -11,6 +11,7 @@ import {
   NbTooltipModule,
   NbSelectModule,
   NbFormFieldModule,
+  NbInputModule,
 } from '@nebular/theme';
 
 @NgModule({
@@ -19,6 +20,7 @@ import {
     CommonModule,
     ManageStudentRoutingModule,
     NbCardModule,
+    NbInputModule,
     NbSelectModule,
     NbFormFieldModule,
     NbButtonModule,

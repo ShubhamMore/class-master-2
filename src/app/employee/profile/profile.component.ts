@@ -1,7 +1,7 @@
 import { NbToastrService } from '@nebular/theme';
 import { environment } from './../../../environments/environment';
 import { AuthService } from './../../authentication/auth/auth-service/auth.service';
-import { InstituteModel } from './../../models/institute.model';
+import { EmployeeModel } from './../../models/employee.model';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { UserService } from './../../services/shared-services/user.service';
 import { Component, OnInit } from '@angular/core';
@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
   loading: boolean;
   profileForm: FormGroup;
   changePasswordForm: FormGroup;
-  profile: InstituteModel;
+  profile: EmployeeModel;
   constructor(
     private userService: UserService,
     private toastrService: NbToastrService,
@@ -39,6 +39,12 @@ export class ProfileComponent implements OnInit {
       }),
       address: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(10)],
+      }),
+      birthDate: new FormControl(null, {
+        validators: [],
+      }),
+      qualification: new FormControl(null, {
+        validators: [],
       }),
     });
 
@@ -77,6 +83,8 @@ export class ProfileComponent implements OnInit {
           name: this.profile.name,
           phone: this.profile.phone,
           address: this.profile.address,
+          birthDate: this.profile.birthDate,
+          qualification: this.profile.qualification,
         });
 
         this.loading = false;

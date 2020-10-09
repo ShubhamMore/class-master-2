@@ -18,7 +18,7 @@
         <form (ngSubmit)="saveProfile()" [formGroup]="profileForm">
           <p class="sub-title">Personal Details</p>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-control-group">
                 <label class="label" for="input-name">User Name:</label>
                 <input
@@ -55,7 +55,7 @@
               </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-control-group">
                 <label class="label" for="input-phone">User phone:</label>
                 <input
@@ -104,6 +104,40 @@
               </div>
             </div>
 
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-birth-date">Birth Date (Optional):</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-birth-date"
+                  name="birthDate"
+                  formControlName="birthDate"
+                  placeholder="Birth Date (Optional)"
+                  fullWidth
+                  [status]="
+                    profileForm.get('birthDate').touched
+                      ? profileForm.get('birthDate').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    profileForm.get('birthDate').invalid && profileForm.get('birthDate').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="profileForm.get('birthDate').errors?.required"
+                  >
+                    Birth Date is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
             <div class="col-md-12">
               <div class="form-control-group">
                 <label class="label" for="input-address">User Address:</label>
@@ -140,6 +174,42 @@
                     *ngIf="profileForm.get('address').errors?.minlength"
                   >
                     User address should be 10 characters
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-qualification">Qualification (Optional):</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-qualification"
+                  name="qualification"
+                  formControlName="qualification"
+                  placeholder="Qualification (Optional)"
+                  rows="2"
+                  fullWidth
+                  [status]="
+                    profileForm.get('qualification').touched
+                      ? profileForm.get('qualification').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                ></textarea>
+                <ng-container
+                  *ngIf="
+                    profileForm.get('qualification').invalid &&
+                    profileForm.get('qualification').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="profileForm.get('qualification').errors?.required"
+                  >
+                    Qualification is required!
                   </p>
                 </ng-container>
               </div>

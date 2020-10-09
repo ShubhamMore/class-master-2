@@ -17,6 +17,7 @@ export class ManageStudentComponent implements OnInit {
   private branchId: string;
   type: string;
   branchStudents: BranchStudentModel[];
+  filteredBranchStudents: BranchStudentModel[];
 
   categories: CategoryModel[];
   category: string;
@@ -56,6 +57,7 @@ export class ManageStudentComponent implements OnInit {
     this.studentService.setStudentType(this.type);
 
     this.branchStudents = [];
+    this.filteredBranchStudents = [];
     this.categories = [];
     this.category = '';
     this.getCategories();
@@ -83,9 +85,10 @@ export class ManageStudentComponent implements OnInit {
 
   getStudents(category: string) {
     this.loading = true;
-    this.branchStudentService.getBranchStudents(this.branchId, category, this.type).subscribe(
+    this.branchStudentService.getBranchStudentNameIds(this.branchId, category, this.type).subscribe(
       (branchStudents: BranchStudentModel[]) => {
         this.branchStudents = branchStudents;
+        this.filteredBranchStudents = branchStudents;
         this.loading = false;
       },
       (err: any) => {
@@ -93,6 +96,17 @@ export class ManageStudentComponent implements OnInit {
         this.loading = false;
       },
     );
+  }
+
+  searchStudent(student: string) {
+    student = student.trim().toLowerCase();
+    if (student) {
+      this.filteredBranchStudents = this.branchStudents.filter(
+        (branchStudent: BranchStudentModel) => branchStudent.name.toLowerCase().includes(student),
+      );
+    } else {
+      this.filteredBranchStudents = [...this.branchStudents];
+    }
   }
 
   editBranchStudent(id: string, student: string) {

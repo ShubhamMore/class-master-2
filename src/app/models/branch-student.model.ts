@@ -7,5 +7,6 @@ export class BranchStudentModel {
     public admissionDate: string,
     public description: string,
     public status: boolean,
+    public name?: string,
   ) {}
 }

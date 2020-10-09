@@ -78,10 +78,13 @@ export class StudentCourseInstallmentService {
   getCourseInstallment(installmentId: string): Observable<InstallmentModel> {
     return this.studentCourseInstallment.pipe(
       map((studentCourseInstallment: StudentCourseInstallmentModel) => {
-        const installment = studentCourseInstallment.installments.find(
-          (curInstallment: InstallmentModel) => curInstallment._id === installmentId,
-        );
-        return installment;
+        if (studentCourseInstallment) {
+          const installment = studentCourseInstallment.installments.find(
+            (curInstallment: InstallmentModel) => curInstallment._id === installmentId,
+          );
+          return installment;
+        }
+        return null;
       }),
     );
   }

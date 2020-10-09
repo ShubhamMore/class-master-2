@@ -4,9 +4,7 @@
       <nb-card-body>
         <img src="" alt="Institute" />
         <br />
-        <h2>No Institute Added</h2>
-        <br />
-        <button nbButton status="primary" routerLink="../membership-plans">Add Institute</button>
+        <h2>You are not assigned to any Institute Yet</h2>
       </nb-card-body>
     </nb-card>
   </div>
@@ -14,52 +12,11 @@
 
 <ng-container *ngIf="branches.length > 0">
   <div class="row">
-    <div class="col-md-3 col-sm-6">
-      <nb-card status="success">
-        <nb-card-header>
-          <h5 class="text-white">Branches <small>0</small></h5>
-        </nb-card-header>
-      </nb-card>
-    </div>
-    <div class="col-md-3 col-sm-6">
-      <nb-card status="info">
-        <nb-card-header>
-          <h5 class="text-white">Branches <small>0</small></h5>
-        </nb-card-header>
-      </nb-card>
-    </div>
-    <div class="col-md-3 col-sm-6">
-      <nb-card status="warning">
-        <nb-card-header>
-          <h5 class="text-white">Branches <small>0</small></h5>
-        </nb-card-header>
-      </nb-card>
-    </div>
-    <div class="col-md-3 col-sm-6">
-      <nb-card status="danger">
-        <nb-card-header>
-          <h5 class="text-white">Branches <small>0</small></h5>
-        </nb-card-header>
-      </nb-card>
-    </div>
-  </div>
-
-  <div class="row">
     <div class="col-md-8">
       <nb-card>
         <nb-card-header>
           <div class="row">
             <div class="col-md-12">
-              <button
-                class="float-right"
-                nbButton
-                status="warning"
-                size="small"
-                routerLink="../membership-plans"
-              >
-                <span class="btn-add-branch-text">New Branch</span>
-                <nb-icon icon="plus-circle-outline"></nb-icon>
-              </button>
               <h3>My Branches</h3>
             </div>
           </div>
