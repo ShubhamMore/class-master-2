@@ -1,1 +1,201 @@
-<p>manage-budget works!</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>BUDGET</h3>
+      </div>
+
+      <div class="col-md-3 col-sm-4">
+        <button
+          type="button"
+          fullWidth
+          nbTooltip="Add Income Expense"
+          nbButton
+          size="small"
+          status="primary"
+          (click)="addIncomeExpense()"
+        >
+          Add Income/Expense <nb-icon icon="plus-circle-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-4 col-sm-6 col-12">
+        <div class="form-control-group">
+          <label class="label" for="input-year">Select Year:</label>
+          <nb-select
+            name="year"
+            id="input-year"
+            [selected]="year"
+            (selectedChange)="onSelectYear($event)"
+            fullWidth
+          >
+            <nb-option value="">All Years</nb-option>
+            <nb-option *ngFor="let year of years" [value]="year">{{ year }}</nb-option>
+          </nb-select>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-12">
+        <div class="form-control-group">
+          <label class="label" for="input-month">Select Month:</label>
+          <nb-select
+            name="month"
+            id="input-month"
+            [selected]="month"
+            (selectedChange)="onSelectMonth($event)"
+            fullWidth
+          >
+            <nb-option value="">All Months</nb-option>
+            <nb-option *ngFor="let month of months" [value]="month.monthNo">{{
+              month.month
+            }}</nb-option>
+          </nb-select>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-12">
+        <button
+          class="mt-4"
+          type="button"
+          nbTooltip="Budget Summery"
+          nbButton
+          size="medium"
+          fullWidth
+          status="success"
+          (click)="viewStatement()"
+        >
+          View Summery&nbsp;<nb-icon icon="list-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <div class="col-md-4 col-sm-6 col-12">
+        <h4>
+          <strong>Income : </strong>
+          &#x20b9; <span>{{ getTotalIncome() }}/-</span>
+        </h4>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-12">
+        <h4>
+          <strong>Expense : </strong>
+          &#x20b9; <span>{{ getTotalExpense() }}/-</span>
+        </h4>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-12">
+        <h4>
+          <strong>Balance : </strong>
+          &#x20b9;
+          <span [ngClass]="getTotalBalance() >= 0 ? '' : 'negative-balance'"
+            >{{ getTotalBalance() }}/-</span
+          >
+        </h4>
+      </div>
+
+      <div class="col-md-3 col-sm-5 col-7 pt-3 mx-auto">
+        <button nbButton status="primary" fullWidth (click)="openChart(budgetChart)">
+          View Chart&nbsp;<nb-icon icon="pie-chart-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+
+    <hr />
+
+    <nb-tabset fullWidth>
+      <nb-tab tabTitle="INCOME">
+        <div class="table-responsive" *ngIf="incomes.length > 0; else noIncome">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Income</th>
+                <th>Amount</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let income of incomes; let i = index" routerLinkActive="active">
+                <td>{{ i + 1 }}</td>
+                <td>
+                  <span class="pointer" [routerLink]="income._id">{{ income.title }}</span>
+                </td>
+                <td>
+                  <span>{{ income.amount }}</span>
+                </td>
+                <td class="text-center">
+                  <nb-icon
+                    class="pointer delete-budget"
+                    icon="close-circle-outline"
+                    nbTooltip="Delete Income"
+                    (click)="deleteBudget(income._id, i, 'income')"
+                  ></nb-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #noIncome>
+          <p class="text-center pt-2">No Income</p>
+        </ng-template>
+      </nb-tab>
+      <nb-tab tabTitle="EXPENSE">
+        <div class="table-responsive" *ngIf="expenses.length > 0; else noExpense">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Expense</th>
+                <th>Amount</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody class="expense">
+              <tr *ngFor="let expense of expenses; let i = index" routerLinkActive="active">
+                <td>{{ i + 1 }}</td>
+                <td>
+                  <span class="pointer" [routerLink]="expense._id">{{ expense.title }}</span>
+                </td>
+                <td>
+                  <span>{{ expense.amount }}</span>
+                </td>
+                <td class="text-center">
+                  <nb-icon
+                    class="pointer delete-budget"
+                    icon="outline-trash"
+                    (click)="deleteBudget(expense._id, i, 'expense')"
+                    nbTooltip="Delete Expense"
+                  ></nb-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #noExpense>
+          <p class="text-center pt-2">No Expenses</p>
+        </ng-template>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #budgetChart let-chartData let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>
+      <h4>Chart</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <chart type="pie" [data]="chartData.data" [options]="chartData.options"></chart>
+    </nb-card-body>
+    <nb-card-footer>
+      <button class="float-right" size="small" nbButton (click)="ref.close()">Close</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

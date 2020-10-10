@@ -2,53 +2,33 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { BudgetModel } from '../models/budget.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BudgetService {
-  private budgetSearchData = {
-    searchDuration: '0',
-    searchType: '0',
-    year: null,
-    month: null,
-  };
-
-  setSearchDuration(searchDuration: string) {
-    this.budgetSearchData.searchDuration = searchDuration;
-  }
-
-  getSearchDuration() {
-    return this.budgetSearchData.searchDuration;
-  }
-
-  setSearchType(searchType: string) {
-    this.budgetSearchData.searchType = searchType;
-  }
-
-  getSearchType() {
-    return this.budgetSearchData.searchType;
-  }
+  private searchMonth: string;
+  private searchYear: string;
 
   setMonth(month: string) {
-    this.budgetSearchData.month = month;
+    this.searchMonth = month;
   }
   getMonth() {
-    return this.budgetSearchData.month;
+    return this.searchMonth;
   }
 
   setYear(year: string) {
-    this.budgetSearchData.year = year;
+    this.searchYear = year;
   }
+
   getYear() {
-    return this.budgetSearchData.year;
+    return this.searchYear;
   }
 
   constructor(private httpService: HttpService) {}
 
-  getBudget(searchData: any) {
-    const data = { api: 'getBudget', data: searchData };
+  getBudgetForBranch(branch: string, month: string, year: string) {
+    const data = { api: 'getBudgetForBranch', data: { branch, month, year } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -59,20 +39,8 @@ export class BudgetService {
     );
   }
 
-  getBudgetToShow(id: any) {
-    const data = { api: 'getBudgetToShow', data: { id } };
-    return this.httpService.httpPost(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      }),
-    );
-  }
-
-  getBudgetSummery(searchData: any) {
-    const data = { api: 'getBudgetSummery', data: searchData };
+  getBudgetSummery(branch: string, month: string, year: string) {
+    const data = { api: 'getBudgetSummery', data: { branch, month, year } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -85,30 +53,6 @@ export class BudgetService {
 
   saveBudget(budget: any) {
     const data = { api: 'saveBudget', data: budget };
-    return this.httpService.httpPost(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      }),
-    );
-  }
-
-  getBudgetSummeryByYear(year: any) {
-    const data = { api: 'getBudgetSummeryByYear', data: { year } };
-    return this.httpService.httpPost(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      }),
-    );
-  }
-
-  editBudget(budget: BudgetModel) {
-    const data = { api: 'editBudget', data: budget };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

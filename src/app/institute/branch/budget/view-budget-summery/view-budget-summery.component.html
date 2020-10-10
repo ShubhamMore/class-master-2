@@ -1,0 +1,48 @@
+<nb-card>
+  <nb-card-header>
+    <button class="float-right" nbButton size="tiny" status="warning">Back</button>
+    <h4>
+      BUDGET SUMMERY <small>{{ getDuration() }}</small>
+    </h4>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive" *ngIf="budgetSummery.length > 0; else noBudgetSummery">
+      <table class="table table-sm">
+        <thead class="table-heading">
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Title</th>
+            <th>Income</th>
+            <th>Expense</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let curBudgetSummery of budgetSummery; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ dateService.formatDate(curBudgetSummery.date) }}</td>
+            <td>{{ curBudgetSummery.title }}</td>
+            <td>
+              {{ curBudgetSummery.type === 'income' ? curBudgetSummery.amount : '' }}
+            </td>
+            <td>
+              {{ curBudgetSummery.type === 'expense' ? curBudgetSummery.amount : '' }}
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3"><strong>Total</strong></td>
+            <td>
+              <strong>{{ getTotalIncome() }}</strong>
+            </td>
+            <td>
+              <strong>{{ getTotalExpense() }}</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noBudgetSummery>
+      <p class="text-center pt-2">No Budget Summery Available</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

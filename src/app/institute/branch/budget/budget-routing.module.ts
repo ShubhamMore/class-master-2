@@ -13,6 +13,26 @@ const routes: Routes = [
         loadChildren: () =>
           import('./manage-budget/manage-budget.module').then((m) => m.ManageBudgetModule),
       },
+
+      {
+        path: 'add',
+        loadChildren: () => import('./add-budget/add-budget.module').then((m) => m.AddBudgetModule),
+      },
+
+      {
+        path: 'view',
+        loadChildren: () =>
+          import('./view-budget/view-budget.module').then((m) => m.ViewBudgetModule),
+      },
+
+      {
+        path: 'summery',
+        loadChildren: () =>
+          import('./view-budget-summery/view-budget-summery.module').then(
+            (m) => m.ViewBudgetSummeryModule,
+          ),
+      },
+
       {
         path: '',
         redirectTo: 'manage',
