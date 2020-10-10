@@ -56,7 +56,6 @@ export class ManageBudgetComponent implements OnInit {
       this.themeConfig = config;
     });
 
-
     this.months = this.dateService.getMonths();
     this.years = this.dateService.getYears();
 
@@ -132,6 +131,7 @@ export class ManageBudgetComponent implements OnInit {
   }
 
   searchBudget() {
+    this.loading = true;
     this.budgetService.getBudgetForBranch(this.branchId, this.month, this.year).subscribe(
       (budgetData: { incomes: BudgetModel[]; expenses: BudgetModel[] }) => {
         this.incomes = budgetData.incomes;
@@ -140,7 +140,6 @@ export class ManageBudgetComponent implements OnInit {
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-
         this.loading = false;
       },
     );

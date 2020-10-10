@@ -50,7 +50,10 @@ export class ManageStudentComponent implements OnInit {
     });
 
     if (this.type !== 'active' && this.type !== 'inactive') {
-      this.router.navigate(['../page-not-found'], { relativeTo: this.route });
+      this.router.navigate(['../manage'], {
+        relativeTo: this.route,
+        queryParams: { type: 'active' },
+      });
       return;
     }
 

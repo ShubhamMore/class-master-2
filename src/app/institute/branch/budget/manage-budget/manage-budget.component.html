@@ -111,80 +111,90 @@
 
     <nb-tabset fullWidth>
       <nb-tab tabTitle="INCOME">
-        <div class="table-responsive" *ngIf="incomes.length > 0; else noIncome">
-          <table class="table table-sm table-hover">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Income</th>
-                <th>Amount</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let income of incomes; let i = index" routerLinkActive="active">
-                <td>{{ i + 1 }}</td>
-                <td>
-                  <span class="pointer" [routerLink]="income._id">{{ income.title }}</span>
-                </td>
-                <td>
-                  <span>{{ income.amount }}</span>
-                </td>
-                <td class="text-center">
-                  <nb-icon
-                    class="pointer delete-budget"
-                    icon="close-circle-outline"
-                    nbTooltip="Delete Income"
-                    (click)="deleteBudget(income._id, i, 'income')"
-                  ></nb-icon>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <ng-template #noIncome>
-          <p class="text-center pt-2">No Income</p>
-        </ng-template>
+        <ng-container *ngIf="!loading; else loadingBudget">
+          <div class="table-responsive" *ngIf="incomes.length > 0; else noIncome">
+            <table class="table table-sm table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Income</th>
+                  <th>Amount</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let income of incomes; let i = index" routerLinkActive="active">
+                  <td>{{ i + 1 }}</td>
+                  <td>
+                    <span class="pointer" [routerLink]="income._id">{{ income.title }}</span>
+                  </td>
+                  <td>
+                    <span>{{ income.amount }}</span>
+                  </td>
+                  <td class="text-center">
+                    <nb-icon
+                      class="pointer delete-budget"
+                      icon="close-circle-outline"
+                      nbTooltip="Delete Income"
+                      (click)="deleteBudget(income._id, i, 'income')"
+                    ></nb-icon>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
       </nb-tab>
       <nb-tab tabTitle="EXPENSE">
-        <div class="table-responsive" *ngIf="expenses.length > 0; else noExpense">
-          <table class="table table-sm table-hover">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Expense</th>
-                <th>Amount</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody class="expense">
-              <tr *ngFor="let expense of expenses; let i = index" routerLinkActive="active">
-                <td>{{ i + 1 }}</td>
-                <td>
-                  <span class="pointer" [routerLink]="expense._id">{{ expense.title }}</span>
-                </td>
-                <td>
-                  <span>{{ expense.amount }}</span>
-                </td>
-                <td class="text-center">
-                  <nb-icon
-                    class="pointer delete-budget"
-                    icon="outline-trash"
-                    (click)="deleteBudget(expense._id, i, 'expense')"
-                    nbTooltip="Delete Expense"
-                  ></nb-icon>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <ng-template #noExpense>
-          <p class="text-center pt-2">No Expenses</p>
-        </ng-template>
+        <ng-container *ngIf="!loading; else loadingBudget">
+          <div class="table-responsive" *ngIf="expenses.length > 0; else noExpense">
+            <table class="table table-sm table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Expense</th>
+                  <th>Amount</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody class="expense">
+                <tr *ngFor="let expense of expenses; let i = index" routerLinkActive="active">
+                  <td>{{ i + 1 }}</td>
+                  <td>
+                    <span class="pointer" [routerLink]="expense._id">{{ expense.title }}</span>
+                  </td>
+                  <td>
+                    <span>{{ expense.amount }}</span>
+                  </td>
+                  <td class="text-center">
+                    <nb-icon
+                      class="pointer delete-budget"
+                      icon="outline-trash"
+                      (click)="deleteBudget(expense._id, i, 'expense')"
+                      nbTooltip="Delete Expense"
+                    ></nb-icon>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
       </nb-tab>
     </nb-tabset>
   </nb-card-body>
 </nb-card>
+
+<ng-template #loadingBudget>
+  <p class="text-center pt-2">Loading...</p>
+</ng-template>
+
+<ng-template #noIncome>
+  <p class="text-center pt-2">No Income</p>
+</ng-template>
+
+<ng-template #noExpense>
+  <p class="text-center pt-2">No Expenses</p>
+</ng-template>
 
 <ng-template #budgetChart let-chartData let-ref="dialogRef">
   <nb-card>
