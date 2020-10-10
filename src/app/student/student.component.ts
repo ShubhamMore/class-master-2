@@ -1,17 +1,24 @@
+import { NbMenuItem } from '@nebular/theme';
+import { MenuService } from './menu.service';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-student',
-  templateUrl: './student.component.html',
   styleUrls: ['./student.component.scss'],
+  template: `
+    <ngx-one-column-layout>
+      <nb-menu [items]="menu"></nb-menu>
+      <router-outlet></router-outlet>
+    </ngx-one-column-layout>
+  `,
 })
 export class StudentComponent implements OnInit {
-  loading: boolean;
+  menu: NbMenuItem[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private menuService: MenuService) {}
 
   ngOnInit(): void {
-    this.loading = true;
+    this.menuService.setMenuItemSequence();
+    this.menu = this.menuService.getMenuItems();
   }
 }
