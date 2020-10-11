@@ -33,6 +33,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'q&a',
+        loadChildren: () =>
+          import('./question-answers/question-answers.module').then((m) => m.QuestionAnswersModule),
+      },
+
+      {
         path: 'attendance',
         loadChildren: () =>
           import('./attendance/attendance.module').then((m) => m.AttendanceModule),

@@ -1,8 +1,5 @@
 import { BranchEmployeeService } from './../../../../../services/branch-employee.service';
-import {
-  BranchEmployeeModel,
-  EmployeeNameIdModel,
-} from './../../../../../models/branch-employee.model';
+import { EmployeeNameIdModel } from './../../../../../models/branch-employee.model';
 import { ScheduleService } from './../../../../../services/schedule.service';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { BatchService } from './../../../../../services/batch.service';

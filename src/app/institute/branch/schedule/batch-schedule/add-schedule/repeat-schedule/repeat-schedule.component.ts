@@ -1,5 +1,5 @@
 import { NbToastrService } from '@nebular/theme';
-import { BranchEmployeeModel } from './../../../../../../models/branch-employee.model';
+import { EmployeeNameIdModel } from './../../../../../../models/branch-employee.model';
 import { SubjectModel } from './../../../../../../models/course.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
@@ -15,7 +15,7 @@ export class RepeatScheduleComponent implements OnInit {
 
   @Input() repeatSchedule: any;
   @Input() subjects: SubjectModel[];
-  @Input() teachers: BranchEmployeeModel[];
+  @Input() teachers: EmployeeNameIdModel[];
 
   @Output() close = new EventEmitter<void>();
   @Output() submit = new EventEmitter<any>();

@@ -20,8 +20,8 @@ export class LectureService {
     this.date = date;
   }
 
-  setLectureData(Lecture: ScheduleModel) {
-    this.lecture.next(Lecture);
+  setLectureData(lecture: ScheduleModel) {
+    this.lecture.next(lecture);
   }
 
   getLectureData() {

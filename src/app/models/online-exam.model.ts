@@ -1,4 +1,3 @@
-import { QuestionModel } from './online-exam-question.model';
 export class OnlineExamModel {
   constructor(
     public _id: string,

@@ -1,0 +1,54 @@
+<nb-card>
+  <nb-card-header>
+    <h3>{{ lectureQuestion ? 'Edit' : 'New' }} Question</h3>
+  </nb-card-header>
+
+  <nb-card-body>
+    <form [formGroup]="lectureQuestionForm" (submit)="saveLectureQuestion()">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-control-group">
+            <label class="label" for="input-question">Question:</label>
+            <textarea
+              type="text"
+              nbInput
+              id="input-question"
+              name="question"
+              formControlName="question"
+              placeholder="Question"
+              fullWidth
+              [status]="
+                lectureQuestionForm.get('question').touched
+                  ? lectureQuestionForm.get('question').invalid
+                    ? 'danger'
+                    : 'success'
+                  : 'basic'
+              "
+            ></textarea>
+            <ng-container
+              *ngIf="
+                lectureQuestionForm.get('question').invalid &&
+                lectureQuestionForm.get('question').touched
+              "
+            >
+              <p
+                class="caption status-danger"
+                *ngIf="lectureQuestionForm.get('question').errors?.required"
+              >
+                Question is required!
+              </p>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-12 text-right">
+          <button type="submit" nbButton size="small" status="success">Save</button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
