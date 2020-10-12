@@ -1,12 +1,5 @@
-import { ReactiveFormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbInputModule,
-  NbButtonModule,
-  NbIconModule,
-  NbUserModule,
-} from '@nebular/theme';
-import { AddAnswerComponent } from './../view-question-answers/add-answer/add-answer.component';
+import { AddQuestionAnswersModule } from './../add-question-answers/add-question-answers.module';
+import { NbCardModule, NbButtonModule, NbIconModule, NbUserModule } from '@nebular/theme';
 import { ViewQuestionAnswersComponent } from './view-question-answers.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,16 +7,15 @@ import { CommonModule } from '@angular/common';
 import { ViewQuestionAnswersRoutingModule } from './view-question-answers-routing.module';
 
 @NgModule({
-  declarations: [ViewQuestionAnswersComponent, AddAnswerComponent],
+  declarations: [ViewQuestionAnswersComponent],
   imports: [
     CommonModule,
     ViewQuestionAnswersRoutingModule,
+    AddQuestionAnswersModule,
     NbCardModule,
-    NbInputModule,
     NbButtonModule,
     NbIconModule,
     NbUserModule,
-    ReactiveFormsModule,
   ],
 })
 export class ViewQuestionAnswersModule {}

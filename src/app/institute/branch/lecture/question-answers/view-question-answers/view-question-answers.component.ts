@@ -1,5 +1,5 @@
-import { AddQuestionComponent } from './../add-question/add-question.component';
-import { AddAnswerComponent } from './add-answer/add-answer.component';
+import { AddQuestionComponent } from './../add-question-answers/add-question/add-question.component';
+import { AddAnswerComponent } from '../add-question-answers/add-answer/add-answer.component';
 import { DateService } from './../../../../../services/shared-services/date.service';
 import { AuthService } from './../../../../../authentication/auth/auth-service/auth.service';
 import { QuestionAnswersService } from './../../../../../services/question-answers.service';
@@ -20,9 +20,9 @@ import { LectureQuestionAnswerModel } from '../../../../../models/lecture-questi
 export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
   loading: boolean;
   lectureQuestion: LectureQuestionModel;
-  lectureQuestionAnswer: LectureQuestionAnswerModel;
   branchId: string;
   lecture: LectureModel;
+  editLectureQuestionAnswer: boolean;
   user: { name: string; imsMasterId: string };
 
   constructor(
@@ -46,11 +46,15 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.editLectureQuestionAnswer = false;
+
     this.user = this.authService.getUserData();
 
     this.questionAnswersService
-      .getQuestionAnswersData()
+      .getQuestionAnswers()
       .subscribe((questionAnswers: LectureQuestionModel) => {
+        if (!questionAnswers) {
+        }
         this.lectureQuestion = questionAnswers;
       });
 
@@ -63,6 +67,7 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
     });
 
     this.getLectureQuestionAnswers(this.lectureQuestion._id);
+
     if (!this.lectureQuestion) {
     } else {
       const id = this.questionAnswersService.getQuestionAnswersId();
@@ -95,12 +100,7 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
   private openAnswerDialog() {
     this.dialogService
       .open(AddAnswerComponent, {
-        context: {
-          branchId: this.branchId,
-          lecture: this.lecture,
-          lectureQuestion: this.lectureQuestion,
-          lectureQuestionAnswer: this.lectureQuestionAnswer,
-        },
+        context: {},
       })
       .onClose.subscribe(
         (answer: LectureQuestionAnswerModel) => answer && this.saveLectureQuestionAnswer(answer),
@@ -108,8 +108,8 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
   }
 
   editQuestion(lectureQuestion: LectureQuestionModel) {
-    this.questionAnswersService.setQuestionAnswersId(lectureQuestion._id);
-    this.questionAnswersService.setQuestionAnswersData(lectureQuestion);
+    this.questionAnswersService.setQuestionId(lectureQuestion._id);
+    this.questionAnswersService.setQuestion(lectureQuestion);
     this.dialogService
       .open(AddQuestionComponent, {
         context: {},
@@ -154,7 +154,9 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
 
   editQuestionAnswer(lectureQuestionAnswer: LectureQuestionAnswerModel) {
     if (lectureQuestionAnswer) {
-      this.lectureQuestionAnswer = lectureQuestionAnswer;
+      this.questionAnswersService.setQuestionAnswerId(lectureQuestionAnswer._id);
+      this.questionAnswersService.setQuestionAnswer(lectureQuestionAnswer);
+      this.editLectureQuestionAnswer = true;
       this.openAnswerDialog();
     } else {
       // tslint:disable-next-line: quotemark
@@ -163,19 +165,18 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
   }
 
   saveLectureQuestionAnswer(newLectureQuestionAnswer: LectureQuestionAnswerModel) {
-    if (!this.lectureQuestionAnswer) {
+    if (!this.editLectureQuestionAnswer) {
       newLectureQuestionAnswer.name = this.user.name;
-
       this.lectureQuestion.answers.push(newLectureQuestionAnswer);
     } else {
       const index = this.lectureQuestion.answers.findIndex(
-        (curAnswer: LectureQuestionAnswerModel) => curAnswer._id === this.lectureQuestionAnswer._id,
+        (curAnswer: LectureQuestionAnswerModel) => curAnswer._id === newLectureQuestionAnswer._id,
       );
 
       if (index >= 0) {
         this.lectureQuestion.answers[index] = newLectureQuestionAnswer;
       }
-      this.lectureQuestionAnswer = null;
+      this.editLectureQuestionAnswer = false;
     }
   }
 
@@ -192,6 +193,6 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.questionAnswersService.deleteQuestionAnswersId();
-    this.questionAnswersService.deleteQuestionAnswersData();
+    this.questionAnswersService.deleteQuestionAnswers();
   }
 }

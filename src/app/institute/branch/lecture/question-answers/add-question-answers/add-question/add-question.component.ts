@@ -1,11 +1,10 @@
-import { QuestionAnswersService } from './../../../../../services/question-answers.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { LectureService } from './../../../../../services/lecture.service';
-import { BranchService } from './../../../../../services/branch.service';
-import { LectureQuestionModel } from './../../../../../models/lecture-question.model';
+import { QuestionAnswersService } from './../../../../../../services/question-answers.service';
+import { LectureService } from './../../../../../../services/lecture.service';
+import { BranchService } from './../../../../../../services/branch.service';
+import { LectureQuestionModel } from './../../../../../../models/lecture-question.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NbToastrService, NbDialogRef } from '@nebular/theme';
-import { ScheduleModel as LectureModel } from './../../../../../models/schedule.model';
+import { ScheduleModel as LectureModel } from './../../../../../../models/schedule.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
@@ -43,14 +42,12 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
       }),
     });
 
-    this.questionAnswersService
-      .getQuestionAnswersData()
-      .subscribe((questionAnswers: LectureQuestionModel) => {
-        this.lectureQuestion = questionAnswers;
-        if (questionAnswers) {
-          this.lectureQuestionForm.patchValue({ question: this.lectureQuestion.question });
-        }
-      });
+    this.questionAnswersService.getQuestion().subscribe((questionAnswers: LectureQuestionModel) => {
+      this.lectureQuestion = questionAnswers;
+      if (questionAnswers) {
+        this.lectureQuestionForm.patchValue({ question: this.lectureQuestion.question });
+      }
+    });
 
     this.lectureService.getLectureData().subscribe((lecture: LectureModel) => {
       this.lecture = lecture;
@@ -119,7 +116,7 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.questionAnswersService.deleteQuestionAnswersId();
-    this.questionAnswersService.deleteQuestionAnswersData();
+    this.questionAnswersService.deleteQuestionId();
+    this.questionAnswersService.deleteQuestion();
   }
 }

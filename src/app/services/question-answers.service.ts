@@ -3,23 +3,76 @@ import { HttpService } from './shared-services/http.service';
 import { Injectable } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
+import { LectureQuestionAnswerModel } from '../models/lecture-question-answers.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QuestionAnswersService {
+  private question = new BehaviorSubject<LectureQuestionModel>(null);
+  private questionAnswer = new BehaviorSubject<LectureQuestionAnswerModel>(null);
   private questionAnswers = new BehaviorSubject<LectureQuestionModel>(null);
+  private questionId: string = null;
+  private questionAnswerId: string = null;
   private questionAnswersId: string = null;
 
-  setQuestionAnswersData(questionAnswers: LectureQuestionModel) {
+  setQuestion(question: LectureQuestionModel) {
+    this.question.next(question);
+  }
+
+  getQuestion() {
+    return this.question;
+  }
+
+  deleteQuestion() {
+    this.question.next(null);
+  }
+
+  setQuestionId(questionId: string) {
+    this.questionId = questionId;
+  }
+
+  getQuestionId() {
+    return this.questionId;
+  }
+
+  deleteQuestionId() {
+    this.questionId = null;
+  }
+
+  setQuestionAnswer(questionAnswer: LectureQuestionAnswerModel) {
+    this.questionAnswer.next(questionAnswer);
+  }
+
+  getQuestionAnswer() {
+    return this.questionAnswer;
+  }
+
+  deleteQuestionAnswer() {
+    this.questionAnswer.next(null);
+  }
+
+  setQuestionAnswerId(questionAnswerId: string) {
+    this.questionAnswerId = questionAnswerId;
+  }
+
+  getQuestionAnswerId() {
+    return this.questionAnswerId;
+  }
+
+  deleteQuestionAnswerId() {
+    this.questionAnswerId = null;
+  }
+
+  setQuestionAnswers(questionAnswers: LectureQuestionModel) {
     this.questionAnswers.next(questionAnswers);
   }
 
-  getQuestionAnswersData() {
+  getQuestionAnswers() {
     return this.questionAnswers;
   }
 
-  deleteQuestionAnswersData() {
+  deleteQuestionAnswers() {
     this.questionAnswers.next(null);
   }
 

@@ -1,4 +1,4 @@
-import { AddQuestionComponent } from './add-question/add-question.component';
+import { AddQuestionComponent } from './add-question-answers/add-question/add-question.component';
 import { DateService } from './../../../../services/shared-services/date.service';
 import { AuthService } from './../../../../authentication/auth/auth-service/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -95,8 +95,8 @@ export class QuestionAnswersComponent implements OnInit {
   }
 
   editQuestion(questionAnswer: LectureQuestionModel) {
-    this.questionAnswerService.setQuestionAnswersId(questionAnswer._id);
-    this.questionAnswerService.setQuestionAnswersData(questionAnswer);
+    this.questionAnswerService.setQuestionId(questionAnswer._id);
+    this.questionAnswerService.setQuestion(questionAnswer);
     this.editLectureQuestion = true;
     this.openQuestionDialog();
   }
@@ -123,7 +123,7 @@ export class QuestionAnswersComponent implements OnInit {
 
   viewQuestionAnswer(questionAnswer: LectureQuestionModel) {
     this.questionAnswerService.setQuestionAnswersId(questionAnswer._id);
-    this.questionAnswerService.setQuestionAnswersData(questionAnswer);
+    this.questionAnswerService.setQuestionAnswers(questionAnswer);
     this.router.navigate(['./view'], { relativeTo: this.route });
   }
 

@@ -1,33 +1,43 @@
-import { QuestionAnswersService } from './../../../../../../services/question-answers.service';
-import { LectureQuestionModel } from './../../../../../../models/lecture-question.model';
+import { LectureService } from '../../../../../../services/lecture.service';
+import { BranchService } from '../../../../../../services/branch.service';
+import { QuestionAnswersService } from '../../../../../../services/question-answers.service';
+import { LectureQuestionModel } from '../../../../../../models/lecture-question.model';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LectureQuestionAnswerModel } from './../../../../../../models/lecture-question-answers.model';
-import { Component, OnInit, Input } from '@angular/core';
-import { ScheduleModel as LectureModel } from './../../../../../../models/schedule.model';
+import { LectureQuestionAnswerModel } from '../../../../../../models/lecture-question-answers.model';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ScheduleModel as LectureModel } from '../../../../../../models/schedule.model';
 
 @Component({
   selector: 'ngx-add-answer',
   templateUrl: './add-answer.component.html',
   styleUrls: ['./add-answer.component.scss'],
 })
-export class AddAnswerComponent implements OnInit {
+export class AddAnswerComponent implements OnInit, OnDestroy {
   loading: boolean;
   answerForm: FormGroup;
 
-  @Input() branchId: string;
-  @Input() lecture: LectureModel;
-  @Input() lectureQuestionAnswer: LectureQuestionAnswerModel;
-  @Input() lectureQuestion: LectureQuestionModel;
+  branchId: string;
+  lecture: LectureModel;
+  lectureQuestionAnswer: LectureQuestionAnswerModel;
+  lectureQuestion: LectureQuestionModel;
 
   constructor(
     private toastrService: NbToastrService,
+    private branchService: BranchService,
+    private lectureService: LectureService,
     private questionAnswersService: QuestionAnswersService,
     protected ref: NbDialogRef<AddAnswerComponent>,
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
+
+    this.branchId = this.branchService.getBranchId();
+    if (!this.branchId) {
+      this.onClose();
+      return;
+    }
 
     this.answerForm = new FormGroup({
       answer: new FormControl(
@@ -38,7 +48,27 @@ export class AddAnswerComponent implements OnInit {
       ),
     });
 
-    this.loading = false;
+    this.questionAnswersService.getQuestion().subscribe((questionAnswers: LectureQuestionModel) => {
+      this.lectureQuestion = questionAnswers;
+    });
+
+    this.questionAnswersService
+      .getQuestionAnswer()
+      .subscribe((questionAnswer: LectureQuestionAnswerModel) => {
+        this.lectureQuestionAnswer = questionAnswer;
+        if (questionAnswer) {
+          this.answerForm.patchValue({ answer: this.lectureQuestionAnswer.answer });
+        }
+      });
+
+    this.lectureService.getLectureData().subscribe((lecture: LectureModel) => {
+      this.lecture = lecture;
+      if (!this.lecture) {
+        this.onClose();
+        return;
+      }
+      this.loading = false;
+    });
   }
 
   onClose() {
@@ -46,6 +76,12 @@ export class AddAnswerComponent implements OnInit {
   }
 
   saveLectureQuestionAnswer() {
+    this.answerForm.markAllAsTouched();
+    if (this.answerForm.invalid) {
+      this.showToastr('top-right', 'danger', 'Answer is Required');
+      return;
+    }
+
     const answer: string = this.answerForm.value.answer;
 
     const lectureQuestionAnswer: any = {
@@ -91,5 +127,10 @@ export class AddAnswerComponent implements OnInit {
       position,
       status,
     });
+  }
+
+  ngOnDestroy() {
+    this.questionAnswersService.deleteQuestionAnswerId();
+    this.questionAnswersService.deleteQuestionAnswer();
   }
 }
