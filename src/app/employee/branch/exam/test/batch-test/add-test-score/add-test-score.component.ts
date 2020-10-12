@@ -3,7 +3,6 @@ import { CourseService } from './../../../../../../services/course.service';
 import { BatchModel } from './../../../../../../models/batch.model';
 import { CategoryModel } from './../../../../../../models/branch.model';
 import { SubjectModel, CourseModel } from './../../../../../../models/course.model';
-import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
 import { DateService } from './../../../../../../services/shared-services/date.service';
 import { ExamService } from './../../../../../../services/exam.service';
@@ -12,8 +11,11 @@ import { Component, OnInit } from '@angular/core';
 import { BranchService } from './../../../../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
-class Student {
-  constructor(public student: string) {}
+interface StudentScore {
+  name: string;
+  student: string;
+  rollNumber: string;
+  marks?: number;
 }
 
 @Component({
@@ -31,9 +33,7 @@ export class AddTestScoreComponent implements OnInit {
   course: CourseModel;
   batch: BatchModel;
 
-  studentMarksForm: FormGroup;
-
-  private students: Student[];
+  students: StudentScore[];
   constructor(
     private branchService: BranchService,
     private toastrService: NbToastrService,
@@ -75,66 +75,20 @@ export class AddTestScoreComponent implements OnInit {
       this.batch = batch;
     });
 
-    this.studentMarksForm = new FormGroup({ marks: new FormArray([]) });
-
     this.students = [];
 
-    const marks = this.getMarks();
-    marks.controls = [];
-
-    this.examService
-      .getStudents(this.exam.branch, this.exam.category, this.exam.course, this.exam.batch)
-      .subscribe(
-        (students: Student[]) => {
-          this.students = students;
-
-          if (this.exam.marks.length > 0) {
-            this.exam.marks.forEach((myMarks: MarksModel) => {
-              this.addStudentMark(myMarks.student, myMarks.marks);
-            });
-          } else {
-            students.forEach((student: Student) => {
-              this.addStudentMark(student.student, null);
-            });
-          }
-
-          this.loading = false;
-        },
-        (error: any) => {
-          this.showToastr('top-right', 'danger', error);
-          this.back();
-        },
-      );
+    this.getStudents();
   }
 
-  private getMarks() {
-    return this.studentMarksForm.get('marks') as FormArray;
-  }
-
-  private addStudentMark(student: string, marks: number) {
-    const studentMarks = new FormGroup({
-      student: new FormControl(student, { validators: [Validators.required] }),
-      marks: new FormControl(marks, { validators: [Validators.required] }),
-    });
-
-    return studentMarks;
-  }
-
-  saveMarks() {
-    this.studentMarksForm.markAllAsTouched();
-    if (this.studentMarksForm.invalid) {
-      this.showToastr('top-right', 'danger', 'Enter All Students valid Marks');
-      return;
-    }
-
+  private getStudents() {
     this.loading = true;
-
-    const marks = this.studentMarksForm.value.marks;
-
-    this.examService.saveStudentsMarks(this.exam._id, marks).subscribe(
-      (res: any) => {
-        this.showToastr('top-right', 'success', 'Exam Score Updates Successfully!');
-        this.back();
+    this.examService.getStudentsForExam(this.exam._id).subscribe(
+      (students: StudentScore[]) => {
+        students.map((student: any) => {
+          return (student.marks = student.marks ? student.marks : 0);
+        });
+        this.students = students;
+        this.loading = false;
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
@@ -143,34 +97,62 @@ export class AddTestScoreComponent implements OnInit {
     );
   }
 
+  onChangeMarks(marks: number, i: number) {
+    this.students[i].marks = marks;
+  }
+
+  examMarksValidation() {
+    const invalidStudentMarks: string[] = [];
+
+    this.students.forEach((student: StudentScore) => {
+      if (!student.marks) {
+        invalidStudentMarks.push(student.name);
+      } else if (student.marks && (student.marks > this.exam.outOfMarks || student.marks < 0)) {
+        invalidStudentMarks.push(student.name);
+      }
+    });
+
+    return invalidStudentMarks.join(', ');
+  }
+
+  saveMarks() {
+    const invalidStudents = this.examMarksValidation();
+
+    if (invalidStudents) {
+      this.showToastr('top-right', 'danger', 'Enter Valid Marks for student ' + invalidStudents);
+      return;
+    }
+
+    this.examService.saveStudentsMarks(this.exam._id, this.students).subscribe(
+      (res: any) => {
+        this.showToastr('top-right', 'success', `Exam Marks Updated Successfully`);
+        this.back();
+      },
+      (error: any) => {
+        this.showToastr('top-right', 'danger', error);
+      },
+    );
+  }
+
+  getSubject(subject: string) {
+    const mySubject = this.course.subjects.find(
+      (curSubject: SubjectModel) => curSubject._id === subject,
+    );
+
+    if (!mySubject) {
+      return '--';
+    }
+    return mySubject.subject;
+  }
+
+  back() {
+    this.router.navigate(['../manage'], { relativeTo: this.route });
+  }
+
   private showToastr(position: any, status: any, message: string) {
     this.toastrService.show(status, message, {
       position,
       status,
     });
-  }
-
-  getSubject(subjectId: string) {
-    const subject = this.course.subjects.find(
-      (curSubject: SubjectModel) => curSubject._id === subjectId,
-    );
-    if (subject) {
-      return subject.subject;
-    }
-
-    return '--';
-  }
-
-  getStudent(studentId: string) {
-    const myStudent = this.students.find((student: Student) => student.student === studentId);
-    if (myStudent) {
-      return myStudent.student;
-    }
-
-    return '--';
-  }
-
-  back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

@@ -38,10 +38,10 @@ export class ExamService {
 
   constructor(private httpService: HttpService) {}
 
-  getStudents(branch: any, category: any, course: string, batch: string) {
+  getStudentsForExam(exam: string) {
     const data = {
       api: 'getStudentsForExam',
-      data: { branch, category, course, batch },
+      data: { exam },
     };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {

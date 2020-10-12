@@ -2,8 +2,8 @@ export class ExamModel {
   constructor(
     public _id: string,
     public examTitle: string,
-    public outOfMarks: string,
-    public passingMarks: string,
+    public outOfMarks: number,
+    public passingMarks: number,
     public date: string,
     public time: string,
     public duration: string,
@@ -18,5 +18,10 @@ export class ExamModel {
 }
 
 export class MarksModel {
-  constructor(public _id: string, public student: string, public marks: number) {}
+  constructor(
+    public _id: string,
+    public student: string,
+    public rollNumber: string,
+    public marks: number,
+  ) {}
 }
