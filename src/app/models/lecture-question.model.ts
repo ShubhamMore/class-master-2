@@ -1,3 +1,4 @@
+import { LectureQuestionAnswerModel } from './lecture-question-answers.model';
 export class LectureQuestionModel {
   constructor(
     public _id: string,
@@ -12,5 +13,6 @@ export class LectureQuestionModel {
     public editedAt: number,
     public status: boolean,
     public name?: string,
+    public answers?: LectureQuestionAnswerModel[],
   ) {}
 }

@@ -22,7 +22,7 @@
               <div class="row">
                 <div class="col-md-6 col-12">
                   <nb-user
-                    [name]="lectureQuestion.name"
+                    [name]="lectureQuestion.name ? lectureQuestion.name : 'Unknown'"
                     [title]="formatQuestionAnswerDate(lectureQuestion.createdAt)"
                   ></nb-user>
                 </div>
@@ -60,7 +60,7 @@
               </div>
             </nb-card-header>
             <nb-card-body>
-              <p>{{ lectureQuestion.question }}</p>
+              <div [innerHTML]="lectureQuestion.question"></div>
             </nb-card-body>
           </nb-card>
         </ng-container>

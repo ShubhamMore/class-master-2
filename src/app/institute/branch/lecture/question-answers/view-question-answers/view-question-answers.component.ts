@@ -1,3 +1,5 @@
+import { DateService } from './../../../../../services/shared-services/date.service';
+import { AuthService } from './../../../../../authentication/auth/auth-service/auth.service';
 import { QuestionAnswersService } from './../../../../../services/question-answers.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LectureService } from './../../../../../services/lecture.service';
@@ -17,27 +19,32 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
   loading: boolean;
   lectureQuestion: LectureQuestionModel;
   lectureQuestionAnswer: LectureQuestionAnswerModel;
-  lectureQuestionAnswers: LectureQuestionAnswerModel[];
   answerModel: boolean;
   branchId: string;
   lecture: LectureModel;
+  userId: string;
 
   constructor(
+    private authService: AuthService,
     private toastrService: NbToastrService,
     private branchService: BranchService,
     private lectureService: LectureService,
     private questionAnswersService: QuestionAnswersService,
+    private dateService: DateService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
+
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
+
+    this.userId = this.authService.getUserData().imsMasterId;
 
     this.questionAnswersService
       .getQuestionAnswersData()
@@ -46,7 +53,6 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
       });
 
     this.answerModel = false;
-    this.lectureQuestionAnswers = [];
 
     this.lectureService.getLectureData().subscribe((lecture: LectureModel) => {
       this.lecture = lecture;
@@ -55,10 +61,68 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
         return;
       }
     });
+
+    this.getLectureQuestionAnswers(this.lectureQuestion._id);
+    if (!this.lectureQuestion) {
+    } else {
+      const id = this.questionAnswersService.getQuestionAnswersId();
+      if (id) {
+        this.getLectureQuestionAnswers(id);
+      } else {
+        this.showToastr('top-right', 'danger', 'Question Not Found');
+        this.back();
+      }
+    }
+  }
+
+  getLectureQuestionAnswers(id: string) {
+    this.questionAnswersService.getLectureQuestionAnswer(id).subscribe(
+      (questionAnswer: LectureQuestionModel) => {
+        this.lectureQuestion = questionAnswer;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.showToastr('top-right', 'danger', error);
+        this.back();
+      },
+    );
   }
 
   addQuestionAnswer() {
     this.answerModel = true;
+  }
+
+  editQuestion(questionAnswer: LectureQuestionModel) {}
+
+  formatQuestionAnswerDate(questionDate: any) {
+    const date: string = this.dateService.convertToDate(questionDate).toString();
+    return date.substr(0, 21);
+  }
+
+  deleteQuestion(id: string) {
+    this.loading = true;
+    this.questionAnswersService.deleteLectureQuestion(id).subscribe(
+      (res: any) => {
+        this.back();
+        this.showToastr('top-right', 'success', `Question Deleted Successfully!`);
+      },
+      (err: any) => {
+        this.showToastr('top-right', 'danger', err);
+        this.loading = false;
+      },
+    );
+  }
+
+  deleteQuestionAnswer(id: string, i: number) {
+    this.questionAnswersService.deleteLectureQuestionAnswer(id).subscribe(
+      (res: any) => {
+        this.lectureQuestion.answers.splice(i, 1);
+        this.showToastr('top-right', 'success', `Answer Deleted Successfully!`);
+      },
+      (err: any) => {
+        this.showToastr('top-right', 'danger', err);
+      },
+    );
   }
 
   editQuestionAnswer(lectureQuestionAnswer: LectureQuestionAnswerModel) {
@@ -66,7 +130,8 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
       this.lectureQuestionAnswer = lectureQuestionAnswer;
       this.answerModel = true;
     } else {
-      this.showToastr('top-right', 'danger', 'Cant Edit this Answer');
+      // tslint:disable-next-line: quotemark
+      this.showToastr('top-right', 'danger', "Can't Edit this Answer");
     }
   }
 
@@ -75,7 +140,7 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
     this.lectureQuestionAnswer = null;
   }
 
-  saveLectureQuestion(answer: any) {
+  saveLectureQuestionAnswer(answer: any) {
     const lectureQuestionAnswer: any = {
       branch: this.branchId,
       category: this.lecture.category,
@@ -88,8 +153,9 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
 
     if (!this.lectureQuestionAnswer) {
       this.questionAnswersService.newLectureQuestionAnswer(lectureQuestionAnswer).subscribe(
-        (res: any) => {
+        (newLectureQuestionAnswer: LectureQuestionAnswerModel) => {
           this.closeAnswerModel();
+          this.lectureQuestion.answers.push(newLectureQuestionAnswer);
           this.showToastr('top-right', 'success', 'New Answer Added Successfully!');
         },
         (error: any) => {
@@ -99,9 +165,16 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
       );
     } else {
       lectureQuestionAnswer._id = this.lectureQuestionAnswer._id;
+      const index = this.lectureQuestion.answers.findIndex(
+        (curAnswer: LectureQuestionAnswerModel) => curAnswer._id === this.lectureQuestionAnswer._id,
+      );
+
       this.questionAnswersService.editLectureQuestionAnswer(lectureQuestionAnswer).subscribe(
         (res: any) => {
           this.closeAnswerModel();
+          if (index >= 0) {
+            this.lectureQuestion.answers[index].answer = answer;
+          }
           this.showToastr('top-right', 'success', 'Answer Updated Successfully!');
         },
         (error: any) => {

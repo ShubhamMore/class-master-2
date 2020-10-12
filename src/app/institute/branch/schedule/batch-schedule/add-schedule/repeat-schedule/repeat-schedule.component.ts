@@ -53,6 +53,7 @@ export class RepeatScheduleComponent implements OnInit {
   }
 
   saveSchedule() {
+    this.repeatScheduleForm.markAllAsTouched();
     if (this.repeatScheduleForm.invalid) {
       this.showToastr('top-right', 'danger', 'All Schedule Fields are Required');
       return;
