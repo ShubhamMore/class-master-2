@@ -8,18 +8,6 @@ const routes: Routes = [
     component: QuestionAnswersComponent,
   },
 
-  // {
-  //   path: 'add',
-  //   loadChildren: () =>
-  //     import('./add-question/add-question.module').then((m) => m.AddQuestionModule),
-  // },
-
-  // {
-  //   path: 'edit',
-  //   loadChildren: () =>
-  //     import('./add-question/add-question.module').then((m) => m.AddQuestionModule),
-  // },
-
   {
     path: 'view',
     loadChildren: () =>
