@@ -1,10 +1,8 @@
+import { RepeatScheduleComponent } from './repeat-schedule/repeat-schedule.component';
 import { BranchEmployeeService } from './../../../../../services/branch-employee.service';
-import {
-  BranchEmployeeModel,
-  EmployeeNameIdModel,
-} from './../../../../../models/branch-employee.model';
+import { EmployeeNameIdModel } from './../../../../../models/branch-employee.model';
 import { ScheduleService } from './../../../../../services/schedule.service';
-import { NbToastrService, NbStepperComponent } from '@nebular/theme';
+import { NbToastrService, NbStepperComponent, NbDialogService } from '@nebular/theme';
 import { BatchService } from './../../../../../services/batch.service';
 import { CourseService } from './../../../../../services/course.service';
 import { BatchModel } from './../../../../../models/batch.model';
@@ -55,6 +53,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
     private branchService: BranchService,
     private courseService: CourseService,
     private branchEmployeeService: BranchEmployeeService,
+    private dialogService: NbDialogService,
     public dateService: DateService,
     private batchService: BatchService,
     private scheduleService: ScheduleService,
@@ -230,22 +229,43 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
     this.repeatSchedules.splice(i, 1);
   }
 
+  openRepeatScheduleDialog(type: string) {
+    this.dialogService
+      .open(RepeatScheduleComponent, {
+        context: {
+          subjects: this.subjects,
+          teachers: this.teachers,
+          repeatSchedule: this.repeatSchedule,
+          type: type,
+        },
+      })
+      .onClose.subscribe((schedule: any) => {
+        if (schedule) {
+          this.saveRepeatSchedule(schedule);
+        } else {
+          this.cancelRepeatSchedule();
+        }
+      });
+  }
+
   editRepeatSchedule(schedule: any, i: number) {
-    this.repeatSchedule = schedule;
+    this.repeatSchedule = { ...schedule };
     this.repeatScheduleIndex = i;
     this.repeatScheduleEdit = true;
+    this.openRepeatScheduleDialog('Edit');
   }
 
   cloneRepeatSchedule(schedule: any, i: number) {
-    this.repeatSchedule = schedule;
+    this.repeatSchedule = { ...schedule };
     this.repeatScheduleIndex = i;
+    this.openRepeatScheduleDialog('Clone');
   }
 
   saveRepeatSchedule(schedule: any) {
     if (this.repeatScheduleEdit) {
-      this.repeatSchedules[this.repeatScheduleIndex] = schedule;
+      this.repeatSchedules[this.repeatScheduleIndex] = { ...schedule };
     } else {
-      this.repeatSchedules.splice(this.repeatScheduleIndex + 1, 0, schedule);
+      this.repeatSchedules.splice(this.repeatScheduleIndex + 1, 0, { ...schedule });
     }
     this.cancelRepeatSchedule();
   }

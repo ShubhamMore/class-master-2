@@ -1,58 +1,28 @@
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.75);
-  z-index: 50;
-}
-
 .answer-box {
-  position: fixed;
-  border-radius: 0.25rem;
-  top: 20vh;
-  left: 20vw;
   width: 60vw;
   height: auto;
-  padding: 0;
-  z-index: 100;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-
-.answer-box-actions {
-  text-align: right;
 }
 
 @media only screen and (max-width: 1200px) {
   .answer-box {
-    top: 15vh;
-    left: 25vw;
-    width: 50vw;
+    width: 65vw;
   }
 }
 
 @media only screen and (max-width: 840px) {
   .answer-box {
-    top: 10vh;
-    left: 15vw;
     width: 70vw;
   }
 }
 
 @media only screen and (max-width: 420px) {
   .answer-box {
-    top: 7vh;
-    left: 5vw;
     width: 90vw;
   }
 }
 
 @media only screen and (max-width: 300px) {
   .answer-box {
-    top: 2vh;
-    left: 2vw;
     width: 96vw;
   }
 }

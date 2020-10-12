@@ -1,8 +1,8 @@
-import { NbToastrService } from '@nebular/theme';
-import { BranchEmployeeModel } from './../../../../../../models/branch-employee.model';
+import { NbToastrService, NbDialogRef } from '@nebular/theme';
+import { EmployeeNameIdModel } from './../../../../../../models/branch-employee.model';
 import { SubjectModel } from './../../../../../../models/course.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'ngx-repeat-schedule',
@@ -13,14 +13,15 @@ export class RepeatScheduleComponent implements OnInit {
   loading: boolean;
   repeatScheduleForm: FormGroup;
 
+  @Input() type: string;
   @Input() repeatSchedule: any;
   @Input() subjects: SubjectModel[];
-  @Input() teachers: BranchEmployeeModel[];
+  @Input() teachers: EmployeeNameIdModel[];
 
-  @Output() close = new EventEmitter<void>();
-  @Output() submit = new EventEmitter<any>();
-
-  constructor(private toastrService: NbToastrService) {}
+  constructor(
+    private toastrService: NbToastrService,
+    protected ref: NbDialogRef<RepeatScheduleComponent>,
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -47,9 +48,8 @@ export class RepeatScheduleComponent implements OnInit {
       }),
     });
   }
-
   onClose() {
-    this.close.emit();
+    this.ref.close();
   }
 
   saveSchedule() {
@@ -64,7 +64,8 @@ export class RepeatScheduleComponent implements OnInit {
     this.repeatSchedule.topic = this.repeatScheduleForm.value.topic;
     this.repeatSchedule.teacher = this.repeatScheduleForm.value.teacher;
     this.repeatSchedule.sessionType = this.repeatScheduleForm.value.sessionType;
-    this.submit.emit(this.repeatSchedule);
+
+    this.ref.close(this.repeatSchedule);
   }
 
   private showToastr(position: any, status: any, message: string) {

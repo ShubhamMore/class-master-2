@@ -1,3 +1,4 @@
+import { AddAnswerComponent } from './add-answer/add-answer.component';
 import { DateService } from './../../../../../services/shared-services/date.service';
 import { AuthService } from './../../../../../authentication/auth/auth-service/auth.service';
 import { QuestionAnswersService } from './../../../../../services/question-answers.service';
@@ -5,7 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LectureService } from './../../../../../services/lecture.service';
 import { BranchService } from './../../../../../services/branch.service';
 import { LectureQuestionModel } from '../../../../../models/lecture-question.model';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbDialogService } from '@nebular/theme';
 import { ScheduleModel as LectureModel } from './../../../../../models/schedule.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LectureQuestionAnswerModel } from '../../../../../models/lecture-question-answers.model';
@@ -19,7 +20,6 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
   loading: boolean;
   lectureQuestion: LectureQuestionModel;
   lectureQuestionAnswer: LectureQuestionAnswerModel;
-  answerModel: boolean;
   branchId: string;
   lecture: LectureModel;
   userId: string;
@@ -33,6 +33,7 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
     private dateService: DateService,
     private router: Router,
     private route: ActivatedRoute,
+    private dialogService: NbDialogService,
   ) {}
 
   ngOnInit(): void {
@@ -51,8 +52,6 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
       .subscribe((questionAnswers: LectureQuestionModel) => {
         this.lectureQuestion = questionAnswers;
       });
-
-    this.answerModel = false;
 
     this.lectureService.getLectureData().subscribe((lecture: LectureModel) => {
       this.lecture = lecture;
@@ -89,7 +88,17 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
   }
 
   addQuestionAnswer() {
-    this.answerModel = true;
+    this.openAnswerDialog();
+  }
+
+  private openAnswerDialog() {
+    this.dialogService
+      .open(AddAnswerComponent, {
+        context: {
+          answer: this.lectureQuestionAnswer,
+        },
+      })
+      .onClose.subscribe((answer: string) => answer && this.saveLectureQuestionAnswer(answer));
   }
 
   editQuestion(questionAnswer: LectureQuestionModel) {}
@@ -128,19 +137,14 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
   editQuestionAnswer(lectureQuestionAnswer: LectureQuestionAnswerModel) {
     if (lectureQuestionAnswer) {
       this.lectureQuestionAnswer = lectureQuestionAnswer;
-      this.answerModel = true;
+      this.openAnswerDialog();
     } else {
       // tslint:disable-next-line: quotemark
       this.showToastr('top-right', 'danger', "Can't Edit this Answer");
     }
   }
 
-  closeAnswerModel() {
-    this.answerModel = false;
-    this.lectureQuestionAnswer = null;
-  }
-
-  saveLectureQuestionAnswer(answer: any) {
+  saveLectureQuestionAnswer(answer: string) {
     const lectureQuestionAnswer: any = {
       branch: this.branchId,
       category: this.lecture.category,
@@ -154,7 +158,6 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
     if (!this.lectureQuestionAnswer) {
       this.questionAnswersService.newLectureQuestionAnswer(lectureQuestionAnswer).subscribe(
         (newLectureQuestionAnswer: LectureQuestionAnswerModel) => {
-          this.closeAnswerModel();
           this.lectureQuestion.answers.push(newLectureQuestionAnswer);
           this.showToastr('top-right', 'success', 'New Answer Added Successfully!');
         },
@@ -171,10 +174,10 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
 
       this.questionAnswersService.editLectureQuestionAnswer(lectureQuestionAnswer).subscribe(
         (res: any) => {
-          this.closeAnswerModel();
           if (index >= 0) {
             this.lectureQuestion.answers[index].answer = answer;
           }
+          this.lectureQuestionAnswer = null;
           this.showToastr('top-right', 'success', 'Answer Updated Successfully!');
         },
         (error: any) => {

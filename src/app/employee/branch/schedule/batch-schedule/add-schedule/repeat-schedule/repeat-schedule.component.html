@@ -1,274 +1,271 @@
-<div class="backdrop" (click)="onClose()"></div>
-<div class="repeat-schedule-box">
-  <nb-card>
-    <nb-card-header>
-      <h3>Repeat Schedule</h3>
-    </nb-card-header>
+<nb-card class="repeat-schedule-box">
+  <nb-card-header>
+    <h3>{{ type }} Schedule</h3>
+  </nb-card-header>
 
-    <nb-card-body>
-      <div class="row">
-        <div class="col-12">
-          <form [formGroup]="repeatScheduleForm" (submit)="saveSchedule()">
-            <div class="row">
-              <div class="col-md-4 col-sm-6">
-                <div class="form-control-group">
-                  <label class="label" for="input-date">Date:</label>
-                  <input
-                    type="date"
-                    nbInput
-                    id="input-date"
-                    name="date"
-                    formControlName="date"
-                    placeholder="Date"
-                    fullWidth
-                    disabled
-                  />
-                </div>
-              </div>
-
-              <div class="col-md-4 col-sm-6">
-                <div class="form-control-group">
-                  <label class="label" for="input-schedule-title">Schedule Start Time:</label>
-                  <input
-                    type="time"
-                    nbInput
-                    id="input-schedule-title"
-                    name="title"
-                    formControlName="startTime"
-                    placeholder="Schedule Start Time"
-                    fullWidth
-                    [status]="
-                      repeatScheduleForm.get('startTime').touched
-                        ? repeatScheduleForm.get('startTime').invalid
-                          ? 'danger'
-                          : 'success'
-                        : 'basic'
-                    "
-                  />
-                  <ng-container
-                    *ngIf="
-                      repeatScheduleForm.get('startTime').invalid &&
-                      repeatScheduleForm.get('startTime').touched
-                    "
-                  >
-                    <p
-                      class="caption status-danger"
-                      *ngIf="repeatScheduleForm.get('startTime').errors?.required"
-                    >
-                      Schedule Start Time is required!
-                    </p>
-                  </ng-container>
-                </div>
-              </div>
-
-              <div class="col-md-4 col-sm-6">
-                <div class="form-control-group">
-                  <label class="label" for="input-schedule-end-time">Schedule End Time:</label>
-                  <input
-                    type="time"
-                    nbInput
-                    id="input-schedule-end-time"
-                    name="endTime"
-                    min="0"
-                    formControlName="endTime"
-                    placeholder="Schedule End Time"
-                    fullWidth
-                    [status]="
-                      repeatScheduleForm.get('endTime').touched
-                        ? repeatScheduleForm.get('endTime').invalid
-                          ? 'danger'
-                          : 'success'
-                        : 'basic'
-                    "
-                  />
-                  <ng-container
-                    *ngIf="
-                      repeatScheduleForm.get('endTime').invalid &&
-                      repeatScheduleForm.get('endTime').touched
-                    "
-                  >
-                    <p
-                      class="caption status-danger"
-                      *ngIf="repeatScheduleForm.get('endTime').errors?.required"
-                    >
-                      Schedule End Time is required!
-                    </p>
-                  </ng-container>
-                </div>
-              </div>
-
-              <div class="col-md-4 col-sm-6">
-                <div class="form-control-group">
-                  <label class="label" for="input-subject">Subject:</label>
-                  <nb-select
-                    id="input-subject"
-                    name="subject"
-                    formControlName="subject"
-                    placeholder="Subject"
-                    fullWidth
-                    [status]="
-                      repeatScheduleForm.get('subject').touched
-                        ? repeatScheduleForm.get('subject').invalid
-                          ? 'danger'
-                          : 'success'
-                        : 'basic'
-                    "
-                  >
-                    <nb-option value="">Select Subject</nb-option>
-                    <nb-option *ngFor="let subject of subjects" [value]="subject._id">{{
-                      subject.subject
-                    }}</nb-option>
-                  </nb-select>
-                  <ng-container
-                    *ngIf="
-                      repeatScheduleForm.get('subject').invalid &&
-                      repeatScheduleForm.get('subject').touched
-                    "
-                  >
-                    <p
-                      class="caption status-danger"
-                      *ngIf="repeatScheduleForm.get('subject').errors?.required"
-                    >
-                      Subject is required!
-                    </p>
-                  </ng-container>
-                </div>
-              </div>
-
-              <div class="col-md-4 col-sm-6">
-                <div class="form-control-group">
-                  <label class="label" for="input-topic">Topic:</label>
-                  <input
-                    type="text"
-                    nbInput
-                    id="input-topic"
-                    name="topic"
-                    formControlName="topic"
-                    placeholder="Topic"
-                    fullWidth
-                    [status]="
-                      repeatScheduleForm.get('topic').touched
-                        ? repeatScheduleForm.get('topic').invalid
-                          ? 'danger'
-                          : 'success'
-                        : 'basic'
-                    "
-                  />
-                  <ng-container
-                    *ngIf="
-                      repeatScheduleForm.get('topic').invalid &&
-                      repeatScheduleForm.get('topic').touched
-                    "
-                  >
-                    <p
-                      class="caption status-danger"
-                      *ngIf="repeatScheduleForm.get('topic').errors?.required"
-                    >
-                      Topic is required!
-                    </p>
-                  </ng-container>
-                </div>
-              </div>
-
-              <div class="col-md-4 col-sm-6">
-                <div class="form-control-group">
-                  <label class="label" for="input-teacher">Teacher:</label>
-                  <nb-select
-                    id="input-teacher"
-                    name="teacher"
-                    formControlName="teacher"
-                    placeholder="Teacher"
-                    fullWidth
-                    [status]="
-                      repeatScheduleForm.get('teacher').touched
-                        ? repeatScheduleForm.get('teacher').invalid
-                          ? 'danger'
-                          : 'success'
-                        : 'basic'
-                    "
-                  >
-                    <nb-option value="">Select Teacher</nb-option>
-                    <nb-option *ngFor="let teacher of teachers" [value]="teacher.employee">{{
-                      teacher.employee
-                    }}</nb-option>
-                  </nb-select>
-                  <ng-container
-                    *ngIf="
-                      repeatScheduleForm.get('teacher').invalid &&
-                      repeatScheduleForm.get('teacher').touched
-                    "
-                  >
-                    <p
-                      class="caption status-danger"
-                      *ngIf="repeatScheduleForm.get('teacher').errors?.required"
-                    >
-                      Teacher is required!
-                    </p>
-                  </ng-container>
-                </div>
-              </div>
-
-              <div class="col-md-4 col-sm-6">
-                <div class="form-control-group">
-                  <label class="label" for="input-session-type">Session Type:</label>
-                  <nb-select
-                    id="input-session-type"
-                    name="sessionType"
-                    formControlName="sessionType"
-                    placeholder="sessionType"
-                    fullWidth
-                    [status]="
-                      repeatScheduleForm.get('sessionType').touched
-                        ? repeatScheduleForm.get('sessionType').invalid
-                          ? 'danger'
-                          : 'success'
-                        : 'basic'
-                    "
-                  >
-                    <nb-option value="classroom">
-                      Class Room
-                    </nb-option>
-                    <nb-option value="online">
-                      Online
-                    </nb-option>
-                  </nb-select>
-                  <ng-container
-                    *ngIf="
-                      repeatScheduleForm.get('sessionType').invalid &&
-                      repeatScheduleForm.get('sessionType').touched
-                    "
-                  >
-                    <p
-                      class="caption status-danger"
-                      *ngIf="repeatScheduleForm.get('sessionType').errors?.required"
-                    >
-                      Session Type is required!
-                    </p>
-                  </ng-container>
-                </div>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="repeatScheduleForm" (submit)="saveSchedule()">
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-date">Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-date"
+                  name="date"
+                  formControlName="date"
+                  placeholder="Date"
+                  fullWidth
+                  disabled
+                />
               </div>
             </div>
-            <hr />
-            <div class="row">
-              <div class="col-12">
-                <button
-                  type="button"
-                  class="float-right"
-                  nbButton
-                  status="danger"
-                  (click)="onClose()"
-                  size="small"
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-schedule-title">Schedule Start Time:</label>
+                <input
+                  type="time"
+                  nbInput
+                  id="input-schedule-title"
+                  name="title"
+                  formControlName="startTime"
+                  placeholder="Schedule Start Time"
+                  fullWidth
+                  [status]="
+                    repeatScheduleForm.get('startTime').touched
+                      ? repeatScheduleForm.get('startTime').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    repeatScheduleForm.get('startTime').invalid &&
+                    repeatScheduleForm.get('startTime').touched
+                  "
                 >
-                  Cancel
-                </button>
-                <button type="submit" class="float-right mr-2" nbButton status="basic" size="small">
-                  Save
-                </button>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="repeatScheduleForm.get('startTime').errors?.required"
+                  >
+                    Schedule Start Time is required!
+                  </p>
+                </ng-container>
               </div>
             </div>
-          </form>
-        </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-schedule-end-time">Schedule End Time:</label>
+                <input
+                  type="time"
+                  nbInput
+                  id="input-schedule-end-time"
+                  name="endTime"
+                  min="0"
+                  formControlName="endTime"
+                  placeholder="Schedule End Time"
+                  fullWidth
+                  [status]="
+                    repeatScheduleForm.get('endTime').touched
+                      ? repeatScheduleForm.get('endTime').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    repeatScheduleForm.get('endTime').invalid &&
+                    repeatScheduleForm.get('endTime').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="repeatScheduleForm.get('endTime').errors?.required"
+                  >
+                    Schedule End Time is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-subject">Subject:</label>
+                <nb-select
+                  id="input-subject"
+                  name="subject"
+                  formControlName="subject"
+                  placeholder="Subject"
+                  fullWidth
+                  [status]="
+                    repeatScheduleForm.get('subject').touched
+                      ? repeatScheduleForm.get('subject').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="">Select Subject</nb-option>
+                  <nb-option *ngFor="let subject of subjects" [value]="subject._id">{{
+                    subject.subject
+                  }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="
+                    repeatScheduleForm.get('subject').invalid &&
+                    repeatScheduleForm.get('subject').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="repeatScheduleForm.get('subject').errors?.required"
+                  >
+                    Subject is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-topic">Topic:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-topic"
+                  name="topic"
+                  formControlName="topic"
+                  placeholder="Topic"
+                  fullWidth
+                  [status]="
+                    repeatScheduleForm.get('topic').touched
+                      ? repeatScheduleForm.get('topic').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    repeatScheduleForm.get('topic').invalid &&
+                    repeatScheduleForm.get('topic').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="repeatScheduleForm.get('topic').errors?.required"
+                  >
+                    Topic is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-teacher">Teacher:</label>
+                <nb-select
+                  id="input-teacher"
+                  name="teacher"
+                  formControlName="teacher"
+                  placeholder="Teacher"
+                  fullWidth
+                  [status]="
+                    repeatScheduleForm.get('teacher').touched
+                      ? repeatScheduleForm.get('teacher').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="">Select Teacher</nb-option>
+                  <nb-option *ngFor="let teacher of teachers" [value]="teacher.employee">{{
+                    teacher.name
+                  }}</nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="
+                    repeatScheduleForm.get('teacher').invalid &&
+                    repeatScheduleForm.get('teacher').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="repeatScheduleForm.get('teacher').errors?.required"
+                  >
+                    Teacher is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+              <div class="form-control-group">
+                <label class="label" for="input-session-type">Session Type:</label>
+                <nb-select
+                  id="input-session-type"
+                  name="sessionType"
+                  formControlName="sessionType"
+                  placeholder="sessionType"
+                  fullWidth
+                  [status]="
+                    repeatScheduleForm.get('sessionType').touched
+                      ? repeatScheduleForm.get('sessionType').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="classroom">
+                    Class Room
+                  </nb-option>
+                  <nb-option value="online">
+                    Online
+                  </nb-option>
+                </nb-select>
+                <ng-container
+                  *ngIf="
+                    repeatScheduleForm.get('sessionType').invalid &&
+                    repeatScheduleForm.get('sessionType').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="repeatScheduleForm.get('sessionType').errors?.required"
+                  >
+                    Session Type is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-12">
+              <button
+                type="button"
+                class="float-right"
+                nbButton
+                status="danger"
+                (click)="onClose()"
+                size="small"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="float-right mr-2" nbButton status="basic" size="small">
+                Save
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-    </nb-card-body>
-  </nb-card>
-</div>
+    </div>
+  </nb-card-body>
+</nb-card>

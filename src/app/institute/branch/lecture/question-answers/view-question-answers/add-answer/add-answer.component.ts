@@ -1,4 +1,4 @@
-import { NbToastrService } from '@nebular/theme';
+import { NbDialogRef, NbToastrService } from '@nebular/theme';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LectureQuestionAnswerModel } from './../../../../../../models/lecture-question-answers.model';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
@@ -14,10 +14,10 @@ export class AddAnswerComponent implements OnInit {
 
   @Input() answer: LectureQuestionAnswerModel;
 
-  @Output() close = new EventEmitter<void>();
-  @Output() submitAnswer = new EventEmitter<string>();
-
-  constructor(private toastrService: NbToastrService) {}
+  constructor(
+    private toastrService: NbToastrService,
+    protected ref: NbDialogRef<AddAnswerComponent>,
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -32,7 +32,7 @@ export class AddAnswerComponent implements OnInit {
   }
 
   onClose() {
-    this.close.emit();
+    this.ref.close();
   }
 
   saveAnswer() {
@@ -44,7 +44,7 @@ export class AddAnswerComponent implements OnInit {
 
     const answer: string = this.answerForm.value.answer;
 
-    this.submitAnswer.emit(answer);
+    this.ref.close(answer);
   }
 
   private showToastr(position: any, status: any, message: string) {
