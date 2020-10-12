@@ -40,7 +40,7 @@
                     Answer
                   </button>
                   <button
-                    *ngIf="lectureQuestion.createdBy === userId"
+                    *ngIf="lectureQuestion.createdBy === user.imsMasterId"
                     class="mr-3"
                     nbButton
                     size="small"
@@ -50,7 +50,7 @@
                     Edit
                   </button>
                   <button
-                    *ngIf="lectureQuestion.createdBy === userId"
+                    *ngIf="lectureQuestion.createdBy === user.imsMasterId"
                     class="mr-3"
                     nbButton
                     size="small"
@@ -84,7 +84,7 @@
                 </div>
                 <div class="col-md-6 col-12 text-right">
                   <button
-                    *ngIf="lectureQuestionAnswer.createdBy === userId"
+                    *ngIf="lectureQuestionAnswer.createdBy === user.imsMasterId"
                     class="mr-3"
                     nbButton
                     size="small"
@@ -94,7 +94,7 @@
                     Edit
                   </button>
                   <button
-                    *ngIf="lectureQuestionAnswer.createdBy === userId"
+                    *ngIf="lectureQuestionAnswer.createdBy === user.imsMasterId"
                     class="mr-3"
                     nbButton
                     size="small"

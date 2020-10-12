@@ -1,3 +1,4 @@
+import { AddQuestionComponent } from './add-question/add-question.component';
 import { DateService } from './../../../../services/shared-services/date.service';
 import { AuthService } from './../../../../authentication/auth/auth-service/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -7,7 +8,7 @@ import { ScheduleModel as LectureModel } from './../../../../models/schedule.mod
 import { LectureService } from './../../../../services/lecture.service';
 import { QuestionAnswersService } from './../../../../services/question-answers.service';
 import { BranchService } from './../../../../services/branch.service';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-question-answers',
@@ -19,7 +20,8 @@ export class QuestionAnswersComponent implements OnInit {
   branchId: string;
   lecture: LectureModel;
   questionsAnswers: LectureQuestionModel[];
-  userId: string;
+  editLectureQuestion: boolean;
+  user: { name: string; imsMasterId: string };
 
   constructor(
     private authService: AuthService,
@@ -29,6 +31,7 @@ export class QuestionAnswersComponent implements OnInit {
     private toastrService: NbToastrService,
     private router: Router,
     private route: ActivatedRoute,
+    private dialogService: NbDialogService,
     public dateService: DateService,
   ) {}
 
@@ -40,7 +43,9 @@ export class QuestionAnswersComponent implements OnInit {
       return;
     }
 
-    this.userId = this.authService.getUserData().imsMasterId;
+    this.editLectureQuestion = false;
+
+    this.user = this.authService.getUserData();
 
     this.questionsAnswers = [];
 
@@ -76,13 +81,24 @@ export class QuestionAnswersComponent implements OnInit {
   }
 
   addQuestion() {
-    this.router.navigate(['./add'], { relativeTo: this.route });
+    this.openQuestionDialog();
+  }
+
+  openQuestionDialog() {
+    this.dialogService
+      .open(AddQuestionComponent, {
+        context: {},
+      })
+      .onClose.subscribe(
+        (question: LectureQuestionModel) => question && this.saveLectureQuestion(question),
+      );
   }
 
   editQuestion(questionAnswer: LectureQuestionModel) {
     this.questionAnswerService.setQuestionAnswersId(questionAnswer._id);
     this.questionAnswerService.setQuestionAnswersData(questionAnswer);
-    this.router.navigate(['./edit'], { relativeTo: this.route, queryParams: { mode: 'edit' } });
+    this.editLectureQuestion = true;
+    this.openQuestionDialog();
   }
 
   formatQuestionAnswerDate(questionDate: any) {
@@ -109,6 +125,23 @@ export class QuestionAnswersComponent implements OnInit {
     this.questionAnswerService.setQuestionAnswersId(questionAnswer._id);
     this.questionAnswerService.setQuestionAnswersData(questionAnswer);
     this.router.navigate(['./view'], { relativeTo: this.route });
+  }
+
+  saveLectureQuestion(question: LectureQuestionModel) {
+    if (!this.editLectureQuestion) {
+      question.name = this.user.name;
+      this.questionsAnswers.push(question);
+    } else {
+      const index = this.questionsAnswers.findIndex(
+        (curQuestion: LectureQuestionModel) => curQuestion._id === question._id,
+      );
+
+      if (index >= 0) {
+        this.questionsAnswers[index] = question;
+      }
+
+      this.editLectureQuestion = false;
+    }
   }
 
   showToastr(position: any, status: any, message: string) {

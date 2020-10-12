@@ -4,7 +4,7 @@ import { LectureService } from './../../../../../services/lecture.service';
 import { BranchService } from './../../../../../services/branch.service';
 import { LectureQuestionModel } from './../../../../../models/lecture-question.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbDialogRef } from '@nebular/theme';
 import { ScheduleModel as LectureModel } from './../../../../../models/schedule.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
@@ -25,8 +25,7 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
     private branchService: BranchService,
     private lectureService: LectureService,
     private questionAnswersService: QuestionAnswersService,
-    private router: Router,
-    private route: ActivatedRoute,
+    protected ref: NbDialogRef<AddQuestionComponent>, // private router: Router, // private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +33,7 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.onClose();
       return;
     }
 
@@ -56,7 +55,7 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
     this.lectureService.getLectureData().subscribe((lecture: LectureModel) => {
       this.lecture = lecture;
       if (!this.lecture) {
-        this.back();
+        this.onClose();
         return;
       }
       this.loading = false;
@@ -70,20 +69,22 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
       return;
     }
 
+    const question: string = this.lectureQuestionForm.value.question;
+
     const lectureQuestion: any = {
       branch: this.branchId,
       category: this.lecture.category,
       course: this.lecture.course,
       batch: this.lecture.batch,
       lecture: this.lecture._id,
-      question: this.lectureQuestionForm.value.question,
+      question: question,
     };
 
     if (!this.lectureQuestion) {
       this.questionAnswersService.newLectureQuestion(lectureQuestion).subscribe(
-        (res: any) => {
+        (newLectureQuestion: LectureQuestionModel) => {
           this.showToastr('top-right', 'success', 'New Question Added Successfully!');
-          this.back();
+          this.ref.close(newLectureQuestion);
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
@@ -94,8 +95,9 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
       lectureQuestion._id = this.lectureQuestion._id;
       this.questionAnswersService.editLectureQuestion(lectureQuestion).subscribe(
         (res: any) => {
+          this.lectureQuestion.question = question;
           this.showToastr('top-right', 'success', 'Question Updated Successfully!');
-          this.back();
+          this.ref.close(this.lectureQuestion);
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
@@ -105,8 +107,8 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
     }
   }
 
-  back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+  onClose() {
+    this.ref.close();
   }
 
   private showToastr(position: any, status: any, message: string) {

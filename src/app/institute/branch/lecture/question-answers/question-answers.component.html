@@ -14,9 +14,9 @@
     </div>
   </nb-card-header>
   <nb-card-body class="body-container">
-    <div class="row">
+    <div class="row" *ngIf="!loading; else loadingData">
       <div class="col-md-12">
-        <ng-container *ngIf="!loading; else loadingData">
+        <ng-container *ngIf="questionsAnswers.length > 0; else noQuestions">
           <nb-card *ngFor="let lectureQuestion of questionsAnswers; let i = index">
             <nb-card-header>
               <div class="row">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-md-6 col-12 text-right">
                   <button
-                    *ngIf="lectureQuestion.createdBy === userId"
+                    *ngIf="lectureQuestion.createdBy === user.imsMasterId"
                     class="mr-3"
                     nbButton
                     size="small"
@@ -47,7 +47,7 @@
                     View
                   </button>
                   <button
-                    *ngIf="lectureQuestion.createdBy === userId"
+                    *ngIf="lectureQuestion.createdBy === user.imsMasterId"
                     class="mr-3"
                     nbButton
                     size="small"
@@ -64,10 +64,13 @@
             </nb-card-body>
           </nb-card>
         </ng-container>
-        <ng-template #loadingData>
-          <p class="text-center">Loading...</p>
+        <ng-template #noQuestions>
+          <p class="text-center pt-5 pb-5">You are first to Ask the Question</p>
         </ng-template>
       </div>
     </div>
+    <ng-template #loadingData>
+      <p class="text-center pt-5 pb-5">Loading...</p>
+    </ng-template>
   </nb-card-body>
 </nb-card>

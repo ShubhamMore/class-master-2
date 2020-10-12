@@ -1,11 +1,11 @@
 <nb-card class="answer-box">
   <nb-card-header>
     <nb-icon class="float-right pointer" icon="close-outline" (click)="onClose()"></nb-icon>
-    <h3>{{ answer ? 'Edit' : 'New' }} Answer</h3>
+    <h3>{{ lectureQuestionAnswer ? 'Edit' : 'New' }} Answer</h3>
   </nb-card-header>
 
   <nb-card-body>
-    <form [formGroup]="answerForm" (submit)="saveAnswer()" *ngIf="!loading">
+    <form [formGroup]="answerForm" (submit)="saveLectureQuestionAnswer()" *ngIf="!loading">
       <div class="row">
         <div class="col-12">
           <div class="form-control-group">
@@ -40,8 +40,13 @@
       <hr />
 
       <div class="row">
-        <div class="col-12 text-right">
+        <div class="col-6">
           <button type="submit" nbButton size="small" status="success">Save</button>
+        </div>
+        <div class="col-6 text-right">
+          <button type="button" nbButton size="small" status="danger" (click)="onClose()">
+            Cancel
+          </button>
         </div>
       </div>
     </form>
