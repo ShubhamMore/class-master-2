@@ -1,3 +1,4 @@
+import { AddQuestionComponent } from './../add-question/add-question.component';
 import { AddAnswerComponent } from './add-answer/add-answer.component';
 import { DateService } from './../../../../../services/shared-services/date.service';
 import { AuthService } from './../../../../../authentication/auth/auth-service/auth.service';
@@ -106,7 +107,19 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
       );
   }
 
-  editQuestion(questionAnswer: LectureQuestionModel) {}
+  editQuestion(lectureQuestion: LectureQuestionModel) {
+    this.questionAnswersService.setQuestionAnswersId(lectureQuestion._id);
+    this.questionAnswersService.setQuestionAnswersData(lectureQuestion);
+    this.dialogService
+      .open(AddQuestionComponent, {
+        context: {},
+      })
+      .onClose.subscribe((question: LectureQuestionModel) => {
+        if (question) {
+          this.lectureQuestion = question;
+        }
+      });
+  }
 
   formatQuestionAnswerDate(questionDate: any) {
     const date: string = this.dateService.convertToDate(questionDate).toString();
