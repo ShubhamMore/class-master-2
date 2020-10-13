@@ -2,16 +2,16 @@ import { StudentCourseInstallmentModel } from './../models/student-course-instal
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 import { StudentCourseModel } from '../models/student-course.model';
 
 @Injectable({ providedIn: 'root' })
 export class StudentCourseService {
   private studentCourseId: string;
-  private studentCourse: StudentCourseModel;
+  private studentCourse = new BehaviorSubject<StudentCourseModel>(null);
 
   setStudentCourseData(studentCourse: StudentCourseModel) {
-    this.studentCourse = studentCourse;
+    this.studentCourse.next(studentCourse);
   }
 
   getStudentCourseData() {
@@ -19,7 +19,7 @@ export class StudentCourseService {
   }
 
   deleteStudentCourseData() {
-    this.studentCourse = null;
+    this.studentCourse.next(null);
   }
 
   setStudentCourseId(studentCourseId: string) {

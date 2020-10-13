@@ -37,78 +37,97 @@
         </div>
       </nb-card-header>
       <nb-card-body>
-        <div class="row">
-          <div class="col-12" *ngIf="students.length > 0; else noStudents">
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Student Name</th>
-                    <th>Roll Number</th>
-                    <th>Marks</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let student of students; let i = index">
-                    <td>{{ student.name }}</td>
-                    <td>{{ student.rollNumber }}</td>
-                    <td>
-                      <div class="form-control-group">
-                        <input
-                          type="number"
-                          nbInput
-                          fullWidth
-                          size="small"
-                          [id]="student.student"
-                          class="input-marks"
-                          min="0"
-                          [max]="exam.outOfMarks"
-                          [value]="student.marks"
-                          (input)="onChangeMarks($event.target.value, i)"
-                          [status]="
-                            !isNumber(student.marks) ||
-                            student.marks > exam.outOfMarks ||
-                            student.marks < 0
-                              ? 'danger'
-                              : 'basic'
-                          "
-                        />
-                        {{
-                          !isNumber(student.marks) +
-                            ' ' +
-                            (student.marks > exam.outOfMarks) +
-                            ' ' +
-                            (student.marks < 0)
-                        }}
-                        <ng-container
-                          *ngIf="
-                            !isNumber(student.marks) ||
-                            student.marks > exam.outOfMarks ||
-                            student.marks < 0
-                          "
-                        >
-                          <p class="caption status-danger">
-                            Enter valid Marks of {{ student.name }}
-                          </p>
-                        </ng-container>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+        <ng-container *ngIf="examMarksForm.get('marks')['controls'].length > 0; else noStudents">
+          <form class="" (submit)="saveMarks()" [formGroup]="examMarksForm">
+            <div class="row">
+              <div class="col-12">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Student Name</th>
+                        <th>Roll Number</th>
+                        <th>Marks</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container
+                        *ngFor="
+                          let studentScore of examMarksForm.get('marks')['controls'];
+                          let i = index
+                        "
+                      >
+                        <tr [formGroup]="studentScore">
+                          <td>{{ studentScore.value.name }}</td>
+                          <td>{{ studentScore.value.rollNumber }}</td>
+                          <td>
+                            <div class="form-control-group">
+                              <input
+                                type="number"
+                                nbInput
+                                fullWidth
+                                size="small"
+                                [id]="studentScore.student"
+                                [name]="studentScore.student"
+                                class="input-marks"
+                                formControlName="marks"
+                                placeholder="Marks of {{ studentScore.value.name }}"
+                                min="0"
+                                [max]="exam.outOfMarks"
+                                [status]="
+                                  studentScore.get('marks').touched
+                                    ? studentScore.get('marks').invalid
+                                      ? 'danger'
+                                      : 'success'
+                                    : 'basic'
+                                "
+                              />
+                              <ng-container
+                                *ngIf="
+                                  studentScore.get('marks').invalid &&
+                                  studentScore.get('marks').touched
+                                "
+                              >
+                                <p
+                                  class="caption status-danger"
+                                  *ngIf="studentScore.get('marks').errors?.required"
+                                >
+                                  Enter valid Marks of {{ studentScore.value.name }}
+                                </p>
+                                <p
+                                  class="caption status-danger"
+                                  *ngIf="studentScore.get('marks').errors?.min"
+                                >
+                                  Minimum marks should be 0
+                                </p>
+                                <p
+                                  class="caption status-danger"
+                                  *ngIf="studentScore.get('marks').errors?.max"
+                                >
+                                  Maximum marks should be {{ exam.outOfMarks }}
+                                </p>
+                              </ng-container>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <hr />
+              </div>
+
+              <div class="col-12 text-right">
+                <button type="submit" nbButton status="primary" size="small">
+                  Save
+                </button>
+              </div>
             </div>
-          </div>
-
-          <div class="col-12">
-            <hr />
-          </div>
-
-          <div class="col-12 text-right">
-            <button type="button" nbButton status="primary" size="small" (click)="saveMarks()">
-              Save
-            </button>
-          </div>
-        </div>
+          </form>
+        </ng-container>
         <ng-template #noStudents>
           <p class="text-center">No Students Found</p>
         </ng-template>
@@ -119,6 +138,5 @@
         No Students Found
       </p>
     </ng-template>
-
-    <nb-card> </nb-card> </nb-card-body
-></nb-card>
+  </nb-card-body>
+</nb-card>

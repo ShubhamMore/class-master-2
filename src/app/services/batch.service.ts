@@ -84,6 +84,18 @@ export class BatchService {
     );
   }
 
+  getBatchSubjects(course: string, batch: string) {
+    const data = { api: 'getBatchSubjects', data: { course, batch } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getBatchForEditing(id: string) {
     const data = { api: 'getBatchForEditing', data: { id } };
     return this.httpService.httpPost(data).pipe(

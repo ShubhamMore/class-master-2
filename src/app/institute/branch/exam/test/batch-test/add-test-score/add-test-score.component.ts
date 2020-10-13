@@ -1,3 +1,4 @@
+import { FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { BatchService } from './../../../../../../services/batch.service';
 import { CourseService } from './../../../../../../services/course.service';
 import { BatchModel } from './../../../../../../models/batch.model';
@@ -6,7 +7,7 @@ import { SubjectModel, CourseModel } from './../../../../../../models/course.mod
 import { NbToastrService } from '@nebular/theme';
 import { DateService } from './../../../../../../services/shared-services/date.service';
 import { ExamService } from './../../../../../../services/exam.service';
-import { ExamModel, MarksModel } from './../../../../../../models/exam.model';
+import { ExamModel } from './../../../../../../models/exam.model';
 import { Component, OnInit } from '@angular/core';
 import { BranchService } from './../../../../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -33,7 +34,8 @@ export class AddTestScoreComponent implements OnInit {
   course: CourseModel;
   batch: BatchModel;
 
-  students: StudentScore[];
+  examMarksForm: FormGroup;
+
   constructor(
     private branchService: BranchService,
     private toastrService: NbToastrService,
@@ -63,6 +65,10 @@ export class AddTestScoreComponent implements OnInit {
       return;
     }
 
+    this.examMarksForm = new FormGroup({
+      marks: new FormArray([]),
+    });
+
     this.branchService.getCategoryData().subscribe((category: CategoryModel) => {
       this.category = category;
     });
@@ -75,8 +81,6 @@ export class AddTestScoreComponent implements OnInit {
       this.batch = batch;
     });
 
-    this.students = [];
-
     this.getStudents();
   }
 
@@ -87,7 +91,13 @@ export class AddTestScoreComponent implements OnInit {
         students.map((student: any) => {
           return (student.marks = student.marks ? student.marks : 0);
         });
-        this.students = students;
+
+        const examScore = this.getStudentsScore();
+        examScore.controls = [];
+
+        students.forEach((student: any) => {
+          this.addStudentScore(student);
+        });
         this.loading = false;
       },
       (error: any) => {
@@ -97,43 +107,41 @@ export class AddTestScoreComponent implements OnInit {
     );
   }
 
+  private getStudentsScore() {
+    return this.examMarksForm.get('marks') as FormArray;
+  }
+
+  private addStudentScore(student: StudentScore) {
+    const examScore = this.getStudentsScore();
+    examScore.push(this.newStudentScore(student));
+  }
+
+  private newStudentScore(student: StudentScore) {
+    return new FormGroup({
+      name: new FormControl(student.name, { validators: [Validators.required] }),
+      student: new FormControl(student.student, { validators: [Validators.required] }),
+      rollNumber: new FormControl(student.rollNumber, { validators: [Validators.required] }),
+      marks: new FormControl(student.marks ? student.marks : 0, {
+        validators: [Validators.required, Validators.min(0), Validators.max(this.exam.outOfMarks)],
+      }),
+    });
+  }
+
   isNumber(number: any): boolean {
     return Number.isInteger(number);
   }
 
-  onChangeMarks(marks: number, i: number) {
-    if (!marks) {
-      marks = 0;
-    }
-    this.students[i].marks = +marks;
-  }
-
-  examMarksValidation() {
-    const invalidStudentMarks: string[] = [];
-
-    this.students.forEach((student: StudentScore, i: number) => {
-      if (!student.marks) {
-        this.students[i].marks = 0;
-      } else if (
-        this.isNumber(student.marks) &&
-        (student.marks > this.exam.outOfMarks || student.marks < 0)
-      ) {
-        invalidStudentMarks.push(student.name);
-      }
-    });
-
-    return invalidStudentMarks.join(', ');
-  }
-
   saveMarks() {
-    // const invalidStudents = this.examMarksValidation();
+    this.examMarksForm.markAllAsTouched();
 
-    // if (invalidStudents) {
-    //   this.showToastr('top-right', 'danger', 'Enter Valid Marks for student ' + invalidStudents);
-    //   return;
-    // }
+    if (this.examMarksForm.invalid) {
+      this.showToastr('top-right', 'danger', 'Enter Valid Marks for All Students');
+      return;
+    }
 
-    this.examService.saveStudentsMarks(this.exam._id, this.students).subscribe(
+    const studentScore = this.examMarksForm.value.marks;
+
+    this.examService.saveStudentsMarks(this.exam._id, studentScore).subscribe(
       (res: any) => {
         this.showToastr('top-right', 'success', `Exam Marks Updated Successfully`);
         this.back();

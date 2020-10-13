@@ -36,6 +36,27 @@ export class AttendanceService {
     );
   }
 
+  getStudentCourseAttendance(
+    subject: string,
+    month: string,
+    year: string,
+    student: string,
+    studentCourse: string,
+  ) {
+    const data = {
+      api: 'getStudentCourseAttendance',
+      data: { subject, month, year, student, studentCourse },
+    };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getAttendance(
     month: string,
     year: string,

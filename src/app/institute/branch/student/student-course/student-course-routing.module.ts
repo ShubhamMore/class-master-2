@@ -40,6 +40,22 @@ const routes: Routes = [
       },
 
       {
+        path: 'attendance',
+        loadChildren: () =>
+          import('./student-course-attendance/student-course-attendance.module').then(
+            (m) => m.StudentCourseAttendanceModule,
+          ),
+      },
+
+      {
+        path: 'performance',
+        loadChildren: () =>
+          import('./student-course-performance/student-course-performance.module').then(
+            (m) => m.StudentCoursePerformanceModule,
+          ),
+      },
+
+      {
         path: '',
         redirectTo: 'manage',
         pathMatch: 'full',
