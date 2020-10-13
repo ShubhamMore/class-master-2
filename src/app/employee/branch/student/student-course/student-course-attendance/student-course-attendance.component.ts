@@ -1,4 +1,3 @@
-import { ExamService } from './../../../../../services/exam.service';
 import { BatchService } from './../../../../../services/batch.service';
 import { StudentCourseModel } from './../../../../../models/student-course.model';
 import { SubjectModel } from './../../../../../models/course.model';
@@ -12,11 +11,11 @@ import { DateService, Month } from './../../../../../services/shared-services/da
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ngx-student-course-performance',
-  templateUrl: './student-course-performance.component.html',
-  styleUrls: ['./student-course-performance.component.scss'],
+  selector: 'ngx-student-course-attendance',
+  templateUrl: './student-course-attendance.component.html',
+  styleUrls: ['./student-course-attendance.component.scss'],
 })
-export class StudentCoursePerformanceComponent implements OnInit {
+export class StudentCourseAttendanceComponent implements OnInit {
   private branchId: string;
   private categoryId: string;
   private studentCourseId: string;
@@ -26,7 +25,7 @@ export class StudentCoursePerformanceComponent implements OnInit {
 
   loading: boolean;
 
-  scores: any[];
+  attendance: any[];
 
   subjects: SubjectModel[];
   subject: string;
@@ -37,6 +36,11 @@ export class StudentCoursePerformanceComponent implements OnInit {
   years: string[];
   year: string;
 
+  totalLectures: number;
+  totalPresent: number;
+  totalAbsent: number;
+  attendancePercentage: string;
+
   constructor(
     public dateService: DateService,
     private branchService: BranchService,
@@ -44,7 +48,7 @@ export class StudentCoursePerformanceComponent implements OnInit {
     private toastrService: NbToastrService,
     private studentService: StudentService,
     private studentCourseService: StudentCourseService,
-    private examService: ExamService,
+    private attendanceService: AttendanceService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -72,7 +76,7 @@ export class StudentCoursePerformanceComponent implements OnInit {
       return;
     }
 
-    this.scores = [];
+    this.attendance = [];
 
     this.subjects = [];
     this.subject = '';
@@ -83,12 +87,17 @@ export class StudentCoursePerformanceComponent implements OnInit {
     this.month = (this.dateService.getDate().getMonth() + 1).toString().padStart(2, '0');
     this.year = this.years[this.years.length - 1];
 
+    this.totalLectures = 0;
+    this.totalPresent = 0;
+    this.totalAbsent = 0;
+    this.attendancePercentage = '--';
+
     this.batchService
       .getBatchSubjects(this.studentCourse.course, this.studentCourse.batch)
       .subscribe(
         (subjects: SubjectModel[]) => {
           this.subjects = subjects;
-          this.getStudentCourseScore();
+          this.getStudentCourseAttendance();
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
@@ -99,7 +108,7 @@ export class StudentCoursePerformanceComponent implements OnInit {
 
   onSelectMonth(month: string) {
     this.month = month;
-    this.getStudentCourseScore();
+    this.getStudentCourseAttendance();
   }
 
   onSelectYear(year: string) {
@@ -107,18 +116,18 @@ export class StudentCoursePerformanceComponent implements OnInit {
     if (year === '') {
       this.month = '';
     }
-    this.getStudentCourseScore();
+    this.getStudentCourseAttendance();
   }
 
   onSelectSubject(subject: string) {
     this.subject = subject;
-    this.getStudentCourseScore();
+    this.getStudentCourseAttendance();
   }
 
-  getStudentCourseScore() {
+  getStudentCourseAttendance() {
     this.loading = true;
-    this.examService
-      .getStudentCourseScore(
+    this.attendanceService
+      .getStudentCourseAttendance(
         this.subject,
         this.month,
         this.year,
@@ -126,8 +135,9 @@ export class StudentCoursePerformanceComponent implements OnInit {
         this.studentCourseId,
       )
       .subscribe(
-        (scores: any[]) => {
-          this.scores = scores;
+        (attendance: any[]) => {
+          this.attendance = attendance;
+          this.calculateAttendance(attendance.length);
           this.loading = false;
         },
         (error: any) => {
@@ -135,6 +145,35 @@ export class StudentCoursePerformanceComponent implements OnInit {
           this.back();
         },
       );
+  }
+
+  calculateAttendance(totalLectures: number) {
+    let totalPresent = 0;
+    let totalAbsent = 0;
+
+    this.attendance.forEach((atten: any) => {
+      if (atten.attendance) {
+        totalPresent++;
+      } else {
+        totalAbsent++;
+      }
+    });
+
+    this.totalLectures = totalLectures;
+    this.totalPresent = totalPresent;
+    this.totalAbsent = totalAbsent;
+
+    let attendancePercentage: number;
+
+    if (totalLectures > 0) {
+      attendancePercentage = (totalPresent * 100) / totalLectures;
+    }
+
+    if (attendancePercentage) {
+      this.attendancePercentage = attendancePercentage.toFixed(2).toString() + '%';
+    } else {
+      this.attendancePercentage = '--';
+    }
   }
 
   back() {

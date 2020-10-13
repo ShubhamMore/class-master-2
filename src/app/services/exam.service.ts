@@ -38,6 +38,27 @@ export class ExamService {
 
   constructor(private httpService: HttpService) {}
 
+  getStudentCourseScore(
+    subject: string,
+    month: string,
+    year: string,
+    student: string,
+    studentCourse: string,
+  ) {
+    const data = {
+      api: 'getStudentCourseScore',
+      data: { subject, month, year, student, studentCourse },
+    };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getStudentsForExam(exam: string) {
     const data = {
       api: 'getStudentsForExam',

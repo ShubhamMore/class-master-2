@@ -92,6 +92,18 @@ export class ManageStudentCourseComponent implements OnInit, OnDestroy {
     this.router.navigate(['../edit'], { relativeTo: this.route, queryParams: { mode: 'edit' } });
   }
 
+  courseAttendance(studentCourse: StudentCourseModel) {
+    this.studentCourseService.setStudentCourseId(studentCourse._id);
+    this.studentCourseService.setStudentCourseData(studentCourse);
+    this.router.navigate(['../attendance'], { relativeTo: this.route });
+  }
+
+  coursePerformance(studentCourse: StudentCourseModel) {
+    this.studentCourseService.setStudentCourseId(studentCourse._id);
+    this.studentCourseService.setStudentCourseData(studentCourse);
+    this.router.navigate(['../performance'], { relativeTo: this.route });
+  }
+
   changeCourseStatus(studentCourseId: string, status: boolean, i: number) {}
 
   private showToastr(position: any, status: any, message: string) {

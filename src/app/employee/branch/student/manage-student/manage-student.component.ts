@@ -41,7 +41,6 @@ export class ManageStudentComponent implements OnInit {
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
-
       return;
     }
 
@@ -69,7 +68,9 @@ export class ManageStudentComponent implements OnInit {
 
   private getCategories() {
     this.branchService.getBranchData().subscribe((branch: BranchModel) => {
-      this.categories = branch.categories;
+      if (branch) {
+        this.categories = branch.categories;
+      }
     });
 
     if (!this.categories) {

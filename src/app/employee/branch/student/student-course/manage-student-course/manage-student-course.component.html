@@ -33,6 +33,8 @@
                   <th>Roll Number</th>
                   <th>Activation date</th>
                   <th>Installments</th>
+                  <th>Attendance</th>
+                  <th>Performance</th>
                   <th colspan="2">Action</th>
                 </tr>
               </thead>
@@ -58,6 +60,28 @@
                       "
                     >
                       Installments
+                    </button>
+                  </td>
+
+                  <td>
+                    <button
+                      nbButton
+                      status="info"
+                      size="small"
+                      (click)="courseAttendance(studentCourse)"
+                    >
+                      Attendance
+                    </button>
+                  </td>
+
+                  <td>
+                    <button
+                      nbButton
+                      status="success"
+                      size="small"
+                      (click)="coursePerformance(studentCourse)"
+                    >
+                      Performance
                     </button>
                   </td>
 

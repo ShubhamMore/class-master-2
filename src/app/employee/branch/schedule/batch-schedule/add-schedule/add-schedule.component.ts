@@ -1,6 +1,9 @@
 import { RepeatScheduleComponent } from './repeat-schedule/repeat-schedule.component';
 import { BranchEmployeeService } from './../../../../../services/branch-employee.service';
-import { EmployeeNameIdModel } from './../../../../../models/branch-employee.model';
+import {
+  BranchEmployeeModel,
+  EmployeeNameIdModel,
+} from './../../../../../models/branch-employee.model';
 import { ScheduleService } from './../../../../../services/schedule.service';
 import { NbToastrService, NbStepperComponent, NbDialogService } from '@nebular/theme';
 import { BatchService } from './../../../../../services/batch.service';

@@ -34,7 +34,6 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
     private studentCourseInstallmentReceiptService: StudentCourseInstallmentReceiptService,
     private courseService: CourseService,
     private studentService: StudentService,
-
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -47,7 +46,6 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
 
     if (!this.branchId || !this.categoryId || !this.studentId) {
       this.router.navigate(['../'], { relativeTo: this.route });
-
       return;
     }
 

@@ -103,6 +103,14 @@ export class ManageLectureComponent implements OnInit {
     });
   }
 
+  questionAnswers(lecture: LectureModel) {
+    this.lectureService.setLectureId(lecture._id);
+    this.lectureService.setLectureData(lecture);
+    this.router.navigate(['../q&a'], {
+      relativeTo: this.route,
+    });
+  }
+
   getLecture() {
     this.loading = true;
     this.lectureService

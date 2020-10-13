@@ -5,7 +5,7 @@
         <button class="float-right" nbButton size="small" status="warning" (click)="back()">
           Back
         </button>
-        <h3>Exam Score</h3>
+        <h3>Attendance</h3>
       </div>
     </div>
   </nb-card-header>
@@ -65,38 +65,58 @@
   </nb-card-header>
   <nb-card-body class="body-container">
     <div class="row">
+      <div class="col-md-10 col-12 mx-auto">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <span><strong>Total Lectures: </strong>{{ totalLectures }}</span>
+          </div>
+          <div class="col-md-6 col-12">
+            <span><strong>Attendance Percentage: </strong>{{ attendancePercentage }}</span>
+          </div>
+          <div class="col-md-6 col-12">
+            <span><strong>Total Present: </strong>{{ totalPresent }}</span>
+          </div>
+          <div class="col-md-6 col-12">
+            <span><strong>Total Absent: </strong>{{ totalAbsent }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
       <div class="col-md-12">
         <ng-container *ngIf="!loading; else loadingData">
-          <div class="table-responsive" *ngIf="scores.length > 0; else noScores">
+          <div class="table-responsive" *ngIf="attendance.length > 0; else noAttendance">
             <table class="table">
               <thead>
                 <tr>
                   <th>#</th>
                   <th>Date</th>
                   <th>Subject</th>
-                  <th>Title</th>
-                  <th>Score</th>
-                  <th>Status</th>
+                  <th>Topic</th>
+                  <th>Attendance</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let score of scores; let i = index">
+                <tr *ngFor="let atten of attendance; let i = index">
                   <td>{{ i + 1 }}</td>
-                  <td>{{ dateService.formatDate(score.date) }}</td>
-                  <td>{{ score.subject }}</td>
-                  <td>{{ score.examTitle }}</td>
-                  <td>{{ score.marks }}/{{ score.outOfMarks }}</td>
+                  <td>{{ dateService.formatDate(atten.date) }}</td>
+                  <td>{{ atten.subject }}</td>
+                  <td>{{ atten.topic }}</td>
                   <td>
-                    <span [ngClass]="score.marks >= score.passingMarks ? 'pass' : 'fail'">{{
-                      score.marks >= score.passingMarks ? 'Pass' : 'Fail'
+                    <span [ngClass]="atten.attendance ? 'present' : 'absent'">{{
+                      atten.attendance ? 'Present' : 'Absent'
                     }}</span>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <ng-template #noScores>
-            <p class="text-center">No Score Available</p>
+          <ng-template #noAttendance>
+            <p class="text-center">No Attendance Available</p>
           </ng-template>
         </ng-container>
         <ng-template #loadingData>
