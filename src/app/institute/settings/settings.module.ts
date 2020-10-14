@@ -9,6 +9,7 @@ import {
   NbIconModule,
   NbInputModule,
   NbTooltipModule,
+  NbFormFieldModule,
 } from '@nebular/theme';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -29,6 +30,7 @@ import { SettingsComponent } from './settings.component';
     NbInputModule,
     NbButtonModule,
     NbTooltipModule,
+    NbFormFieldModule,
     SettingsRoutingModule,
   ],
 })

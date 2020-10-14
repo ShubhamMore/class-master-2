@@ -1,6 +1,6 @@
 import { BudgetService } from './../../../services/budget.service';
 import { DateService } from './../../../services/shared-services/date.service';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbThemeService } from '@nebular/theme';
 import { DashboardService } from './../../../services/dashboard.service';
 import { BranchService } from './../../../services/branch.service';
 import { Component, OnInit } from '@angular/core';
@@ -17,6 +17,12 @@ interface DashboardInfo {
   lostLeads: number;
   wonLeads: number;
 }
+
+interface Budget {
+  income: { _id: number; amount: number }[];
+  expense: { _id: number; amount: number }[];
+}
+
 @Component({
   selector: 'ngx-dashboard',
   templateUrl: './dashboard.component.html',
@@ -30,6 +36,11 @@ export class DashboardComponent implements OnInit {
   currentYear: number;
   year: number;
 
+  data: any;
+  options: any;
+  themeSubscription: any;
+  colors: any;
+
   constructor(
     private branchService: BranchService,
     private dashboardService: DashboardService,
@@ -38,6 +49,7 @@ export class DashboardComponent implements OnInit {
     private route: ActivatedRoute,
     public dateService: DateService,
     public budgetService: BudgetService,
+    private themeService: NbThemeService,
   ) {}
 
   ngOnInit(): void {
@@ -47,10 +59,49 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
-    this.getDashboardData();
-
     this.currentYear = +this.dateService.getCurrentYear();
     this.year = +this.dateService.getCurrentYear();
+    this.getDashboardData();
+    this.getBudgetData();
+
+    this.themeSubscription = this.themeService.getJsTheme().subscribe((config: any) => {
+      this.colors = config.variables;
+      const chartjs: any = config.variables.chartjs;
+
+      this.options = {
+        maintainAspectRatio: false,
+        responsive: true,
+        legend: {
+          labels: {
+            fontColor: chartjs.textColor,
+          },
+        },
+        scales: {
+          xAxes: [
+            {
+              gridLines: {
+                display: false,
+                color: chartjs.axisLineColor,
+              },
+              ticks: {
+                fontColor: chartjs.textColor,
+              },
+            },
+          ],
+          yAxes: [
+            {
+              gridLines: {
+                display: true,
+                color: chartjs.axisLineColor,
+              },
+              ticks: {
+                fontColor: chartjs.textColor,
+              },
+            },
+          ],
+        },
+      };
+    });
   }
 
   getDashboardData() {
@@ -104,16 +155,80 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['../lead'], { relativeTo: this.route, queryParams: { type: 'active' } });
   }
 
+  manageBudget() {
+    this.router.navigate(['../budget'], { relativeTo: this.route });
+  }
+
+  manageClassSchedule() {
+    this.router.navigate(['../schedule'], { relativeTo: this.route });
+  }
+
+  manageStudentReports() {
+    this.router.navigate(['../students-report'], { relativeTo: this.route });
+  }
+
   previousYear() {
     if (this.year >= 2018) {
       this.year--;
+      this.getBudgetData();
     }
   }
 
   nextYear() {
     if (this.year <= this.currentYear) {
       this.year++;
+      this.getBudgetData();
     }
+  }
+
+  getBudgetData() {
+    this.budgetService.getBudgetForBranchDashboard(this.branchId, this.year.toString()).subscribe(
+      (budget: Budget) => {
+        this.setBarChartData(budget);
+      },
+      (error: any) => {
+        this.showToastr('top-right', 'danger', error);
+      },
+    );
+  }
+
+  setBarChartData(budget: Budget) {
+    const income: number[] = [];
+    const expense: number[] = [];
+
+    for (let i = 0; i < 12; i++) {
+      // Income
+      const inc = budget.income.find((curIncome: any) => curIncome._id === i + 1);
+      if (inc) {
+        income.push(inc.amount);
+      } else {
+        income.push(0);
+      }
+
+      // Expense
+      const exp = budget.expense.find((curExpense: any) => curExpense._id === i + 1);
+      if (exp) {
+        expense.push(exp.amount);
+      } else {
+        expense.push(0);
+      }
+    }
+
+    this.data = {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [
+        {
+          data: income,
+          label: 'Income',
+          backgroundColor: this.colors.warningLight,
+        },
+        {
+          data: expense,
+          label: 'Expense',
+          backgroundColor: this.colors.dangerLight,
+        },
+      ],
+    };
   }
 
   private showToastr(position: any, status: any, message: string) {

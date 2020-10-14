@@ -17,6 +17,9 @@ export class SettingsComponent implements OnInit {
   zoomKeysForm: FormGroup;
   paymentGatewayKeysForm: FormGroup;
 
+  zoomShowSecret: boolean;
+  paymentGatewayShowSecret: boolean;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -27,11 +30,13 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
 
+    this.zoomShowSecret = false;
     this.zoomKeysForm = new FormGroup({
       accessToken: new FormControl(null, { validators: [Validators.required] }),
       secretToken: new FormControl(null, { validators: [Validators.required] }),
     });
 
+    this.paymentGatewayShowSecret = false;
     this.paymentGatewayKeysForm = new FormGroup({
       accessToken: new FormControl(null, { validators: [Validators.required] }),
       secretToken: new FormControl(null, { validators: [Validators.required] }),
@@ -93,6 +98,14 @@ export class SettingsComponent implements OnInit {
         this.loading = false;
       },
     );
+  }
+
+  toggleShowZoomSecret() {
+    this.zoomShowSecret = !this.zoomShowSecret;
+  }
+
+  toggleShowPaymentGatewaySecret() {
+    this.paymentGatewayShowSecret = !this.paymentGatewayShowSecret;
   }
 
   savePaymentGatewayKeys() {

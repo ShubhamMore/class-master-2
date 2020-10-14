@@ -39,6 +39,18 @@ export class BudgetService {
     );
   }
 
+  getBudgetForBranchDashboard(branch: string, year: string) {
+    const data = { api: 'getBudgetForBranchDashboard', data: { branch, year } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getBudgetSummery(branch: string, month: string, year: string) {
     const data = { api: 'getBudgetSummery', data: { branch, month, year } };
     return this.httpService.httpPost(data).pipe(

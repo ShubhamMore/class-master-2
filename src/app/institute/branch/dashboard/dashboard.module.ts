@@ -1,11 +1,11 @@
+import { ChartModule } from 'angular2-chartjs';
+
 import {
   NbCardModule,
   NbActionsModule,
   NbButtonModule,
   NbTooltipModule,
   NbIconModule,
-  NbFormFieldModule,
-  NbInputModule,
 } from '@nebular/theme';
 import { DashboardComponent } from './dashboard.component';
 import { NgModule } from '@angular/core';
@@ -18,13 +18,12 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
   imports: [
     CommonModule,
     NbActionsModule,
+    ChartModule,
     DashboardRoutingModule,
     NbCardModule,
     NbButtonModule,
     NbIconModule,
     NbTooltipModule,
-    NbFormFieldModule,
-    NbInputModule,
   ],
 })
 export class DashboardModule {}
