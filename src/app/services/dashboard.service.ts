@@ -9,9 +9,9 @@ import { throwError } from 'rxjs';
 export class DashboardService {
   constructor(private httpService: HttpService) {}
 
-  getBranchDashboardData(branch: string) {
-    const data = { api: 'getBranchDashboardData', data: { branch } };
-    return this.httpService.httpGet(data).pipe(
+  getBranchDashboard(branch: string) {
+    const data = { api: 'getBranchDashboard', data: { branch } };
+    return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
       }),
@@ -21,9 +21,9 @@ export class DashboardService {
     );
   }
 
-  getEmployeeBranchDashboardData(branch: string) {
-    const data = { api: 'getEmployeeBranchDashboardData', data: { branch } };
-    return this.httpService.httpGet(data).pipe(
+  getEmployeeBranchDashboard(branch: string) {
+    const data = { api: 'getEmployeeBranchDashboard', data: { branch } };
+    return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
       }),
@@ -33,9 +33,9 @@ export class DashboardService {
     );
   }
 
-  getStudentBranchDashboardData(branch: any) {
-    const data = { api: 'getStudentBranchDashboardData', data: { branch } };
-    return this.httpService.httpGet(data).pipe(
+  getStudentBranchDashboard(branch: any) {
+    const data = { api: 'getStudentBranchDashboard', data: { branch } };
+    return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
       }),

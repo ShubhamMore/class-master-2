@@ -1,4 +1,3 @@
-import { CapitalizePipe } from './@theme/pipes/capitalize.pipe';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 /**
  * @license

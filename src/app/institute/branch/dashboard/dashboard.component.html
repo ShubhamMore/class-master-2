@@ -1,1 +1,209 @@
-<p>dashboard works!</p>
+<div class="row" *ngIf="!loading">
+  <div class="col-md-4 col-sm-6 col-12">
+    <nb-card status="primary">
+      <nb-card-header>
+        <button
+          class="float-right text-white"
+          nbButton
+          outline
+          size="medium"
+          status="primary"
+          nbTooltip="Add Student"
+          shape="round"
+          (click)="addCourse()"
+        >
+          <nb-icon icon="plus"></nb-icon>
+        </button>
+        <h3 class="text-white"><span class="pointer" (click)="manageCourse()">Course</span></h3>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-actions size="giant" fullWidth>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.activeCourses }}</h4>
+                <h6>Active</h6>
+              </div>
+            </div>
+          </nb-action>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.inactiveCourses }}</h4>
+                <h6>Inactive</h6>
+              </div>
+            </div>
+          </nb-action>
+        </nb-actions>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-md-4 col-sm-6 col-12">
+    <nb-card status="success">
+      <nb-card-header>
+        <button
+          class="float-right text-white"
+          nbButton
+          outline
+          size="medium"
+          status="success"
+          nbTooltip="Add Student"
+          shape="round"
+          (click)="addStudent()"
+        >
+          <nb-icon icon="plus"></nb-icon>
+        </button>
+        <h3 class="text-white"><span class="pointer" (click)="manageStudent()">Student</span></h3>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-actions size="giant" fullWidth>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.activeStudents }}</h4>
+                <h6>Active</h6>
+              </div>
+            </div>
+          </nb-action>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.inactiveStudents }}</h4>
+                <h6>Inactive</h6>
+              </div>
+            </div>
+          </nb-action>
+        </nb-actions>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-md-4 col-sm-6 col-12">
+    <nb-card status="warning">
+      <nb-card-header>
+        <button
+          class="float-right text-white"
+          nbButton
+          outline
+          size="medium"
+          status="warning"
+          nbTooltip="Add Student"
+          shape="round"
+          (click)="addEmployee()"
+        >
+          <nb-icon icon="plus"></nb-icon>
+        </button>
+        <h3 class="text-white"><span class="pointer" (click)="manageEmployee()">Employee</span></h3>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-actions size="giant" fullWidth>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.activeEmployees }}</h4>
+                <h6>Active</h6>
+              </div>
+            </div>
+          </nb-action>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.inactiveEmployees }}</h4>
+                <h6>Inactive</h6>
+              </div>
+            </div>
+          </nb-action>
+        </nb-actions>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-md-5 col-sm-6 col-12">
+    <nb-card status="info">
+      <nb-card-header>
+        <button
+          class="float-right text-white"
+          nbButton
+          outline
+          size="medium"
+          status="info"
+          nbTooltip="Add Student"
+          shape="round"
+          (click)="addLead()"
+        >
+          <nb-icon icon="plus"></nb-icon>
+        </button>
+        <h3 class="text-white"><span class="pointer" (click)="manageLead()">Lead</span></h3>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-actions size="giant" fullWidth>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.wonLeads }}</h4>
+                <h6>Won</h6>
+              </div>
+            </div>
+          </nb-action>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.openLeads }}</h4>
+                <h6>Open</h6>
+              </div>
+            </div>
+          </nb-action>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.lostLeads }}</h4>
+                <h6>Lost</h6>
+              </div>
+            </div>
+          </nb-action>
+        </nb-actions>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-md-7 col-sm-6 col-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="row">
+          <div class="col-md-8 col-sm-7 col-12">
+            <h3>Budget</h3>
+          </div>
+          <div class="col-md-4 col-sm-5 col-12">
+            <nb-form-field>
+              <button
+                nbPrefix
+                nbButton
+                ghost
+                status="primary"
+                size="small"
+                (click)="previousYear()"
+                *ngIf="year > 2018"
+              >
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+              </button>
+              <input type="text" size="small" nbInput [value]="year" disabled />
+              <button
+                nbSuffix
+                nbButton
+                ghost
+                status="primary"
+                size="small"
+                (click)="nextYear()"
+                *ngIf="year < currentYear"
+              >
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </nb-form-field>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body> </nb-card-body>
+    </nb-card>
+  </div>
+</div>
