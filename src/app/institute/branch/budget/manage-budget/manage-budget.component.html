@@ -119,14 +119,14 @@
                   <th>#</th>
                   <th>Income</th>
                   <th>Amount</th>
-                  <th>Delete</th>
+                  <th class="text-center">Delete</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let income of incomes; let i = index" routerLinkActive="active">
                   <td>{{ i + 1 }}</td>
                   <td>
-                    <span class="pointer" [routerLink]="income._id">{{ income.title }}</span>
+                    <span class="pointer">{{ income.title }}</span>
                   </td>
                   <td>
                     <span>{{ income.amount }}</span>
@@ -154,14 +154,14 @@
                   <th>#</th>
                   <th>Expense</th>
                   <th>Amount</th>
-                  <th>Delete</th>
+                  <th class="text-center">Delete</th>
                 </tr>
               </thead>
               <tbody class="expense">
                 <tr *ngFor="let expense of expenses; let i = index" routerLinkActive="active">
                   <td>{{ i + 1 }}</td>
                   <td>
-                    <span class="pointer" [routerLink]="expense._id">{{ expense.title }}</span>
+                    <span class="pointer">{{ expense.title }}</span>
                   </td>
                   <td>
                     <span>{{ expense.amount }}</span>
@@ -169,9 +169,9 @@
                   <td class="text-center">
                     <nb-icon
                       class="pointer delete-budget"
-                      icon="outline-trash"
-                      (click)="deleteBudget(expense._id, i, 'expense')"
+                      icon="close-circle-outline"
                       nbTooltip="Delete Expense"
+                      (click)="deleteBudget(expense._id, i, 'expense')"
                     ></nb-icon>
                   </td>
                 </tr>
@@ -199,7 +199,7 @@
 <ng-template #budgetChart let-chartData let-ref="dialogRef">
   <nb-card>
     <nb-card-header>
-      <h4>Chart</h4>
+      <h4>Pie Chart</h4>
     </nb-card-header>
     <nb-card-body>
       <chart type="pie" [data]="chartData.data" [options]="chartData.options"></chart>
