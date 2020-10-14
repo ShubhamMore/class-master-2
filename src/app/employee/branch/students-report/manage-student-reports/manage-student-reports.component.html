@@ -1,8 +1,8 @@
 <nb-card>
   <nb-card-header>
     <div class="row">
-      <div class="col-md-9 col-sm-8">
-        <h3>{{ type | uppercase }} Students</h3>
+      <div class="col-md-9 col-sm-4">
+        <h3>Student Reports</h3>
       </div>
       <div class="col-md-3 col-sm-4">
         <nb-select
@@ -53,8 +53,8 @@
                   <th>#</th>
                   <th>Student</th>
                   <th>Category</th>
-                  <th>Courses</th>
-                  <th colspan="2">Action</th>
+                  <th>Status</th>
+                  <th>Course Reports</th>
                 </tr>
               </thead>
               <tbody>
@@ -62,66 +62,26 @@
                   <td>{{ i + 1 }}</td>
                   <td>{{ branchStudent.name }}</td>
                   <td>{{ getCategory(branchStudent.category) }}</td>
-
                   <td>
-                    <div class="btn-group">
-                      <button
-                        nbButton
-                        status="success"
-                        nbPrefix
-                        size="small"
-                        (click)="
-                          branchStudentCourses(
-                            branchStudent._id,
-                            branchStudent.student,
-                            branchStudent.category
-                          )
-                        "
-                      >
-                        Courses
-                      </button>
-                      <button
-                        class=""
-                        nbButton
-                        nbTooltip="Add Course"
-                        nbSuffix
-                        status="success"
-                        size="small"
-                        (click)="
-                          branchAddStudentCourses(
-                            branchStudent._id,
-                            branchStudent.student,
-                            branchStudent.category
-                          )
-                        "
-                      >
-                        <nb-icon icon="plus-outline"></nb-icon>
-                      </button>
-                    </div>
+                    <span [ngClass]="branchStudent.status ? 'active' : 'inactive'">{{
+                      branchStudent.status ? 'Active' : 'Inactive'
+                    }}</span>
                   </td>
-
                   <td>
                     <button
                       nbButton
-                      status="basic"
-                      size="small"
-                      (click)="editBranchStudent(branchStudent._id, branchStudent.student)"
-                    >
-                      Edit
-                    </button>
-                  </td>
-
-                  <td>
-                    <button
-                      class=""
-                      nbButton
-                      [status]="!branchStudent.status ? 'warning' : 'danger'"
+                      status="success"
+                      nbPrefix
                       size="small"
                       (click)="
-                        changeBranchStudentStatus(branchStudent._id, !branchStudent.status, i)
+                        branchStudentCourses(
+                          branchStudent._id,
+                          branchStudent.student,
+                          branchStudent.category
+                        )
                       "
                     >
-                      {{ !branchStudent.status ? 'Activate' : 'Deactivate' }}
+                      Course Reports
                     </button>
                   </td>
                 </tr>

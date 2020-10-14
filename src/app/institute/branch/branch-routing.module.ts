@@ -49,6 +49,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'students-report',
+        loadChildren: () =>
+          import('./students-report/students-report.module').then((m) => m.StudentsReportModule),
+      },
+
+      {
         path: 'employee',
         loadChildren: () => import('./employee/employee.module').then((m) => m.EmployeeModule),
       },

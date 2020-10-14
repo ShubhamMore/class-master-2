@@ -59,6 +59,18 @@ export class BranchStudentService {
     );
   }
 
+  getBranchAllStudentNameIds(branch: string, category: string) {
+    const data = { api: 'getBranchAllStudentNameIds', data: { branch, category } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getBranchStudent(id: string, student: string) {
     const data = { api: 'addBranchStudent', data: { id, student } };
     return this.httpService.httpPost(data).pipe(

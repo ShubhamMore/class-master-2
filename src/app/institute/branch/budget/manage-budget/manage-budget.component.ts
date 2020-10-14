@@ -1,10 +1,8 @@
 import { DateService, Month } from './../../../../services/shared-services/date.service';
-import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BudgetService } from '../../../../services/budget.service';
 import { BranchService } from '../../../../services/branch.service';
 import { BudgetModel } from '../../../../models/budget.model';
-import { BranchModel } from '../../../../models/branch.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NbDialogService, NbThemeService, NbToastrService } from '@nebular/theme';
 
@@ -96,11 +94,11 @@ export class ManageBudgetComponent implements OnInit {
 
     const chartData = {
       data: {
-        labels: ['Expense', 'Income'],
+        labels: ['Income', 'Expense'],
         datasets: [
           {
             data: [this.getTotalIncome(), this.getTotalExpense()],
-            backgroundColor: [colors.dangerLight, colors.warningLight],
+            backgroundColor: [colors.warningLight, colors.dangerLight],
           },
         ],
       },

@@ -9,8 +9,8 @@ import { throwError, BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class StudentCourseInstallmentService {
-  private studentCourseInstallmentId: string;
   private courseInstallmentId: string;
+  private studentCourseInstallmentId: string;
   private studentCourseInstallment = new BehaviorSubject<StudentCourseInstallmentModel>(null);
 
   setStudentCourseInstallmentData(studentCourseInstallment: StudentCourseInstallmentModel) {
