@@ -81,8 +81,13 @@
                     <span class="">+91 {{ branch.basicDetails.phone }}</span>
                   </td>
                   <td>
+                    <span [ngClass]="branch.status ? 'active' : 'inactive'">
+                      <strong>{{ branch.status ? 'Active' : 'Inactive' }}</strong>
+                    </span>
+                  </td>
+                  <td>
                     <button
-                      k
+                      *ngIf="branch.status"
                       class=""
                       nbButton
                       status="warning"
@@ -90,6 +95,16 @@
                       (click)="manageBranch(branch._id)"
                     >
                       Manage
+                    </button>
+                    <button
+                      *ngIf="!branch.status"
+                      class=""
+                      nbButton
+                      status="danger"
+                      size="small"
+                      (click)="activateBranch(branch._id)"
+                    >
+                      Activate Now
                     </button>
                   </td>
                 </tr>

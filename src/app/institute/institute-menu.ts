@@ -13,7 +13,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 2
   {
     title: 'My Institutes',
-    icon: '',
+    icon: 'cube-outline',
     link: '/institute/my-institutes',
     hidden: false,
   },
@@ -21,7 +21,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 3
   {
     title: 'Dashboard',
-    icon: '',
+    icon: 'shield-outline',
     link: '/institute/branch/dashboard',
     hidden: true,
   },
@@ -29,7 +29,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 4
   {
     title: 'Branch Management',
-    icon: '',
+    icon: 'share-outline',
     hidden: true,
     children: [
       {
@@ -53,7 +53,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 5
   {
     title: 'Student Management',
-    icon: '',
+    icon: 'person-outline',
     hidden: true,
     children: [
       {
@@ -95,7 +95,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 8
   {
     title: 'Exam Management',
-    icon: '',
+    icon: 'edit-2-outline',
     hidden: true,
     children: [
       {
@@ -114,7 +114,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 9
   {
     title: 'Employee Management',
-    icon: '',
+    icon: 'person-outline',
     hidden: true,
     children: [
       {
@@ -140,7 +140,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 10
   {
     title: 'Lead Management',
-    icon: '',
+    icon: 'search-outline',
     hidden: true,
     children: [
       {
@@ -164,7 +164,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 11
   {
     title: 'Student Reports',
-    icon: '',
+    icon: 'bar-chart-outline',
     link: '/institute/branch/students-report',
     hidden: true,
   },
@@ -172,7 +172,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 12
   {
     title: 'Budget Management',
-    icon: '',
+    icon: 'activity-outline',
     link: '/institute/branch/budget/manage',
     hidden: true,
   },

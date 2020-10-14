@@ -1,8 +1,7 @@
-@import '~bootstrap/scss/mixins/breakpoints';
-@import '~@nebular/theme/styles/global/breakpoints';
-
-@include media-breakpoint-down(sm) {
+.active {
+  color: #00d68f;
 }
 
-@include media-breakpoint-down(is) {
+.inactive {
+  color: #ff3d71;
 }

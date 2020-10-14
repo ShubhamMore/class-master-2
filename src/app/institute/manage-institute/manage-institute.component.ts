@@ -59,6 +59,10 @@ export class ManageInstituteComponent implements OnInit {
     this.router.navigate(['../branch/dashboard'], { relativeTo: this.route });
   }
 
+  activateBranch(id: string) {
+    // this.branchService.setBranchId(id);
+  }
+
   viewBranch(id: string) {
     this.branchService.setBranchId(id);
     this.router.navigate(['../view'], { relativeTo: this.route });

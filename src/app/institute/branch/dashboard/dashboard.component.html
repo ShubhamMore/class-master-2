@@ -1,13 +1,13 @@
 <div class="row" *ngIf="!loading">
   <div class="col-md-4 col-sm-6 col-12">
-    <nb-card status="primary">
+    <nb-card status="warning">
       <nb-card-header>
         <button
           class="float-right text-white"
           nbButton
           outline
           size="medium"
-          status="primary"
+          status="warning"
           nbTooltip="Add Student"
           shape="round"
           (click)="addCourse()"
@@ -80,14 +80,14 @@
   </div>
 
   <div class="col-md-4 col-sm-6 col-12">
-    <nb-card status="warning">
+    <nb-card status="danger">
       <nb-card-header>
         <button
           class="float-right text-white"
           nbButton
           outline
           size="medium"
-          status="warning"
+          status="danger"
           nbTooltip="Add Student"
           shape="round"
           (click)="addEmployee()"
