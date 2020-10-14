@@ -155,6 +155,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 10
   {
+    title: 'Students Report',
+    icon: '',
+    link: '/employee/branch/students-report',
+    hidden: true,
+  },
+
+  // 11
+  {
     title: 'Budget Management',
     icon: '',
     link: '/employee/branch/budget/manage',
