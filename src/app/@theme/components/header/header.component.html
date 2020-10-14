@@ -22,7 +22,6 @@
 
 <div class="header-container">
   <nb-actions size="small">
-    <nb-action class="control-item" icon="email-outline"></nb-action>
     <nb-action
       class="control-item"
       icon="bell-outline"
@@ -33,12 +32,13 @@
       badgeStatus="danger"
       *ngIf="user.role !== 'admin'"
     ></nb-action>
-    <nb-action class="control-item" icon="power-outline" (click)="logOut()"></nb-action>
+    <!-- <nb-action class="control-item" icon="power-outline" (click)="logOut()"></nb-action> -->
     <nb-action class="user-action" *nbIsGranted="['view', 'user']">
       <nb-user
         [nbContextMenu]="userMenu"
         [onlyPicture]="userPictureOnly"
         [name]="user?.name | uppercase"
+        nbContextMenuTag="my-context-menu"
       >
       </nb-user>
     </nb-action>

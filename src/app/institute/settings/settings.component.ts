@@ -81,9 +81,9 @@ export class SettingsComponent implements OnInit {
             '_blank',
             'toolbar,scrollbars,resizable,top=200,left=500,width=400,height=400',
           );
-          setTimeout(() => {
-            popup.close();
-          }, 3000);
+          // setTimeout(() => {
+          //   popup.close();
+          // }, 3000);
         });
 
         this.showToastr('top-right', 'success', 'Institute Zoom Keys Saved Successfully!');

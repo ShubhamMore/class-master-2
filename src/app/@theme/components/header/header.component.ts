@@ -16,7 +16,7 @@ import {
 } from '@nebular/theme';
 
 import { LayoutService } from '../../../@core/utils';
-import { map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -50,6 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private breakpointService: NbMediaBreakpointsService,
     private notificationService: NotificationService,
+    private nbMenuService: NbMenuService,
     private socketService: SocketService,
   ) {}
 
@@ -81,6 +82,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.user.userRole === 'institute') {
       this.userMenu.push({ title: 'Settings', link: '/institute/settings' });
     }
+
+    this.userMenu.push({ title: 'Logout' });
+
+    this.nbMenuService
+      .onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === 'my-context-menu'),
+        map(({ item: { title } }) => title),
+      )
+      .subscribe((title) => {
+        if (title === 'Logout') {
+          this.logOut();
+        }
+      });
 
     this.branchService.getBranchesData().subscribe((branches: BranchModel[]) => {
       this.branches = branches;
