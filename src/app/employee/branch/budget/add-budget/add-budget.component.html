@@ -10,9 +10,7 @@
     >
       Back
     </button>
-    <h3 class="">
-      {{ 'Add ' }}
-    </h3>
+    <h3 class="">Add {{ budgetForm.value.type | uppercase }}</h3>
   </nb-card-header>
   <nb-card-body>
     <nb-stepper #stepper [linear]="true" [disableStepNavigation]="true">

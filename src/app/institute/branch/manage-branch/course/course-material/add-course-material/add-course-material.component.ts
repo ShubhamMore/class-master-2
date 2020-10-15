@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CourseMaterialService } from '../../../../../../services/course-material.service';
 import { CourseModel } from '../../../../../../models/course.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Location } from '@angular/common';
 import { CourseService } from '../../../../../../services/course.service';
 import { NbToastrService } from '@nebular/theme';
 import { BranchService } from '../../../../../../services/branch.service';
@@ -32,7 +31,6 @@ export class AddCourseMaterialComponent implements OnInit {
     private courseMaterialService: CourseMaterialService,
     private toastrService: NbToastrService,
     private router: Router,
-    private location: Location,
     private route: ActivatedRoute,
   ) {}
 
@@ -53,7 +51,7 @@ export class AddCourseMaterialComponent implements OnInit {
     this.subject = '';
     this.courseService.getCourseData().subscribe((course: CourseModel) => {
       if (!course) {
-        // this.showToastr('top-right', 'danger', 'Course Not Available');
+        this.showToastr('top-right', 'danger', 'Course Not Available');
         this.cancel();
         return;
       }
@@ -127,10 +125,31 @@ export class AddCourseMaterialComponent implements OnInit {
 
     this.courseMaterialService.newCourseMaterials(courseMaterials).subscribe(
       (res: any) => {
+        const totalFiles = this.uploadCourseMaterials.length;
+        const overStorageFiles = res.overStorageFiles;
+        this.showToastr(
+          'top-right',
+          'success',
+          `${totalFiles - overStorageFiles} file${
+            totalFiles - overStorageFiles === 1 ? ' is' : 's are'
+          } Uploaded Successfully!`,
+        );
+
+        if (overStorageFiles > 0) {
+          this.showToastr(
+            'top-right',
+            'danger',
+            `Storage is full, ${overStorageFiles} file${
+              overStorageFiles === 1 ? ' is' : 's are'
+            } not Uploaded`,
+          );
+        }
+
         this.uploadCourseMaterials = [];
         this.cancel();
       },
       (error: any) => {
+        this.showToastr('top-right', 'danger', error);
         this.loading = false;
       },
     );

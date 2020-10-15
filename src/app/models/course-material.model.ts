@@ -7,6 +7,7 @@ export class CourseMaterialModel {
     public subject: string,
     public title: string,
     public fileName: string,
+    public fileSize: number,
     public fileType: string,
     public secureUrl: string,
     public publicId: string,

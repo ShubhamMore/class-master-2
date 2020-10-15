@@ -8,6 +8,7 @@ export class LectureMaterialModel {
     public lecture: string,
     public title: string,
     public fileName: string,
+    public fileSize: number,
     public fileType: string,
     public secureUrl: string,
     public publicId: string,

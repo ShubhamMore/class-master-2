@@ -172,6 +172,33 @@
 
     <div class="row">
       <div class="col-12">
+        <nb-card>
+          <nb-card-header>
+            <h3>Branch Storage</h3>
+          </nb-card-header>
+          <nb-card-body>
+            <div class="progress-info">
+              <h4>
+                {{ availableStorage }} <small>left of {{ totalStorage }}</small>
+              </h4>
+              <nb-progress-bar
+                [value]="usedStorageInPercentage"
+                status="danger"
+                [displayValue]="true"
+              >
+                <span *ngIf="usedStorageInPercentage >= 25">&nbsp;Used</span>
+              </nb-progress-bar>
+              <div class="caption description">
+                <bdi>{{ usedStorage }} Used</bdi>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
+    <!-- <div class="row">
+      <div class="col-12">
         <nb-card status="">
           <nb-card-header>
             <button
@@ -220,7 +247,7 @@
           </nb-card-header>
         </nb-card>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div class="col-md-7 col-sm-6 col-12">

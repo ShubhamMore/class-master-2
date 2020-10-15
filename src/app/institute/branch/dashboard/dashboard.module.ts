@@ -6,6 +6,7 @@ import {
   NbButtonModule,
   NbTooltipModule,
   NbIconModule,
+  NbProgressBarModule,
 } from '@nebular/theme';
 import { DashboardComponent } from './dashboard.component';
 import { NgModule } from '@angular/core';
@@ -24,6 +25,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     NbButtonModule,
     NbIconModule,
     NbTooltipModule,
+    NbProgressBarModule,
   ],
 })
 export class DashboardModule {}

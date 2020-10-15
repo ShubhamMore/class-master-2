@@ -1,3 +1,4 @@
+import { StorageService } from './../../../../../../services/shared-services/storage.service';
 import { CourseMaterialModel } from './../../../../../../models/course-material.model';
 import { Component, OnInit } from '@angular/core';
 import { CourseModel, SubjectModel } from './../../../../../../models/course.model';
@@ -23,8 +24,8 @@ export class ManageCourseMaterialComponent implements OnInit {
     private branchService: BranchService,
     private courseService: CourseService,
     private courseMaterialService: CourseMaterialService,
+    private storageService: StorageService,
     private toastrService: NbToastrService,
-
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -47,6 +48,11 @@ export class ManageCourseMaterialComponent implements OnInit {
       }
       this.getCourseMaterials(this.subject);
     });
+  }
+
+  getFileSize(fileSize: number) {
+    const size = this.storageService.convertByteToUnit(fileSize);
+    return size.value.toFixed(1) + ' ' + size.unit;
   }
 
   getCourseMaterials(subject: string) {

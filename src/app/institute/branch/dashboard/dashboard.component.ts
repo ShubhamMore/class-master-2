@@ -1,3 +1,5 @@
+import { BranchStorageModel } from '../../../models/branch-storage.model';
+import { StorageService } from './../../../services/shared-services/storage.service';
 import { BudgetService } from './../../../services/budget.service';
 import { DateService } from './../../../services/shared-services/date.service';
 import { NbToastrService, NbThemeService } from '@nebular/theme';
@@ -7,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 interface DashboardInfo {
+  branchStorage: BranchStorageModel;
   activeCourses: number;
   inactiveCourses: number;
   activeStudents: number;
@@ -41,10 +44,16 @@ export class DashboardComponent implements OnInit {
   themeSubscription: any;
   colors: any;
 
+  totalStorage: string;
+  usedStorage: string;
+  availableStorage: string;
+  usedStorageInPercentage: number;
+
   constructor(
     private branchService: BranchService,
     private dashboardService: DashboardService,
     private toastrService: NbToastrService,
+    private storageService: StorageService,
     private router: Router,
     private route: ActivatedRoute,
     public dateService: DateService,
@@ -104,10 +113,31 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  calculateStorage(branchStorage: BranchStorageModel) {
+    const totalStorage: any = this.storageService.convertByteToUnit(
+      branchStorage.totalStorageAssigned,
+    );
+    const usedStorage: any = this.storageService.convertByteToUnit(branchStorage.totalStorageUsed);
+
+    const availableStorage: any = this.storageService.convertByteToUnit(
+      branchStorage.totalStorageAssigned - branchStorage.totalStorageUsed,
+    );
+
+    this.totalStorage = totalStorage.value.toFixed(1) + ' ' + totalStorage.unit;
+    this.usedStorage = usedStorage.value.toFixed(1) + ' ' + usedStorage.unit;
+    this.availableStorage = availableStorage.value.toFixed(1) + ' ' + availableStorage.unit;
+
+    // tslint:disable-next-line: radix
+    this.usedStorageInPercentage = parseInt(
+      ((branchStorage.totalStorageUsed * 100) / branchStorage.totalStorageAssigned).toFixed(1),
+    );
+  }
+
   getDashboardData() {
     this.dashboardService.getBranchDashboard(this.branchId).subscribe(
       (dashboardInfo: DashboardInfo) => {
         this.dashboardInfo = dashboardInfo;
+        this.calculateStorage(dashboardInfo.branchStorage);
         this.loading = false;
       },
       (error: any) => {

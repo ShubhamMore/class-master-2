@@ -54,7 +54,6 @@
                   <th>Student</th>
                   <th>Category</th>
                   <th>Courses</th>
-                  <th>Installments</th>
                   <th colspan="2">Action</th>
                 </tr>
               </thead>
@@ -99,23 +98,6 @@
                         <nb-icon icon="plus-outline"></nb-icon>
                       </button>
                     </div>
-                  </td>
-
-                  <td>
-                    <button
-                      nbButton
-                      status="info"
-                      size="small"
-                      (click)="
-                        branchStudentCourses(
-                          branchStudent._id,
-                          branchStudent.student,
-                          branchStudent.category
-                        )
-                      "
-                    >
-                      Installments
-                    </button>
                   </td>
 
                   <td>
