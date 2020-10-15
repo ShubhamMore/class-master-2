@@ -74,6 +74,18 @@ export class EmployeeSalaryService {
     );
   }
 
+  getMyBranchSalaries(branch: string, month: string, year: string) {
+    const data = { api: 'getMyBranchSalaries', data: { branch, month, year } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getEmployeeSalaries(employee: string, month: string, year: string) {
     const data = { api: 'getEmployeeSalaries', data: { employee, month, year } };
     return this.httpService.httpPost(data).pipe(
