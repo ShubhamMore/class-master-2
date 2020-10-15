@@ -209,10 +209,10 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
         .subscribe(
           (res: { receiptId: string }) => {
             this.showToastr('top-right', 'success', 'Installment Receipt Generated Successfully!');
-            this.studentCourseInstallmentService.setCourseInstallmentReceipt(
-              this.courseInstallmentId,
-              res.receiptId,
-            );
+            // this.studentCourseInstallmentService.setCourseInstallmentReceipt(
+            //   this.courseInstallmentId,
+            //   res.receiptId,
+            // );
             this.back();
           },
           (err: any) => {

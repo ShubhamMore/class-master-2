@@ -23,6 +23,8 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
   private branchId: string;
   private studentId: string;
   private categoryId: string;
+  private courseId: string;
+  private studentCourseInstallmentId: string;
 
   studentCourseInstallment: StudentCourseInstallmentModel;
 
@@ -43,18 +45,44 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
     this.branchId = this.branchService.getBranchId();
     this.categoryId = this.branchService.getCategoryId();
     this.studentId = this.studentService.getStudentId();
+    this.courseId = this.courseService.getCourseId();
+    this.studentCourseInstallmentId = this.studentCourseInstallmentService.getStudentCourseInstallmentId();
 
-    if (!this.branchId || !this.categoryId || !this.studentId) {
+    if (
+      !this.branchId ||
+      !this.categoryId ||
+      !this.courseId ||
+      !this.studentId ||
+      !this.studentCourseInstallmentId
+    ) {
       this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
 
+    // New Code
     this.studentCourseInstallmentService
-      .getStudentCourseInstallmentData()
-      .subscribe((studentCourseInstallment: StudentCourseInstallmentModel) => {
-        this.studentCourseInstallment = studentCourseInstallment;
-      });
-    this.loading = false;
+      .getStudentCourseInstallment(this.studentCourseInstallmentId)
+      .subscribe(
+        (studentCourseInstallment: StudentCourseInstallmentModel) => {
+          this.studentCourseInstallmentService.setStudentCourseInstallmentData(
+            studentCourseInstallment,
+          );
+          this.studentCourseInstallment = studentCourseInstallment;
+          this.loading = false;
+        },
+        (err: any) => {
+          this.showToastr('top-right', 'danger', err);
+          this.router.navigate(['../'], { relativeTo: this.route });
+        },
+      );
+
+    //  Old Code
+    // this.studentCourseInstallmentService
+    //   .getStudentCourseInstallmentData()
+    //   .subscribe((studentCourseInstallment: StudentCourseInstallmentModel) => {
+    //     this.studentCourseInstallment = studentCourseInstallment;
+    //   });
+    // this.loading = false;
   }
 
   getStudentName(): Observable<string> {
