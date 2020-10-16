@@ -1,3 +1,4 @@
+import { RoleService } from './../../../services/role.service';
 import { BranchStorageModel } from '../../../models/branch-storage.model';
 import { StorageService } from './../../../services/shared-services/storage.service';
 import { BudgetService } from './../../../services/budget.service';
@@ -49,6 +50,8 @@ export class DashboardComponent implements OnInit {
   availableStorage: string;
   usedStorageInPercentage: number;
 
+  role: string;
+
   constructor(
     private branchService: BranchService,
     private dashboardService: DashboardService,
@@ -59,6 +62,7 @@ export class DashboardComponent implements OnInit {
     public dateService: DateService,
     public budgetService: BudgetService,
     private themeService: NbThemeService,
+    private roleService: RoleService,
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +72,11 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
+
+    this.roleService.getEmployeeRole().subscribe((role: string) => {
+      this.role = role;
+    });
+
     this.currentYear = +this.dateService.getCurrentYear();
     this.year = +this.dateService.getCurrentYear();
     this.getDashboardData();
@@ -134,10 +143,12 @@ export class DashboardComponent implements OnInit {
   }
 
   getDashboardData() {
-    this.dashboardService.getBranchDashboard(this.branchId).subscribe(
+    this.dashboardService.getBranchDashboardForEmployee(this.branchId).subscribe(
       (dashboardInfo: DashboardInfo) => {
         this.dashboardInfo = dashboardInfo;
-        this.calculateStorage(dashboardInfo.branchStorage);
+        if (dashboardInfo && dashboardInfo.branchStorage) {
+          this.calculateStorage(dashboardInfo.branchStorage);
+        }
         this.loading = false;
       },
       (error: any) => {

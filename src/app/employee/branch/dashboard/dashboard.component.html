@@ -1,5 +1,5 @@
 <div class="row" *ngIf="!loading">
-  <div class="col-md-4 col-sm-6 col-12">
+  <div class="col-md-4 col-sm-6 col-12" *ngIf="role === 'manager'">
     <nb-card status="warning">
       <nb-card-header>
         <button
@@ -39,7 +39,7 @@
     </nb-card>
   </div>
 
-  <div class="col-md-4 col-sm-6 col-12">
+  <div class="col-md-4 col-sm-6 col-12" *ngIf="role === 'manager'">
     <nb-card status="success">
       <nb-card-header>
         <button
@@ -79,7 +79,7 @@
     </nb-card>
   </div>
 
-  <div class="col-md-4 col-sm-6 col-12">
+  <div class="col-md-4 col-sm-6 col-12" *ngIf="role === 'manager'">
     <nb-card status="danger">
       <nb-card-header>
         <button
@@ -119,7 +119,7 @@
     </nb-card>
   </div>
 
-  <div class="col-md-5 col-sm-6 col-12">
+  <div class="col-md-5 col-sm-6 col-12" *ngIf="role === 'manager'">
     <div class="row">
       <div class="col-12">
         <nb-card status="info">
@@ -196,61 +196,9 @@
         </nb-card>
       </div>
     </div>
-
-    <!-- <div class="row">
-      <div class="col-12">
-        <nb-card status="">
-          <nb-card-header>
-            <button
-              class="float-right"
-              nbButton
-              outline
-              size="medium"
-              status="danger"
-              nbTooltip="Manage Class Schedule"
-              shape="round"
-              (click)="manageClassSchedule()"
-            >
-              <nb-icon icon="arrow-forward"></nb-icon>
-            </button>
-            <h3 class="">
-              <span class="pointer text-danger" (click)="manageClassSchedule()"
-                >Manage Class Schedule</span
-              >
-            </h3>
-          </nb-card-header>
-        </nb-card>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-12">
-        <nb-card status="">
-          <nb-card-header>
-            <button
-              class="float-right"
-              nbButton
-              outline
-              size="medium"
-              status="success"
-              nbTooltip="Manage Reports"
-              shape="round"
-              (click)="manageStudentReports()"
-            >
-              <nb-icon icon="arrow-forward"></nb-icon>
-            </button>
-            <h3 class="">
-              <span class="pointer text-success" (click)="manageStudentReports()"
-                >Manage Reports</span
-              >
-            </h3>
-          </nb-card-header>
-        </nb-card>
-      </div>
-    </div> -->
   </div>
 
-  <div class="col-md-7 col-sm-6 col-12">
+  <div class="col-md-7 col-sm-6 col-12" *ngIf="role === 'manager'">
     <nb-card>
       <nb-card-header>
         <div class="row">

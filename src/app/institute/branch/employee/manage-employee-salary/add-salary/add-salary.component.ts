@@ -233,6 +233,7 @@ export class AddSalaryComponent implements OnInit, OnDestroy {
     const employeeSalary: any = {
       branch: this.branchId,
       employee: this.employee.imsMasterId,
+      role: this.branchEmployee.role,
       ...this.salaryForm.value,
       earnings: this.earnings,
       deductions: this.deductions,

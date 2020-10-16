@@ -80,7 +80,7 @@ export class ManageSalaryComponent implements OnInit, OnDestroy {
   viewEmployeeSalary(employeeSalary: EmployeeSalaryModel) {
     this.employeeSalaryService.setEmployeeSalaryId(employeeSalary._id);
     this.employeeSalaryService.setEmployeeSalaryData(employeeSalary);
-    this.router.navigate(['./view'], { relativeTo: this.route });
+    this.router.navigate(['../view'], { relativeTo: this.route });
   }
 
   private showToastr(position: any, status: any, message: string) {

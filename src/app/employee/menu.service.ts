@@ -23,15 +23,15 @@ export class MenuService {
     this.menuItems.push(MENU_ITEMS[0]); // home
     this.menuItems.push(MENU_ITEMS[1]); // dashboard
     this.menuItems.push(MENU_ITEMS[2]); // branch management
-    this.menuItems.push(MENU_ITEMS[3]); // student management
-    this.menuItems.push(MENU_ITEMS[4]); // schedule management
-    this.menuItems.push(MENU_ITEMS[5]); // lecture management
-    this.menuItems.push(MENU_ITEMS[6]); // exam management
-    this.menuItems.push(MENU_ITEMS[7]); // employee management
-    this.menuItems.push(MENU_ITEMS[8]); // lead management
-    this.menuItems.push(MENU_ITEMS[9]); // students report
-    this.menuItems.push(MENU_ITEMS[10]); // budget managements
-    this.menuItems.push(MENU_ITEMS[11]); // My Salaries
+    this.menuItems.push(MENU_ITEMS[3]); // My Salaries
+    this.menuItems.push(MENU_ITEMS[4]); // student management
+    this.menuItems.push(MENU_ITEMS[5]); // schedule management
+    this.menuItems.push(MENU_ITEMS[6]); // lecture management
+    this.menuItems.push(MENU_ITEMS[7]); // exam management
+    this.menuItems.push(MENU_ITEMS[8]); // employee management
+    this.menuItems.push(MENU_ITEMS[9]); // lead management
+    this.menuItems.push(MENU_ITEMS[10]); // students report
+    this.menuItems.push(MENU_ITEMS[11]); // budget managements
   }
 
   showHideMenu(i: number, status: boolean) {
@@ -73,28 +73,28 @@ export class MenuService {
       this.showHideMenu(8, false);
       this.showHideMenu(9, false);
       this.showHideMenu(10, false);
-      this.showHideMenu(11, true);
+      this.showHideMenu(11, false);
     } else if (this.role === 'teacher') {
       this.showHideMenu(2, true);
-      this.showHideMenu(3, true);
-      this.showHideMenu(4, false);
+      this.showHideMenu(3, false);
+      this.showHideMenu(4, true);
       this.showHideMenu(5, false);
       this.showHideMenu(6, false);
-      this.showHideMenu(7, true);
+      this.showHideMenu(7, false);
       this.showHideMenu(8, true);
-      this.showHideMenu(9, false);
-      this.showHideMenu(10, true);
+      this.showHideMenu(9, true);
+      this.showHideMenu(10, false);
       this.showHideMenu(11, true);
     } else if (this.role === 'councillor') {
       this.showHideMenu(2, true);
-      this.showHideMenu(3, true);
-      this.showHideMenu(4, false);
+      this.showHideMenu(3, false);
+      this.showHideMenu(4, true);
       this.showHideMenu(5, false);
       this.showHideMenu(6, false);
-      this.showHideMenu(7, true);
+      this.showHideMenu(7, false);
       this.showHideMenu(8, true);
-      this.showHideMenu(9, false);
-      this.showHideMenu(10, true);
+      this.showHideMenu(9, true);
+      this.showHideMenu(10, false);
       this.showHideMenu(11, true);
     } else {
       this.hideMenus();
