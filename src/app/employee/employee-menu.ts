@@ -168,4 +168,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/employee/branch/budget/manage',
     hidden: true,
   },
+
+  // 12
+  {
+    title: 'My Salaries',
+    icon: '',
+    link: '/employee/branch/salary/manage',
+    hidden: true,
+  },
 ];

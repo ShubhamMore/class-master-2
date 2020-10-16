@@ -31,6 +31,7 @@ export class MenuService {
     this.menuItems.push(MENU_ITEMS[8]); // lead management
     this.menuItems.push(MENU_ITEMS[9]); // students report
     this.menuItems.push(MENU_ITEMS[10]); // budget managements
+    this.menuItems.push(MENU_ITEMS[11]); // My Salaries
   }
 
   showHideMenu(i: number, status: boolean) {
@@ -72,6 +73,7 @@ export class MenuService {
       this.showHideMenu(8, false);
       this.showHideMenu(9, false);
       this.showHideMenu(10, false);
+      this.showHideMenu(11, true);
     } else if (this.role === 'teacher') {
       this.showHideMenu(2, true);
       this.showHideMenu(3, true);
@@ -82,6 +84,7 @@ export class MenuService {
       this.showHideMenu(8, true);
       this.showHideMenu(9, false);
       this.showHideMenu(10, true);
+      this.showHideMenu(11, true);
     } else if (this.role === 'councillor') {
       this.showHideMenu(2, true);
       this.showHideMenu(3, true);
@@ -92,6 +95,7 @@ export class MenuService {
       this.showHideMenu(8, true);
       this.showHideMenu(9, false);
       this.showHideMenu(10, true);
+      this.showHideMenu(11, true);
     } else {
       this.hideMenus();
     }

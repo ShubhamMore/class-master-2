@@ -2,6 +2,7 @@ export class EmployeeSalaryModel {
   constructor(
     public _id: string,
     public employee: string,
+    public name: string,
     public branch: string,
     public date: string,
     public month: string,
@@ -17,6 +18,7 @@ export class EmployeeSalaryModel {
     public netSalary: string,
     public netSalaryInWords: string,
     public status: boolean,
+    public role?: string,
   ) {}
 }
 

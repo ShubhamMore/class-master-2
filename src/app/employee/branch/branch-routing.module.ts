@@ -60,6 +60,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'salary',
+        loadChildren: () => import('./salary/salary.module').then((m) => m.SalaryModule),
+      },
+
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
