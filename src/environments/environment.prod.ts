@@ -8,5 +8,5 @@ export const environment = {
   backend: '',
   encKey: 'b417cf7714f5c803ac31ea7ea4ee3a11',
   razorpayKeyId: 'rzp_test_1JFxmyJ8eg8wQZ',
-  SOCKET_ENDPOINT: 'http://localhost:3000/classMasterSocketConnection',
+  SOCKET_ENDPOINT: '/classMasterSocketConnection',
 };
