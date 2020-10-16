@@ -106,6 +106,28 @@ export class AddStudyMaterialComponent implements OnInit {
 
     this.lectureMaterialService.newLectureMaterials(lectureMaterials).subscribe(
       (res: any) => {
+        const totalFiles = this.uploadLectureMaterials.length;
+        const overStorageFiles = res.overStorageFiles;
+        if (overStorageFiles < totalFiles) {
+          this.showToastr(
+            'top-right',
+            'success',
+            `${totalFiles - overStorageFiles} file${
+              totalFiles - overStorageFiles === 1 ? ' is' : 's are'
+            } Uploaded Successfully!`,
+          );
+        }
+
+        if (overStorageFiles > 0) {
+          this.showToastr(
+            'top-right',
+            'danger',
+            `Storage is full, ${overStorageFiles} file${
+              overStorageFiles === 1 ? ' is' : 's are'
+            } not Uploaded`,
+          );
+        }
+
         this.uploadLectureMaterials = [];
         this.cancel();
       },

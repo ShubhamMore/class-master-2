@@ -127,13 +127,15 @@ export class AddCourseMaterialComponent implements OnInit {
       (res: any) => {
         const totalFiles = this.uploadCourseMaterials.length;
         const overStorageFiles = res.overStorageFiles;
-        this.showToastr(
-          'top-right',
-          'success',
-          `${totalFiles - overStorageFiles} file${
-            totalFiles - overStorageFiles === 1 ? ' is' : 's are'
-          } Uploaded Successfully!`,
-        );
+        if (overStorageFiles < totalFiles) {
+          this.showToastr(
+            'top-right',
+            'success',
+            `${totalFiles - overStorageFiles} file${
+              totalFiles - overStorageFiles === 1 ? ' is' : 's are'
+            } Uploaded Successfully!`,
+          );
+        }
 
         if (overStorageFiles > 0) {
           this.showToastr(
