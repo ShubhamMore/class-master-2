@@ -1,3 +1,5 @@
+import { SharedModule } from './../../../../shared/shared.module';
+import { OnlineLectureComponent } from './online-lecture/online-lecture.component';
 import { FormsModule } from '@angular/forms';
 import {
   NbCardModule,
@@ -6,6 +8,7 @@ import {
   NbInputModule,
   NbTooltipModule,
   NbAccordionModule,
+  NbTabsetModule,
   NbFormFieldModule,
 } from '@nebular/theme';
 import { NgModule } from '@angular/core';
@@ -15,9 +18,10 @@ import { ManageLectureRoutingModule } from './manage-lecture-routing.module';
 import { ManageLectureComponent } from './manage-lecture.component';
 
 @NgModule({
-  declarations: [ManageLectureComponent],
+  declarations: [ManageLectureComponent, OnlineLectureComponent],
   imports: [
     CommonModule,
+    SharedModule,
     ManageLectureRoutingModule,
     NbCardModule,
     NbTooltipModule,
@@ -25,6 +29,7 @@ import { ManageLectureComponent } from './manage-lecture.component';
     NbButtonModule,
     NbInputModule,
     NbAccordionModule,
+    NbTabsetModule,
     NbFormFieldModule,
     FormsModule,
   ],

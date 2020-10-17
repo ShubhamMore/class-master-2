@@ -1,4 +1,4 @@
-import { OnlineLectureComponent } from './../online-lecture/online-lecture.component';
+import { OnlineLectureComponent } from './online-lecture/online-lecture.component';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { BatchModel } from './../../../../models/batch.model';
 import { CategoryModel } from './../../../../models/branch.model';

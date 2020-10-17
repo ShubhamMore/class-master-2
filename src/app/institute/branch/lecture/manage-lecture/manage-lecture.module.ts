@@ -1,4 +1,5 @@
-import { OnlineLectureComponent } from './../online-lecture/online-lecture.component';
+import { SharedModule } from './../../../../shared/shared.module';
+import { OnlineLectureComponent } from './online-lecture/online-lecture.component';
 import { FormsModule } from '@angular/forms';
 import {
   NbCardModule,
@@ -18,9 +19,10 @@ import { ManageLectureComponent } from './manage-lecture.component';
 import { SafeUrlPipe } from '../../../../pipe/safe-url.pipe';
 
 @NgModule({
-  declarations: [ManageLectureComponent, OnlineLectureComponent, SafeUrlPipe],
+  declarations: [ManageLectureComponent, OnlineLectureComponent],
   imports: [
     CommonModule,
+    SharedModule,
     ManageLectureRoutingModule,
     NbCardModule,
     NbTooltipModule,

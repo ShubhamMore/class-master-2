@@ -1,4 +1,5 @@
-import { NbToastrService } from '@nebular/theme';
+import { OnlineLectureComponent } from './online-lecture/online-lecture.component';
+import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { BatchModel } from './../../../../models/batch.model';
 import { CategoryModel } from './../../../../models/branch.model';
 import { CourseModel, SubjectModel } from './../../../../models/course.model';
@@ -24,7 +25,8 @@ export class ManageLectureComponent implements OnInit {
   course: CourseModel;
   batch: BatchModel;
 
-  lectures: LectureModel[];
+  onlineLectures: LectureModel[];
+  classroomLectures: LectureModel[];
 
   date: string;
 
@@ -36,6 +38,7 @@ export class ManageLectureComponent implements OnInit {
     public dateService: DateService,
     private router: Router,
     private route: ActivatedRoute,
+    private windowService: NbWindowService,
     private toastrService: NbToastrService,
   ) {}
 
@@ -64,7 +67,8 @@ export class ManageLectureComponent implements OnInit {
       this.date = this.dateService.getDateString();
     }
 
-    this.lectures = [];
+    this.onlineLectures = [];
+    this.classroomLectures = [];
 
     this.getLecture();
   }
@@ -95,6 +99,18 @@ export class ManageLectureComponent implements OnInit {
     });
   }
 
+  startOnlineLecture(lecture: LectureModel) {
+    if (lecture.sessionType === 'online') {
+      this.lectureService.setLectureId(lecture._id);
+      this.windowService.open(OnlineLectureComponent, {
+        title: lecture.topic,
+        context: {},
+      });
+    } else {
+      this.showToastr('top-right', 'danger', 'This os not an Online Lecture');
+    }
+  }
+
   lectureMaterial(lecture: LectureModel) {
     this.lectureService.setLectureId(lecture._id);
     this.lectureService.setLectureData(lecture);
@@ -117,7 +133,12 @@ export class ManageLectureComponent implements OnInit {
       .getLectures(this.branchId, this.category._id, this.course._id, this.batch._id, this.date)
       .subscribe(
         (lectures: LectureModel[]) => {
-          this.lectures = lectures;
+          this.onlineLectures = lectures.filter(
+            (lecture: LectureModel) => lecture.sessionType === 'online',
+          );
+          this.classroomLectures = lectures.filter(
+            (lecture: LectureModel) => lecture.sessionType === 'classroom',
+          );
           this.loading = false;
         },
         (error: any) => {

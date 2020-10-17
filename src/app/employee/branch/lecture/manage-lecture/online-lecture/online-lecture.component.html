@@ -1,0 +1,11 @@
+<div class="zoom-meeting" *ngIf="!loading">
+  <iframe
+    width="100%"
+    height="100%"
+    [src]="zoomURL | safeUrl"
+    frameborder="0"
+    allowfullscreen="true"
+    allow="camera; microphone;"
+  >
+  </iframe>
+</div>
