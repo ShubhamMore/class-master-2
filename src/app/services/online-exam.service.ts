@@ -10,49 +10,6 @@ import { throwError } from 'rxjs';
 export class OnlineExamService {
   onlineExam: OnlineExamModel;
 
-  private onlineExamSearchData: any = {
-    branch: '',
-    category: '',
-    course: '',
-    batch: '',
-    subject: '',
-  };
-
-  setBranch(branch: string) {
-    this.onlineExamSearchData.branch = branch;
-  }
-  getBranch() {
-    return this.onlineExamSearchData.branch;
-  }
-
-  setCategory(category: string) {
-    this.onlineExamSearchData.category = category;
-  }
-  getCategory() {
-    return this.onlineExamSearchData.category;
-  }
-
-  setCourse(course: string) {
-    this.onlineExamSearchData.course = course;
-  }
-  getCourse() {
-    return this.onlineExamSearchData.course;
-  }
-
-  setBatch(batch: string) {
-    this.onlineExamSearchData.batch = batch;
-  }
-  getBatch() {
-    return this.onlineExamSearchData.batch;
-  }
-
-  setSubject(subject: string) {
-    this.onlineExamSearchData.subject = subject;
-  }
-  getSubject() {
-    return this.onlineExamSearchData.subject;
-  }
-
   constructor(private httpService: HttpService) {}
 
   getOnlineExam(id: string) {

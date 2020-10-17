@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { environment } from './../../../environments/environment';
 import * as CryptoJS from 'crypto-js';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -19,5 +20,10 @@ export class EncryptService {
     });
 
     return encrypted.toString();
+  }
+
+  AESEncrypt(message: any) {
+    const encryptedImsMasterId = CryptoJS.AES.encrypt(message, environment.aesKey).toString();
+    return encryptedImsMasterId;
   }
 }

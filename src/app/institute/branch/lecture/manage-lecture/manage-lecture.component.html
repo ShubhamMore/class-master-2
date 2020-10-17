@@ -12,36 +12,82 @@
     </div>
   </nb-card-header>
   <nb-card-body *ngIf="!loading; else loadingTemplate">
-    <div class="table-responsive" *ngIf="lectures.length > 0; else noLecture">
-      <table class="table">
-        <tr *ngFor="let lecture of lectures">
-          <td>{{ getTime(lecture.startTime, lecture.endTime) }}</td>
-          <td>{{ getSubject(lecture.subject) }}</td>
-          <td>{{ lecture.topic }}</td>
-          <td>{{ lecture.teacher }}</td>
-          <td>
-            <button status="primary" nbButton size="small" (click)="markAttendance(lecture)">
-              Attendance
-            </button>
-          </td>
-          <td>
-            <button status="warning" nbButton size="small" (click)="lectureMaterial(lecture)">
-              Study Material
-            </button>
-          </td>
-          <td>
-            <button status="success" nbButton size="small" (click)="questionAnswers(lecture)">
-              Q&A
-            </button>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <ng-template #noLecture>
-      <p class="text-center">No Lecture</p>
-    </ng-template>
+    <nb-tabset fullWidth>
+      <nb-tab tabTitle="Classroom Lecture">
+        <div class="table-responsive" *ngIf="classroomLectures.length > 0; else noClassroomLecture">
+          <table class="table">
+            <tbody>
+              <tr *ngFor="let lecture of classroomLectures">
+                <td>{{ getTime(lecture.startTime, lecture.endTime) }}</td>
+                <td>{{ getSubject(lecture.subject) }}</td>
+                <td>{{ lecture.topic }}</td>
+                <td>{{ lecture.teacher }}</td>
+
+                <td>
+                  <button status="primary" nbButton size="small" (click)="markAttendance(lecture)">
+                    Attendance
+                  </button>
+                </td>
+                <td>
+                  <button status="warning" nbButton size="small" (click)="lectureMaterial(lecture)">
+                    Study Material
+                  </button>
+                </td>
+                <td>
+                  <button status="success" nbButton size="small" (click)="questionAnswers(lecture)">
+                    Q&A
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-tab>
+      <nb-tab tabTitle="Online Lecture">
+        <div class="table-responsive" *ngIf="onlineLectures.length > 0; else noOnlineLecture">
+          <table class="table">
+            <tbody>
+              <tr *ngFor="let lecture of onlineLectures">
+                <td>{{ getTime(lecture.startTime, lecture.endTime) }}</td>
+                <td>{{ getSubject(lecture.subject) }}</td>
+                <td>{{ lecture.topic }}</td>
+                <td>{{ lecture.teacher }}</td>
+                <td>
+                  <button status="info" nbButton size="small" (click)="startOnlineLecture(lecture)">
+                    Go Live
+                  </button>
+                </td>
+                <td>
+                  <button status="primary" nbButton size="small" (click)="markAttendance(lecture)">
+                    Attendance
+                  </button>
+                </td>
+                <td>
+                  <button status="warning" nbButton size="small" (click)="lectureMaterial(lecture)">
+                    Study Material
+                  </button>
+                </td>
+                <td>
+                  <button status="success" nbButton size="small" (click)="questionAnswers(lecture)">
+                    Q&A
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-tab>
+    </nb-tabset>
   </nb-card-body>
 </nb-card>
+
+<ng-template #noClassroomLecture>
+  <p class="text-center pt-5 pb-5">No Classroom Lecture</p>
+</ng-template>
+
+<ng-template #noOnlineLecture>
+  <p class="text-center pt-5 pb-5">No Online Lecture</p>
+</ng-template>
 
 <ng-template #loadingTemplate>
   <p class="text-center">Loading...</p>
