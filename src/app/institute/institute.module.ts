@@ -5,10 +5,11 @@ import { NbMenuModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { InstituteRoutingModule } from './institute-routing.module';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   imports: [InstituteRoutingModule, ThemeModule, NbMenuModule],
-  declarations: [InstituteComponent],
+  declarations: [InstituteComponent, PaymentComponent],
   providers: [MenuService],
 })
 export class InstituteModule {}

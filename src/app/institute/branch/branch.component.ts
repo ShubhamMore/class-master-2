@@ -1,7 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { BranchModel } from './../../models/branch.model';
 import { BranchService } from './../../services/branch.service';
-import { MenuService } from './../menu.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
@@ -14,7 +12,6 @@ export class BranchComponent implements OnInit, OnDestroy {
   branchId: string;
 
   constructor(
-    private menuService: MenuService,
     private branchService: BranchService,
     private router: Router,
     private route: ActivatedRoute,
@@ -22,7 +19,6 @@ export class BranchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
-    this.menuService.showMenu();
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {

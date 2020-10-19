@@ -1,3 +1,4 @@
+import { MenuService } from './../../menu.service';
 import { BranchStorageModel } from '../../../models/branch-storage.model';
 import { StorageService } from './../../../services/shared-services/storage.service';
 import { BudgetService } from './../../../services/budget.service';
@@ -58,6 +59,7 @@ export class DashboardComponent implements OnInit {
     private route: ActivatedRoute,
     public dateService: DateService,
     public budgetService: BudgetService,
+    private menuService: MenuService,
     private themeService: NbThemeService,
   ) {}
 
@@ -138,11 +140,12 @@ export class DashboardComponent implements OnInit {
       (dashboardInfo: DashboardInfo) => {
         this.dashboardInfo = dashboardInfo;
         this.calculateStorage(dashboardInfo.branchStorage);
+        this.menuService.showMenu();
         this.loading = false;
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-        this.loading = false;
+        this.router.navigate(['../../'], { relativeTo: this.route });
       },
     );
   }
