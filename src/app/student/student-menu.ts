@@ -28,36 +28,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 4
   {
-    title: 'Class Schedule',
-    icon: 'calendar-outline',
-    link: '/student/branch/schedule/manage',
-    hidden: true,
-  },
-
-  // 5
-  {
-    title: 'Lecture',
-    icon: 'book-open-outline',
-    link: '/student/branch/lecture/manage',
-    hidden: true,
-  },
-
-  // 6
-  {
     title: 'Exam',
     icon: '',
+    link: '/student/branch/exam/online-test/manage',
     hidden: true,
-    children: [
-      {
-        title: 'Schedule Classroom Test',
-        link: '/student/branch/exam/test/manage',
-        hidden: true,
-      },
-      {
-        title: 'Schedule Online Exam',
-        link: '/student/branch/exam/online-test/manage',
-        hidden: true,
-      },
-    ],
   },
 ];

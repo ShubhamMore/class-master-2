@@ -8,10 +8,6 @@ const routes: Routes = [
     component: ExamComponent,
     children: [
       {
-        path: 'test',
-        loadChildren: () => import('./test/test.module').then((m) => m.TestModule),
-      },
-      {
         path: 'online-test',
         loadChildren: () =>
           import('./online-test/online-test.module').then((m) => m.OnlineTestModule),

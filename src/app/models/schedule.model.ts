@@ -13,5 +13,6 @@ export class ScheduleModel {
     public teacher: string,
     public sessionType: string,
     public status: boolean,
+    public subjectName?: string,
   ) {}
 }

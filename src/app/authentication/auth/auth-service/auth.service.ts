@@ -106,7 +106,9 @@ export class AuthService {
         new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogout(expirationDuration);
 
-      if (loadedUser.userRole === 'institute') {
+      if (loadedUser.userRole === 'admin') {
+        this.router.navigate(['/admin'], { relativeTo: this.route });
+      } else if (loadedUser.userRole === 'institute') {
         this.router.navigate(['/institute'], { relativeTo: this.route });
       } else if (loadedUser.userRole === 'employee') {
         this.router.navigate(['/employee'], { relativeTo: this.route });

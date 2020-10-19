@@ -60,6 +60,27 @@ export class LectureService {
     );
   }
 
+  getLecturesForStudent(
+    branch: string,
+    category: string,
+    course: string,
+    batch: string,
+    date: string,
+  ) {
+    const data = {
+      api: 'getLecturesForStudent',
+      data: { branch, category, course, batch, date },
+    };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getLecture(id: string) {
     const data = { api: 'getLecture', data: { id } };
     return this.httpService.httpPost(data).pipe(

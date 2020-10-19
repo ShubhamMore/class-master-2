@@ -13,11 +13,6 @@ const routes: Routes = [
       },
 
       {
-        path: 'schedule',
-        loadChildren: () => import('./schedule/schedule.module').then((m) => m.ScheduleModule),
-      },
-
-      {
         path: 'exam',
         loadChildren: () => import('./exam/exam.module').then((m) => m.ExamModule),
       },

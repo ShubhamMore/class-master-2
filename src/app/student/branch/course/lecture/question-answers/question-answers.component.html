@@ -1,0 +1,76 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>
+          Question & Answers
+        </h3>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <button nbButton status="primary" fullWidth size="small" (click)="addQuestion()">
+          Add Question <nb-icon icon="plus-circle-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="body-container">
+    <div class="row" *ngIf="!loading; else loadingData">
+      <div class="col-md-12">
+        <ng-container *ngIf="questionsAnswers.length > 0; else noQuestions">
+          <nb-card *ngFor="let lectureQuestion of questionsAnswers; let i = index">
+            <nb-card-header>
+              <div class="row">
+                <div class="col-md-6 col-12">
+                  <nb-user
+                    [name]="lectureQuestion.name ? lectureQuestion.name : 'Unknown'"
+                    [title]="formatQuestionAnswerDate(lectureQuestion.createdAt)"
+                  ></nb-user>
+                </div>
+                <div class="col-md-6 col-12 text-right">
+                  <button
+                    *ngIf="lectureQuestion.createdBy === user.imsMasterId"
+                    class="mr-3"
+                    nbButton
+                    size="small"
+                    status="basic"
+                    (click)="editQuestion(lectureQuestion)"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    class="mr-3"
+                    nbButton
+                    size="small"
+                    status="primary"
+                    (click)="viewQuestionAnswer(lectureQuestion)"
+                  >
+                    View
+                  </button>
+                  <button
+                    *ngIf="lectureQuestion.createdBy === user.imsMasterId"
+                    class="mr-3"
+                    nbButton
+                    size="small"
+                    status="danger"
+                    (click)="deleteQuestion(lectureQuestion._id)"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </nb-card-header>
+            <nb-card-body>
+              <div [innerHTML]="lectureQuestion.question"></div>
+            </nb-card-body>
+          </nb-card>
+        </ng-container>
+        <ng-template #noQuestions>
+          <p class="text-center pt-5 pb-5">You are first to Ask the Question</p>
+        </ng-template>
+      </div>
+    </div>
+    <ng-template #loadingData>
+      <p class="text-center pt-5 pb-5">Loading...</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

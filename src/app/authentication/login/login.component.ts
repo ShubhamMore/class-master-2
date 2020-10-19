@@ -59,7 +59,9 @@ export class LoginComponent implements OnInit {
       (user: any) => {
         this.loading = false;
         this.showToastr('top-right', 'success', 'Login successful!');
-        if (user.userRole === 'institute') {
+        if (user.userRole === 'admin') {
+          this.router.navigate(['/admin'], { relativeTo: this.route });
+        } else if (user.userRole === 'institute') {
           this.router.navigate(['/institute'], { relativeTo: this.route });
         } else if (user.userRole === 'employee') {
           this.router.navigate(['/employee'], { relativeTo: this.route });

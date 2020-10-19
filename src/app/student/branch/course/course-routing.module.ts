@@ -1,25 +1,67 @@
-import { CourseComponent } from './course.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CourseComponent } from './course.component';
 
 const routes: Routes = [
   {
     path: '',
     component: CourseComponent,
-  },
+    children: [
+      {
+        path: 'manage',
+        loadChildren: () =>
+          import('./manage-course/manage-course.module').then((m) => m.ManageCourseModule),
+      },
 
-  {
-    path: 'page-not-found',
-    loadChildren: () =>
-      import('../../../shared/page-not-found/page-not-found.module').then(
-        (m) => m.PageNotFoundModule,
-      ),
-  },
+      {
+        path: 'installment',
+        loadChildren: () =>
+          import('./course-installment/course-installment.module').then(
+            (m) => m.CourseInstallmentModule,
+          ),
+      },
 
-  {
-    path: '**',
-    redirectTo: 'page-not-found',
-    pathMatch: 'full',
+      {
+        path: 'attendance',
+        loadChildren: () =>
+          import('./course-attendance/course-attendance.module').then(
+            (m) => m.CourseAttendanceModule,
+          ),
+      },
+
+      {
+        path: 'performance',
+        loadChildren: () =>
+          import('./course-performance/course-performance.module').then(
+            (m) => m.CoursePerformanceModule,
+          ),
+      },
+
+      {
+        path: 'lecture',
+        loadChildren: () => import('./lecture/lecture.module').then((m) => m.LectureModule),
+      },
+
+      {
+        path: '',
+        redirectTo: 'manage',
+        pathMatch: 'full',
+      },
+
+      {
+        path: 'page-not-found',
+        loadChildren: () =>
+          import('../../../shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule,
+          ),
+      },
+
+      {
+        path: '**',
+        redirectTo: 'page-not-found',
+        pathMatch: 'full',
+      },
+    ],
   },
 ];
 

@@ -135,8 +135,8 @@ export class BranchService {
     );
   }
 
-  getBranchesForStudent(imsMasterId: any) {
-    const data = { api: 'getBranches', data: { imsMasterId } };
+  getBranchesForStudent() {
+    const data = { api: 'getBranchesForStudent', data: {} };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

@@ -14,5 +14,8 @@ export class StudentCourseModel {
     public additionalDiscountAmount: number,
     public netPayable: number,
     public status: boolean,
+    public categoryName?: string,
+    public courseName?: string,
+    public batchName?: string,
   ) {}
 }

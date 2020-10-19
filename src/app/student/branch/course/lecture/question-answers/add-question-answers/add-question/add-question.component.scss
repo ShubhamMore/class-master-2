@@ -1,0 +1,30 @@
+.question-box {
+  width: 60vw;
+  height: auto;
+}
+
+@media only screen and (max-width: 1200px) {
+  .question-box {
+    width: 65vw;
+  }
+}
+
+@media only screen and (max-width: 840px) {
+  .question-box {
+    width: 70vw;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .question-box {
+    width: 90vw;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .question-box {
+    top: 2vh;
+    left: 2vw;
+    width: 96vw;
+  }
+}

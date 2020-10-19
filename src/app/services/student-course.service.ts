@@ -60,6 +60,18 @@ export class StudentCourseService {
     );
   }
 
+  getStudentAllCourses(branch: string) {
+    const data = { api: 'getStudentAllCourses', data: { branch } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getStudentCourse(id: string) {
     const data = { api: 'getStudentCourse', data: { id } };
     return this.httpService.httpPost(data).pipe(

@@ -1,0 +1,108 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-12">
+        <button class="float-right" nbButton size="small" status="warning" (click)="back()">
+          Back
+        </button>
+        <h3>Exam Score</h3>
+      </div>
+    </div>
+  </nb-card-header>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-3 col-sm-4"></div>
+
+      <div class="col-md-3 col-sm-4">
+        <nb-select
+          id="select-subject"
+          name="subject"
+          [selected]="subject"
+          fullWidth
+          placeholder="All Subjects"
+          (selectedChange)="onSelectSubject($event)"
+        >
+          <nb-option value="">All Subjects</nb-option>
+          <nb-option *ngFor="let subject of subjects" [value]="subject._id">{{
+            subject.subject
+          }}</nb-option>
+        </nb-select>
+      </div>
+
+      <div class="col-md-3 col-sm-4">
+        <nb-select
+          id="select-year"
+          name="year"
+          [selected]="year"
+          fullWidth
+          placeholder="All Years"
+          (selectedChange)="onSelectYear($event)"
+        >
+          <nb-option value="">All Years</nb-option>
+          <nb-option *ngFor="let year of years" [value]="year">{{ year }}</nb-option>
+        </nb-select>
+      </div>
+
+      <div class="col-md-3 col-sm-4">
+        <nb-select
+          id="select-month"
+          name="month"
+          [selected]="month"
+          fullWidth
+          placeholder="All Months"
+          (selectedChange)="onSelectMonth($event)"
+        >
+          <nb-option value="">All Months</nb-option>
+          <nb-option *ngFor="let month of months" [value]="month.monthNo">{{
+            month.month
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="body-container">
+    <div class="row">
+      <div class="col-md-12">
+        <ng-container *ngIf="!loading; else loadingData">
+          <div class="table-responsive" *ngIf="scores.length > 0; else noScores">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Date</th>
+                  <th>Subject</th>
+                  <th>Title</th>
+                  <th>Score</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let score of scores; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ dateService.formatDate(score.date) }}</td>
+                  <td>{{ score.subject }}</td>
+                  <td>{{ score.examTitle }}</td>
+                  <td>{{ score.marks }}/{{ score.outOfMarks }}</td>
+                  <td>
+                    <span [ngClass]="score.marks >= score.passingMarks ? 'pass' : 'fail'">{{
+                      score.marks >= score.passingMarks ? 'Pass' : 'Fail'
+                    }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noScores>
+            <p class="text-center">No Score Available</p>
+          </ng-template>
+        </ng-container>
+        <ng-template #loadingData>
+          <p class="text-center pt-5 pb-5">Loading...</p>
+        </ng-template>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

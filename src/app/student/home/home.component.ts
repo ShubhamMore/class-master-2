@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
     this.menuService.hideMenu();
     this.branchService.setBranchId('');
 
-    this.branchService.getBranchesForEmployee().subscribe(
+    this.branchService.getBranchesForStudent().subscribe(
       (branches: BranchModel[]) => {
         this.branches = branches;
         this.branchService.setBranchesData(branches);

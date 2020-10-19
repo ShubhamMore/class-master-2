@@ -7,6 +7,12 @@ import { NgModule } from '@angular/core';
 
 export const routes: Routes = [
   {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
+    canActivate: [],
+  },
+
+  {
     path: 'institute',
     loadChildren: () => import('./institute/institute.module').then((m) => m.InstituteModule),
     canActivate: [InstituteAuthGuard],

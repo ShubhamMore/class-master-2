@@ -1,3 +1,4 @@
+import { MenuService } from './../../menu.service';
 import { BranchService } from './../../../services/branch.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,7 +14,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private branchService: BranchService,
-
+    private menuService: MenuService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -26,5 +27,7 @@ export class DashboardComponent implements OnInit {
 
       return;
     }
+    this.menuService.showMenu();
+    this.loading = false;
   }
 }
