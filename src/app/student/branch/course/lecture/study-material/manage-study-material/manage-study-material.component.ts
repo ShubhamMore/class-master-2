@@ -85,4 +85,8 @@ export class ManageStudyMaterialComponent implements OnInit {
       status,
     });
   }
+
+  back() {
+    this.router.navigate(['../../'], { relativeTo: this.route });
+  }
 }
