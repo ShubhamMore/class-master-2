@@ -28,7 +28,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 4
   {
-    title: 'Exam',
+    title: 'Online Exam',
     icon: '',
     link: '/student/branch/exam/online-test/manage',
     hidden: true,
