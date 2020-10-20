@@ -77,7 +77,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.getNotifications();
 
-    this.userMenu = [{ title: 'Profile', link: '/' + this.user.userRole + '/profile' }];
+    this.userMenu = [];
+
+    if (this.user.userRole !== 'admin') {
+      this.userMenu.push({ title: 'Profile', link: '/' + this.user.userRole + '/profile' });
+    }
 
     if (this.user.userRole === 'institute') {
       this.userMenu.push({ title: 'Settings', link: '/institute/settings' });

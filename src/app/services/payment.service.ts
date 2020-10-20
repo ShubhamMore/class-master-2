@@ -23,30 +23,6 @@ export class PaymentService {
 
   constructor(private httpService: HttpService) {}
 
-  deleteOrder(id: string) {
-    const data = { api: 'deleteOrder', data: { id } };
-    return this.httpService.httpPost(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      }),
-    );
-  }
-
-  generateOrder(order: any) {
-    const data = { api: 'generateOrder', data: order };
-    return this.httpService.httpPost(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      }),
-    );
-  }
-
   verifyPayment(payment: any, placedOrder: any) {
     const data = {
       api: 'verifyPayment',

@@ -12,6 +12,7 @@
     size="medium"
     (selectedChange)="changeSelectBranch($event)"
     status="primary"
+    *ngIf="user.userRole !== 'admin'"
   >
     <nb-option value="">Select Institute</nb-option>
     <nb-option *ngFor="let branch of branches" [value]="branch._id">{{
@@ -30,7 +31,7 @@
       [badgeText]="unseenNotificationCount"
       badgePosition="top right"
       badgeStatus="danger"
-      *ngIf="user.role !== 'admin'"
+      *ngIf="user.userRole !== 'admin'"
     ></nb-action>
     <!-- <nb-action class="control-item" icon="power-outline" (click)="logOut()"></nb-action> -->
     <nb-action class="user-action" *nbIsGranted="['view', 'user']">

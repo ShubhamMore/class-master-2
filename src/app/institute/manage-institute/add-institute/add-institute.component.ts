@@ -1,9 +1,11 @@
+import { PaymentComponent } from './../../payment/payment.component';
+import { OrderService } from './../../../services/order.service';
 import { map } from 'rxjs/operators';
 import { CountryService } from './../../../services/shared-services/country.service';
 import { environment } from './../../../../environments/environment';
 import { PaymentService } from './../../../services/payment.service';
 import { AuthService } from './../../../authentication/auth/auth-service/auth.service';
-import { NbToastrService, NbStepperComponent } from '@nebular/theme';
+import { NbToastrService, NbStepperComponent, NbDialogService } from '@nebular/theme';
 import { BranchService } from './../../../services/branch.service';
 import { MenuService } from './../../menu.service';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
@@ -50,7 +52,9 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private branchService: BranchService,
     private paymentService: PaymentService,
+    private orderService: OrderService,
     private toastrService: NbToastrService,
+    private dialogService: NbDialogService,
 
     private router: Router,
     private route: ActivatedRoute,
@@ -276,7 +280,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
   }
 
   private generateOrder(order: any) {
-    this.paymentService.generateOrder(order).subscribe(
+    this.orderService.generateOrder(order).subscribe(
       (res: any) => {
         this.placedOrderReceipt = res.paymentReceipt;
         // this.options.amount = res.order.amount;
@@ -300,7 +304,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
   }
 
   private deleteOrder() {
-    this.paymentService.deleteOrder(this.placedOrderReceipt._id).subscribe(
+    this.orderService.deleteOrder(this.placedOrderReceipt._id).subscribe(
       (res: any) => {
         this.placedOrderReceipt = null;
       },
@@ -368,6 +372,14 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
     this.stepper.next();
   }
 
+  onClosePayment(order: any) {
+    if (order.type === 'success') {
+      this.activateBranch(this.branchId, order.order, order.receipt);
+    } else {
+      this.deleteBranch();
+    }
+  }
+
   saveBranch() {
     this.branchBasicDetailsForm.markAllAsTouched();
     this.branchAddressForm.markAllAsTouched();
@@ -402,6 +414,13 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
             amount: this.paymentDetails.amount,
             planType: this.paymentDetails.planType,
           };
+          // this.orderService.setOrderDetails(orderDetails);
+
+          // this.dialogService
+          //   .open(PaymentComponent, {
+          //     context: {},
+          //   })
+          //   .onClose.subscribe((order: any) => order && this.onClosePayment(order));
           this.generateOrder(orderDetails);
         },
         (error: any) => {
