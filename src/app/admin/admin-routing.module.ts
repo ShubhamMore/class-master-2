@@ -14,6 +14,32 @@ const routes: Routes = [
       },
 
       {
+        path: 'institutes',
+        loadChildren: () =>
+          import('./institutes/institutes.module').then((m) => m.InstitutesModule),
+        canActivate: [],
+      },
+
+      {
+        path: 'coupon',
+        loadChildren: () => import('./coupon/coupon.module').then((m) => m.CouponModule),
+        canActivate: [],
+      },
+
+      {
+        path: 'membership-plans',
+        loadChildren: () =>
+          import('./membership-plans/membership-plans.module').then((m) => m.MembershipPlansModule),
+        canActivate: [],
+      },
+
+      {
+        path: 'ims-ids',
+        loadChildren: () => import('./ims-ids/ims-ids.module').then((m) => m.ImsIdsModule),
+        canActivate: [],
+      },
+
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',

@@ -6,6 +6,7 @@ import {
   NbCardModule,
   NbFormFieldModule,
   NbIconModule,
+  NbTooltipModule,
   NbInputModule,
 } from '@nebular/theme';
 
@@ -17,6 +18,7 @@ import {
     NbInputModule,
     NbButtonModule,
     NbIconModule,
+    NbTooltipModule,
     NbFormFieldModule,
   ],
 })

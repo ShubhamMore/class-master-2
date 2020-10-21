@@ -1,4 +1,4 @@
-<nb-card>
+<nb-card class="checkout">
   <nb-card-header>
     <button class="float-right" nbButton size="small" (click)="onClose()">
       <nb-icon icon="close"></nb-icon>
@@ -7,7 +7,7 @@
   </nb-card-header>
   <nb-card-body>
     <div class="table-responsive">
-      <table class="table table-sm table-bordered">
+      <table class="table table-bordered">
         <tbody>
           <tr>
             <th>Plan Type:</th>
@@ -25,12 +25,16 @@
             <th>Coupon Code:</th>
             <td>
               <nb-form-field>
-                <input type="text" nbInput size="small" fullWidth />
-                <button nbSuffix nbButton ghost (click)="applyCoupon()" size="small">
-                  <span>Apply</span>
-                  &nbsp;
-                  <nb-icon icon="paper-plane-outline" pack="eva" attr.aria-label="Apply Coupon">
-                  </nb-icon>
+                <input type="text" nbInput fullWidth />
+                <button
+                  nbSuffix
+                  nbButton
+                  ghost
+                  nbTooltip="Apply Coupon Now"
+                  (click)="applyCoupon()"
+                  status="success"
+                >
+                  <nb-icon icon="paper-plane-outline"> </nb-icon>
                 </button>
               </nb-form-field>
             </td>

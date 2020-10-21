@@ -1,3 +1,4 @@
+import { MembershipService } from './../../services/membership.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../../authentication/auth/auth-service/auth.service';
 import { BranchService } from './../../services/branch.service';
@@ -17,7 +18,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private branchService: BranchService,
-    private authService: AuthService,
+    private membershipService: MembershipService,
     private menuService: MenuService,
     private router: Router,
     private route: ActivatedRoute,
@@ -47,6 +48,8 @@ export class HomeComponent implements OnInit {
   }
 
   activateBranch(id: string) {
-    // this.branchService.setBranchId(id);
+    this.branchService.setBranchId(id);
+    this.membershipService.setMembershipType('renew');
+    this.router.navigate(['../membership-plans'], { relativeTo: this.route });
   }
 }

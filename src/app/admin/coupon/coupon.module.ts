@@ -9,14 +9,15 @@ import {
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ImsIdsRoutingModule } from './ims-ids-routing.module';
-import { ImsIdsComponent } from './ims-ids.component';
+import { CouponRoutingModule } from './coupon-routing.module';
+import { CouponComponent } from './coupon.component';
+import { AddCouponComponent } from './add-coupon/add-coupon.component';
 
 @NgModule({
-  declarations: [ImsIdsComponent],
+  declarations: [CouponComponent, AddCouponComponent],
   imports: [
     CommonModule,
-    ImsIdsRoutingModule,
+    CouponRoutingModule,
     NbCardModule,
     NbInputModule,
     NbButtonModule,
@@ -25,4 +26,4 @@ import { ImsIdsComponent } from './ims-ids.component';
     ReactiveFormsModule,
   ],
 })
-export class ImsIdsModule {}
+export class CouponModule {}

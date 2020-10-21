@@ -19,6 +19,5 @@ export class MenuService {
     this.menuItems.push(MENU_ITEMS[2]);
     this.menuItems.push(MENU_ITEMS[3]);
     this.menuItems.push(MENU_ITEMS[4]);
-    this.menuItems.push(MENU_ITEMS[5]);
   }
 }

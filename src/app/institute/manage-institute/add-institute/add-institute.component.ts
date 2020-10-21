@@ -290,7 +290,6 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
   }
 
   onCheckout(checkout: any) {
-    console.log(checkout);
     if (checkout.status) {
       this.dialogService
         .open(PaymentComponent, {

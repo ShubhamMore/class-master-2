@@ -12,37 +12,29 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 2
   {
-    title: 'Dashboard',
+    title: 'Institutes',
     icon: '',
-    link: '/admin/branch/dashboard',
+    link: '/admin/institutes',
     hidden: false,
   },
 
   // 3
   {
-    title: 'Institutes',
+    title: 'Membership Plans',
     icon: '',
-    link: '/admin/institute',
+    link: '/admin/membership',
     hidden: false,
   },
 
   // 4
   {
-    title: 'Membership Plans',
-    icon: 'calendar-outline',
-    link: '/admin/membership',
+    title: 'Coupon Codes',
+    icon: '',
+    link: '/admin/coupon',
     hidden: false,
   },
 
   // 5
-  {
-    title: 'Coupon Codes',
-    icon: 'book-open-outline',
-    link: '/admin/coupons',
-    hidden: false,
-  },
-
-  // 6
   {
     title: 'IMS Ids',
     icon: '',

@@ -1,0 +1,30 @@
+.checkout {
+  width: 60vw;
+  height: auto;
+}
+
+@media only screen and (max-width: 1200px) {
+  .checkout {
+    width: 65vw;
+  }
+}
+
+@media only screen and (max-width: 840px) {
+  .checkout {
+    width: 70vw;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .checkout {
+    width: 90vw;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .checkout {
+    top: 2vh;
+    left: 2vw;
+    width: 96vw;
+  }
+}
