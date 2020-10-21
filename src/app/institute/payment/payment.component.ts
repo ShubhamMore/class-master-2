@@ -33,11 +33,16 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
     this.user = this.authService.getUserData();
     this.paymentDetails = this.paymentService.getPaymentDetails();
-    this.orderDetails = this.orderService.getOrderDetails();
 
-    if (!this.orderDetails) {
-      this.onClose();
-    }
+    this.orderDetails = {
+      userId: this.user._id,
+      userPhone: this.user.phone,
+      userName: this.user.name,
+      userEmail: this.user.email,
+      amount: this.paymentDetails.amount,
+      packageType: this.paymentDetails.packageType,
+      planType: this.paymentDetails.planType,
+    };
 
     this.options = {
       key: environment.razorpayKeyId, // Enter the Key ID generated from the Dashboard
@@ -104,7 +109,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.orderService.deleteOrder(this.placedOrderReceipt._id).subscribe(
       (res: any) => {
         this.placedOrderReceipt = null;
-        this.ref.close({ type: 'delete' });
+        this.ref.close({ status: false });
       },
       (err: any) => {
         this.showToastr('top-right', 'danger', err);
@@ -116,7 +121,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.paymentService.verifyPayment(payment, this.placedOrderReceipt).subscribe(
       (res: any) => {
         this.showToastr('top-right', 'success', 'Payment Verified Successfully');
-        this.ref.close({ type: 'success', order: res.orderId, receipt: res.receiptId });
+        this.ref.close({ status: true, order: res.orderId, receipt: res.receiptId });
       },
       (err: any) => {
         this.showToastr('top-right', 'danger', err);

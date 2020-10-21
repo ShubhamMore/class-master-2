@@ -1,0 +1,47 @@
+<nb-card>
+  <nb-card-header>
+    <button class="float-right" nbButton size="small" (click)="onClose()">
+      <nb-icon icon="close"></nb-icon>
+    </button>
+    <h3>Checkout</h3>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <tbody>
+          <tr>
+            <th>Plan Type:</th>
+            <td>{{ checkoutData.planType | uppercase }}</td>
+          </tr>
+          <tr>
+            <th>Package Type:</th>
+            <td>{{ checkoutData.packageType | uppercase }}</td>
+          </tr>
+          <tr>
+            <th>Amount:</th>
+            <td>{{ checkoutData.amount }}</td>
+          </tr>
+          <tr>
+            <th>Coupon Code:</th>
+            <td>
+              <nb-form-field>
+                <input type="text" nbInput size="small" fullWidth />
+                <button nbSuffix nbButton ghost (click)="applyCoupon()" size="small">
+                  <span>Apply</span>
+                  &nbsp;
+                  <nb-icon icon="paper-plane-outline" pack="eva" attr.aria-label="Apply Coupon">
+                  </nb-icon>
+                </button>
+              </nb-form-field>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <button class="float-right" nbButton status="primary" size="small" (click)="checkout()">
+      Checkout
+    </button>
+  </nb-card-footer>
+</nb-card>

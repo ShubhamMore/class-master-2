@@ -1,10 +1,7 @@
 import { PaymentComponent } from './../../payment/payment.component';
-import { OrderService } from './../../../services/order.service';
 import { map } from 'rxjs/operators';
 import { CountryService } from './../../../services/shared-services/country.service';
-import { environment } from './../../../../environments/environment';
 import { PaymentService } from './../../../services/payment.service';
-import { AuthService } from './../../../authentication/auth/auth-service/auth.service';
 import { NbToastrService, NbStepperComponent, NbDialogService } from '@nebular/theme';
 import { BranchService } from './../../../services/branch.service';
 import { MenuService } from './../../menu.service';
@@ -15,7 +12,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ObjectId } from 'bson';
 
 import { of, Observable } from 'rxjs';
-declare const Razorpay: any;
+import { CheckoutComponent } from '../../checkout/checkout.component';
+// declare const Razorpay: any;
 
 @Component({
   selector: 'ngx-add-institute',
@@ -26,7 +24,6 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
-  private user: any;
 
   branchBasicDetailsForm: FormGroup;
   branchAddressForm: FormGroup;
@@ -41,21 +38,14 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
   filteredStates: Observable<any[]>;
   filteredCities: Observable<any[]>;
 
-  private options: any;
-  private razorPay: any;
-  private placedOrderReceipt: any;
-
   paymentDetails: any;
   constructor(
     private menuService: MenuService,
     private countryService: CountryService,
-    private authService: AuthService,
     private branchService: BranchService,
     private paymentService: PaymentService,
-    private orderService: OrderService,
     private toastrService: NbToastrService,
     private dialogService: NbDialogService,
-
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -68,7 +58,6 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.menuService.hideMenu();
-    this.user = this.authService.getUserData();
     this.paymentDetails = this.paymentService.getPaymentDetails();
 
     let mode: string;
@@ -82,7 +71,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
       this.showToastr('top-right', 'danger', 'Invalid Route');
       this.router.navigate(['../page-not-found'], { relativeTo: this.route });
       return;
-    } else if (!mode && (!this.user || !this.paymentDetails)) {
+    } else if (!mode && !this.paymentDetails) {
       this.showToastr('top-right', 'danger', 'Invalid Payment Details');
       this.router.navigate(['../'], { relativeTo: this.route });
 
@@ -172,39 +161,6 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
         },
       );
     } else {
-      this.options = {
-        key: environment.razorpayKeyId, // Enter the Key ID generated from the Dashboard
-        amount: '', // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-        currency: 'INR',
-        name: 'IMS Master',
-        description: 'Test Transaction',
-        image: '../../../../assets/brand/class-master-mini.png',
-        // tslint:disable-next-line: max-line-length
-        order_id: '', // This is a sample Order ID. Pass the `id` obtained in the response of Step 1 order_9A33XWu170gUtm
-        handler: (response: any) => {
-          this.verifyPayment(response);
-        },
-        modal: {
-          ondismiss: () => {
-            this.deleteOrder();
-            this.deleteBranch();
-          },
-        },
-        prefill: {
-          name: '',
-          email: '',
-          contact: '',
-        },
-        notes: {
-          address: '',
-        },
-        theme: {
-          color: '#528FF0',
-        },
-      };
-
-      this.razorPay = new Razorpay(this.options);
-
       this.generateCategory();
       this.loading = false;
     }
@@ -279,53 +235,6 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
     this.cities = this.countryService.getCities(name);
   }
 
-  private generateOrder(order: any) {
-    this.orderService.generateOrder(order).subscribe(
-      (res: any) => {
-        this.placedOrderReceipt = res.paymentReceipt;
-        // this.options.amount = res.order.amount;
-        this.options.amount = '1';
-        this.options.order_id = res.order.id;
-        this.options.currency = res.order.currency;
-        this.options.prefill.name = this.user.name;
-        this.options.prefill.email = this.user.email;
-        this.options.prefill.contact = this.user.phone;
-        this.razorPay = new Razorpay(this.options);
-        this.pay();
-      },
-      (err: any) => {
-        this.showToastr('top-right', 'danger', err);
-      },
-    );
-  }
-
-  private pay() {
-    this.razorPay.open();
-  }
-
-  private deleteOrder() {
-    this.orderService.deleteOrder(this.placedOrderReceipt._id).subscribe(
-      (res: any) => {
-        this.placedOrderReceipt = null;
-      },
-      (err: any) => {
-        this.showToastr('top-right', 'danger', err);
-      },
-    );
-  }
-
-  verifyPayment(payment: any) {
-    this.paymentService.verifyPayment(payment, this.placedOrderReceipt).subscribe(
-      (res: any) => {
-        this.showToastr('top-right', 'success', 'Payment Verified Successfully');
-        this.activateBranch(this.branchId, res.orderId, res.receiptId);
-      },
-      (err: any) => {
-        this.showToastr('top-right', 'danger', err);
-      },
-    );
-  }
-
   private activateBranch(id: string, orderId: string, ReceiptId: string) {
     const paymentDetails = {
       amount: this.paymentDetails.amount,
@@ -373,8 +282,23 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
   }
 
   onClosePayment(order: any) {
-    if (order.type === 'success') {
+    if (order.status) {
       this.activateBranch(this.branchId, order.order, order.receipt);
+    } else {
+      this.deleteBranch();
+    }
+  }
+
+  onCheckout(checkout: any) {
+    console.log(checkout);
+    if (checkout.status) {
+      this.dialogService
+        .open(PaymentComponent, {
+          context: {},
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+        })
+        .onClose.subscribe((order: any) => order && this.onClosePayment(order));
     } else {
       this.deleteBranch();
     }
@@ -406,22 +330,14 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
       this.branchService.addBranch(branch).subscribe(
         (res: any) => {
           this.branchId = res.branchId;
-          const orderDetails = {
-            userId: this.user._id,
-            userPhone: this.user.phone,
-            userName: this.user.name,
-            userEmail: this.user.email,
-            amount: this.paymentDetails.amount,
-            planType: this.paymentDetails.planType,
-          };
-          // this.orderService.setOrderDetails(orderDetails);
 
-          // this.dialogService
-          //   .open(PaymentComponent, {
-          //     context: {},
-          //   })
-          //   .onClose.subscribe((order: any) => order && this.onClosePayment(order));
-          this.generateOrder(orderDetails);
+          this.dialogService
+            .open(CheckoutComponent, {
+              context: {},
+              closeOnBackdropClick: false,
+              closeOnEsc: false,
+            })
+            .onClose.subscribe((checkout: any) => checkout && this.onCheckout(checkout));
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);

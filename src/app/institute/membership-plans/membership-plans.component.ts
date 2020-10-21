@@ -3,6 +3,7 @@ import { PaymentService } from './../../services/payment.service';
 import { BranchService } from './../../services/branch.service';
 import { MenuService } from './../menu.service';
 import { Component, OnInit } from '@angular/core';
+import { MembershipService } from '../../services/membership.service';
 
 @Component({
   selector: 'ngx-membership-plans',
@@ -13,6 +14,7 @@ export class MembershipPlansComponent implements OnInit {
   constructor(
     private menuService: MenuService,
     private branchService: BranchService,
+    private membershipService: MembershipService,
     private paymentService: PaymentService,
     private router: Router,
     private route: ActivatedRoute,
@@ -23,8 +25,8 @@ export class MembershipPlansComponent implements OnInit {
     this.menuService.hideMenu();
   }
 
-  activate(planType: string, amount: string) {
-    this.paymentService.setPaymentDetails(planType, amount);
+  activate(planType: string, packageType: string, amount: string) {
+    this.paymentService.setPaymentDetails(planType, packageType, amount);
     this.router.navigate(['../add'], { relativeTo: this.route });
   }
 }
