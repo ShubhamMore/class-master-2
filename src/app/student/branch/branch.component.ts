@@ -1,3 +1,4 @@
+import { InstituteKeysService } from './../../services/institute-keys.service';
 import { NbToastrService } from '@nebular/theme';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BranchService } from './../../services/branch.service';
@@ -15,6 +16,7 @@ export class BranchComponent implements OnInit, OnDestroy {
   constructor(
     private toastrService: NbToastrService,
     private branchService: BranchService,
+    private instituteKeysService: InstituteKeysService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -28,7 +30,17 @@ export class BranchComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.loading = false;
+    this.instituteKeysService.getInstitutePaymentAccessKey(this.branchId).subscribe(
+      (paymentGateway: any) => {
+        if (paymentGateway && paymentGateway.accessKey) {
+          this.instituteKeysService.setLocalInstitutePaymentAccessKey(paymentGateway.accessKey);
+        }
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+      },
+    );
   }
 
   private showToastr(position: any, status: any, message: string) {
@@ -41,5 +53,6 @@ export class BranchComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.branchService.deleteBranchId();
     this.branchService.deleteBranchData();
+    this.instituteKeysService.setLocalInstitutePaymentAccessKey(null);
   }
 }

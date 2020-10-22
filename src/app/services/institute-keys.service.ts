@@ -7,12 +7,37 @@ import { throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class InstituteKeysService {
+  private institutePaymentAccessKey: string;
+
+  setLocalInstitutePaymentAccessKey(institutePaymentAccessKey: string) {
+    this.institutePaymentAccessKey = institutePaymentAccessKey;
+  }
+
+  getLocalInstitutePaymentAccessKey() {
+    return this.institutePaymentAccessKey;
+  }
+
   constructor(private httpService: HttpService) {}
 
   getInstituteKeys() {
     const data = {
       api: 'getInstituteKeys',
       data: {},
+    };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  getInstitutePaymentAccessKey(branch: string) {
+    const data = {
+      api: 'getInstitutePaymentAccessKey',
+      data: { branch },
     };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {

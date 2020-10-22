@@ -66,7 +66,7 @@
                   <th>Installment Date</th>
                   <th>Installment Amount</th>
                   <th>Pending Amount</th>
-                  <th>Pay/Receipt</th>
+                  <th>{{ paymentGatewayAccessKey ? 'Pay/' : '' }}Receipt</th>
                 </tr>
               </thead>
               <tbody>
@@ -87,6 +87,7 @@
                           ? showReceipt(installment.receiptId)
                           : payInstallment(installment._id)
                       "
+                      *ngIf="installment.receiptId || paymentGatewayAccessKey"
                     >
                       {{ installment.receiptId ? 'Receipt' : ' Pay' }}
                     </button>

@@ -1,3 +1,4 @@
+import { PaymentComponent } from './payment/payment.component';
 import { NgModule } from '@angular/core';
 
 import { StudentRoutingModule } from './student-routing.module';
@@ -9,7 +10,7 @@ import { NbMenuModule } from '@nebular/theme';
 import { ThemeModule } from './../@theme/theme.module';
 
 @NgModule({
-  declarations: [StudentComponent],
+  declarations: [StudentComponent, PaymentComponent],
   imports: [StudentRoutingModule, ThemeModule, NbMenuModule],
   providers: [MenuService],
 })

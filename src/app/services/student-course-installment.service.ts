@@ -11,18 +11,18 @@ import { throwError, BehaviorSubject, Observable } from 'rxjs';
 export class StudentCourseInstallmentService {
   private courseInstallmentId: string;
   private studentCourseInstallmentId: string;
-  private studentCourseInstallment = new BehaviorSubject<StudentCourseInstallmentModel>(null);
+  private studentCourseInstallments = new BehaviorSubject<StudentCourseInstallmentModel>(null);
 
-  setStudentCourseInstallmentData(studentCourseInstallment: StudentCourseInstallmentModel) {
-    this.studentCourseInstallment.next(studentCourseInstallment);
+  setStudentCourseInstallmentData(studentCourseInstallments: StudentCourseInstallmentModel) {
+    this.studentCourseInstallments.next(studentCourseInstallments);
   }
 
   getStudentCourseInstallmentData() {
-    return this.studentCourseInstallment;
+    return this.studentCourseInstallments;
   }
 
   deleteStudentCourseInstallmentData() {
-    this.studentCourseInstallment.next(null);
+    this.studentCourseInstallments.next(null);
   }
 
   setStudentCourseInstallmentId(studentCourseInstallmentId: string) {
@@ -50,7 +50,7 @@ export class StudentCourseInstallmentService {
   }
 
   setCourseInstallmentReceipt(installmentId: string, receiptId: string) {
-    this.studentCourseInstallment.subscribe(
+    this.studentCourseInstallments.subscribe(
       (studentCourseInstallment: StudentCourseInstallmentModel) => {
         if (studentCourseInstallment) {
           const i = studentCourseInstallment.installments.findIndex(
@@ -76,7 +76,7 @@ export class StudentCourseInstallmentService {
   }
 
   getCourseInstallment(installmentId: string): Observable<InstallmentModel> {
-    return this.studentCourseInstallment.pipe(
+    return this.studentCourseInstallments.pipe(
       map((studentCourseInstallment: StudentCourseInstallmentModel) => {
         if (studentCourseInstallment) {
           const installment = studentCourseInstallment.installments.find(

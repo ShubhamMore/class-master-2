@@ -1,3 +1,7 @@
+import { CheckoutComponent } from './../../../../checkout/checkout.component';
+import { PaymentComponent } from './../../../../payment/payment.component';
+import { PaymentService } from './../../../../../services/payment.service';
+import { InstituteKeysService } from './../../../../../services/institute-keys.service';
 import { StudentCourseService } from './../../../../../services/student-course.service';
 import { StudentCourseModel } from './../../../../../models/student-course.model';
 import { StudentCourseInstallmentReceiptService } from './../../../../../services/student-course-installment-receipt.service';
@@ -8,7 +12,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from './../../../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-manage-course-installment',
@@ -21,6 +25,8 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
   private branchId: string;
   private studentCourseInstallmentId: string;
 
+  paymentGatewayAccessKey: string;
+
   studentCourseInstallment: StudentCourseInstallmentModel;
   studentCourse: StudentCourseModel;
 
@@ -29,6 +35,9 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
     public dateService: DateService,
     public toastrService: NbToastrService,
     private studentCourseService: StudentCourseService,
+    private instituteKeysService: InstituteKeysService,
+    private paymentService: PaymentService,
+    private dialogService: NbDialogService,
     private studentCourseInstallmentService: StudentCourseInstallmentService,
     private studentCourseInstallmentReceiptService: StudentCourseInstallmentReceiptService,
     private router: Router,
@@ -44,6 +53,8 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
       this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
+
+    this.paymentGatewayAccessKey = this.instituteKeysService.getLocalInstitutePaymentAccessKey();
 
     this.studentCourseService
       .getStudentCourseData()
@@ -68,13 +79,42 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
         },
       );
   }
+
   showReceipt(receiptId: string) {
     this.studentCourseInstallmentReceiptService.setStudentCourseInstallmentReceiptId(receiptId);
     this.router.navigate(['../receipt'], { relativeTo: this.route });
   }
+
+  onClosePayment(order: any) {
+    if (order.status) {
+      // this.activateBranch(this.branchId, order.order, order.receipt);
+    }
+  }
+
+  onCheckout(checkout: any) {
+    if (checkout.status) {
+      this.dialogService
+        .open(PaymentComponent, {
+          context: {},
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+        })
+        .onClose.subscribe((order: any) => order && this.onClosePayment(order));
+    }
+  }
+
   payInstallment(installmentId: string) {
-    this.studentCourseInstallmentService.setCourseInstallmentId(installmentId);
-    // this.router.navigate(['../collect'], { relativeTo: this.route });
+    if (this.paymentGatewayAccessKey) {
+      this.studentCourseInstallmentService.setCourseInstallmentId(installmentId);
+      this.dialogService
+        .open(CheckoutComponent, {
+          context: {},
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+        })
+        .onClose.subscribe((checkout: any) => checkout && this.onCheckout(checkout));
+      // this.router.navigate(['../collect'], { relativeTo: this.route });
+    }
   }
 
   private showToastr(position: any, status: any, message: string) {

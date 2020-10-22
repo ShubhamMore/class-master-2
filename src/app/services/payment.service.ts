@@ -8,6 +8,7 @@ import { throwError } from 'rxjs';
 })
 export class PaymentService {
   private paymentDetails: { planType: string; packageType: string; amount: string };
+  private institutePaymentDetails: { planType: string; packageType: string; amount: string };
 
   getPaymentDetails() {
     return this.paymentDetails;
@@ -21,11 +22,41 @@ export class PaymentService {
     this.paymentDetails = null;
   }
 
+  getInstitutePaymentDetails() {
+    return this.institutePaymentDetails;
+  }
+
+  setInstitutePaymentDetails(planType: string, packageType: string, amount: string) {
+    this.institutePaymentDetails = { planType, packageType, amount };
+  }
+
+  deleteInstitutePaymentDetails() {
+    this.institutePaymentDetails = null;
+  }
+
   constructor(private httpService: HttpService) {}
 
   verifyPayment(payment: any, placedOrder: any) {
     const data = {
       api: 'verifyPayment',
+      data: {
+        payment,
+        receipt: placedOrder,
+      },
+    };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  verifyInstitutePayment(payment: any, placedOrder: any) {
+    const data = {
+      api: 'verifyInstitutePayment',
       data: {
         payment,
         receipt: placedOrder,
