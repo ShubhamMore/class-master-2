@@ -34,8 +34,8 @@ const routes: Routes = [
       },
 
       {
-        path: 'ims-ids',
-        loadChildren: () => import('./ims-ids/ims-ids.module').then((m) => m.ImsIdsModule),
+        path: 'settings',
+        loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
         canActivate: [],
       },
 

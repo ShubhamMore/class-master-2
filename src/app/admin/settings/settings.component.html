@@ -1,0 +1,101 @@
+<nb-card>
+  <nb-card-header>
+    <button class="float-right" nbButton status="warning" size="tiny" (click)="back()">Back</button>
+    <h3>Settings</h3>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-8 col-sm-10 col-12 mx-auto">
+        <form [formGroup]="zoomKeysForm" (submit)="saveZoomKeys()">
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-access-token">Zoom Access Token:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-access-token"
+                  name="accessToken"
+                  formControlName="accessToken"
+                  placeholder="Zoom Access Token"
+                  fullWidth
+                  [status]="
+                    zoomKeysForm.get('accessToken').touched
+                      ? zoomKeysForm.get('accessToken').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    zoomKeysForm.get('accessToken').invalid &&
+                    zoomKeysForm.get('accessToken').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="zoomKeysForm.get('accessToken').errors?.required"
+                  >
+                    Zoom Access Token is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+              <div class="form-control-group">
+                <label class="label" for="input-secret-token">Zoom Secret Token:</label>
+                <nb-form-field>
+                  <input
+                    [type]="zoomShowSecret ? 'text' : 'password'"
+                    nbInput
+                    id="input-secret-token"
+                    name="secretToken"
+                    formControlName="secretToken"
+                    placeholder="Zoom Secret Token"
+                    fullWidth
+                    [status]="
+                      zoomKeysForm.get('secretToken').touched
+                        ? zoomKeysForm.get('secretToken').invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                  <button type="button" nbSuffix nbButton ghost (click)="toggleShowZoomSecret()">
+                    <nb-icon
+                      [icon]="zoomShowSecret ? 'eye-outline' : 'eye-off-2-outline'"
+                      pack="eva"
+                      [attr.aria-label]="zoomShowSecret ? 'show secret' : 'hide secret'"
+                    >
+                    </nb-icon>
+                  </button>
+                </nb-form-field>
+                <ng-container
+                  *ngIf="
+                    zoomKeysForm.get('secretToken').invalid &&
+                    zoomKeysForm.get('secretToken').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="zoomKeysForm.get('secretToken').errors?.required"
+                  >
+                    Zoom Secret Token is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-12 mt-3">
+              <button type="submit" class="float-right" nbButton size="small" status="primary">
+                Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

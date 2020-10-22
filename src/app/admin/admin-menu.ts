@@ -22,7 +22,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Membership Plans',
     icon: '',
-    link: '/admin/membership',
+    link: '/admin/membership-plans',
     hidden: false,
   },
 
@@ -36,9 +36,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 5
   {
-    title: 'IMS Ids',
+    title: 'Setting',
     icon: '',
-    link: '/admin/ims-ids',
+    link: '/admin/settings',
     hidden: false,
   },
 ];

@@ -1,11 +1,11 @@
-import { ImsIdsComponent } from './ims-ids.component';
+import { SettingsComponent } from './settings.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
     path: '',
-    component: ImsIdsComponent,
+    component: SettingsComponent,
   },
 
   {
@@ -25,4 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ImsIdsRoutingModule {}
+export class SettingsRoutingModule {}
