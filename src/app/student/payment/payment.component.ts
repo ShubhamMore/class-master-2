@@ -1,7 +1,11 @@
+import { BranchService } from './../../services/branch.service';
+import {
+  StudentCourseInstallmentModel,
+  InstallmentModel,
+} from './../../models/student-course-installment.model';
+import { InstituteOrderService } from './../../services/institute-order.service';
 import { StudentCourseInstallmentService } from './../../services/student-course-installment.service';
 import { InstituteKeysService } from './../../services/institute-keys.service';
-import { OrderService } from './../../services/order.service';
-import { environment } from './../../../environments/environment.prod';
 import { AuthService } from './../../authentication/auth/auth-service/auth.service';
 import { PaymentService } from './../../services/payment.service';
 import { NbToastrService, NbDialogRef } from '@nebular/theme';
@@ -16,6 +20,7 @@ declare const Razorpay: any;
 export class PaymentComponent implements OnInit, OnDestroy {
   loading: boolean;
   private user: any;
+  private branchId: string;
   private orderDetails: any;
   private options: any;
   private razorPay: any;
@@ -23,12 +28,15 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   private paymentGatewayAccessKey: string;
 
-  paymentDetails: any;
+  studentCourseInstallment: StudentCourseInstallmentModel;
+  courseInstallment: InstallmentModel;
+
   constructor(
+    private branchService: BranchService,
     private paymentService: PaymentService,
     private instituteKeysService: InstituteKeysService,
     private studentCourseInstallmentService: StudentCourseInstallmentService,
-    private orderService: OrderService,
+    private instituteOrderService: InstituteOrderService,
     private authService: AuthService,
     private toastrService: NbToastrService,
     protected ref: NbDialogRef<PaymentComponent>, // private router: Router, // private route: ActivatedRoute,
@@ -38,12 +46,30 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.user = this.authService.getUserData();
-    this.paymentDetails = this.paymentService.getPaymentDetails();
+
+    this.branchId = this.branchService.getBranchId();
+
+    if (!this.branchId) {
+      this.onClose();
+      return;
+    }
+
+    this.studentCourseInstallmentService
+      .getStudentCourseInstallmentData()
+      .subscribe((studentCourseInstallment: StudentCourseInstallmentModel) => {
+        this.studentCourseInstallment = studentCourseInstallment;
+      });
+
+    this.studentCourseInstallmentService
+      .getCourseInstallmentData()
+      .subscribe((courseInstallment: InstallmentModel) => {
+        this.courseInstallment = courseInstallment;
+      });
 
     this.paymentGatewayAccessKey = this.instituteKeysService.getLocalInstitutePaymentAccessKey();
 
     if (!this.paymentGatewayAccessKey) {
-      this.ref.close();
+      this.onClose();
       return;
     }
 
@@ -52,9 +78,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
       userPhone: this.user.phone,
       userName: this.user.name,
       userEmail: this.user.email,
-      amount: this.paymentDetails.amount,
-      packageType: this.paymentDetails.packageType,
-      planType: this.paymentDetails.planType,
+      amount: this.courseInstallment.installmentAmount,
+      studentInstallment: this.studentCourseInstallment._id,
+      installment: this.courseInstallment._id,
+      branch: this.branchId,
     };
 
     this.options = {
@@ -95,7 +122,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private generateOrder() {
-    this.orderService.generateOrder(this.orderDetails).subscribe(
+    this.instituteOrderService.generateInstituteOrder(this.orderDetails).subscribe(
       (res: any) => {
         this.placedOrderReceipt = res.paymentReceipt;
         // this.options.amount = res.order.amount;
@@ -119,7 +146,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private deleteOrder() {
-    this.orderService.deleteOrder(this.placedOrderReceipt._id).subscribe(
+    this.instituteOrderService.deleteInstituteOrder(this.placedOrderReceipt._id).subscribe(
       (res: any) => {
         this.placedOrderReceipt = null;
         this.ref.close({ status: false });
@@ -131,7 +158,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   verifyPayment(payment: any) {
-    this.paymentService.verifyPayment(payment, this.placedOrderReceipt).subscribe(
+    this.paymentService.verifyInstitutePayment(payment, this.placedOrderReceipt).subscribe(
       (res: any) => {
         this.showToastr('top-right', 'success', 'Payment Verified Successfully');
         this.ref.close({ status: true, order: res.orderId, receipt: res.receiptId });

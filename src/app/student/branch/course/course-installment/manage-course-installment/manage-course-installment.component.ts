@@ -6,7 +6,10 @@ import { StudentCourseService } from './../../../../../services/student-course.s
 import { StudentCourseModel } from './../../../../../models/student-course.model';
 import { StudentCourseInstallmentReceiptService } from './../../../../../services/student-course-installment-receipt.service';
 import { DateService } from './../../../../../services/shared-services/date.service';
-import { StudentCourseInstallmentModel } from './../../../../../models/student-course-installment.model';
+import {
+  InstallmentModel,
+  StudentCourseInstallmentModel,
+} from './../../../../../models/student-course-installment.model';
 import { StudentCourseInstallmentService } from './../../../../../services/student-course-installment.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from './../../../../../services/branch.service';
@@ -103,9 +106,10 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
     }
   }
 
-  payInstallment(installmentId: string) {
+  payInstallment(installment: InstallmentModel) {
     if (this.paymentGatewayAccessKey) {
-      this.studentCourseInstallmentService.setCourseInstallmentId(installmentId);
+      this.studentCourseInstallmentService.setCourseInstallmentId(installment._id);
+      this.studentCourseInstallmentService.setCourseInstallmentData(installment);
       this.dialogService
         .open(CheckoutComponent, {
           context: {},
@@ -113,7 +117,6 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
           closeOnEsc: false,
         })
         .onClose.subscribe((checkout: any) => checkout && this.onCheckout(checkout));
-      // this.router.navigate(['../collect'], { relativeTo: this.route });
     }
   }
 

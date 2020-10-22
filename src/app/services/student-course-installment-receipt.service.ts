@@ -56,6 +56,21 @@ export class StudentCourseInstallmentReceiptService {
     );
   }
 
+  generateStudentCourseInstallmentReceipt(studentCourseInstallmentReceipt: any) {
+    const data = {
+      api: 'generateStudentCourseInstallmentReceipt',
+      data: studentCourseInstallmentReceipt,
+    };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   changeStudentCourseInstallmentReceiptStatus(id: string, status: boolean) {
     const data = { api: 'changeStudentCourseInstallmentReceiptStatus', data: { id, status } };
     return this.httpService.httpPost(data).pipe(

@@ -6,6 +6,7 @@ import { HttpService } from './shared-services/http.service';
 })
 export class CheckoutService {
   private checkoutDetails: any;
+
   setCheckoutDetails(checkoutDetails: string) {
     this.checkoutDetails = checkoutDetails;
   }
@@ -13,5 +14,6 @@ export class CheckoutService {
   getCheckoutDetails() {
     return this.checkoutDetails;
   }
+
   constructor(private httpService: HttpService) {}
 }

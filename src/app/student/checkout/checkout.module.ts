@@ -7,7 +7,6 @@ import {
   NbFormFieldModule,
   NbIconModule,
   NbTooltipModule,
-  NbInputModule,
 } from '@nebular/theme';
 
 @NgModule({
@@ -15,7 +14,6 @@ import {
   imports: [
     CommonModule,
     NbCardModule,
-    NbInputModule,
     NbButtonModule,
     NbIconModule,
     NbTooltipModule,

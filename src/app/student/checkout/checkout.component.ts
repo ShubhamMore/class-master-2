@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
 import { CheckoutService } from '../../services/checkout.service';
-import { CouponService } from '../../services/coupon.service';
 import { PaymentService } from '../../services/payment.service';
 
 @Component({
@@ -15,20 +14,17 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private checkoutService: CheckoutService,
     private paymentService: PaymentService,
-    private couponService: CouponService,
     private toastrService: NbToastrService,
     protected ref: NbDialogRef<CheckoutComponent>,
   ) {}
 
   ngOnInit(): void {
-    this.checkoutData = this.paymentService.getPaymentDetails();
+    this.checkoutData = this.paymentService.getInstitutePaymentDetails();
   }
 
   onClose() {
     this.ref.close({ status: false });
   }
-
-  applyCoupon() {}
 
   checkout() {
     this.ref.close({ status: true });

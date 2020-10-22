@@ -9,21 +9,17 @@ import { throwError, BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class StudentCourseInstallmentService {
-  private courseInstallmentId: string;
+  // Installment
+
   private studentCourseInstallmentId: string;
   private studentCourseInstallments = new BehaviorSubject<StudentCourseInstallmentModel>(null);
 
-  setStudentCourseInstallmentData(studentCourseInstallments: StudentCourseInstallmentModel) {
-    this.studentCourseInstallments.next(studentCourseInstallments);
-  }
+  // Single Installment
 
-  getStudentCourseInstallmentData() {
-    return this.studentCourseInstallments;
-  }
+  private courseInstallmentId: string;
+  private courseInstallment = new BehaviorSubject<InstallmentModel>(null);
 
-  deleteStudentCourseInstallmentData() {
-    this.studentCourseInstallments.next(null);
-  }
+  // Installment Id
 
   setStudentCourseInstallmentId(studentCourseInstallmentId: string) {
     this.studentCourseInstallmentId = studentCourseInstallmentId;
@@ -37,6 +33,22 @@ export class StudentCourseInstallmentService {
     this.studentCourseInstallmentId = null;
   }
 
+  // Installments
+
+  setStudentCourseInstallmentData(studentCourseInstallments: StudentCourseInstallmentModel) {
+    this.studentCourseInstallments.next(studentCourseInstallments);
+  }
+
+  getStudentCourseInstallmentData() {
+    return this.studentCourseInstallments;
+  }
+
+  deleteStudentCourseInstallmentData() {
+    this.studentCourseInstallments.next(null);
+  }
+
+  // Single Installment Id
+
   setCourseInstallmentId(courseInstallmentId: string) {
     this.courseInstallmentId = courseInstallmentId;
   }
@@ -48,6 +60,22 @@ export class StudentCourseInstallmentService {
   deleteCourseInstallmentId() {
     this.courseInstallmentId = null;
   }
+
+  // Single Installment
+
+  setCourseInstallmentData(courseInstallment: InstallmentModel) {
+    this.courseInstallment.next(courseInstallment);
+  }
+
+  getCourseInstallmentData() {
+    return this.courseInstallment;
+  }
+
+  deleteCourseInstallmentData() {
+    this.courseInstallment.next(null);
+  }
+
+  // Set Course Installment Receipt
 
   setCourseInstallmentReceipt(installmentId: string, receiptId: string) {
     this.studentCourseInstallments.subscribe(
@@ -74,6 +102,8 @@ export class StudentCourseInstallmentService {
       },
     );
   }
+
+  // Get Course Installment by Installment Id
 
   getCourseInstallment(installmentId: string): Observable<InstallmentModel> {
     return this.studentCourseInstallments.pipe(

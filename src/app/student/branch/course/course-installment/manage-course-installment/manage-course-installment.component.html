@@ -85,7 +85,7 @@
                       (click)="
                         installment.receiptId
                           ? showReceipt(installment.receiptId)
-                          : payInstallment(installment._id)
+                          : payInstallment(installment)
                       "
                       *ngIf="installment.receiptId || paymentGatewayAccessKey"
                     >
