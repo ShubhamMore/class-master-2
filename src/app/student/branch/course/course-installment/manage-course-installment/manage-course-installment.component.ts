@@ -65,6 +65,10 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
         this.studentCourse = studentCourse;
       });
 
+    this.getStudentCourseInstallment();
+  }
+
+  getStudentCourseInstallment() {
     // New Code
     this.studentCourseInstallmentService
       .getStudentCourseInstallment(this.studentCourseInstallmentId)
@@ -121,19 +125,13 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
   }
 
   generateStudentCourseInstallmentReceipt(order: string, receipt: string) {
-    const courseInstallmentId = this.studentCourseInstallmentService.getCourseInstallmentId();
-
     this.loading = true;
     this.studentCourseInstallmentReceiptService
       .generateStudentCourseInstallmentReceipt(order, receipt)
       .subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'Receipt Generated Successfully');
-          this.studentCourseInstallmentService.setCourseInstallmentReceipt(
-            courseInstallmentId,
-            res.receiptId,
-          );
-          this.loading = false;
+          this.getStudentCourseInstallment();
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);

@@ -8,7 +8,7 @@ import { throwError } from 'rxjs';
 })
 export class PaymentService {
   private paymentDetails: { planType: string; packageType: string; amount: string };
-  private institutePaymentDetails: { planType: string; packageType: string; amount: string };
+  private institutePaymentDetails: { amount: string };
 
   getPaymentDetails() {
     return this.paymentDetails;
@@ -26,8 +26,8 @@ export class PaymentService {
     return this.institutePaymentDetails;
   }
 
-  setInstitutePaymentDetails(planType: string, packageType: string, amount: string) {
-    this.institutePaymentDetails = { planType, packageType, amount };
+  setInstitutePaymentDetails(amount: string) {
+    this.institutePaymentDetails = { amount };
   }
 
   deleteInstitutePaymentDetails() {

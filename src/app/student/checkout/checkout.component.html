@@ -10,16 +10,28 @@
       <table class="table table-bordered">
         <tbody>
           <tr>
-            <th>Plan Type:</th>
-            <td>{{ checkoutData.planType | uppercase }}</td>
+            <th>Category:</th>
+            <td>{{ studentCourse.categoryName }}</td>
           </tr>
           <tr>
-            <th>Package Type:</th>
-            <td>{{ checkoutData.packageType | uppercase }}</td>
+            <th>Course/Batch:</th>
+            <td>{{ studentCourse.courseName }}/{{ studentCourse.batchName }}</td>
           </tr>
           <tr>
-            <th>Amount:</th>
-            <td>{{ checkoutData.amount }}</td>
+            <th>Date:</th>
+            <td>{{ dateService.formatDate(courseInstallment.date) }}</td>
+          </tr>
+          <tr>
+            <th>Installment No:</th>
+            <td>{{ installment.installmentNo }}</td>
+          </tr>
+          <tr>
+            <th>Installment Date:</th>
+            <td>{{ dateService.formatDate(installment.installmentDate) }}</td>
+          </tr>
+          <tr>
+            <th>Installment Amount:</th>
+            <td>{{ installment.installmentAmount }}</td>
           </tr>
         </tbody>
       </table>
