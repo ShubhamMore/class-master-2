@@ -97,6 +97,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
       },
       (err: any) => {
         this.showToastr('top-right', 'danger', err);
+        this.onClose();
       },
     );
   }
@@ -113,6 +114,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
       },
       (err: any) => {
         this.showToastr('top-right', 'danger', err);
+        this.onClose();
       },
     );
   }
@@ -125,6 +127,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
       },
       (err: any) => {
         this.showToastr('top-right', 'danger', err);
+        this.onClose();
       },
     );
   }
