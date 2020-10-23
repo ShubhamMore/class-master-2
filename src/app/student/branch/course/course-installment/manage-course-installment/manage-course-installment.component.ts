@@ -90,7 +90,7 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
 
   onClosePayment(order: any) {
     if (order.status) {
-      // this.activateBranch(this.branchId, order.order, order.receipt);
+      this.generateStudentCourseInstallmentReceipt(order.order, order.receipt);
     }
   }
 
@@ -118,6 +118,28 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
         })
         .onClose.subscribe((checkout: any) => checkout && this.onCheckout(checkout));
     }
+  }
+
+  generateStudentCourseInstallmentReceipt(order: string, receipt: string) {
+    const courseInstallmentId = this.studentCourseInstallmentService.getCourseInstallmentId();
+
+    this.loading = true;
+    this.studentCourseInstallmentReceiptService
+      .generateStudentCourseInstallmentReceipt(order, receipt)
+      .subscribe(
+        (res: any) => {
+          this.showToastr('top-right', 'success', 'Receipt Generated Successfully');
+          this.studentCourseInstallmentService.setCourseInstallmentReceipt(
+            courseInstallmentId,
+            res.receiptId,
+          );
+          this.loading = false;
+        },
+        (error: any) => {
+          this.showToastr('top-right', 'danger', error);
+          this.loading = false;
+        },
+      );
   }
 
   private showToastr(position: any, status: any, message: string) {

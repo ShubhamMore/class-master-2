@@ -54,10 +54,11 @@ export class PaymentService {
     );
   }
 
-  verifyInstitutePayment(payment: any, placedOrder: any) {
+  verifyInstitutePayment(branch: string, payment: any, placedOrder: any) {
     const data = {
       api: 'verifyInstitutePayment',
       data: {
+        branch,
         payment,
         receipt: placedOrder,
       },

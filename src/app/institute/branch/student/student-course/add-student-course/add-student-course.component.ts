@@ -67,9 +67,9 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    route.queryParams.subscribe((param: Params) => {
-      this.ngOnInit();
-    });
+    // route.queryParams.subscribe((param: Params) => {
+    //   this.ngOnInit();
+    // });
   }
 
   ngOnInit(): void {

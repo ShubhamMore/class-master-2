@@ -48,8 +48,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.user = this.authService.getUserData();
 
     this.branchId = this.branchService.getBranchId();
+    this.paymentGatewayAccessKey = this.instituteKeysService.getLocalInstitutePaymentAccessKey();
 
-    if (!this.branchId) {
+    if (!this.branchId || !this.paymentGatewayAccessKey) {
       this.onClose();
       return;
     }
@@ -65,13 +66,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
       .subscribe((courseInstallment: InstallmentModel) => {
         this.courseInstallment = courseInstallment;
       });
-
-    this.paymentGatewayAccessKey = this.instituteKeysService.getLocalInstitutePaymentAccessKey();
-
-    if (!this.paymentGatewayAccessKey) {
-      this.onClose();
-      return;
-    }
 
     this.orderDetails = {
       userId: this.user._id,
@@ -158,15 +152,17 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   verifyPayment(payment: any) {
-    this.paymentService.verifyInstitutePayment(payment, this.placedOrderReceipt).subscribe(
-      (res: any) => {
-        this.showToastr('top-right', 'success', 'Payment Verified Successfully');
-        this.ref.close({ status: true, order: res.orderId, receipt: res.receiptId });
-      },
-      (err: any) => {
-        this.showToastr('top-right', 'danger', err);
-      },
-    );
+    this.paymentService
+      .verifyInstitutePayment(this.branchId, payment, this.placedOrderReceipt)
+      .subscribe(
+        (res: any) => {
+          this.showToastr('top-right', 'success', 'Payment Verified Successfully');
+          this.ref.close({ status: true, order: res.orderId, receipt: res.receiptId });
+        },
+        (err: any) => {
+          this.showToastr('top-right', 'danger', err);
+        },
+      );
   }
 
   onClose() {

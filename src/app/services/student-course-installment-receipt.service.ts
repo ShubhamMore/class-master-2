@@ -56,10 +56,13 @@ export class StudentCourseInstallmentReceiptService {
     );
   }
 
-  generateStudentCourseInstallmentReceipt(studentCourseInstallmentReceipt: any) {
+  generateStudentCourseInstallmentReceipt(order: string, receipt: string) {
     const data = {
       api: 'generateStudentCourseInstallmentReceipt',
-      data: studentCourseInstallmentReceipt,
+      data: {
+        order,
+        receipt,
+      },
     };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {

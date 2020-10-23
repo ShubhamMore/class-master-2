@@ -45,10 +45,10 @@ export class AddSalaryComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    route.queryParams.subscribe((param: Params) => {
-      // put the code from `ngOnInit` here
-      this.ngOnInit();
-    });
+    // route.queryParams.subscribe((param: Params) => {
+    //   // put the code from `ngOnInit` here
+    //   this.ngOnInit();
+    // });
   }
 
   ngOnInit(): void {
