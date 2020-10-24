@@ -1,1 +1,69 @@
-<p>coupon works!</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>Coupons</h3>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <button nbButton status="primary" size="small" fullWidth (click)="addCoupon()">
+          Add Coupon <nb-icon icon="plus-circle-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive" *ngIf="coupons.length > 0; else noCoupons">
+          <table class="table">
+            <thead>
+              <th>#</th>
+              <th>Coupon Code</th>
+              <th>Discount</th>
+              <th>Expiry Date</th>
+              <th colspan="2">Action</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let coupon of coupons; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ coupon.code }}</td>
+                <td>
+                  {{ coupon.discountAmount }}{{ coupon.discountType === 'percentage' ? '%' : '/-' }}
+                </td>
+                <td>{{ coupon.expiryDate ? dateService.formatDate(coupon.expiryDate) : '--' }}</td>
+                <td>
+                  <button
+                    type="button"
+                    nbButton
+                    status="basic"
+                    size="small"
+                    (click)="editCoupon(coupon)"
+                  >
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    nbButton
+                    status="danger"
+                    size="small"
+                    (click)="deleteCoupon(coupon._id)"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #noCoupons>
+  <p class="pt-5 pb-5 text-center">
+    No Coupons
+  </p>
+</ng-template>

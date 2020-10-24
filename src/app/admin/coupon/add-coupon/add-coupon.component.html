@@ -1,1 +1,240 @@
-<p>add-coupon works!</p>
+<nb-card class="coupon-box">
+  <nb-card-header>
+    <nb-icon class="float-right pointer" icon="close-outline" (click)="onClose()"></nb-icon>
+    <h3 class="">
+      {{ !coupon ? 'Add New Coupon' : 'Edit Coupon ' + (coupon.code | uppercase) }}
+    </h3>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper #stepper [linear]="true">
+      <nb-step [stepControl]="couponForm" label="Coupon Details">
+        <form class="" (submit)="submitCoupon()" [formGroup]="couponForm">
+          <h6>Coupon:</h6>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-code">Code:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-code"
+                  name="code"
+                  formControlName="code"
+                  placeholder="Code"
+                  maxlength="30"
+                  fullWidth
+                  [status]="
+                    couponForm.get('code').touched
+                      ? couponForm.get('code').invalid || !validCouponCode
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (input)="checkCouponCode($event.target.value)"
+                />
+                <ng-container *ngIf="couponForm.get('code').touched">
+                  <p class="caption status-danger" *ngIf="couponForm.get('code').errors?.required">
+                    Code is required!
+                  </p>
+                  <p class="caption status-danger" *ngIf="!validCouponCode">
+                    This Coupon Code Already Exist!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-billing-discount-type">Discount Type:</label>
+                <nb-select
+                  id="input-discount-type"
+                  name="discountType"
+                  formControlName="discountType"
+                  placeholder="Select Discount Type"
+                  fullWidth
+                  [status]="
+                    couponForm.get('discountType').touched
+                      ? couponForm.get('discountType').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="">Select Discount Type</nb-option>
+                  <nb-option *ngFor="let discountType of discountTypes" [value]="discountType">{{
+                    discountType | uppercase
+                  }}</nb-option>
+                </nb-select>
+                <ng-container *ngIf="couponForm.get('discountType').touched">
+                  <p
+                    class="caption status-danger"
+                    *ngIf="couponForm.get('discountType').errors?.required"
+                  >
+                    Discount Type is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-discount-amount">Discount Amount:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-discount-amount"
+                  name="discountAmount"
+                  min="0"
+                  formControlName="discountAmount"
+                  placeholder="Discount {{
+                    couponForm.value.discountType === 'percentage' ? 'Percentage (%)' : 'Amount'
+                  }} "
+                  fullWidth
+                  [status]="
+                    couponForm.get('discountAmount').touched
+                      ? couponForm.get('discountAmount').invalid ||
+                        couponForm.hasError('invalidDiscountPercentage')
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container *ngIf="couponForm.get('discountAmount').touched">
+                  <p
+                    class="caption status-danger"
+                    *ngIf="couponForm.get('discountAmount').errors?.required"
+                  >
+                    Discount Amount is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="couponForm.get('discountAmount').errors?.min"
+                  >
+                    Discount Amount should be more than or equal to 0
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="couponForm.hasError('invalidDiscountPercentage')"
+                  >
+                    Discount Percentage should be between 0% to 100%
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-expiry-date">Expiry Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-expiry-date"
+                  name="expiryDate"
+                  [min]="dateService.getDateString()"
+                  formControlName="expiryDate"
+                  placeholder="Expiry Date "
+                  fullWidth
+                />
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-billing-description">Description:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-description"
+                  name="description"
+                  formControlName="description"
+                  placeholder="Description (Optional)"
+                  fullWidth
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-billing-terms-and-conditions"
+                  >Terms & Conditions:</label
+                >
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-terms-and-conditions"
+                  name="termsAndConditions"
+                  formControlName="termsAndConditions"
+                  placeholder="Terms & Conditions (Optional)"
+                  fullWidth
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <button nbButton type="submit">
+                <span>Next</span>
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step label="Submit">
+        <div class="step-container">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Coupon Code</th>
+                  <td>{{ couponForm.value.code }}</td>
+                </tr>
+                <tr>
+                  <th>Discount Type</th>
+                  <td>{{ couponForm.value.discountType | uppercase }}</td>
+                </tr>
+                <tr>
+                  <th>Discount Amount</th>
+                  <td>
+                    {{ couponForm.value.discountAmount }}
+                    {{ couponForm.value.discountType === 'percentage' ? '%' : '' }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Expiry Date</th>
+                  <td>{{ dateService.formatDate(couponForm.value.expiryDate) }}</td>
+                </tr>
+                <tr>
+                  <th>Description</th>
+                  <td>{{ couponForm.value.description }}</td>
+                </tr>
+                <tr>
+                  <th>Terms & Conditions</th>
+                  <td>{{ couponForm.value.termsAndConditions }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button class="" nbButton nbStepperPrevious>
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton (click)="saveCoupon()"><span>Submit</span></button>
+            </div>
+          </div>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

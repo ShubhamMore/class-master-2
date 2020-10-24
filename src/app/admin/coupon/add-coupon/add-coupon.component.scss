@@ -1,0 +1,28 @@
+.coupon-box {
+  width: 60vw;
+  height: auto;
+}
+
+@media only screen and (max-width: 1200px) {
+  .coupon-box {
+    width: 65vw;
+  }
+}
+
+@media only screen and (max-width: 840px) {
+  .coupon-box {
+    width: 70vw;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .coupon-box {
+    width: 90vw;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .coupon-box {
+    width: 96vw;
+  }
+}

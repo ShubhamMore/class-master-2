@@ -5,6 +5,7 @@ import {
   NbButtonModule,
   NbSelectModule,
   NbIconModule,
+  NbStepperModule,
 } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -24,6 +25,7 @@ import { AddCouponComponent } from './add-coupon/add-coupon.component';
     NbSelectModule,
     NbIconModule,
     ReactiveFormsModule,
+    NbStepperModule,
   ],
 })
 export class CouponModule {}
