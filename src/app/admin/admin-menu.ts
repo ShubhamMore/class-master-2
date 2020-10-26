@@ -36,6 +36,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 5
   {
+    title: 'Users',
+    icon: '',
+    link: '/admin/users',
+    hidden: false,
+  },
+
+  // 6
+  {
     title: 'Setting',
     icon: '',
     link: '/admin/settings',
