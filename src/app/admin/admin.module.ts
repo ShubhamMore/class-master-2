@@ -1,4 +1,6 @@
-import { AdminService } from './admin.service';
+import { UserService } from './services/user.service';
+import { InstituteService } from './services/institute.service';
+import { AdminZoomService } from './services/admin-zoom.service';
 import { MenuService } from './menu.service';
 import { NbMenuModule } from '@nebular/theme';
 import { ThemeModule } from './../@theme/theme.module';
@@ -11,6 +13,6 @@ import { AdminComponent } from './admin.component';
 @NgModule({
   declarations: [AdminComponent],
   imports: [CommonModule, ThemeModule, NbMenuModule, AdminRoutingModule],
-  providers: [MenuService, AdminService],
+  providers: [MenuService, AdminZoomService, InstituteService, UserService],
 })
 export class AdminModule {}

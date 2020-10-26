@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InstituteKeysModel } from './../../models/institute-keys.model';
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../admin.service';
+import { AdminZoomService } from '../services/admin-zoom.service';
 
 @Component({
   selector: 'ngx-settings',
@@ -21,7 +21,7 @@ export class SettingsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastrService: NbToastrService,
-    private adminService: AdminService,
+    private adminZoomService: AdminZoomService,
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +33,7 @@ export class SettingsComponent implements OnInit {
       secretToken: new FormControl(null, { validators: [Validators.required] }),
     });
 
-    this.adminService.getAdminZoomKeys().subscribe(
+    this.adminZoomService.getAdminZoomKeys().subscribe(
       (zoomKeys: any) => {
         if (zoomKeys) {
           this.zoomKeysForm.patchValue({
@@ -63,9 +63,9 @@ export class SettingsComponent implements OnInit {
       secretKey: this.zoomKeysForm.value.secretToken,
     };
 
-    this.adminService.saveAdminZoomKeys(keys).subscribe(
+    this.adminZoomService.saveAdminZoomKeys(keys).subscribe(
       (res: any) => {
-        this.adminService.getAdminZoomAuthLink().subscribe((responce: any) => {
+        this.adminZoomService.getAdminZoomAuthLink().subscribe((responce: any) => {
           const popup = window.open(
             responce.authLink,
             '_blank',

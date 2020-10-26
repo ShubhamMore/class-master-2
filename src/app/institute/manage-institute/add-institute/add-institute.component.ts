@@ -329,6 +329,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
       this.branchService.addBranch(branch).subscribe(
         (res: any) => {
           this.branchId = res.branchId;
+          this.branchService.setBranchId(this.branchId);
 
           this.dialogService
             .open(CheckoutComponent, {
@@ -361,6 +362,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
       this.branchService.deleteBranch(this.branchId).subscribe(
         (res: any) => {
           this.branchId = null;
+          this.branchService.deleteBranchId();
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);

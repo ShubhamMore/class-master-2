@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '../services/shared-services/http.service';
+import { HttpService } from '../../services/shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 @Injectable()
-export class AdminService {
+export class UserService {
   constructor(private httpService: HttpService) {}
 
-  saveAdminZoomKeys(keys: any) {
+  getUsers() {
     const data = {
-      api: 'saveAdminZoomKeys',
-      data: keys,
+      api: 'getUsers',
+      data: {},
     };
 
     return this.httpService.httpPost(data).pipe(
@@ -23,25 +23,10 @@ export class AdminService {
     );
   }
 
-  getAdminZoomKeys() {
+  changeUserStatus(user: string, status: boolean) {
     const data = {
-      api: 'getAdminZoomKeys',
-    };
-
-    return this.httpService.httpGet(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      }),
-    );
-  }
-
-  getAdminZoomAuthLink() {
-    const data = {
-      api: 'getAdminZoomAuthLink',
-      data: {},
+      api: 'changeUserStatus',
+      data: { user, status },
     };
 
     return this.httpService.httpPost(data).pipe(

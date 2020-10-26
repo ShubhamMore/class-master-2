@@ -1,3 +1,4 @@
+import { BranchService } from './../../services/branch.service';
 import { CouponService } from './../../services/coupon.service';
 import { OrderService } from './../../services/order.service';
 import { environment } from './../../../environments/environment.prod';
@@ -22,6 +23,7 @@ interface Coupon {
 })
 export class PaymentComponent implements OnInit, OnDestroy {
   loading: boolean;
+
   private user: any;
   private orderDetails: any;
   private options: any;
@@ -30,6 +32,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   paymentDetails: any;
   constructor(
+    private branchService: BranchService,
     private paymentService: PaymentService,
     private couponService: CouponService,
     private orderService: OrderService,
@@ -78,7 +81,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
     const coupon: Coupon = this.couponService.getAppliedCoupon();
 
+    const branchId = this.branchService.getBranchId();
+
     this.orderDetails = {
+      branch: branchId,
       userId: this.user.imsMasterId,
       userPhone: this.user.phone,
       userName: this.user.name,
