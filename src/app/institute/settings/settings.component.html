@@ -14,12 +14,12 @@
           <div class="row">
             <div class="col-md-6 col-12">
               <div class="form-control-group">
-                <label class="label" for="input-access-token">Zoom Access Token:</label>
+                <label class="label" for="input-zoom-access-token">Zoom Access Token:</label>
                 <input
                   type="text"
                   nbInput
-                  id="input-access-token"
-                  name="accessToken"
+                  id="input-zoom-access-token"
+                  name="zoomAccessToken"
                   formControlName="accessToken"
                   placeholder="Zoom Access Token"
                   fullWidth
@@ -49,13 +49,13 @@
 
             <div class="col-md-6 col-12">
               <div class="form-control-group">
-                <label class="label" for="input-secret-token">Zoom Secret Token:</label>
+                <label class="label" for="input-zoom-secret-token">Zoom Secret Token:</label>
                 <nb-form-field>
                   <input
                     [type]="zoomShowSecret ? 'text' : 'password'"
                     nbInput
-                    id="input-secret-token"
-                    name="secretToken"
+                    id="input-zoom-secret-token"
+                    name="zoomSecretToken"
                     formControlName="secretToken"
                     placeholder="Zoom Secret Token"
                     fullWidth
@@ -114,12 +114,14 @@
           <div class="row">
             <div class="col-md-6 col-12">
               <div class="form-control-group">
-                <label class="label" for="input-access-token">Payment Gateway Access Token:</label>
+                <label class="label" for="input-payment-gateway-access-token"
+                  >Payment Gateway Access Token:</label
+                >
                 <input
                   type="text"
                   nbInput
-                  id="input-access-token"
-                  name="accessToken"
+                  id="input-payment-gateway-access-token"
+                  name="paymentGatewayAccessToken"
                   formControlName="accessToken"
                   placeholder="Payment Gateway Access Token"
                   fullWidth
@@ -149,13 +151,15 @@
 
             <div class="col-md-6 col-12">
               <div class="form-control-group">
-                <label class="label" for="input-secret-token">Payment Gateway Secret Token:</label>
+                <label class="label" for="input-payment-gateway-secret-token"
+                  >Payment Gateway Secret Token:</label
+                >
                 <nb-form-field>
                   <input
                     [type]="paymentGatewayShowSecret ? 'text' : 'password'"
                     nbInput
-                    id="input-secret-token"
-                    name="secretToken"
+                    id="input-payment-gateway-secret-token"
+                    name="paymentGatewaySecretToken"
                     formControlName="secretToken"
                     placeholder="Payment Gateway Secret Token"
                     fullWidth
