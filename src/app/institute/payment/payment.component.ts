@@ -1,3 +1,4 @@
+import { CouponService } from './../../services/coupon.service';
 import { OrderService } from './../../services/order.service';
 import { environment } from './../../../environments/environment.prod';
 import { AuthService } from './../../authentication/auth/auth-service/auth.service';
@@ -6,6 +7,14 @@ import { NbToastrService, NbDialogRef } from '@nebular/theme';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 declare const Razorpay: any;
+
+interface Coupon {
+  code: string;
+  discount: string;
+  discountAmount: number;
+  totalAmount: string;
+  discountType?: string;
+}
 @Component({
   selector: 'ngx-payment',
   templateUrl: './payment.component.html',
@@ -22,6 +31,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   paymentDetails: any;
   constructor(
     private paymentService: PaymentService,
+    private couponService: CouponService,
     private orderService: OrderService,
     private authService: AuthService,
     private toastrService: NbToastrService,
@@ -33,16 +43,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
     this.user = this.authService.getUserData();
     this.paymentDetails = this.paymentService.getPaymentDetails();
-
-    this.orderDetails = {
-      userId: this.user._id,
-      userPhone: this.user.phone,
-      userName: this.user.name,
-      userEmail: this.user.email,
-      amount: this.paymentDetails.amount,
-      packageType: this.paymentDetails.packageType,
-      planType: this.paymentDetails.planType,
-    };
 
     this.options = {
       key: environment.razorpayKeyId, // Enter the Key ID generated from the Dashboard
@@ -75,6 +75,22 @@ export class PaymentComponent implements OnInit, OnDestroy {
     };
 
     this.razorPay = new Razorpay(this.options);
+
+    const coupon: Coupon = this.couponService.getAppliedCoupon();
+
+    this.orderDetails = {
+      userId: this.user.imsMasterId,
+      userPhone: this.user.phone,
+      userName: this.user.name,
+      userEmail: this.user.email,
+      amount: this.paymentDetails.amount,
+      packageType: this.paymentDetails.packageType,
+      planType: this.paymentDetails.planType,
+    };
+
+    if (coupon) {
+      this.orderDetails.coupon = coupon.code;
+    }
 
     this.generateOrder();
 
@@ -143,5 +159,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.couponService.deleteAppliedCoupon();
+  }
 }

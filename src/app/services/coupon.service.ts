@@ -4,11 +4,19 @@ import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
 
+interface Coupon {
+  code: string;
+  discount: string;
+  discountAmount: number;
+  totalAmount: string;
+  discountType?: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class CouponService {
   private discountTypes: string[] = ['percentage', 'amount'];
 
-  private coupons = new BehaviorSubject<CouponModel[]>([]);
+  private appliedCoupon: Coupon;
   private coupon = new BehaviorSubject<CouponModel>(null);
   private couponId: string;
 
@@ -28,16 +36,16 @@ export class CouponService {
     this.couponId = null;
   }
 
-  setCouponsData(coupons: CouponModel[]) {
-    this.coupons.next(coupons);
+  setAppliedCoupon(appliedCoupon: Coupon) {
+    this.appliedCoupon = appliedCoupon;
   }
 
-  getCouponsData() {
-    return this.coupons;
+  getAppliedCoupon() {
+    return this.appliedCoupon;
   }
 
-  deleteCouponsData() {
-    this.coupons.next([]);
+  deleteAppliedCoupon() {
+    this.appliedCoupon = null;
   }
 
   setCouponData(coupon: CouponModel) {

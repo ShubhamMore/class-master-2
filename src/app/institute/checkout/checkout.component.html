@@ -19,14 +19,20 @@
           </tr>
           <tr>
             <th>Amount:</th>
-            <td>{{ checkoutData.amount }}</td>
+            <td>{{ getAmount(checkoutData.amount) }}/-</td>
           </tr>
-          <tr>
+          <tr *ngIf="!coupon">
             <th>Coupon Code:</th>
             <td>
               <nb-form-field>
-                <input type="text" nbInput fullWidth />
+                <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  (input)="changeCouponCode($event.target.value)"
+                />
                 <button
+                  type="button"
                   nbSuffix
                   nbButton
                   ghost
@@ -39,12 +45,35 @@
               </nb-form-field>
             </td>
           </tr>
+          <tr *ngIf="coupon">
+            <th>Coupon Code:</th>
+            <td>{{ coupon.code }}</td>
+          </tr>
+          <tr *ngIf="coupon">
+            <th>Discount:</th>
+            <td>{{ coupon.discount }}</td>
+          </tr>
+          <tr *ngIf="coupon">
+            <th>Discount Amount:</th>
+            <td>{{ getAmount(coupon.discountAmount) }}/-</td>
+          </tr>
+          <tr *ngIf="coupon">
+            <th>Total Amount:</th>
+            <td>{{ getAmount(coupon.totalAmount) }}/-</td>
+          </tr>
         </tbody>
       </table>
     </div>
   </nb-card-body>
   <nb-card-footer>
-    <button class="float-right" nbButton status="primary" size="small" (click)="checkout()">
+    <button
+      type="button"
+      class="float-right"
+      nbButton
+      status="primary"
+      size="small"
+      (click)="checkout()"
+    >
       Checkout
     </button>
   </nb-card-footer>

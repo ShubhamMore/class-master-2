@@ -1,1 +1,45 @@
-<p>membership-plans works!</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>Membership Plans</h3>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <th>#</th>
+              <th>Membership Type</th>
+              <th>Duration</th>
+              <th>Price</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let membership of memberships; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ membership.name | uppercase }}</td>
+                <td>{{ membership.duration }} Month/s</td>
+                <td>{{ getAmount(membership.price) }}/-</td>
+                <td>
+                  <button
+                    type="button"
+                    nbButton
+                    status="basic"
+                    size="small"
+                    (click)="editMembership(membership)"
+                  >
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
