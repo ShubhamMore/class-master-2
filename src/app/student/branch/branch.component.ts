@@ -1,3 +1,4 @@
+import { BranchModel } from './../../models/branch.model';
 import { InstituteKeysService } from './../../services/institute-keys.service';
 import { NbToastrService } from '@nebular/theme';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,16 +31,24 @@ export class BranchComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.branchService.getBranchForStudent(this.branchId).subscribe(
+      (branch: BranchModel) => {
+        this.branchService.setBranchData(branch);
+        this.loading = false;
+      },
+      (error: any) => {
+        this.showToastr('top-right', 'danger', error);
+        this.router.navigate(['../'], { relativeTo: this.route });
+      },
+    );
+
     this.instituteKeysService.getInstitutePaymentAccessKey(this.branchId).subscribe(
       (paymentGateway: any) => {
         if (paymentGateway && paymentGateway.accessKey) {
           this.instituteKeysService.setLocalInstitutePaymentAccessKey(paymentGateway.accessKey);
         }
-        this.loading = false;
       },
-      (error: any) => {
-        this.loading = false;
-      },
+      (error: any) => {},
     );
   }
 

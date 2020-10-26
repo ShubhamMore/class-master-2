@@ -1,3 +1,6 @@
+import { StudentCourseService } from './../../services/student-course.service';
+import { StudentCourseModel } from './../../models/student-course.model';
+import { BranchModel } from './../../models/branch.model';
 import { BranchService } from './../../services/branch.service';
 import {
   StudentCourseInstallmentModel,
@@ -26,15 +29,19 @@ export class PaymentComponent implements OnInit, OnDestroy {
   private razorPay: any;
   private placedOrderReceipt: any;
 
+  branch: BranchModel;
+
   private paymentGatewayAccessKey: string;
 
   studentCourseInstallment: StudentCourseInstallmentModel;
   courseInstallment: InstallmentModel;
+  studentCourse: StudentCourseModel;
 
   constructor(
     private branchService: BranchService,
     private paymentService: PaymentService,
     private instituteKeysService: InstituteKeysService,
+    private studentCourseService: StudentCourseService,
     private studentCourseInstallmentService: StudentCourseInstallmentService,
     private instituteOrderService: InstituteOrderService,
     private authService: AuthService,
@@ -48,6 +55,17 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.user = this.authService.getUserData();
 
     this.branchId = this.branchService.getBranchId();
+
+    this.branchService.getBranchData().subscribe((branch: BranchModel) => {
+      this.branch = branch;
+    });
+
+    this.studentCourseService
+      .getStudentCourseData()
+      .subscribe((studentCourse: StudentCourseModel) => {
+        this.studentCourse = studentCourse;
+      });
+
     this.paymentGatewayAccessKey = this.instituteKeysService.getLocalInstitutePaymentAccessKey();
 
     if (!this.branchId || !this.paymentGatewayAccessKey) {
@@ -82,9 +100,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
       key: this.paymentGatewayAccessKey, // Enter the Key ID generated from the Dashboard
       amount: '', // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       currency: 'INR',
-      name: 'IMS Master',
-      description: 'Class Master Transaction',
-      image: '../../../assets/brand/class-master-mini.png',
+      name: this.branch ? this.branch.basicDetails.branchName : 'Institute Fees',
+      description: this.getPaymentDescription(),
+      // image: '../../../assets/brand/class-master-mini.png',
       // tslint:disable-next-line: max-line-length
       order_id: '', // This is a sample Order ID. Pass the `id` obtained in the response of Step 1 order_9A33XWu170gUtm
       handler: (response: any) => {
@@ -113,6 +131,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.generateOrder();
 
     this.loading = false;
+  }
+
+  getPaymentDescription() {
+    return `Installment ${this.courseInstallment.installmentNo} of Course ${this.studentCourse.courseName}`;
   }
 
   private generateOrder() {

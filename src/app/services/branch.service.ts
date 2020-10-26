@@ -135,6 +135,18 @@ export class BranchService {
     );
   }
 
+  getBranchForStudent(id: string) {
+    const data = { api: 'getBranchForStudent', data: { id } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getBranchesForStudent() {
     const data = { api: 'getBranchesForStudent', data: {} };
     return this.httpService.httpPost(data).pipe(
