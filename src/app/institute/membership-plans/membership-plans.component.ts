@@ -1,3 +1,4 @@
+import { MembershipPlanModel } from './../../models/membership-plan.model';
 import { PaymentComponent } from './../payment/payment.component';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { CheckoutComponent } from './../checkout/checkout.component';
@@ -14,9 +15,14 @@ import { MembershipService } from '../../services/membership.service';
   styleUrls: ['./membership-plans.component.scss'],
 })
 export class MembershipPlansComponent implements OnInit, OnDestroy {
+  loading: boolean;
+
   branchId: string;
   membershipType: string;
   paymentDetails: any;
+
+  membershipPlans: MembershipPlanModel[];
+
   constructor(
     private menuService: MenuService,
     private branchService: BranchService,
@@ -29,6 +35,7 @@ export class MembershipPlansComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.branchId = this.branchService.getBranchId();
     this.membershipType = this.membershipService.getMembershipType();
 
@@ -37,7 +44,34 @@ export class MembershipPlansComponent implements OnInit, OnDestroy {
       this.branchId = null;
     }
 
+    this.membershipPlans = [];
+
+    this.getMembershipPlans();
+
     this.menuService.hideMenu();
+  }
+
+  getMembershipPlans() {
+    this.membershipService.getMemberships().subscribe(
+      (membershipPlans: MembershipPlanModel[]) => {
+        this.membershipPlans = membershipPlans;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+      },
+    );
+  }
+
+  getPrice(name: string) {
+    const membershipPlan = this.getMembership(name);
+
+    if (membershipPlan) {
+      const price = parseFloat(membershipPlan.price.toString());
+      return price.toFixed(2).toString() + '/-';
+    } else {
+      return '--';
+    }
   }
 
   onClosePayment(order: any) {
@@ -58,20 +92,39 @@ export class MembershipPlansComponent implements OnInit, OnDestroy {
     }
   }
 
-  activate(planType: string, packageType: string, amount: string) {
-    this.paymentService.setPaymentDetails(planType, packageType, amount);
+  getMembership(name: string) {
+    return this.membershipPlans.find(
+      (curMembershipPlan: MembershipPlanModel) => curMembershipPlan.name === name,
+    );
+  }
 
-    if (this.branchId && this.membershipType === 'renew') {
-      this.paymentDetails = this.paymentService.getPaymentDetails();
-      this.dialogService
-        .open(CheckoutComponent, {
-          context: {},
-          closeOnBackdropClick: false,
-          closeOnEsc: false,
-        })
-        .onClose.subscribe((checkout: any) => checkout && this.onCheckout(checkout));
-    } else {
-      this.router.navigate(['../add'], { relativeTo: this.route });
+  isMembershipPlanAvailable(name: string): boolean {
+    const membershipPlan = this.getMembership(name);
+
+    if (membershipPlan) {
+      return true;
+    }
+    return false;
+  }
+
+  activate(planType: string, packageType: string) {
+    const membershipPlan = this.getMembership(packageType);
+
+    if (membershipPlan) {
+      this.paymentService.setPaymentDetails(planType, packageType, membershipPlan.price);
+
+      if (this.branchId && this.membershipType === 'renew') {
+        this.paymentDetails = this.paymentService.getPaymentDetails();
+        this.dialogService
+          .open(CheckoutComponent, {
+            context: {},
+            closeOnBackdropClick: false,
+            closeOnEsc: false,
+          })
+          .onClose.subscribe((checkout: any) => checkout && this.onCheckout(checkout));
+      } else {
+        this.router.navigate(['../add'], { relativeTo: this.route });
+      }
     }
   }
 
