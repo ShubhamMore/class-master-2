@@ -26,6 +26,7 @@ import { Subject } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
+
   userPictureOnly: boolean = false;
   user: any;
 
@@ -199,9 +200,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   toggleSidebar(): boolean {
-    this.sidebarService.toggle(true, 'menu-sidebar');
+    this.sidebarService.toggle(false, 'menu-sidebar');
     this.layoutService.changeLayoutSize();
-
     return false;
   }
 
