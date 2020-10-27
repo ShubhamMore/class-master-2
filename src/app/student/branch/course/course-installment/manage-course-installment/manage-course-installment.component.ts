@@ -69,7 +69,7 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
   }
 
   getStudentCourseInstallment() {
-    // New Code
+    this.loading = true;
     this.studentCourseInstallmentService
       .getStudentCourseInstallment(this.studentCourseInstallmentId)
       .subscribe(
@@ -147,5 +147,7 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.studentCourseInstallmentService.deleteStudentCourseInstallmentData();
+  }
 }

@@ -1,1 +1,195 @@
-<p>users works!</p>
+<nb-card>
+  <nb-card-header>
+    <h3>USERS</h3>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-tabset
+      fullWidth
+      *ngIf="!loading; else loadingData"
+      [routeParam]="curTab"
+      (changeTab)="changeTab($event.tabTitle)"
+    >
+      <nb-tab tabTitle="institutes">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <nb-form-field>
+              <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+              <input
+                type="text"
+                nbInput
+                shape="round"
+                placeholder="Search Institute"
+                fullWidth
+                (input)="searchInstitute($event.target.value)"
+              />
+            </nb-form-field>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="table-responsive" *ngIf="filteredInstitutes.length > 0; else noInstitutes">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>IMS Master ID</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of institutes; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.imsMasterId }}</td>
+                <td>{{ user.status ? 'Active' : 'Inactive' }}</td>
+                <td>
+                  <button
+                    type="button"
+                    nbButton
+                    size="small"
+                    [status]="!user.status ? 'success' : 'danger'"
+                    (click)="changeUserStatus('institute', user.imsMasterId, !user.status)"
+                  >
+                    {{ !user.status ? 'Activate' : 'Deactivate' }}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-tab>
+      <nb-tab tabTitle="employees">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <nb-form-field>
+              <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+              <input
+                type="text"
+                nbInput
+                shape="round"
+                placeholder="Search Employee"
+                fullWidth
+                (input)="searchEmployee($event.target.value)"
+              />
+            </nb-form-field>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="table-responsive" *ngIf="filteredEmployees.length > 0; else noEmployees">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>IMS Master ID</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of employees; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.imsMasterId }}</td>
+                <td>{{ user.status ? 'Active' : 'Inactive' }}</td>
+                <td>
+                  <button
+                    type="button"
+                    nbButton
+                    size="small"
+                    [status]="!user.status ? 'success' : 'danger'"
+                    (click)="changeUserStatus('employee', user.imsMasterId, !user.status)"
+                  >
+                    {{ !user.status ? 'Activate' : 'Deactivate' }}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-tab>
+      <nb-tab tabTitle="students">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <nb-form-field>
+              <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+              <input
+                type="text"
+                nbInput
+                shape="round"
+                placeholder="Search Student"
+                fullWidth
+                (input)="searchStudent($event.target.value)"
+              />
+            </nb-form-field>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="table-responsive" *ngIf="filteredStudents.length > 0; else noStudents">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>IMS Master ID</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of students; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.imsMasterId }}</td>
+                <td>{{ user.status ? 'Active' : 'Inactive' }}</td>
+                <td>
+                  <button
+                    type="button"
+                    nbButton
+                    size="small"
+                    [status]="!user.status ? 'success' : 'danger'"
+                    (click)="changeUserStatus('student', user.imsMasterId, !user.status)"
+                  >
+                    {{ !user.status ? 'Activate' : 'Deactivate' }}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #noInstitutes>
+  <p class="pt-5 pb-5 text-center">No Institutes</p>
+</ng-template>
+<ng-template #noEmployees>
+  <p class="pt-5 pb-5 text-center">No Employees</p>
+</ng-template>
+<ng-template #noStudents>
+  <p class="pt-5 pb-5 text-center">No Students</p>
+</ng-template>
+<ng-template #loadingData>
+  <p class="pt-5 pb-5 text-center">Loading...</p>
+</ng-template>

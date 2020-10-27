@@ -1,3 +1,4 @@
+import { LectureService } from './../../../services/lecture.service';
 import { RoleService } from './../../../services/role.service';
 import { BranchStorageModel } from '../../../models/branch-storage.model';
 import { StorageService } from './../../../services/shared-services/storage.service';
@@ -50,10 +51,13 @@ export class DashboardComponent implements OnInit {
   availableStorage: string;
   usedStorageInPercentage: number;
 
+  upcomingLectures: any[];
+
   role: string;
 
   constructor(
     private branchService: BranchService,
+    private lectureService: LectureService,
     private dashboardService: DashboardService,
     private toastrService: NbToastrService,
     private storageService: StorageService,
@@ -79,8 +83,12 @@ export class DashboardComponent implements OnInit {
 
     this.currentYear = +this.dateService.getCurrentYear();
     this.year = +this.dateService.getCurrentYear();
+
+    this.upcomingLectures = [];
+
     this.getDashboardData();
     this.getBudgetData();
+    this.getUpcomingLectures();
 
     this.themeSubscription = this.themeService.getJsTheme().subscribe((config: any) => {
       this.colors = config.variables;
@@ -120,6 +128,17 @@ export class DashboardComponent implements OnInit {
         },
       };
     });
+  }
+
+  getUpcomingLectures() {
+    this.lectureService.getUpcomingLecturesForEmployee(this.branchId).subscribe(
+      (upcomingLectures: any[]) => {
+        this.upcomingLectures = upcomingLectures;
+      },
+      (error: any) => {
+        this.showToastr('top-right', 'danger', error);
+      },
+    );
   }
 
   calculateStorage(branchStorage: BranchStorageModel) {
@@ -270,6 +289,10 @@ export class DashboardComponent implements OnInit {
         },
       ],
     };
+  }
+
+  getTime(startTime: string, endTime: string) {
+    return this.dateService.formatTime(startTime) + ' - ' + this.dateService.formatTime(endTime);
   }
 
   private showToastr(position: any, status: any, message: string) {

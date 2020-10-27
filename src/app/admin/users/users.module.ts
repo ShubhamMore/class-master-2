@@ -1,3 +1,13 @@
+import {
+  NbCardModule,
+  NbUserModule,
+  NbIconModule,
+  NbInputModule,
+  NbButtonModule,
+  NbTooltipModule,
+  NbTabsetModule,
+  NbFormFieldModule,
+} from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -6,6 +16,17 @@ import { UsersComponent } from './users.component';
 
 @NgModule({
   declarations: [UsersComponent],
-  imports: [CommonModule, UsersRoutingModule],
+  imports: [
+    CommonModule,
+    UsersRoutingModule,
+    NbCardModule,
+    NbUserModule,
+    NbIconModule,
+    NbInputModule,
+    NbButtonModule,
+    NbTooltipModule,
+    NbTabsetModule,
+    NbFormFieldModule,
+  ],
 })
 export class UsersModule {}

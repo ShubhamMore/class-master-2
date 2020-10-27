@@ -239,4 +239,50 @@
       </nb-card-body>
     </nb-card>
   </div>
+
+  <div class="col-12">
+    <nb-card class="upcoming-lectures">
+      <nb-card-header>
+        <h3>Upcoming Lectures</h3>
+      </nb-card-header>
+      <nb-card-body>
+        <div class="table-responsive" *ngIf="upcomingLectures.length > 0; else noUpcomingLectures">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Category</th>
+                <th>Course/Batch</th>
+                <th>Subject</th>
+                <th>Teacher</th>
+                <th>Topic</th>
+                <th>Session Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let lecture of upcomingLectures; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ dateService.formatDate(lecture.date) }}</td>
+                <td>{{ getTime(lecture.startTime, lecture.endTime) }}</td>
+                <td>{{ lecture.categoryName }}</td>
+                <td>{{ lecture.courseName }}/{{ lecture.batchName }}</td>
+                <td>{{ lecture.subjectName }}</td>
+                <td>{{ lecture.teacherName }}</td>
+                <td>{{ lecture.topic }}</td>
+                <td>{{ lecture.sessionType | uppercase }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
 </div>
+
+<ng-template #noUpcomingLectures>
+  <p class="pt-5 pb-5 text-center">
+    No Upcoming Lectures
+  </p>
+</ng-template>

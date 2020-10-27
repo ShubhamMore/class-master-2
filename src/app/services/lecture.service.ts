@@ -92,4 +92,16 @@ export class LectureService {
       }),
     );
   }
+
+  getUpcomingLecturesForEmployee(branch: string) {
+    const data = { api: 'getUpcomingLecturesForEmployee', data: { branch } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
 }
