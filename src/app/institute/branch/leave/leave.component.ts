@@ -1,6 +1,7 @@
+import { LeaveCommentComponent } from './leave-comment/leave-comment.component';
 import { EmployeeNameIdModel } from './../../../models/branch-employee.model';
 import { BranchEmployeeService } from './../../../services/branch-employee.service';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbDialogService } from '@nebular/theme';
 import { Month, DateService } from './../../../services/shared-services/date.service';
 import { EmployeeLeaveService } from './../../../services/employee-leave.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -39,6 +40,7 @@ export class LeaveComponent implements OnInit {
     private route: ActivatedRoute,
     private employeeLeaveService: EmployeeLeaveService,
     private toastrService: NbToastrService,
+    private dialogService: NbDialogService,
   ) {}
 
   ngOnInit(): void {
@@ -135,13 +137,53 @@ export class LeaveComponent implements OnInit {
     return '--';
   }
 
-  getLeaveDuration(duration: string, startDate: string, endDate: string, hours: string) {}
+  getLeaveDuration(duration: string, startDate: string, endDate: string, hours: string) {
+    if (duration === 'single') {
+      return `Single Day Leave on ${this.dateService.formatDate(startDate)}`;
+    } else if (duration === 'multiple') {
+      return `Multiple Days Leave from ${this.dateService.formatDate(
+        startDate,
+      )} to ${this.dateService.formatDate(endDate)}`;
+    } else if ('hourly') {
+      return `Hourly Leave for ${hours} Hours on ${this.dateService.formatDate(startDate)}`;
+    } else {
+      return duration + ' leave';
+    }
+  }
 
   back() {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  changeLeaveStatus(id: string, status: string) {}
+  changeEmployeeLeaveStatus(_id: string, status: string, comment: string) {
+    this.loading = true;
+    const employeeLeave = {
+      _id,
+      status,
+      comment,
+    };
+
+    this.employeeLeaveService.updateEmployeeLeave(employeeLeave).subscribe(
+      (res: any) => {
+        this.showToastr('top-right', 'success', `Leave ${status.toUpperCase()} Successfully!`);
+        this.getBranchLeaves();
+      },
+      (error: any) => {
+        this.showToastr('top-right', 'danger', error);
+        this.loading = false;
+      },
+    );
+  }
+
+  openCommentDialog(id: string, status: string) {
+    this.dialogService
+      .open(LeaveCommentComponent, {
+        context: {},
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe((comment: string) => this.changeEmployeeLeaveStatus(id, status, comment));
+  }
 
   private showToastr(position: any, status: any, message: string) {
     this.toastrService.show(status, message, {

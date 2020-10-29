@@ -12,10 +12,10 @@ import { CommonModule } from '@angular/common';
 
 import { LeaveRoutingModule } from './leave-routing.module';
 import { LeaveComponent } from './leave.component';
-import { ShowLeaveComponent } from './show-leave/show-leave.component';
+import { LeaveCommentComponent } from './leave-comment/leave-comment.component';
 
 @NgModule({
-  declarations: [LeaveComponent, ShowLeaveComponent],
+  declarations: [LeaveComponent, LeaveCommentComponent],
   imports: [
     CommonModule,
     LeaveRoutingModule,
