@@ -3,14 +3,9 @@
     <h3>USERS</h3>
   </nb-card-header>
   <nb-card-body>
-    <nb-tabset
-      fullWidth
-      *ngIf="!loading; else loadingData"
-      [routeParam]="curTab"
-      (changeTab)="changeTab($event.tabTitle)"
-    >
+    <nb-tabset fullWidth [routeParam]="curTab" (changeTab)="changeTab($event.tabTitle)">
       <nb-tab tabTitle="institutes">
-        <div class="row">
+        <div class="row" *ngIf="!loading; else loadingData">
           <div class="col-md-6 col-12">
             <nb-form-field>
               <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
@@ -65,8 +60,9 @@
           </table>
         </div>
       </nb-tab>
+
       <nb-tab tabTitle="employees">
-        <div class="row">
+        <div class="row" *ngIf="!loading; else loadingData">
           <div class="col-md-6 col-12">
             <nb-form-field>
               <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
@@ -121,8 +117,9 @@
           </table>
         </div>
       </nb-tab>
+
       <nb-tab tabTitle="students">
-        <div class="row">
+        <div class="row" *ngIf="!loading; else loadingData">
           <div class="col-md-6 col-12">
             <nb-form-field>
               <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
