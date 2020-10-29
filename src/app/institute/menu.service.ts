@@ -26,6 +26,7 @@ export class MenuService {
     this.menuItems.push(MENU_ITEMS[9]);
     this.menuItems.push(MENU_ITEMS[10]);
     this.menuItems.push(MENU_ITEMS[11]);
+    this.menuItems.push(MENU_ITEMS[12]);
   }
 
   hideMenu() {

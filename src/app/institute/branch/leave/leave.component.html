@@ -1,0 +1,255 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Employee Leaves</h3>
+      </div>
+    </div>
+  </nb-card-header>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-3 col-sm-4">
+        <nb-select
+          id="select-employee"
+          name="employee"
+          [selected]="employee"
+          fullWidth
+          placeholder="All Employees"
+          (selectedChange)="onSelectEmployee($event)"
+        >
+          <nb-option value="">All Employees</nb-option>
+          <nb-option *ngFor="let employee of branchEmployees" [value]="employee.employee">{{
+            employee.name
+          }}</nb-option>
+        </nb-select>
+      </div>
+
+      <div class="col-md-3 col-sm-4">
+        <nb-select
+          id="select-year"
+          name="year"
+          [selected]="year"
+          fullWidth
+          placeholder="All Years"
+          (selectedChange)="onSelectYear($event)"
+        >
+          <nb-option value="">All Years</nb-option>
+          <nb-option *ngFor="let year of years" [value]="year">{{ year }}</nb-option>
+        </nb-select>
+      </div>
+
+      <div class="col-md-3 col-sm-4">
+        <nb-select
+          id="select-month"
+          name="month"
+          [selected]="month"
+          fullWidth
+          placeholder="All Months"
+          (selectedChange)="onSelectMonth($event)"
+        >
+          <nb-option value="">All Months</nb-option>
+          <nb-option *ngFor="let month of months" [value]="month.monthNo">{{
+            month.month
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="body-container">
+    <div class="row">
+      <div class="col-md-12">
+        <nb-tabset fullWidth>
+          <nb-tab tabTitle="pending">
+            <ng-container *ngIf="!loading; else loadingData">
+              <div class="table-responsive" *ngIf="pendingLeaves.length > 0; else noPendingLeaves">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Employee</th>
+                      <th>Date</th>
+                      <th>Leave Type</th>
+                      <th>Duration</th>
+                      <th>Reason</th>
+                      <th colspan="2">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let employeeLeave of pendingLeaves; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>
+                        {{ getEmployeeName(employeeLeave.employee) }}
+                      </td>
+                      <td>{{ dateService.formatDate(employeeLeave.date) }}</td>
+                      <td>{{ employeeLeave.leaveType }}</td>
+                      <td>
+                        {{
+                          getLeaveDuration(
+                            employeeLeave.duration,
+                            employeeLeave.startDate,
+                            employeeLeave.endDate,
+                            employeeLeave.hours
+                          )
+                        }}
+                      </td>
+                      <td>
+                        {{ employeeLeave.reason }}
+                      </td>
+                      <td>
+                        <button
+                          nbButton
+                          status="success"
+                          size="small"
+                          (click)="changeLeaveStatus(employeeLeave._id, 'accepted')"
+                        >
+                          Approve
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          nbButton
+                          status="danger"
+                          size="small"
+                          (click)="changeLeaveStatus(employeeLeave._id, 'rejected')"
+                        >
+                          Reject
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ng-template #noPendingLeaves>
+                <p class="text-center pt-5 pb-5">No Pending Leaves Available</p>
+              </ng-template>
+            </ng-container>
+          </nb-tab>
+          <nb-tab tabTitle="approved">
+            <ng-container *ngIf="!loading; else loadingData">
+              <div
+                class="table-responsive"
+                *ngIf="approvedLeaves.length > 0; else noApprovedLeaves"
+              >
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Employee</th>
+                      <th>Date</th>
+                      <th>Leave Type</th>
+                      <th>Duration</th>
+                      <th>Reason</th>
+                      <th>Monitored By</th>
+                      <th>Comment</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let employeeLeave of pendingLeaves; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>
+                        {{ getEmployeeName(employeeLeave.employee) }}
+                      </td>
+                      <td>{{ dateService.formatDate(employeeLeave.date) }}</td>
+                      <td>{{ employeeLeave.leaveType }}</td>
+                      <td>
+                        {{
+                          getLeaveDuration(
+                            employeeLeave.duration,
+                            employeeLeave.startDate,
+                            employeeLeave.endDate,
+                            employeeLeave.hours
+                          )
+                        }}
+                      </td>
+                      <td>
+                        {{ employeeLeave.reason }}
+                      </td>
+
+                      <td>
+                        {{ employeeLeave.monitoredBy }}
+                        <br />
+                        on {{ dateService.formatDate(employeeLeave.monitoredDate) }}
+                      </td>
+
+                      <td>
+                        {{ employeeLeave.comment }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ng-template #noApprovedLeaves>
+                <p class="text-center pt-5 pb-5">No Approved Leaves Available</p>
+              </ng-template>
+            </ng-container>
+          </nb-tab>
+          <nb-tab tabTitle="Rejected">
+            <ng-container *ngIf="!loading; else loadingData">
+              <div
+                class="table-responsive"
+                *ngIf="rejectedLeaves.length > 0; else noRejectedLeaves"
+              >
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Employee</th>
+                      <th>Date</th>
+                      <th>Leave Type</th>
+                      <th>Duration</th>
+                      <th>Reason</th>
+                      <th>Monitored By</th>
+                      <th>Comment</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let employeeLeave of pendingLeaves; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>
+                        {{ getEmployeeName(employeeLeave.employee) }}
+                      </td>
+                      <td>{{ dateService.formatDate(employeeLeave.date) }}</td>
+                      <td>{{ employeeLeave.leaveType }}</td>
+                      <td>
+                        {{
+                          getLeaveDuration(
+                            employeeLeave.duration,
+                            employeeLeave.startDate,
+                            employeeLeave.endDate,
+                            employeeLeave.hours
+                          )
+                        }}
+                      </td>
+                      <td>
+                        {{ employeeLeave.reason }}
+                      </td>
+                      <td>
+                        {{ employeeLeave.monitoredBy }}
+                        <br />
+                        on {{ dateService.formatDate(employeeLeave.monitoredDate) }}
+                      </td>
+
+                      <td>
+                        {{ employeeLeave.comment }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ng-template #noRejectedLeaves>
+                <p class="text-center pt-5 pb-5">No Rejected Leaves</p>
+              </ng-template>
+            </ng-container>
+          </nb-tab>
+        </nb-tabset>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #loadingData>
+  <p class="text-center pt-5 pb-5">Loading...</p>
+</ng-template>

@@ -139,6 +139,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 10
   {
+    title: 'Leave Management',
+    icon: 'bar-chart-outline',
+    link: '/institute/branch/leave',
+    hidden: true,
+  },
+
+  // 11
+  {
     title: 'Lead Management',
     icon: 'search-outline',
     hidden: true,
@@ -161,7 +169,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 11
+  // 12
   {
     title: 'Student Reports',
     icon: 'bar-chart-outline',
@@ -169,7 +177,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: true,
   },
 
-  // 12
+  // 13
   {
     title: 'Budget Management',
     icon: 'activity-outline',

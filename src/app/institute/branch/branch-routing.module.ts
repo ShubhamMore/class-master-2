@@ -60,6 +60,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'leave',
+        loadChildren: () => import('./leave/leave.module').then((m) => m.LeaveModule),
+      },
+
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
