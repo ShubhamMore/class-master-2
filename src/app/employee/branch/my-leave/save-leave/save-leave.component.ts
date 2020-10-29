@@ -153,7 +153,7 @@ export class SaveLeaveComponent implements OnInit, OnDestroy {
     if (!this.leave) {
       this.leaveService.createEmployeeLeave(leave).subscribe(
         (resLeave: EmployeeLeaveModel) => {
-          this.ref.close({ leave: resLeave, type: 'add' });
+          this.ref.close({ leave: resLeave, type: 'new' });
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
