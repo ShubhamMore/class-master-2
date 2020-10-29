@@ -142,7 +142,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let employeeLeave of pendingLeaves; let i = index">
+                    <tr *ngFor="let employeeLeave of approvedLeaves; let i = index">
                       <td>{{ i + 1 }}</td>
                       <td>{{ dateService.formatDate(employeeLeave.date) }}</td>
                       <td>{{ employeeLeave.leaveType }}</td>
@@ -197,7 +197,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let employeeLeave of pendingLeaves; let i = index">
+                    <tr *ngFor="let employeeLeave of rejectedLeaves; let i = index">
                       <td>{{ i + 1 }}</td>
                       <td>{{ dateService.formatDate(employeeLeave.date) }}</td>
                       <td>{{ employeeLeave.leaveType }}</td>

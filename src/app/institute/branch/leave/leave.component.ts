@@ -140,7 +140,7 @@ export class LeaveComponent implements OnInit {
         startDate,
       )} to ${this.dateService.formatDate(endDate)}`;
     } else if ('hourly') {
-      return `Hourly Leave for ${hours} Hours on ${this.dateService.formatDate(startDate)}`;
+      return `Hourly Leave on ${this.dateService.formatDate(startDate)} for ${hours} Hours`;
     } else {
       return duration + ' leave';
     }

@@ -82,7 +82,7 @@ export class MyLeaveComponent implements OnInit {
           (leave: EmployeeLeaveModel) => leave.status === 'pending',
         );
         this.approvedLeaves = leaves.filter(
-          (leave: EmployeeLeaveModel) => leave.status === 'approved',
+          (leave: EmployeeLeaveModel) => leave.status === 'accepted',
         );
         this.rejectedLeaves = leaves.filter(
           (leave: EmployeeLeaveModel) => leave.status === 'rejected',
@@ -104,7 +104,7 @@ export class MyLeaveComponent implements OnInit {
         startDate,
       )} to ${this.dateService.formatDate(endDate)}`;
     } else if ('hourly') {
-      return `Hourly Leave for ${hours} Hours on ${this.dateService.formatDate(startDate)}`;
+      return `Hourly Leave on ${this.dateService.formatDate(startDate)} for ${hours} Hours`;
     } else {
       return duration + ' leave';
     }
