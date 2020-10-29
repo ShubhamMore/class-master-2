@@ -1,0 +1,28 @@
+.leave-box {
+  width: 60vw;
+  height: auto;
+}
+
+@media only screen and (max-width: 1200px) {
+  .leave-box {
+    width: 65vw;
+  }
+}
+
+@media only screen and (max-width: 840px) {
+  .leave-box {
+    width: 70vw;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .leave-box {
+    width: 90vw;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .leave-box {
+    width: 96vw;
+  }
+}

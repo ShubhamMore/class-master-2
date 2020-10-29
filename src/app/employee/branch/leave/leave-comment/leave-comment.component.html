@@ -1,0 +1,24 @@
+<nb-card class="comment-box">
+  <nb-card-header>
+    <h4>Comment</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <textArea
+      nbInput
+      fullWidth
+      rows="2"
+      (input)="changeComment($event.target.value)"
+      placeholder="Comment"
+    >
+    </textArea>
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="row">
+      <div class="col-12 text-right">
+        <button type="button" nbButton status="primary" size="small" (click)="submit()">
+          Submit
+        </button>
+      </div>
+    </div>
+  </nb-card-footer>
+</nb-card>

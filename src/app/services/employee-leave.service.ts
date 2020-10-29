@@ -50,8 +50,8 @@ export class EmployeeLeaveService {
     );
   }
 
-  changeEmployeeLeaveStatus(id: string, status: boolean) {
-    const data = { api: 'changeEmployeeLeaveStatus', data: { id, status } };
+  changeEmployeeLeaveStatus(leave: any) {
+    const data = { api: 'changeEmployeeLeaveStatus', data: leave };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

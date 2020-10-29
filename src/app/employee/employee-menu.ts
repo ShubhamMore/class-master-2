@@ -22,11 +22,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'My Salaries',
     icon: '',
-    link: '/employee/branch/salary/manage',
+    link: '/employee/branch/my-salary/manage',
     hidden: true,
   },
 
   // 4
+  {
+    title: 'My Leaves',
+    icon: '',
+    link: '/employee/branch/my-leave',
+    hidden: true,
+  },
+
+  // 5
   {
     title: 'Branch Management',
     icon: '',
@@ -50,7 +58,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 5
+  // 6
   {
     title: 'Student Management',
     icon: '',
@@ -76,7 +84,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 6
+  // 7
   {
     title: 'Schedule Class',
     icon: 'calendar-outline',
@@ -84,7 +92,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: true,
   },
 
-  // 7
+  // 8
   {
     title: 'Lecture Management',
     icon: 'book-open-outline',
@@ -92,7 +100,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: true,
   },
 
-  // 8
+  // 9
   {
     title: 'Exam Management',
     icon: '',
@@ -111,7 +119,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 9
+  // 10
   {
     title: 'Employee Management',
     icon: '',
@@ -137,7 +145,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 10
+  // 11
+  {
+    title: 'Leave Management',
+    icon: '',
+    link: '/employee/branch/leave',
+    hidden: true,
+  },
+
+  // 12
   {
     title: 'Lead Management',
     icon: '',
@@ -161,7 +177,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 11
+  // 13
   {
     title: 'Students Report',
     icon: '',
@@ -169,7 +185,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: true,
   },
 
-  // 12
+  // 14
   {
     title: 'Budget Management',
     icon: '',

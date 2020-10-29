@@ -1,0 +1,301 @@
+<nb-card class="leave-box">
+  <nb-card-header>
+    <nb-icon class="float-right pointer" icon="close-outline" (click)="onClose()"></nb-icon>
+    <h3 class="">
+      {{ !leave ? 'Apply for Leave' : 'Edit Leave' }}
+    </h3>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper #stepper [linear]="true" *ngIf="!loading; else loadingData">
+      <nb-step [stepControl]="leaveForm" label="Leave Details">
+        <form class="" (submit)="submitLeave()" [formGroup]="leaveForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-date">Application Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-date"
+                  name="date"
+                  [min]="dateService.getDateString()"
+                  formControlName="date"
+                  placeholder="Date"
+                  fullWidth
+                  [status]="
+                    leaveForm.get('date').touched
+                      ? leaveForm.get('date').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+              </div>
+              <ng-container *ngIf="leaveForm.get('date').touched">
+                <p class="caption status-danger" *ngIf="leaveForm.get('date').errors?.required">
+                  Application Date is required!
+                </p>
+              </ng-container>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-leave-type">Leave Type:</label>
+                <nb-select
+                  id="input-leave-type"
+                  name="leaveType"
+                  formControlName="leaveType"
+                  placeholder="Select Leave Type"
+                  fullWidth
+                  [status]="
+                    leaveForm.get('leaveType').touched
+                      ? leaveForm.get('leaveType').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                >
+                  <nb-option value="">Select Leave Type</nb-option>
+                  <nb-option *ngFor="let leaveType of leaveTypes" [value]="leaveType">{{
+                    leaveType
+                  }}</nb-option>
+                </nb-select>
+                <ng-container *ngIf="leaveForm.get('leaveType').touched">
+                  <p
+                    class="caption status-danger"
+                    *ngIf="leaveForm.get('leaveType').errors?.required"
+                  >
+                    Leave Type is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-duration">Duration:</label>
+                <nb-select
+                  id="input-duration"
+                  name="duration"
+                  formControlName="duration"
+                  placeholder="Select Duration"
+                  fullWidth
+                  [status]="
+                    leaveForm.get('duration').touched
+                      ? leaveForm.get('duration').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                  (selectedChange)="onChangeDuration($event)"
+                >
+                  <nb-option *ngFor="let duration of durations" [value]="duration">{{
+                    duration | uppercase
+                  }}</nb-option>
+                </nb-select>
+                <ng-container *ngIf="leaveForm.get('duration').touched">
+                  <p
+                    class="caption status-danger"
+                    *ngIf="leaveForm.get('duration').errors?.required"
+                  >
+                    Duration is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-start-date">Start Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-start-date"
+                  name="startDate"
+                  [min]="dateService.getDateString()"
+                  formControlName="startDate"
+                  placeholder="Start Date"
+                  fullWidth
+                  [status]="
+                    leaveForm.get('startDate').touched
+                      ? leaveForm.get('startDate').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+              </div>
+              <ng-container *ngIf="leaveForm.get('startDate').touched">
+                <p
+                  class="caption status-danger"
+                  *ngIf="leaveForm.get('startDate').errors?.required"
+                >
+                  Start Date is required!
+                </p>
+              </ng-container>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-end-date">End Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-end-date"
+                  name="endDate"
+                  [min]="dateService.getDateString()"
+                  formControlName="endDate"
+                  placeholder="End Date"
+                  fullWidth
+                  [status]="
+                    leaveForm.get('startDate').touched
+                      ? leaveForm.hasError('invalidEndDate')
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+              </div>
+              <ng-container *ngIf="leaveForm.get('endDate').touched">
+                <p class="caption status-danger" *ngIf="leaveForm.hasError('invalidEndDate')">
+                  End Date is required!
+                </p>
+              </ng-container>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-hours">Hours:</label>
+                <input
+                  type="number"
+                  nbInput
+                  id="input-hours"
+                  name="hours"
+                  min="0"
+                  formControlName="hours"
+                  placeholder="Hours"
+                  fullWidth
+                  [status]="
+                    leaveForm.get('hours').touched
+                      ? leaveForm.hasError('invalidHours')
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container *ngIf="leaveForm.get('hours').touched">
+                  <p class="caption status-danger" *ngIf="leaveForm.hasError('invalidHours')">
+                    Leave Hours are required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-reason">Reason:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-reason"
+                  name="reason"
+                  formControlName="reason"
+                  placeholder="Reason"
+                  fullWidth
+                  [status]="
+                    leaveForm.get('reason').touched
+                      ? leaveForm.get('reason').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                ></textarea>
+              </div>
+              <ng-container *ngIf="leaveForm.get('reason').touched">
+                <p class="caption status-danger" *ngIf="leaveForm.get('reason').errors?.required">
+                  Leave Reason is required!
+                </p>
+              </ng-container>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <button nbButton type="submit">
+                <span>Next</span>
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step label="Submit">
+        <div class="step-container">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Application Date</th>
+                  <td>{{ dateService.formatDate(leaveForm.value.date) }}</td>
+                </tr>
+                <tr>
+                  <th>Leave Type</th>
+                  <td>{{ leaveForm.value.leaveType }}</td>
+                </tr>
+                <tr>
+                  <th>Duration</th>
+                  <td>{{ leaveForm.value.duration }}</td>
+                </tr>
+                <tr>
+                  <th>Start Date</th>
+                  <td>
+                    {{ dateService.formatDate(leaveForm.value.startDate) }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>End Date</th>
+                  <td>
+                    {{
+                      leaveForm.value.endDate
+                        ? dateService.formatDate(leaveForm.value.endDate)
+                        : '--'
+                    }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Hours</th>
+                  <td>{{ leaveForm.value.hours ? leaveForm.value.hours + ' Hour/s' : '--' }}</td>
+                </tr>
+                <tr>
+                  <th>Reason</th>
+                  <td>{{ leaveForm.value.reason }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button class="" nbButton nbStepperPrevious>
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton (click)="saveLeave()"><span>Submit</span></button>
+            </div>
+          </div>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #loadingData>
+  <p class="text-center pt-5 pb-5">Loading...</p>
+</ng-template>

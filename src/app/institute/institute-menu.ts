@@ -114,7 +114,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 9
   {
     title: 'Employee Management',
-    icon: 'person-outline',
+    icon: 'people-outline',
     hidden: true,
     children: [
       {
@@ -140,7 +140,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 10
   {
     title: 'Leave Management',
-    icon: 'bar-chart-outline',
+    icon: 'log-out-outline',
     link: '/institute/branch/leave',
     hidden: true,
   },
