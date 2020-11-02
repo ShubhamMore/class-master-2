@@ -94,6 +94,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 8
   {
+    title: 'Assignment Management',
+    icon: 'archive-outline',
+    link: '/institute/branch/assignment/batch',
+    hidden: true,
+  },
+
+  // 9
+  {
     title: 'Exam Management',
     icon: 'edit-2-outline',
     hidden: true,
@@ -111,7 +119,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 9
+  // 10
   {
     title: 'Employee Management',
     icon: 'people-outline',
@@ -137,7 +145,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 10
+  // 11
   {
     title: 'Leave Management',
     icon: 'log-out-outline',
@@ -145,7 +153,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: true,
   },
 
-  // 11
+  // 12
   {
     title: 'Lead Management',
     icon: 'search-outline',
@@ -169,7 +177,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 12
+  // 13
   {
     title: 'Student Reports',
     icon: 'bar-chart-outline',
@@ -177,7 +185,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: true,
   },
 
-  // 13
+  // 14
   {
     title: 'Budget Management',
     icon: 'activity-outline',

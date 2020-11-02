@@ -29,6 +29,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'assignment',
+        loadChildren: () =>
+          import('./assignment/assignment.module').then((m) => m.AssignmentModule),
+      },
+
+      {
         path: 'lead',
         loadChildren: () => import('./lead/lead.module').then((m) => m.LeadModule),
       },

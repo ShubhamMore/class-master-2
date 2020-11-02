@@ -1,0 +1,243 @@
+<nb-card>
+  <nb-card-header>
+    <button class="float-right" nbButton status="warning" size="tiny" (click)="back()">
+      Back
+    </button>
+    <h3 class="">
+      {{ !batch ? 'Add New Batch' : 'Edit Batch ' + (batch.basicDetails.batchName | uppercase) }}
+    </h3>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper #stepper [linear]="true">
+      <nb-step [stepControl]="batchBasicDetailsForm" label="Basic Details">
+        <form class="" (submit)="submitBasicDetails()" [formGroup]="batchBasicDetailsForm">
+          <h6>Batch Details:</h6>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input -batch-name">Batch Name:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-batch-name"
+                  name="batchName"
+                  formControlName="batchName"
+                  placeholder="Batch Name"
+                  maxlength="30"
+                  fullWidth
+                  [status]="
+                    batchBasicDetailsForm.get('batchName').touched
+                      ? batchBasicDetailsForm.get('batchName').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    batchBasicDetailsForm.get('batchName').invalid &&
+                    batchBasicDetailsForm.get('batchName').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="batchBasicDetailsForm.get('batchName').errors?.required"
+                  >
+                    Batch Name is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input -batch-start-date">Batch Start Date:</label>
+                <input
+                  type="date"
+                  nbInput
+                  id="input-batch-start-date"
+                  name="startDate"
+                  formControlName="startDate"
+                  fullWidth
+                  [status]="
+                    batchBasicDetailsForm.get('startDate').touched
+                      ? batchBasicDetailsForm.get('startDate').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                />
+                <ng-container
+                  *ngIf="
+                    batchBasicDetailsForm.get('startDate').invalid &&
+                    batchBasicDetailsForm.get('startDate').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="batchBasicDetailsForm.get('startDate').errors?.required"
+                  >
+                    Batch Start Date is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-control-group">
+                <label class="label" for="input-rollNoPrefix">Roll No Prefix:</label>
+                <input
+                  type="text"
+                  nbInput
+                  id="input-rollNoPrefix"
+                  name="rollNoPrefix"
+                  maxlength="15"
+                  formControlName="rollNoPrefix"
+                  placeholder="Roll No Prefix"
+                  fullWidth
+                />
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-billing-description">Description:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-description"
+                  name="description"
+                  formControlName="description"
+                  placeholder="Description (Optional)"
+                  fullWidth
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <button nbButton type="submit">
+                <span>Next</span>
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step [stepControl]="batchSubjectForm" label="Subject Details">
+        <form [formGroup]="batchSubjectForm" (ngSubmit)="submitSubjects()" class="step-container">
+          <ng-container
+            *ngFor="let subject of batchSubjectForm.get('subjects')['controls']; let i = index"
+          >
+            <div class="row mb-3" [formGroup]="subject">
+              <div class="col-md-4 col-sm-6 mx-auto">
+                <div class="form-control-group">
+                  <nb-checkbox
+                    id="status-{{ i }}"
+                    name="status"
+                    [checked]="subject.value.status"
+                    formControlName="status"
+                    (checkedChange)="changeSubjectStatus($event, i)"
+                  >
+                    <label for="status-{{ i }}">{{ getSubjectName(subject.value.subject) }}</label>
+                  </nb-checkbox>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-sm-6 mx-auto">
+                <div class="form-control-group">
+                  <nb-select
+                    id="teacher-{{ i }}"
+                    name="teacher"
+                    formControlName="teacher"
+                    placeholder="Select Teacher"
+                    fullWidth
+                  >
+                    <nb-option value="">Select Teacher </nb-option>
+                    <nb-option *ngFor="let teacher of teachers" [value]="teacher.employee">{{
+                      teacher.name
+                    }}</nb-option>
+                  </nb-select>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button class="" nbButton nbStepperPrevious>
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton type="submit">
+                <span>Next</span><nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step label="Submit">
+        <div class="step-container">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Batch Name</th>
+                  <td>{{ batchBasicDetailsForm.value.batchName }}</td>
+                </tr>
+                <tr>
+                  <th>Batch Roll No Prefix</th>
+                  <td>{{ batchBasicDetailsForm.value.rollNoPrefix }}</td>
+                </tr>
+
+                <tr>
+                  <th>Description</th>
+                  <td>{{ batchBasicDetailsForm.value.description }}</td>
+                </tr>
+                <tr>
+                  <th>Subjects</th>
+                  <td>
+                    <table class="table table-sm table-borderless">
+                      <tbody>
+                        <ng-container
+                          *ngFor="let subject of batchSubjectForm.get('subjects')['controls']"
+                        >
+                          <tr *ngIf="subject.value.status">
+                            <th>{{ getSubjectName(subject.value.subject) }}</th>
+                            <td>{{ getTeacherName(subject.value.teacher) }}</td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button class="" nbButton nbStepperPrevious>
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton (click)="saveBatch()"><span>Submit</span></button>
+            </div>
+          </div>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>
