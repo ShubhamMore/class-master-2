@@ -1,4 +1,10 @@
-import { NbCardModule, NbSelectModule, NbButtonModule, NbIconModule } from '@nebular/theme';
+import {
+  NbCardModule,
+  NbSelectModule,
+  NbButtonModule,
+  NbIconModule,
+  NbTooltipModule,
+} from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -14,6 +20,7 @@ import { ManageAssignmentComponent } from './manage-assignment.component';
     NbSelectModule,
     NbButtonModule,
     NbIconModule,
+    NbTooltipModule,
   ],
 })
 export class ManageAssignmentModule {}

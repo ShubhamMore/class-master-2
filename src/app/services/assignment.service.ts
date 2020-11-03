@@ -108,6 +108,18 @@ export class AssignmentService {
     );
   }
 
+  deleteAssignmentAttachment(id: string, publicId: string) {
+    const data = { api: 'deleteAssignmentAttachment', data: { id, publicId } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   deleteAssignment(id: string) {
     const data = { api: 'deleteAssignment', data: { id } };
     return this.httpService.httpPost(data).pipe(

@@ -173,6 +173,22 @@ export class ManageAssignmentComponent implements OnInit {
     return '--';
   }
 
+  deleteAssignmentAttachment(id: string, publicId: string, i: number) {
+    this.assignmentService.deleteAssignmentAttachment(id, publicId).subscribe(
+      (res: any) => {
+        this.assignments[i].fileName = null;
+        this.assignments[i].fileSize = null;
+        this.assignments[i].fileType = null;
+        this.assignments[i].secureUrl = null;
+        this.assignments[i].publicId = null;
+        this.showToastr('top-right', 'success', 'Attachment Deleted Successfully!');
+      },
+      (error: any) => {
+        this.showToastr('top-right', 'danger', error);
+      },
+    );
+  }
+
   private showToastr(position: any, status: any, message: string) {
     this.toastrService.show(status, message, {
       position,
