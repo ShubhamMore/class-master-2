@@ -108,7 +108,15 @@ export class ManageAssignmentComponent implements OnInit {
   getAssignments() {
     this.loading = true;
     this.assignmentService
-      .getAssignments(this.branchId, this.category._id, this.course._id, this.batch._id)
+      .getAssignments(
+        this.branchId,
+        this.category._id,
+        this.course._id,
+        this.batch._id,
+        this.subject,
+        this.month,
+        this.year,
+      )
       .subscribe(
         (assignments: AssignmentModel[]) => {
           this.assignments = assignments;
@@ -122,19 +130,19 @@ export class ManageAssignmentComponent implements OnInit {
   }
 
   addAssignment() {
-    this.router.navigate(['./add'], { relativeTo: this.route });
+    this.router.navigate(['../add'], { relativeTo: this.route });
   }
 
   editAssignment(assignment: AssignmentModel) {
     this.assignmentService.setAssignmentId(assignment._id);
     this.assignmentService.setAssignmentData(assignment);
-    this.router.navigate(['./edit'], { relativeTo: this.route, queryParams: { mode: 'edit' } });
+    this.router.navigate(['../edit'], { relativeTo: this.route, queryParams: { mode: 'edit' } });
   }
 
   assignmentSubmissions(assignment: AssignmentModel) {
     this.assignmentService.setAssignmentId(assignment._id);
     this.assignmentService.setAssignmentData(assignment);
-    this.router.navigate(['./submission'], { relativeTo: this.route });
+    this.router.navigate(['../submission'], { relativeTo: this.route });
   }
 
   deleteAssignment(id: string) {
@@ -154,6 +162,15 @@ export class ManageAssignmentComponent implements OnInit {
         this.loading = false;
       },
     );
+  }
+
+  getSubjectName(id: string) {
+    const subject = this.subjects.find((curSubject: SubjectModel) => curSubject._id === id);
+    if (subject) {
+      return subject.subject;
+    }
+
+    return '--';
   }
 
   private showToastr(position: any, status: any, message: string) {

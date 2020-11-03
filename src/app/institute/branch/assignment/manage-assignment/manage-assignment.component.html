@@ -93,10 +93,10 @@
                 <tr *ngFor="let assignment of assignments; let i = index">
                   <td>{{ i + 1 }}</td>
                   <td>{{ dateService.formatDate(assignment.date) }}</td>
-                  <td>{{ assignment.subject }}</td>
+                  <td>{{ getSubjectName(assignment.subject) }}</td>
                   <td>{{ dateService.formatDate(assignment.submissionDate) }}</td>
                   <td>{{ assignment.totalGrades }}</td>
-                  <td>{{ assignment.generatedBy }}</td>
+                  <td>{{ assignment.generatedByName }}</td>
                   <td>
                     <button
                       type="button"

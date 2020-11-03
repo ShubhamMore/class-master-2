@@ -10,7 +10,14 @@ export class AssignmentModel {
     public date: string,
     public submissionDate: string,
     public totalGrades: string,
+    public description: string,
     public generatedBy: string,
+    public fileName: string,
+    public fileSize: string,
+    public fileType: string,
+    public secureUrl: string,
+    public publicId: string,
     public status: boolean,
+    public generatedByName?: string,
   ) {}
 }

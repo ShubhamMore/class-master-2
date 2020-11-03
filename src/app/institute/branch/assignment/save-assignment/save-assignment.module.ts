@@ -5,7 +5,7 @@ import {
   NbSelectModule,
   NbIconModule,
   NbInputModule,
-  NbCheckboxModule,
+  NbTooltipModule,
   NbFormFieldModule,
   NbStepperModule,
 } from '@nebular/theme';
@@ -20,17 +20,14 @@ import { SaveAssignmentComponent } from './save-assignment.component';
   imports: [
     CommonModule,
     SaveAssignmentRoutingModule,
-
+    NbFormFieldModule,
     NbCardModule,
     NbButtonModule,
     NbSelectModule,
     NbIconModule,
     NbInputModule,
-    NbFormFieldModule,
-    NbCheckboxModule,
+    NbTooltipModule,
     NbStepperModule,
-    NbFormFieldModule,
-
     ReactiveFormsModule,
   ],
 })

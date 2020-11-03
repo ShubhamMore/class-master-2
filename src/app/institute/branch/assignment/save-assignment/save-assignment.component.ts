@@ -1,20 +1,16 @@
-import { EmployeeNameIdModel } from './../../../../models/branch-employee.model'; // To be removed
+import { DateService } from './../../../../services/shared-services/date.service';
+import { BatchModel } from './../../../../models/batch.model';
+import { CategoryModel } from './../../../../models/branch.model';
+import { BatchService } from './../../../../services/batch.service';
 import { CourseService } from './../../../../services/course.service';
 import { SubjectModel, CourseModel } from './../../../../models/course.model';
-import { BatchModel, BatchSubjectModel } from './../../../../models/batch.model';
-import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { AssignmentModel } from './../../../../models/assignment.model';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
-import { BatchService } from './../../../../services/batch.service';
+import { AssignmentService } from './../../../../services/assignment.service';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../services/branch.service';
-import { ObjectId } from 'bson';
-import { BranchEmployeeService } from './../../../../services/branch-employee.service';
-
-interface Teacher {
-  imsMasterId: string;
-  name: string;
-}
 
 @Component({
   selector: 'ngx-save-assignment',
@@ -23,26 +19,34 @@ interface Teacher {
 })
 export class SaveAssignmentComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
+  @ViewChild('filePicker') private fileInput: any;
 
   loading: boolean;
   private branchId: string;
-  private batchId: string;
+  private assignmentId: string;
+  assignment: AssignmentModel;
+
+  uploadAssignment: File;
+  fileName: string;
+  invalidFile: boolean;
+
   batch: BatchModel;
   course: CourseModel;
-  teachers: EmployeeNameIdModel[];
+  category: CategoryModel;
+
   subjects: SubjectModel[];
-  batchBasicDetailsForm: FormGroup;
-  batchSubjectForm: FormGroup;
+
+  assignmentDetailsForm: FormGroup;
 
   constructor(
     private branchService: BranchService,
-    private branchEmployeeService: BranchEmployeeService,
-    private batchService: BatchService,
     private courseService: CourseService,
-    private toastrService: NbToastrService,
-
+    private batchService: BatchService,
+    private assignmentService: AssignmentService,
+    public dateService: DateService,
     private router: Router,
     private route: ActivatedRoute,
+    private toastrService: NbToastrService,
   ) {
     this.route.queryParams.subscribe((param: Params) => {
       this.ngOnInit();
@@ -51,6 +55,8 @@ export class SaveAssignmentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.invalidFile = false;
+    this.fileName = null;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
@@ -58,16 +64,28 @@ export class SaveAssignmentComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.courseService.getCourseData().subscribe((course: CourseModel) => {
-      this.course = course;
-      if (!this.course) {
-        this.router.navigate(['../'], { relativeTo: this.route });
+    this.subjects = [];
 
-        return;
-      }
+    this.branchService.getCategoryData().subscribe((category: CategoryModel) => {
+      this.category = category;
     });
 
-    this.batchId = this.batchService.getBatchId();
+    this.courseService.getCourseData().subscribe((course: CourseModel) => {
+      this.course = course;
+      this.batchService.getBatchData().subscribe((batch: BatchModel) => {
+        this.batch = batch;
+        this.batchService.getBatchSubjects(this.course._id, this.batch._id).subscribe(
+          (subjects: SubjectModel[]) => {
+            this.subjects = subjects;
+          },
+          (error: any) => {
+            this.showToastr('top-right', 'danger', error);
+          },
+        );
+      });
+    });
+
+    this.assignmentId = this.assignmentService.getAssignmentId();
 
     let mode: string;
 
@@ -79,155 +97,154 @@ export class SaveAssignmentComponent implements OnInit, OnDestroy {
       this.showToastr('top-right', 'danger', 'Invalid Route');
       this.router.navigate(['../page-not-found'], { relativeTo: this.route });
       return;
-    } else if (mode && !this.batchId) {
-      this.showToastr('top-right', 'danger', 'Batch Not Available');
+    } else if (mode && !this.assignmentId) {
+      this.showToastr('top-right', 'danger', 'Assignment Not Available');
       this.router.navigate(['../page-not-found'], { relativeTo: this.route });
       return;
     }
 
-    this.batchBasicDetailsForm = new FormGroup({
-      batchName: new FormControl(null, {
+    this.assignmentDetailsForm = new FormGroup({
+      subject: new FormControl('', {
         validators: [Validators.required],
       }),
-      startDate: new FormControl(null, {
+      topic: new FormControl(null, {
         validators: [Validators.required],
       }),
-      rollNoPrefix: new FormControl(null, {
-        validators: [],
+      date: new FormControl(this.dateService.getDateString(), {
+        validators: [Validators.required],
+      }),
+      submissionDate: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+      totalGrades: new FormControl(null, {
+        validators: [Validators.required],
       }),
       description: new FormControl(null, {
-        validators: [],
+        validators: [Validators.required],
       }),
     });
 
-    this.batchSubjectForm = new FormGroup(
-      {
-        subjects: new FormArray([]),
-      },
-      { validators: this.atLeastOneSubjectValidator.bind(this) },
-    );
+    if (this.assignmentId) {
+      this.assignmentService
+        .getAssignment(this.assignmentId)
+        .subscribe((assignment: AssignmentModel) => {
+          if (!assignment) {
+            this.router.navigate(['../page-not-found'], { relativeTo: this.route });
+            return;
+          }
+          this.assignment = assignment;
 
-    this.teachers = [];
-    this.subjects = this.course.subjects.filter((subject: SubjectModel) => subject.status);
+          this.assignmentDetailsForm.patchValue({
+            Subject: assignment.subject,
+            topic: assignment.topic,
+            date: assignment.date,
+            submissionDate: assignment.submissionDate,
+            totalGrades: assignment.totalGrades,
+            description: assignment.description,
+          });
 
-    this.subjects.forEach((subject: SubjectModel) => {
-      const batchSubject = {
-        _id: new ObjectId(),
-        subject: subject._id,
-        teacher: '',
-        status: true,
-      };
-      this.addBatchSubject(batchSubject);
-    });
-
-    this.branchEmployeeService.getBranchEmployeeNameIdsForBatch(this.branchId, 'teacher').subscribe(
-      (teachers: EmployeeNameIdModel[]) => {
-        this.teachers = teachers;
-
-        if (this.batchId) {
-          this.batchService.getBatchForEditing(this.batchId).subscribe(
-            (batch: BatchModel) => {
-              if (!batch) {
-                this.router.navigate(['../page-not-found'], { relativeTo: this.route });
-                return;
-              }
-              this.batch = batch;
-              this.batchBasicDetailsForm.patchValue({
-                batchName: batch.basicDetails.batchName,
-                startDate: batch.basicDetails.startDate,
-                duration: batch.basicDetails.rollNoPrefix,
-                description: batch.basicDetails.description,
-              });
-
-              const batchSubjects = batch.subjects;
-
-              this.subjects.forEach((curSubject: SubjectModel, i: number) => {
-                const subject = batchSubjects.find(
-                  (curBatchSubject: BatchSubjectModel) =>
-                    curBatchSubject.subject === curSubject._id,
-                );
-
-                let teacher: string = '';
-                if (subject) {
-                  this.changeSubjectStatus(subject.status, i);
-                  this.getBatchSubjects().controls[i].get('_id').setValue(subject._id);
-                  if (
-                    teachers.find(
-                      (curTeacher: EmployeeNameIdModel) => curTeacher.employee === subject.teacher,
-                    )
-                  ) {
-                    teacher = subject.teacher;
-                  }
-                }
-                this.getBatchSubjects().controls[i].get('teacher').setValue(teacher);
-              });
-              this.loading = false;
-            },
-            (err: any) => {
-              this.router.navigate(['../page-not-found'], { relativeTo: this.route });
-              return;
-            },
-          );
-        } else {
           this.loading = false;
-        }
-      },
-      (error: any) => {
-        this.showToastr('top-right', 'danger', error);
-        this.loading = false;
-      },
-    );
-  }
-
-  private atLeastOneSubjectValidator(group: FormGroup): { [s: string]: boolean } {
-    const subjects = group.value.subjects;
-    let status = false;
-    subjects.forEach((subject: any) => {
-      if (subject.status) {
-        status = true;
-      }
-    });
-
-    if (!status) {
-      return { atLeastOneSubjectError: true };
-    }
-    return null;
-  }
-
-  private getBatchSubjects() {
-    return this.batchSubjectForm.get('subjects') as FormArray;
-  }
-
-  private newBatchSubject(batchSubject: any) {
-    return new FormGroup({
-      _id: new FormControl(batchSubject._id ? batchSubject._id : new ObjectId().toString(), {
-        validators: [Validators.required],
-      }),
-      subject: new FormControl(batchSubject.subject ? batchSubject.subject : null, {
-        validators: [Validators.required],
-      }),
-      teacher: new FormControl(batchSubject.teacher ? batchSubject.teacher : '', {
-        validators: [],
-      }),
-      status: new FormControl(batchSubject.status ? batchSubject.status : true, {
-        validators: [],
-      }),
-    });
-  }
-
-  private addBatchSubject(batchSubject: any) {
-    const subjects = this.getBatchSubjects();
-    subjects.push(this.newBatchSubject(batchSubject));
-  }
-
-  changeSubjectStatus(status: boolean, i: number) {
-    const batchSubject = this.getBatchSubjects().controls[i];
-    batchSubject.get('status').setValue(status);
-    if (status) {
-      batchSubject.get('teacher').enable();
+        });
     } else {
-      batchSubject.get('teacher').setValue('');
-      batchSubject.get('teacher').disable();
+      this.loading = false;
+    }
+  }
+
+  onFilePicked(event: Event) {
+    this.invalidFile = false;
+    const files = (event.target as HTMLInputElement).files;
+    const fileExt: string[] = ['pdf', 'jpg', 'png', 'jpeg', 'mp4'];
+    let ext: string = null;
+    ext = files[0].name.substring(files[0].name.lastIndexOf('.') + 1).toLowerCase();
+    if (!(fileExt.indexOf(ext) !== -1)) {
+      this.invalidFile = true;
+      this.fileName = files[0].name;
+      this.fileInput.nativeElement.value = '';
+      return;
+    }
+    this.invalidFile = false;
+    this.uploadAssignment = files[0];
+    this.fileName = files[0].name;
+    this.fileInput.nativeElement.value = '';
+  }
+
+  clearFile() {
+    this.uploadAssignment = null;
+    this.fileName = null;
+    this.fileInput.nativeElement.value = '';
+    this.invalidFile = false;
+  }
+
+  submitAssignmentDetails() {
+    this.assignmentDetailsForm.markAllAsTouched();
+    if (this.assignmentDetailsForm.invalid) {
+      this.showToastr('top-right', 'danger', 'Assignment details are required');
+      return;
+    } else if (this.invalidFile) {
+      this.showToastr('top-right', 'danger', 'Select Valid File');
+      return;
+    }
+    this.stepper.next();
+  }
+
+  saveAssignment() {
+    this.assignmentDetailsForm.markAllAsTouched();
+
+    if (this.assignmentDetailsForm.invalid) {
+      this.showToastr('top-right', 'danger', 'Assignment details are required');
+      return;
+    } else if (this.invalidFile) {
+      this.showToastr('top-right', 'danger', 'Select Valid File');
+      return;
+    }
+
+    this.loading = true;
+
+    const assignment = new FormData();
+
+    assignment.append('branch', this.branchId);
+    assignment.append('category', this.course.basicDetails.category);
+    assignment.append('course', this.course._id);
+    assignment.append('batch', this.batch._id);
+    assignment.append('subject', this.assignmentDetailsForm.value.subject);
+    assignment.append('topic', this.assignmentDetailsForm.value.topic);
+    assignment.append('date', this.assignmentDetailsForm.value.date);
+    assignment.append('description', this.assignmentDetailsForm.value.description);
+    assignment.append('submissionDate', this.assignmentDetailsForm.value.submissionDate);
+    assignment.append('totalGrades', this.assignmentDetailsForm.value.totalGrades);
+
+    if (this.uploadAssignment) {
+      assignment.append(
+        'assignment',
+        this.uploadAssignment,
+        this.uploadAssignment.name.substring(0, this.uploadAssignment.name.lastIndexOf('.')),
+      );
+    }
+
+    if (!this.assignment) {
+      this.assignmentService.saveAssignment(assignment).subscribe(
+        (res: any) => {
+          this.showToastr('top-right', 'success', 'New Assignment Added Successfully!');
+          this.router.navigate(['../manage'], { relativeTo: this.route });
+        },
+        (error: any) => {
+          this.showToastr('top-right', 'danger', error);
+          this.loading = false;
+        },
+      );
+    } else {
+      assignment.append('_id', this.assignment._id);
+
+      this.assignmentService.updateAssignment(assignment).subscribe(
+        (res: any) => {
+          this.showToastr('top-right', 'success', 'Assignment Updated Successfully!');
+          this.router.navigate(['../manage'], { relativeTo: this.route });
+        },
+        (error: any) => {
+          this.showToastr('top-right', 'danger', error);
+          this.loading = false;
+        },
+      );
     }
   }
 
@@ -240,83 +257,6 @@ export class SaveAssignmentComponent implements OnInit, OnDestroy {
     return '--';
   }
 
-  getTeacherName(id: string) {
-    const teacher = this.teachers.find(
-      (curTeacher: EmployeeNameIdModel) => curTeacher.employee === id,
-    );
-    if (teacher) {
-      return teacher.name;
-    }
-
-    return '--';
-  }
-
-  submitBasicDetails() {
-    this.batchBasicDetailsForm.markAllAsTouched();
-    if (this.batchBasicDetailsForm.invalid) {
-      this.showToastr('top-right', 'danger', 'Basic details are required');
-      return;
-    }
-    this.stepper.next();
-  }
-
-  submitSubjects() {
-    this.batchSubjectForm.markAllAsTouched();
-    if (this.batchSubjectForm.invalid) {
-      this.showToastr('top-right', 'danger', 'At least 1 Subject is required');
-      return;
-    }
-    this.stepper.next();
-  }
-
-  saveBatch() {
-    this.batchBasicDetailsForm.markAllAsTouched();
-    this.batchSubjectForm.markAllAsTouched();
-
-    if (this.batchBasicDetailsForm.invalid) {
-      this.showToastr('top-right', 'danger', 'Basic details are required');
-      return;
-    } else if (this.batchSubjectForm.invalid) {
-      this.showToastr('top-right', 'danger', 'At least 1 Subject is required');
-      return;
-    }
-
-    this.loading = true;
-
-    const batch: any = {
-      branch: this.branchId,
-      category: this.course.basicDetails.category,
-      course: this.course._id,
-      basicDetails: this.batchBasicDetailsForm.value,
-      subjects: this.batchSubjectForm.value.subjects,
-    };
-    if (!this.batch) {
-      this.batchService.addBatch(batch).subscribe(
-        (res: any) => {
-          this.showToastr('top-right', 'success', 'New Batch Added Successfully!');
-          this.router.navigate(['../'], { relativeTo: this.route });
-        },
-        (error: any) => {
-          this.showToastr('top-right', 'danger', error);
-          this.loading = false;
-        },
-      );
-    } else {
-      batch._id = this.batch._id;
-
-      this.batchService.editBatch(batch).subscribe(
-        (res: any) => {
-          this.showToastr('top-right', 'success', 'Batch Updated Successfully!');
-          this.router.navigate(['../'], { relativeTo: this.route });
-        },
-        (error: any) => {
-          this.showToastr('top-right', 'danger', error);
-          this.loading = false;
-        },
-      );
-    }
-  }
-
   private showToastr(position: any, status: any, message: string) {
     this.toastrService.show(status, message, {
       position,
@@ -325,10 +265,10 @@ export class SaveAssignmentComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../manage'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {
-    this.batchService.deleteBatchId();
+    this.assignmentService.deleteAssignmentId();
   }
 }
