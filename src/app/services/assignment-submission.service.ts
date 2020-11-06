@@ -37,7 +37,7 @@ export class AssignmentSubmissionService {
 
   constructor(private httpService: HttpService) {}
 
-  submitAssignment(assignmentSubmission: any) {
+  submitAssignment(assignmentSubmission: FormData) {
     const data = { api: 'submitAssignment', data: assignmentSubmission };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
@@ -61,6 +61,18 @@ export class AssignmentSubmissionService {
     );
   }
 
+  getSubmissionOfAssignment(assignment: string) {
+    const data = { api: 'getSubmissionOfAssignment', data: { assignment } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getAssignmentSubmission(id: string) {
     const data = { api: 'getAssignmentSubmission', data: { id } };
     return this.httpService.httpPost(data).pipe(
@@ -73,7 +85,7 @@ export class AssignmentSubmissionService {
     );
   }
 
-  updateAssignmentSubmission(assignmentSubmission: any) {
+  updateAssignmentSubmission(assignmentSubmission: FormData) {
     const data = { api: 'updateAssignmentSubmission', data: assignmentSubmission };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {

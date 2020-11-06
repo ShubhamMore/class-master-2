@@ -87,6 +87,12 @@ export class ManageCourseComponent implements OnInit, OnDestroy {
     this.router.navigate(['../performance'], { relativeTo: this.route });
   }
 
+  courseAssignment(studentCourse: StudentCourseModel) {
+    this.studentCourseService.setStudentCourseId(studentCourse._id);
+    this.studentCourseService.setStudentCourseData(studentCourse);
+    this.router.navigate(['../assignment'], { relativeTo: this.route });
+  }
+
   private showToastr(position: any, status: any, message: string) {
     this.toastrService.show(status, message, {
       position,

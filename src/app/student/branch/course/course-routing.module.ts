@@ -43,6 +43,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'assignment',
+        loadChildren: () =>
+          import('./assignment/assignment.module').then((m) => m.AssignmentModule),
+      },
+
+      {
         path: '',
         redirectTo: 'manage',
         pathMatch: 'full',

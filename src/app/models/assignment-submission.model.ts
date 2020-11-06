@@ -4,6 +4,7 @@ export class AssignmentSubmissionModel {
     public assignment: string,
     public student: string,
     public title: string,
+    public description: string,
     public grades: string,
     public fileName: string,
     public fileSize: string,

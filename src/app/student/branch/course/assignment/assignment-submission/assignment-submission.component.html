@@ -1,0 +1,186 @@
+<nb-card>
+  <nb-card-header>
+    <button class="float-right" nbButton status="warning" size="tiny" (click)="back()">
+      Back
+    </button>
+    <h3 class="">
+      {{ !assignmentSubmission ? 'Submission' : 'Edit Submission' }}
+    </h3>
+  </nb-card-header>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="table-responsive">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>Assignment Topic</th>
+            <th>:</th>
+            <th>{{ assignment.topic }}</th>
+          </tr>
+          <tr>
+            <th>Assignment Description</th>
+            <th>:</th>
+            <th>{{ assignment.description }}</th>
+          </tr>
+          <tr>
+            <th>Assignment Submission Date</th>
+            <th>:</th>
+            <th>{{ assignment.submissionDate }}</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper #stepper [linear]="true">
+      <nb-step [stepControl]="assignmentSubmissionDetailsForm" label="Basic Details">
+        <form
+          class=""
+          (submit)="submitAssignmentDetails()"
+          [formGroup]="assignmentSubmissionDetailsForm"
+        >
+          <h6>Assignment Details:</h6>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-control-group">
+                <label class="label" for="input-description">Description:</label>
+                <textarea
+                  type="text"
+                  nbInput
+                  id="input-description"
+                  name="description"
+                  formControlName="description"
+                  placeholder="Description"
+                  fullWidth
+                  [status]="
+                    assignmentSubmissionDetailsForm.get('description').touched
+                      ? assignmentSubmissionDetailsForm.get('description').invalid
+                        ? 'danger'
+                        : 'success'
+                      : 'basic'
+                  "
+                ></textarea>
+
+                <ng-container
+                  *ngIf="
+                    assignmentSubmissionDetailsForm.get('description').invalid &&
+                    assignmentSubmissionDetailsForm.get('description').touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="assignmentSubmissionDetailsForm.get('description').errors?.required"
+                  >
+                    Assignment Description is required!
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-control-group">
+                <label class="label" for="input-subject">Attach File</label>
+                <input
+                  type="file"
+                  nbInput
+                  id="input-file"
+                  name="file"
+                  placeholder="Select File"
+                  fullWidth
+                  #filePicker
+                  (change)="onFilePicked($event)"
+                  hidden
+                />
+
+                <nb-form-field>
+                  <button
+                    type="button"
+                    nbPrefix
+                    nbButton
+                    ghost
+                    (click)="filePicker.click()"
+                    nbTooltip="Attach File"
+                  >
+                    <nb-icon icon="attach-outline" pack="eva"> </nb-icon>
+                  </button>
+                  <input
+                    type="text"
+                    nbInput
+                    fullWidth
+                    [value]="fileName"
+                    placeholder="Attach File"
+                    (click)="filePicker.click()"
+                    disabled
+                  />
+                  <button
+                    type="button"
+                    nbSuffix
+                    nbButton
+                    ghost
+                    (click)="clearFile()"
+                    nbTooltip="Remove File"
+                    *ngIf="uploadAssignmentSubmission || (!assignment && fileName)"
+                  >
+                    <nb-icon icon="close-outline" status="danger" pack="eva"> </nb-icon>
+                  </button>
+                </nb-form-field>
+
+                <ng-container *ngIf="invalidFile">
+                  <p class="caption status-danger">
+                    *Please Select a Valid File (*.pdf, '*.jpg, *.png, *.jpeg, *.mp4)
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <button nbButton type="submit">
+                <span>Next</span>
+                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+
+      <nb-step label="Submit">
+        <div class="step-container">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Description</th>
+                  <td>{{ assignmentSubmissionDetailsForm.value.description }}</td>
+                </tr>
+                <tr>
+                  <th>Attach File</th>
+                  <td>{{ uploadAssignmentSubmission ? fileName : '--' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button class="" nbButton nbStepperPrevious>
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <span>prev</span>
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button nbButton (click)="saveAssignment()"><span>Submit</span></button>
+            </div>
+          </div>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

@@ -51,6 +51,7 @@ export class CoursePerformanceComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
+
     this.studentCourseService
       .getStudentCourseData()
       .subscribe((studentCourse: StudentCourseModel) => {
