@@ -1,3 +1,4 @@
+import { StudentBranchService } from './../../student-branch.service';
 import { StudentCourseService } from './../../../../services/student-course.service';
 import { LectureService } from './../../../../services/lecture.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -15,6 +16,7 @@ export class LectureComponent implements OnInit, OnDestroy {
 
   constructor(
     private branchService: BranchService,
+    private studentBranchService: StudentBranchService,
     private lectureService: LectureService,
     private studentCourseService: StudentCourseService,
     private router: Router,

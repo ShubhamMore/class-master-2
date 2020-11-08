@@ -1,3 +1,4 @@
+import { StudentBranchService } from './../../student-branch.service';
 import { ExamService } from './../../../../services/exam.service';
 import { BatchService } from './../../../../services/batch.service';
 import { StudentCourseModel } from './../../../../models/student-course.model';
@@ -34,6 +35,7 @@ export class CoursePerformanceComponent implements OnInit {
 
   constructor(
     public dateService: DateService,
+    private studentBranchService: StudentBranchService,
     private branchService: BranchService,
     private batchService: BatchService,
     private toastrService: NbToastrService,
@@ -48,7 +50,7 @@ export class CoursePerformanceComponent implements OnInit {
     this.branchId = this.branchService.getBranchId();
 
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
@@ -130,7 +132,8 @@ export class CoursePerformanceComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    const type = this.studentBranchService.getType();
+    this.router.navigate(['../'], { relativeTo: this.route, queryParams: { type } });
   }
 
   private showToastr(position: any, status: any, message: string) {

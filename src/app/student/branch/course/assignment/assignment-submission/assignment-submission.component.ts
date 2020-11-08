@@ -46,8 +46,7 @@ export class AssignmentSubmissionComponent implements OnInit, OnDestroy {
     this.fileName = null;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
-
+      this.back();
       return;
     }
 
@@ -164,7 +163,7 @@ export class AssignmentSubmissionComponent implements OnInit, OnDestroy {
       this.assignmentSubmissionService.submitAssignment(assignmentSubmission).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Assignment Added Successfully!');
-          this.router.navigate(['../manage'], { relativeTo: this.route });
+          this.back();
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
@@ -177,7 +176,7 @@ export class AssignmentSubmissionComponent implements OnInit, OnDestroy {
       this.assignmentSubmissionService.updateAssignmentSubmission(assignmentSubmission).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'Assignment Submission Updated Successfully!');
-          this.router.navigate(['../manage'], { relativeTo: this.route });
+          this.back();
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);

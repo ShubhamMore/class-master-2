@@ -1,3 +1,4 @@
+import { StudentBranchService } from './../../../student-branch.service';
 import { StudentCourseService } from './../../../../../services/student-course.service';
 import { StudentCourseModel } from './../../../../../models/student-course.model';
 import { SubjectService } from './../../../../../services/subject.service';
@@ -40,6 +41,7 @@ export class ManageAssignmentComponent implements OnInit {
   constructor(
     private branchService: BranchService,
     private studentCourseService: StudentCourseService,
+    private studentBranchService: StudentBranchService,
     private subjectService: SubjectService,
     private assignmentService: AssignmentService,
     public dateService: DateService,
@@ -53,7 +55,7 @@ export class ManageAssignmentComponent implements OnInit {
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
@@ -144,6 +146,7 @@ export class ManageAssignmentComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    const type = this.studentBranchService.getType();
+    this.router.navigate(['../'], { relativeTo: this.route, queryParams: { type } });
   }
 }

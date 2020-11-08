@@ -24,9 +24,37 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: '',
     link: '/student/branch/course/manage',
     hidden: true,
+    queryParams: { type: 'course' },
   },
 
   // 4
+  {
+    title: 'Lecture',
+    icon: '',
+    link: '/student/branch/course/manage',
+    hidden: true,
+    queryParams: { type: 'lecture' },
+  },
+
+  // 5
+  {
+    title: 'Assignment',
+    icon: '',
+    link: '/student/branch/course/manage',
+    hidden: true,
+    queryParams: { type: 'assignment' },
+  },
+
+  // 6
+  {
+    title: 'Report',
+    icon: '',
+    link: '/student/branch/course/manage',
+    hidden: true,
+    queryParams: { type: 'report' },
+  },
+
+  // 7
   {
     title: 'Online Exam',
     icon: '',

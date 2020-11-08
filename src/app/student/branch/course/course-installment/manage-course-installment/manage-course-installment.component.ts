@@ -53,7 +53,7 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
     this.studentCourseInstallmentId = this.studentCourseInstallmentService.getStudentCourseInstallmentId();
 
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.router.navigate(['../../'], { relativeTo: this.route });
       return;
     }
 
@@ -82,7 +82,7 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
         },
         (err: any) => {
           this.showToastr('top-right', 'danger', err);
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.loading = false;
         },
       );
   }

@@ -1,3 +1,4 @@
+import { StudentBranchService } from './../../student-branch.service';
 import { NbToastrService } from '@nebular/theme';
 import { StudentCourseModel } from './../../../../models/student-course.model';
 import { StudentCourseService } from './../../../../services/student-course.service';
@@ -25,6 +26,7 @@ export class AssignmentComponent implements OnInit, OnDestroy {
 
   constructor(
     private branchService: BranchService,
+    private studentBranchService: StudentBranchService,
     private studentCourseService: StudentCourseService,
     private courseService: CourseService,
     private batchService: BatchService,
@@ -38,7 +40,7 @@ export class AssignmentComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
@@ -69,7 +71,8 @@ export class AssignmentComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    const type = this.studentBranchService.getType();
+    this.router.navigate(['../'], { relativeTo: this.route, queryParams: { type } });
   }
 
   private showToastr(position: any, status: any, message: string) {

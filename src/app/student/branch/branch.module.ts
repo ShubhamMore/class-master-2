@@ -5,9 +5,11 @@ import { CommonModule } from '@angular/common';
 import { BranchRoutingModule } from './branch-routing.module';
 import { BranchComponent } from './branch.component';
 import { BranchHeaderComponent } from './branch-header/branch-header.component';
+import { StudentBranchService } from './student-branch.service';
 
 @NgModule({
   declarations: [BranchComponent, BranchHeaderComponent],
   imports: [CommonModule, BranchRoutingModule, NbCardModule, NbUserModule],
+  providers: [StudentBranchService],
 })
 export class BranchModule {}

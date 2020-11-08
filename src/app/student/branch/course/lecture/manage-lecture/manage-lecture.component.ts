@@ -1,3 +1,4 @@
+import { StudentBranchService } from './../../../student-branch.service';
 import { StudentCourseService } from './../../../../../services/student-course.service';
 import { StudentCourseModel } from './../../../../../models/student-course.model';
 import { NbToastrService } from '@nebular/theme';
@@ -24,6 +25,7 @@ export class ManageLectureComponent implements OnInit {
   constructor(
     private branchService: BranchService,
     private lectureService: LectureService,
+    private studentBranchService: StudentBranchService,
     private studentCourseService: StudentCourseService,
     public dateService: DateService,
     private router: Router,
@@ -118,6 +120,7 @@ export class ManageLectureComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(['../../'], { relativeTo: this.route });
+    const type = this.studentBranchService.getType();
+    this.router.navigate(['../'], { relativeTo: this.route, queryParams: { type } });
   }
 }

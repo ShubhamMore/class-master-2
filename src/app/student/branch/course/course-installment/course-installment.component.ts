@@ -1,3 +1,4 @@
+import { StudentBranchService } from './../../student-branch.service';
 import { StudentCourseService } from './../../../../services/student-course.service';
 import { CourseService } from './../../../../services/course.service';
 import { StudentCourseInstallmentService } from './../../../../services/student-course-installment.service';
@@ -16,6 +17,7 @@ export class CourseInstallmentComponent implements OnInit, OnDestroy {
 
   constructor(
     private branchService: BranchService,
+    private studentBranchService: StudentBranchService,
     private courseService: CourseService,
     private studentCourseService: StudentCourseService,
     private studentCourseInstallmentService: StudentCourseInstallmentService,

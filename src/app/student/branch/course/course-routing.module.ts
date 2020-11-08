@@ -50,7 +50,7 @@ const routes: Routes = [
 
       {
         path: '',
-        redirectTo: 'manage',
+        redirectTo: 'manage?type=course',
         pathMatch: 'full',
       },
 

@@ -22,10 +22,11 @@
                   <th>Batch</th>
                   <th>Roll Number</th>
                   <th>Activation date</th>
-                  <th>Installments</th>
-                  <th>Attendance</th>
-                  <th>Performance</th>
-                  <th>Lecture</th>
+                  <th *ngIf="type === 'course'">Installments</th>
+                  <th *ngIf="type === 'report'">Attendance</th>
+                  <th *ngIf="type === 'report'">Performance</th>
+                  <th *ngIf="type === 'lecture'">Lecture</th>
+                  <th *ngIf="type === 'assignment'">Assignment</th>
                 </tr>
               </thead>
               <tbody>
@@ -37,7 +38,7 @@
                   <td>{{ studentCourse.rollNumber }}</td>
                   <td>{{ dateService.formatDate(studentCourse.activationDate) }}</td>
 
-                  <td>
+                  <td *ngIf="type === 'course'">
                     <button
                       nbButton
                       status="primary"
@@ -48,7 +49,7 @@
                     </button>
                   </td>
 
-                  <td>
+                  <td *ngIf="type === 'report'">
                     <button
                       nbButton
                       status="info"
@@ -59,7 +60,7 @@
                     </button>
                   </td>
 
-                  <td>
+                  <td *ngIf="type === 'report'">
                     <button
                       nbButton
                       status="success"
@@ -70,7 +71,7 @@
                     </button>
                   </td>
 
-                  <td>
+                  <td *ngIf="type === 'lecture'">
                     <button
                       nbButton
                       status="warning"
@@ -80,7 +81,8 @@
                       Lecture
                     </button>
                   </td>
-                  <td>
+
+                  <td *ngIf="type === 'assignment'">
                     <button
                       nbButton
                       status="warning"
