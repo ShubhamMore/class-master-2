@@ -72,6 +72,29 @@ export class AssignmentService {
     );
   }
 
+  getAssignmentsForStudent(
+    branch: string,
+    category: string,
+    course: string,
+    batch: string,
+    subject: string,
+    month: string,
+    year: string,
+  ) {
+    const data = {
+      api: 'getAssignmentsForStudent',
+      data: { branch, category, course, batch, subject, month, year },
+    };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getAssignment(id: string) {
     const data = { api: 'getAssignment', data: { id } };
     return this.httpService.httpPost(data).pipe(

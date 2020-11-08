@@ -19,5 +19,6 @@ export class AssignmentModel {
     public publicId: string,
     public status: boolean,
     public generatedByName?: string,
+    public submission?: any,
   ) {}
 }

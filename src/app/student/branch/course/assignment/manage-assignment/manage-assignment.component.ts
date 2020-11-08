@@ -100,7 +100,7 @@ export class ManageAssignmentComponent implements OnInit {
   getAssignments() {
     this.loading = true;
     this.assignmentService
-      .getAssignments(
+      .getAssignmentsForStudent(
         this.branchId,
         this.studentCourse.category,
         this.studentCourse.course,

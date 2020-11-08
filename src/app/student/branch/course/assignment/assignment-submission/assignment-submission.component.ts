@@ -69,6 +69,8 @@ export class AssignmentSubmissionComponent implements OnInit, OnDestroy {
           this.assignmentSubmissionDetailsForm.patchValue({
             description: assignmentSubmission.description,
           });
+
+          this.fileName = assignmentSubmission.fileName;
         }
 
         this.loading = false;

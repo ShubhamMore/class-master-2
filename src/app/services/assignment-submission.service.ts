@@ -85,6 +85,18 @@ export class AssignmentSubmissionService {
     );
   }
 
+  saveAssignmentSubmissionGrades(submissionGrades: any) {
+    const data = { api: 'saveAssignmentSubmissionGrades', data: submissionGrades };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   updateAssignmentSubmission(assignmentSubmission: FormData) {
     const data = { api: 'updateAssignmentSubmission', data: assignmentSubmission };
     return this.httpService.httpPost(data).pipe(

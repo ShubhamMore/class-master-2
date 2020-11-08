@@ -9,6 +9,14 @@ const routes: Routes = [
   },
 
   {
+    path: 'grade',
+    loadChildren: () =>
+      import('./submission-grading/submission-grading.module').then(
+        (m) => m.SubmissionGradingModule,
+      ),
+  },
+
+  {
     path: 'page-not-found',
     loadChildren: () =>
       import('../../../../shared/page-not-found/page-not-found.module').then(

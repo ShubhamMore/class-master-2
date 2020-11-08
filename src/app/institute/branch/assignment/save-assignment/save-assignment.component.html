@@ -251,10 +251,11 @@
               <div class="form-control-group">
                 <label class="label" for="input-assignment-total-grades">Total Grades:</label>
                 <input
-                  type="text"
+                  type="number"
                   nbInput
                   id="input-assignment-total-grades"
                   name="totalGrades"
+                  min="0"
                   formControlName="totalGrades"
                   fullWidth
                   [status]="
@@ -276,6 +277,12 @@
                     *ngIf="assignmentDetailsForm.get('totalGrades').errors?.required"
                   >
                     Assignment Total Grades is required!
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="assignmentDetailsForm.get('totalGrades').errors?.min"
+                  >
+                    Assignment Total Grades Should be more than 0
                   </p>
                 </ng-container>
               </div>

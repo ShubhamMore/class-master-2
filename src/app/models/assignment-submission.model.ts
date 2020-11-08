@@ -6,6 +6,7 @@ export class AssignmentSubmissionModel {
     public title: string,
     public description: string,
     public grades: string,
+    public remark: string,
     public fileName: string,
     public fileSize: string,
     public fileType: string,
@@ -13,5 +14,6 @@ export class AssignmentSubmissionModel {
     public publicId: string,
     public createdAt: string,
     public status: boolean,
+    public studentName?: string,
   ) {}
 }

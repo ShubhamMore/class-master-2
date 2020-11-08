@@ -1,1 +1,63 @@
-<p>assignment-submission works!</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-12">
+        <button class="float-right" nbButton status="warning" size="tiny" (click)="back()">
+          Back
+        </button>
+        <h3>Submission</h3>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>
+                  #
+                </th>
+                <th>
+                  Student
+                </th>
+                <th>
+                  Submission Status
+                </th>
+                <th>
+                  Grades
+                </th>
+                <th>
+                  Mark Grades
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let submission of assignmentSubmissions; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ submission.studentName }}</td>
+                <td>{{ submission.status ? 'Submitted' : 'Pending' }}</td>
+                <td>
+                  {{ submission.grades ? submission.grades : '--' }}/{{ assignment.totalGrades }}
+                </td>
+                <td>
+                  <button
+                    class=""
+                    nbButton
+                    status="primary"
+                    size="small"
+                    (click)="markGrade(submission)"
+                    [disabled]="!submission.status"
+                  >
+                    Mark
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

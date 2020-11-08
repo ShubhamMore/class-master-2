@@ -1,1 +1,145 @@
-<p>submission-grading works!</p>
+<nb-card>
+  <nb-card-header>
+    <p>
+      <strong>Assignment : </strong>
+      <span>{{ assignment.topic }}</span>
+      <br />
+      <strong>Submission Date : </strong>
+      <span>{{ dateService.formatDate(assignment.submissionDate) }}</span>
+      <br />
+      <strong>Description : </strong>
+      <br />
+      <span class="pl-3">{{ assignment.description }}</span>
+    </p>
+  </nb-card-header>
+  <nb-card-body>
+    <form
+      (submit)="saveGrades()"
+      [formGroup]="assignmentSubmissionForm"
+      *ngIf="!loading; else loadingData"
+    >
+      <div class="row">
+        <div class="col-md-12">
+          <p>
+            <strong>Description : </strong>
+            <br />
+            <span>{{ assignmentSubmission.description }}</span>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <p>
+            <strong>Submitted On : </strong
+            >{{ dateService.formatDate(assignmentSubmission.createdAt) }}
+          </p>
+          <strong>Attachment : </strong>
+          <a
+            [href]="assignmentSubmission.secureUrl"
+            target="_blank"
+            download="{{ assignmentSubmission.studentName + '-' + assignmentSubmission.fileName }}"
+          >
+            {{ assignmentSubmission.fileName }}
+          </a>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-control-group">
+            <label class="label" for="input-submission-grades">Grades:</label>
+            <input
+              type="number"
+              nbInput
+              id="input-submission-grades"
+              name="grades"
+              formControlName="grades"
+              min="0"
+              [max]="assignment.totalGrades"
+              fullWidth
+              [status]="
+                assignmentSubmissionForm.get('grades').touched
+                  ? assignmentSubmissionForm.get('grades').invalid
+                    ? 'danger'
+                    : 'success'
+                  : 'basic'
+              "
+              [placeholder]="assignment.totalGrades"
+            />
+            <ng-container
+              *ngIf="
+                assignmentSubmissionForm.get('grades').invalid &&
+                assignmentSubmissionForm.get('grades').touched
+              "
+            >
+              <p
+                class="caption status-danger"
+                *ngIf="assignmentSubmissionForm.get('grades').errors?.required"
+              >
+                Assignment Grades are required!
+              </p>
+              <p
+                class="caption status-danger"
+                *ngIf="assignmentSubmissionForm.get('totalGrades').errors?.min"
+              >
+                Assignment Total Grades Should be more than equal to 0
+              </p>
+              <p
+                class="caption status-danger"
+                *ngIf="assignmentSubmissionForm.get('totalGrades').errors?.max"
+              >
+                Assignment Total Grades Should be less than equal to {{ assignment.totalGrades }}
+              </p>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-control-group">
+            <label class="label" for="input-submission-remark">Remark:</label>
+            <textarea
+              type="text"
+              nbInput
+              id="input-submission-remark"
+              name="remark"
+              rows="2"
+              formControlName="remark"
+              placeholder="Remark"
+              fullWidth
+              [status]="
+                assignmentSubmissionForm.get('remark').touched
+                  ? assignmentSubmissionForm.get('remark').invalid
+                    ? 'danger'
+                    : 'success'
+                  : 'basic'
+              "
+            ></textarea>
+            <ng-container
+              *ngIf="
+                assignmentSubmissionForm.get('remark').invalid &&
+                assignmentSubmissionForm.get('remark').touched
+              "
+            >
+              <p
+                class="caption status-danger"
+                *ngIf="assignmentSubmissionForm.get('remark').errors?.required"
+              >
+                Assignment Remark is required!
+              </p>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <button type="submit" class="float-right" nbButton status="primary" size="small">
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #loadingData>
+  <p class="pt-5 pb-5 text-center">
+    Loading...
+  </p>
+</ng-template>
