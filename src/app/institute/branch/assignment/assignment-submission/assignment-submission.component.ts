@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../authentication/auth/auth-service/auth.service';
 import { AssignmentSubmissionModel } from './../../../../models/assignment-submission.model';
 import { AssignmentSubmissionService } from './../../../../services/assignment-submission.service';
 import { NbToastrService } from '@nebular/theme';
@@ -18,6 +19,8 @@ export class AssignmentSubmissionComponent implements OnInit {
 
   branchId: string;
 
+  user: any;
+
   assignment: AssignmentModel;
   assignmentSubmissions: AssignmentSubmissionModel[];
 
@@ -25,6 +28,7 @@ export class AssignmentSubmissionComponent implements OnInit {
     private branchService: BranchService,
     private assignmentSubmissionService: AssignmentSubmissionService,
     private assignmentService: AssignmentService,
+    private authService: AuthService,
     public dateService: DateService,
     private router: Router,
     private route: ActivatedRoute,
@@ -39,6 +43,8 @@ export class AssignmentSubmissionComponent implements OnInit {
       this.back();
       return;
     }
+
+    this.user = this.authService.getUserData();
 
     this.assignmentService.getAssignmentData().subscribe((assignment: AssignmentModel) => {
       this.assignment = assignment;
@@ -65,8 +71,10 @@ export class AssignmentSubmissionComponent implements OnInit {
   }
 
   markGrade(submission: AssignmentSubmissionModel) {
-    this.assignmentSubmissionService.setAssignmentSubmissionData(submission);
-    this.router.navigate(['./grade'], { relativeTo: this.route });
+    if (this.assignment.generatedBy === this.user.imsMasterId) {
+      this.assignmentSubmissionService.setAssignmentSubmissionData(submission);
+      this.router.navigate(['./grade'], { relativeTo: this.route });
+    }
   }
 
   private showToastr(position: any, status: any, message: string) {

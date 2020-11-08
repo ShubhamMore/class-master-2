@@ -116,7 +116,7 @@ export class SaveAssignmentComponent implements OnInit, OnDestroy {
         validators: [Validators.required],
       }),
       totalGrades: new FormControl(null, {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.min(0)],
       }),
       description: new FormControl(null, {
         validators: [Validators.required],

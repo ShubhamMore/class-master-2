@@ -28,7 +28,7 @@
                 <th>
                   Grades
                 </th>
-                <th>
+                <th *ngIf="assignment.generatedBy === user.imsMasterId">
                   Mark Grades
                 </th>
               </tr>
@@ -41,7 +41,7 @@
                 <td>
                   {{ submission.grades ? submission.grades : '--' }}/{{ assignment.totalGrades }}
                 </td>
-                <td>
+                <td *ngIf="assignment.generatedBy === user.imsMasterId">
                   <button
                     class=""
                     nbButton

@@ -1,16 +1,19 @@
+import { NbCardModule, NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AssignmentSubmissionRoutingModule } from './assignment-submission-routing.module';
 import { AssignmentSubmissionComponent } from './assignment-submission.component';
-import { SubmissionGradingComponent } from './submission-grading/submission-grading.component';
-
 
 @NgModule({
-  declarations: [AssignmentSubmissionComponent, SubmissionGradingComponent],
+  declarations: [AssignmentSubmissionComponent],
   imports: [
     CommonModule,
-    AssignmentSubmissionRoutingModule
-  ]
+    AssignmentSubmissionRoutingModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbTooltipModule,
+  ],
 })
-export class AssignmentSubmissionModule { }
+export class AssignmentSubmissionModule {}
