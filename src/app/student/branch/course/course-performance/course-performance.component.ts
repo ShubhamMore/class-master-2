@@ -54,6 +54,8 @@ export class CoursePerformanceComponent implements OnInit {
       return;
     }
 
+    this.studentBranchService.setType('report');
+
     this.studentCourseService
       .getStudentCourseData()
       .subscribe((studentCourse: StudentCourseModel) => {

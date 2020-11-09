@@ -41,6 +41,8 @@ export class ManageLectureComponent implements OnInit {
       return;
     }
 
+    this.studentBranchService.setType('lecture');
+
     this.date = this.lectureService.getSearchDate();
     if (!this.date) {
       this.date = this.dateService.getDateString();

@@ -59,6 +59,8 @@ export class ManageAssignmentComponent implements OnInit {
       return;
     }
 
+    this.studentBranchService.setType('assignment');
+
     this.studentCourseService
       .getStudentCourseData()
       .subscribe((studentCourse: StudentCourseModel) => {

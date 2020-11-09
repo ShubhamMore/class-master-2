@@ -58,6 +58,9 @@ export class CourseAttendanceComponent implements OnInit {
       this.back();
       return;
     }
+
+    this.studentBranchService.setType('report');
+
     this.studentCourseService
       .getStudentCourseData()
       .subscribe((studentCourse: StudentCourseModel) => {
