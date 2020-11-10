@@ -8,6 +8,13 @@ const routes: Routes = [
     component: OnlineTestComponent,
     children: [
       {
+        path: 'batch',
+        loadChildren: () =>
+          import('./manage-batch-online-test/manage-batch-online-test.module').then(
+            (m) => m.ManageBatchOnlineTestModule,
+          ),
+      },
+      {
         path: 'manage',
         loadChildren: () =>
           import('./manage-online-test/manage-online-test.module').then(
@@ -34,7 +41,7 @@ const routes: Routes = [
 
       {
         path: '',
-        redirectTo: 'manage',
+        redirectTo: 'batch',
         pathMatch: 'full',
       },
 

@@ -2,13 +2,39 @@ import { OnlineExamModel } from './../models/online-exam.model';
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { HttpService } from './shared-services/http.service';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OnlineExamService {
-  onlineExam: OnlineExamModel;
+  private onlineExamId: string;
+
+  private onlineExam = new BehaviorSubject<OnlineExamModel>(null);
+
+  setOnlineExamData(onlineExam: OnlineExamModel) {
+    this.onlineExam.next(onlineExam);
+  }
+
+  getOnlineExamData() {
+    return this.onlineExam;
+  }
+
+  deleteOnlineExamData() {
+    this.onlineExam.next(null);
+  }
+
+  setOnlineExamId(onlineExamId: string) {
+    this.onlineExamId = onlineExamId;
+  }
+
+  getOnlineExamId() {
+    return this.onlineExamId;
+  }
+
+  deleteOnlineExamId() {
+    this.onlineExamId = null;
+  }
 
   constructor(private httpService: HttpService) {}
 
@@ -36,8 +62,19 @@ export class OnlineExamService {
     );
   }
 
-  getOnlineExams(branch: string, category: any, course: string, batch: string, subject: string) {
-    const data = { api: 'getOnlineExams', data: { branch, category, course, batch, subject } };
+  getOnlineExams(
+    branch: string,
+    category: string,
+    course: string,
+    batch: string,
+    subject: string,
+    month: string,
+    year: string,
+  ) {
+    const data = {
+      api: 'getOnlineExams',
+      data: { branch, category, course, batch, subject, month, year },
+    };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

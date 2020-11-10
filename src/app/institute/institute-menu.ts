@@ -113,7 +113,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Schedule Online Exam',
-        link: '/institute/branch/exam/online-test/manage',
+        link: '/institute/branch/exam/online-test/batch',
         hidden: true,
       },
     ],
