@@ -1,6 +1,5 @@
 import { ExamService } from './../../../../../../services/exam.service';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
-import { Subject } from 'rxjs';
 import { BatchService } from './../../../../../../services/batch.service';
 import { CourseService } from './../../../../../../services/course.service';
 import { BatchModel } from './../../../../../../models/batch.model';

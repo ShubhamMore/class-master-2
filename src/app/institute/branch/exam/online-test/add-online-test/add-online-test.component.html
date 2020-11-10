@@ -1,1 +1,499 @@
-<p>add-online-test works!</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-9">
+        <h3>{{ onlineExam ? 'Edit' : 'Add' }} Online Test</h3>
+      </div>
+      <div class="col-3">
+        <button class="float-right" nbButton size="tiny" status="warning" (click)="back()">
+          Back
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <nb-stepper #stepper [linear]="true" [disableStepNavigation]="true">
+          <nb-step [stepControl]="onlineExamForm" label="OnlineExam Details">
+            <form [formGroup]="onlineExamForm" (submit)="submitOnlineExamForm()">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-control-group">
+                    <label class="label" for="input-online-exam-title">Online Exam Title:</label>
+                    <input
+                      type="text"
+                      nbInput
+                      id="input-online-exam-title"
+                      name="title"
+                      formControlName="title"
+                      placeholder="OnlineExam Title"
+                      fullWidth
+                      [status]="
+                        onlineExamForm.get('title').touched
+                          ? onlineExamForm.get('title').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="
+                        onlineExamForm.get('title').invalid && onlineExamForm.get('title').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('title').errors?.required"
+                      >
+                        Online Exam Title is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-subject">Subject:</label>
+                    <nb-select
+                      id="input-subject"
+                      name="subject"
+                      formControlName="subject"
+                      placeholder="Subject"
+                      fullWidth
+                      [status]="
+                        onlineExamForm.get('subject').touched
+                          ? onlineExamForm.get('subject').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    >
+                      <nb-option value="">Select Subject</nb-option>
+                      <nb-option *ngFor="let subject of subjects" [value]="subject._id">{{
+                        subject.subject
+                      }}</nb-option>
+                    </nb-select>
+                    <ng-container
+                      *ngIf="
+                        onlineExamForm.get('subject').invalid &&
+                        onlineExamForm.get('subject').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('subject').errors?.required"
+                      >
+                        Subject is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-date">Date:</label>
+                    <input
+                      type="date"
+                      nbInput
+                      id="input-date"
+                      name="date"
+                      [min]="onlineExam ? onlineExam.date : dateService.getDateString()"
+                      formControlName="date"
+                      placeholder="Date"
+                      fullWidth
+                      [status]="
+                        onlineExamForm.get('date').touched
+                          ? onlineExamForm.get('date').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="
+                        onlineExamForm.get('date').invalid && onlineExamForm.get('date').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('date').errors?.required"
+                      >
+                        Date is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-time">Time:</label>
+                    <input
+                      type="time"
+                      step="300"
+                      nbInput
+                      id="input-time"
+                      name="time"
+                      formControlName="time"
+                      placeholder="Time"
+                      fullWidth
+                      [status]="
+                        onlineExamForm.get('time').touched
+                          ? onlineExamForm.get('time').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="
+                        onlineExamForm.get('time').invalid && onlineExamForm.get('time').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('time').errors?.required"
+                      >
+                        Time is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-duration">Duration (in Min):</label>
+                    <input
+                      type="number"
+                      nbInput
+                      id="input-duration"
+                      name="duration"
+                      min="0"
+                      formControlName="duration"
+                      placeholder="Duration (in Min)"
+                      fullWidth
+                      [status]="
+                        onlineExamForm.get('duration').touched
+                          ? onlineExamForm.get('duration').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="
+                        onlineExamForm.get('duration').invalid &&
+                        onlineExamForm.get('duration').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('duration').errors?.required"
+                      >
+                        Duration is required!
+                      </p>
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('duration').errors?.min"
+                      >
+                        Duration should be greater than 0
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-control-group">
+                    <label class="label" for="input-description">Description:</label>
+                    <textarea
+                      type="text"
+                      nbInput
+                      rows="2"
+                      id="input-description"
+                      name="description"
+                      min="0"
+                      formControlName="description"
+                      placeholder="Description"
+                      fullWidth
+                      [status]="
+                        onlineExamForm.get('description').touched
+                          ? onlineExamForm.get('description').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    ></textarea>
+                    <ng-container
+                      *ngIf="
+                        onlineExamForm.get('description').invalid &&
+                        onlineExamForm.get('description').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('description').errors?.required"
+                      >
+                        Description is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-each-question-marks"
+                      >Each Question Marks:</label
+                    >
+                    <input
+                      type="number"
+                      nbInput
+                      id="input-each-question-marks"
+                      name="eachQuestionMarks"
+                      min="0"
+                      formControlName="eachQuestionMarks"
+                      placeholder="Each Question Marks"
+                      fullWidth
+                      [status]="
+                        onlineExamForm.get('eachQuestionMarks').touched
+                          ? onlineExamForm.get('eachQuestionMarks').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                      (input)="calculateTotalMarks()"
+                    />
+                    <ng-container
+                      *ngIf="
+                        onlineExamForm.get('eachQuestionMarks').invalid &&
+                        onlineExamForm.get('eachQuestionMarks').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('eachQuestionMarks').errors?.required"
+                      >
+                        Each Question Marks is required!
+                      </p>
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('eachQuestionMarks').errors?.min"
+                      >
+                        Each Question Marks should be greater than 0
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-total-question">Total Question:</label>
+                    <input
+                      type="number"
+                      nbInput
+                      id="input-total-question"
+                      name="totalQuestions"
+                      min="0"
+                      formControlName="totalQuestions"
+                      placeholder="Total Question"
+                      fullWidth
+                      [status]="
+                        onlineExamForm.get('totalQuestions').touched
+                          ? onlineExamForm.get('totalQuestions').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                      (input)="calculateTotalMarks()"
+                    />
+                    <ng-container
+                      *ngIf="
+                        onlineExamForm.get('totalQuestions').invalid &&
+                        onlineExamForm.get('totalQuestions').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('totalQuestions').errors?.required"
+                      >
+                        Total Questions are required!
+                      </p>
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('totalQuestions').errors?.min"
+                      >
+                        Total Questions should be greater than 0
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-total-marks">Total Marks:</label>
+                    <input
+                      type="number"
+                      nbInput
+                      id="input-total-marks"
+                      name="totalMarks"
+                      min="0"
+                      formControlName="totalMarks"
+                      placeholder="Total Marks"
+                      disabled="true"
+                      fullWidth
+                      [status]="
+                        onlineExamForm.get('totalMarks').touched
+                          ? onlineExamForm.get('totalMarks').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="
+                        onlineExamForm.get('totalMarks').invalid &&
+                        onlineExamForm.get('totalMarks').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('totalMarks').errors?.required"
+                      >
+                        Total Marks are required!
+                      </p>
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('totalMarks').errors?.min"
+                      >
+                        Total Marks should be greater than 0
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-control-group">
+                    <label class="label" for="input-onlineExam-passing-marks">Passing Marks:</label>
+                    <input
+                      type="number"
+                      nbInput
+                      id="input-onlineExam-passing-marks"
+                      name="passingMarks"
+                      min="0"
+                      formControlName="passingMarks"
+                      placeholder="Passing Marks"
+                      fullWidth
+                      [status]="
+                        onlineExamForm.get('passingMarks').touched
+                          ? onlineExamForm.get('passingMarks').invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                    <ng-container
+                      *ngIf="
+                        onlineExamForm.get('passingMarks').invalid &&
+                        onlineExamForm.get('passingMarks').touched
+                      "
+                    >
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('passingMarks').errors?.required"
+                      >
+                        Passing Marks is required!
+                      </p>
+                      <p
+                        class="caption status-danger"
+                        *ngIf="onlineExamForm.get('passingMarks').errors?.min"
+                      >
+                        Passing Marks should be greater than 0
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+
+              <hr />
+              <div class="row">
+                <div class="col-12">
+                  <button type="submit" class="float-right" nbButton status="basic" size="small">
+                    Next
+                  </button>
+                </div>
+              </div>
+            </form>
+          </nb-step>
+
+          <nb-step label="Submit">
+            <div class="step-container">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <th>Online Exam Title</th>
+                      <td>{{ onlineExamForm.value.title }}</td>
+                    </tr>
+                    <tr>
+                      <th>Subject</th>
+                      <td>{{ getSubject(onlineExamForm.value.subject) }}</td>
+                    </tr>
+                    <tr>
+                      <th>Date</th>
+                      <td>{{ dateService.formatDate(onlineExamForm.value.date) }}</td>
+                    </tr>
+                    <tr>
+                      <th>Time</th>
+                      <td>{{ dateService.formatTime(onlineExamForm.value.time) }}</td>
+                    </tr>
+                    <tr>
+                      <th>Duration (in Min)</th>
+                      <td>{{ onlineExamForm.value.duration }} Min</td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>{{ onlineExamForm.value.description }}</td>
+                    </tr>
+                    <tr>
+                      <th>Each Question Marks</th>
+                      <td>{{ onlineExamForm.value.eachQuestionMarks }}</td>
+                    </tr>
+                    <tr>
+                      <th>Total Questions</th>
+                      <td>{{ onlineExamForm.value.totalQuestions }}</td>
+                    </tr>
+                    <tr>
+                      <th>Total Marks</th>
+                      <td>{{ onlineExamForm.value.totalMarks }}</td>
+                    </tr>
+                    <tr>
+                      <th>Passing Marks</th>
+                      <td>{{ onlineExamForm.value.passingMarks }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <hr />
+
+              <div class="row">
+                <div class="col-md-6 text-left">
+                  <button type="button" class="" nbButton (click)="previousStep()">
+                    <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                    <span>prev</span>
+                  </button>
+                </div>
+                <div class="col-md-6 text-right">
+                  <button nbButton size="medium" (click)="saveOnlineExam()">
+                    <span>Submit</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nb-step>
+        </nb-stepper>
+        <form [formGroup]="onlineExamForm" size="medium" (submit)="saveOnlineExam()"></form>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
