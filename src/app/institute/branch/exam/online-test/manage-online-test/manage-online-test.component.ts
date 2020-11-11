@@ -136,10 +136,17 @@ export class ManageOnlineTestComponent implements OnInit {
     this.router.navigate(['../edit'], { relativeTo: this.route, queryParams: { mode: 'edit' } });
   }
 
+  onlineExamQuestions(onlineExam: OnlineExamModel) {
+    this.onlineExamService.setOnlineExamId(onlineExam._id);
+    this.onlineExamService.setOnlineExamData(onlineExam);
+    this.router.navigate(['../question'], { relativeTo: this.route });
+  }
+
   changeOnlineExamStatus(id: string, status: boolean, i: number) {
     this.loading = true;
     this.onlineExamService.changeOnlineExamStatus(id, status).subscribe(
       (res: any) => {
+        this.onlineExams[i].status = status;
         this.loading = false;
       },
       (error: any) => {
@@ -154,7 +161,6 @@ export class ManageOnlineTestComponent implements OnInit {
     this.onlineExamService.deleteOnlineExam(id).subscribe(
       (res: any) => {
         this.onlineExams.splice(i, 1);
-
         this.loading = false;
       },
       (error: any) => {

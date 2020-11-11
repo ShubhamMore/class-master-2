@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-12">
         <nb-stepper #stepper [linear]="true" [disableStepNavigation]="true">
-          <nb-step [stepControl]="onlineExamForm" label="OnlineExam Details">
+          <nb-step [stepControl]="onlineExamForm" label="Online Exam Details">
             <form [formGroup]="onlineExamForm" (submit)="submitOnlineExamForm()">
               <div class="row">
                 <div class="col-md-12">
@@ -28,7 +28,7 @@
                       id="input-online-exam-title"
                       name="title"
                       formControlName="title"
-                      placeholder="OnlineExam Title"
+                      placeholder="Online Exam Title"
                       fullWidth
                       [status]="
                         onlineExamForm.get('title').touched
@@ -492,7 +492,6 @@
             </div>
           </nb-step>
         </nb-stepper>
-        <form [formGroup]="onlineExamForm" size="medium" (submit)="saveOnlineExam()"></form>
       </div>
     </div>
   </nb-card-body>

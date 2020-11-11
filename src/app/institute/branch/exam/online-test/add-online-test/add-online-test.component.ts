@@ -116,7 +116,7 @@ export class AddOnlineTestComponent implements OnInit, OnDestroy {
         validators: [],
       }),
       passingMarks: new FormControl(null, {
-        validators: [Validators.required, Validators.min(10)],
+        validators: [Validators.required, Validators.min(1)],
       }),
     });
 
@@ -158,7 +158,7 @@ export class AddOnlineTestComponent implements OnInit, OnDestroy {
   submitOnlineExamForm() {
     this.onlineExamForm.markAllAsTouched();
     if (this.onlineExamForm.invalid) {
-      this.showToastr('top-right', 'danger', 'All OnlineExam Fields are Required');
+      this.showToastr('top-right', 'danger', 'All Online Exam Fields are Required');
       return;
     }
 
@@ -176,7 +176,7 @@ export class AddOnlineTestComponent implements OnInit, OnDestroy {
   saveOnlineExam() {
     this.onlineExamForm.markAllAsTouched();
     if (this.onlineExamForm.invalid) {
-      this.showToastr('top-right', 'danger', 'All OnlineExam Fields are Required');
+      this.showToastr('top-right', 'danger', 'All Online Exam Fields are Required');
       return;
     }
 
@@ -232,7 +232,7 @@ export class AddOnlineTestComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../manage'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

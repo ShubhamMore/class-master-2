@@ -34,7 +34,6 @@ export class OnlineTestComponent implements OnInit, OnDestroy {
     this.courseService.getCourses(this.branchId, '').subscribe(
       (courses: CourseModel[]) => {
         this.courseService.setCoursesData(courses);
-        this.loading = false;
       },
       (error: any) => {},
     );
@@ -42,6 +41,7 @@ export class OnlineTestComponent implements OnInit, OnDestroy {
     this.batchService.getBatches(this.branchId, '', '').subscribe(
       (batches: BatchModel[]) => {
         this.batchService.setBatchesData(batches);
+        this.loading = false;
       },
       (error: any) => {},
     );

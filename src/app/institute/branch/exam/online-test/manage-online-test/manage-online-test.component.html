@@ -78,6 +78,7 @@
                   <th>Date</th>
                   <th>Category</th>
                   <th>Course</th>
+                  <th>Questions</th>
                   <th colspan="3">Action</th>
                 </tr>
               </thead>
@@ -89,7 +90,17 @@
                   <td>{{ category.category }}</td>
                   <td>{{ course.basicDetails.courseName }}</td>
                   <td>
-                    <button nbButton status="primary" size="small" (click)="editOnlineExam(exam)">
+                    <button
+                      nbButton
+                      status="primary"
+                      size="small"
+                      (click)="onlineExamQuestions(exam)"
+                    >
+                      Question
+                    </button>
+                  </td>
+                  <td>
+                    <button nbButton status="basic" size="small" (click)="editOnlineExam(exam)">
                       Edit
                     </button>
                   </td>

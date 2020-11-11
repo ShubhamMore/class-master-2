@@ -1,1 +1,208 @@
-<p>add-online-test-questions works!</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-9">
+        <h3>{{ onlineExam ? 'Edit' : 'Add' }} Online Exam Question</h3>
+      </div>
+      <div class="col-3">
+        <button class="float-right" nbButton size="tiny" status="warning" (click)="back()">
+          Back
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <nb-stepper #stepper [linear]="true" [disableStepNavigation]="true">
+          <nb-step [stepControl]="onlineExamQuestionForm" label="Online Exam Details">
+            <form [formGroup]="onlineExamQuestionForm" (submit)="submitOnlineExamQuestionForm()">
+              <div class="row">
+                <div class="col-md-12">
+                  <nb-card>
+                    <nb-card-header>
+                      <label class="label" for="input-question">Question:</label>
+                    </nb-card-header>
+                    <nb-card-body>
+                      <div class="form-control-group">
+                        <textarea
+                          type="text"
+                          nbInput
+                          id="input-question"
+                          name="question"
+                          rows="2"
+                          formControlName="question"
+                          placeholder="Question"
+                          fullWidth
+                          [status]="
+                            onlineExamQuestionForm.get('question').touched
+                              ? onlineExamQuestionForm.get('question').invalid
+                                ? 'danger'
+                                : 'success'
+                              : 'basic'
+                          "
+                        ></textarea>
+                        <ng-container
+                          *ngIf="
+                            onlineExamQuestionForm.get('question').invalid &&
+                            onlineExamQuestionForm.get('question').touched
+                          "
+                        >
+                          <p
+                            class="caption status-danger"
+                            *ngIf="onlineExamQuestionForm.get('question').errors?.required"
+                          >
+                            Online Exam Question is required!
+                          </p>
+                        </ng-container>
+                      </div>
+                    </nb-card-body>
+                  </nb-card>
+                </div>
+
+                <div
+                  class="col-md-12"
+                  *ngFor="
+                    let answer of onlineExamQuestionForm.get('answers')['controls'];
+                    let i = index
+                  "
+                >
+                  <nb-card [formGroup]="answer">
+                    <nb-card-header>
+                      <div class="row">
+                        <div class="col-12">
+                          <button
+                            class="float-right"
+                            type="button"
+                            nbButton
+                            status="danger"
+                            size="tiny"
+                            (click)="deleteOption(i)"
+                            *ngIf="i !== 0 && i !== 1"
+                          >
+                            <nb-icon icon="trash-outline"></nb-icon>
+                          </button>
+                          <nb-checkbox
+                            [checked]="answer.get('isCorrect').value"
+                            formControlName="isCorrect"
+                          >
+                            Answer {{ i + 1 }}
+                          </nb-checkbox>
+                        </div>
+                      </div>
+                    </nb-card-header>
+                    <nb-card-body>
+                      <div class="form-control-group">
+                        <textarea
+                          type="text"
+                          nbInput
+                          rows="2"
+                          id="input-answer-{{ i }}"
+                          name="answer-{{ i }}"
+                          formControlName="answer"
+                          placeholder="Answer {{ i + 1 }}"
+                          fullWidth
+                          [status]="
+                            answer.get('answer').touched
+                              ? answer.get('answer').invalid
+                                ? 'danger'
+                                : 'success'
+                              : 'basic'
+                          "
+                        ></textarea>
+                        <ng-container
+                          *ngIf="answer.get('answer').invalid && answer.get('answer').touched"
+                        >
+                          <p
+                            class="caption status-danger"
+                            *ngIf="answer.get('answer').errors?.required"
+                          >
+                            Answer {{ i + 1 }} is required!
+                          </p>
+                        </ng-container>
+                      </div>
+                    </nb-card-body>
+                  </nb-card>
+                </div>
+
+                <div class="col-md-12">
+                  <button
+                    class="float-right"
+                    type="button"
+                    nbButton
+                    status="primary"
+                    size="small"
+                    (click)="generateOption()"
+                  >
+                    Add Option
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <ng-container
+                  *ngIf="
+                    onlineExamQuestionForm.hasError('atLeastOneCorrectAnswerError') &&
+                    onlineExamQuestionForm.touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="
+                      onlineExamQuestionForm.hasError('atLeastOneCorrectAnswerError') &&
+                      onlineExamQuestionForm.touched
+                    "
+                  >
+                    *Please Select at least One Correct Answer
+                  </p>
+                </ng-container>
+                <p><strong>*For correct answers, Tick the checkbox</strong></p>
+              </div>
+
+              <hr />
+              <div class="row">
+                <div class="col-12">
+                  <button type="submit" class="float-right" nbButton status="basic" size="small">
+                    Next
+                  </button>
+                </div>
+              </div>
+            </form>
+          </nb-step>
+
+          <nb-step label="Submit">
+            <div class="step-container">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <th>Online Exam Question</th>
+                      <td>{{ onlineExamQuestionForm.value.question }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <hr />
+
+              <div class="row">
+                <div class="col-md-6 text-left">
+                  <button type="button" class="" nbButton (click)="previousStep()">
+                    <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                    <span>prev</span>
+                  </button>
+                </div>
+                <div class="col-md-6 text-right">
+                  <button nbButton size="medium" (click)="saveOnlineExamQuestion()">
+                    <span>Submit</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nb-step>
+        </nb-stepper>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
