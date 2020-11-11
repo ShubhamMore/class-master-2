@@ -69,15 +69,17 @@ export class ManageAssignmentComponent implements OnInit {
       this.course = course;
       this.batchService.getBatchData().subscribe((batch: BatchModel) => {
         this.batch = batch;
-        this.batchService.getBatchSubjects(this.course._id, this.batch._id).subscribe(
-          (subjects: SubjectModel[]) => {
-            this.subjects = subjects;
-            this.subjectService.setSubjectsData(subjects);
-          },
-          (error: any) => {
-            this.showToastr('top-right', 'danger', error);
-          },
-        );
+        if (course && batch) {
+          this.batchService.getBatchSubjects(this.course._id, this.batch._id).subscribe(
+            (subjects: SubjectModel[]) => {
+              this.subjects = subjects;
+              this.subjectService.setSubjectsData(subjects);
+            },
+            (error: any) => {
+              this.showToastr('top-right', 'danger', error);
+            },
+          );
+        }
       });
     });
 

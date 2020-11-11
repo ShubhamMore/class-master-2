@@ -1,1 +1,103 @@
-<p>manage-online-test-questions works!</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-12">
+        <button class="float-right" nbButton size="tiny" status="warning" (click)="back()">
+          Back
+        </button>
+        <h3>Online Exam Questions</h3>
+      </div>
+    </div>
+  </nb-card-header>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h5>
+          Add {{ onlineExam.totalQuestions - onlineExamQuestions.length }} more Questions
+          <small>of {{ onlineExam.totalQuestions }}</small>
+        </h5>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <button
+          nbButton
+          size="small"
+          fullWidth
+          status="primary"
+          (click)="addOnlineExamQuestion()"
+          *ngIf="onlineExamQuestions.length <= onlineExam.totalQuestions"
+        >
+          Add Question <nb-icon icon="plus-circle-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="body-container">
+    <div class="row">
+      <div class="col-md-12">
+        <ng-container *ngIf="!loading; else loadingData">
+          <div class="table-responsive" *ngIf="onlineExamQuestions.length > 0; else noBatches">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Question</th>
+                  <th colspan="2">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let question of onlineExamQuestions; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>
+                    <span>{{
+                      question.question.substring(0, 15) +
+                        (question.question.length > 15 ? '..' : '')
+                    }}</span>
+                  </td>
+                  <td>
+                    <button
+                      nbButton
+                      status="primary"
+                      size="small"
+                      (click)="editOnlineExamQuestion(question)"
+                    >
+                      Edit
+                    </button>
+                  </td>
+                  <!-- <td>
+                    <button
+                      nbButton
+                      [status]="question.status ? 'success' : 'danger'"
+                      size="small"
+                      (click)="changeOnlineExamQuestionStatus(question._id, !question.status, i)"
+                    >
+                      {{ question.status ? 'Inactive' : 'Active' }}
+                    </button>
+                  </td> -->
+                  <td>
+                    <button
+                      nbButton
+                      status="danger"
+                      size="small"
+                      (click)="deleteOnlineExamQuestion(question._id, i)"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noBatches>
+            <p class="text-center pt-5 pb-5">No Online Exams Available</p>
+          </ng-template>
+        </ng-container>
+        <ng-template #loadingData>
+          <p class="text-center pt-5 pb-5">Loading...</p>
+        </ng-template>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

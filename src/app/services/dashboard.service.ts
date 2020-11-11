@@ -22,7 +22,6 @@ export class DashboardService {
   }
 
   getBranchDashboardForEmployee(branch: string) {
-    console.log(branch);
     const data = { api: 'getBranchDashboardForEmployee', data: { branch } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {

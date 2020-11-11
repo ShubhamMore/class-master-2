@@ -14,9 +14,21 @@
 <nb-card>
   <nb-card-header>
     <div class="row">
-      <div class="col-md-9 col-sm-8"></div>
+      <div class="col-md-9 col-sm-8">
+        <h5>
+          Add {{ onlineExam.totalQuestions - onlineExamQuestions.length }} more Questions
+          <small>of {{ onlineExam.totalQuestions }}</small>
+        </h5>
+      </div>
       <div class="col-md-3 col-sm-4">
-        <button nbButton size="small" fullWidth status="primary" (click)="addOnlineExamQuestion()">
+        <button
+          nbButton
+          size="small"
+          fullWidth
+          status="primary"
+          (click)="addOnlineExamQuestion()"
+          *ngIf="onlineExamQuestions.length <= onlineExam.totalQuestions"
+        >
           Add Question <nb-icon icon="plus-circle-outline"></nb-icon>
         </button>
       </div>
@@ -32,7 +44,7 @@
                 <tr>
                   <th>#</th>
                   <th>Question</th>
-                  <th colspan="3">Action</th>
+                  <th colspan="2">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -40,8 +52,8 @@
                   <td>{{ i + 1 }}</td>
                   <td>
                     <span>{{
-                      question.question.substring(0, 10) +
-                        (question.question.length > 10 ? '..' : '')
+                      question.question.substring(0, 15) +
+                        (question.question.length > 15 ? '..' : '')
                     }}</span>
                   </td>
                   <td>
@@ -54,7 +66,7 @@
                       Edit
                     </button>
                   </td>
-                  <td>
+                  <!-- <td>
                     <button
                       nbButton
                       [status]="question.status ? 'success' : 'danger'"
@@ -63,7 +75,7 @@
                     >
                       {{ question.status ? 'Inactive' : 'Active' }}
                     </button>
-                  </td>
+                  </td> -->
                   <td>
                     <button
                       nbButton

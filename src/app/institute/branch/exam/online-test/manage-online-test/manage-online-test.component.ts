@@ -48,10 +48,9 @@ export class ManageOnlineTestComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
@@ -74,13 +73,15 @@ export class ManageOnlineTestComponent implements OnInit {
       this.course = course;
       this.batchService.getBatchData().subscribe((batch: BatchModel) => {
         this.batch = batch;
-        this.batch.subjects.forEach((curSubject: any) => {
-          const mySubject = this.course.subjects.find(
-            (subject: SubjectModel) => subject._id === curSubject.subject,
-          );
-          this.subjects.push(mySubject);
-        });
-        this.searchOnlineExam();
+        if (course && batch) {
+          this.batch.subjects.forEach((curSubject: any) => {
+            const mySubject = this.course.subjects.find(
+              (subject: SubjectModel) => subject._id === curSubject.subject,
+            );
+            this.subjects.push(mySubject);
+          });
+          this.searchOnlineExam();
+        }
       });
     });
   }
@@ -174,5 +175,9 @@ export class ManageOnlineTestComponent implements OnInit {
       position,
       status,
     });
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

@@ -3,7 +3,6 @@ import { DateService } from './../../../../../../services/shared-services/date.s
 import { OnlineExamQuestionService } from './../../../../../../services/online-exam-question.service';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { OnlineExamService } from './../../../../../../services/online-exam.service';
 import { OnlineExamModel } from './../../../../../../models/online-exam.model';
@@ -46,7 +45,6 @@ export class AddOnlineTestQuestionsComponent implements OnInit, OnDestroy {
 
     this.onlineExamService.getOnlineExamData().subscribe((onlineExam: OnlineExamModel) => {
       if (!onlineExam) {
-        this.showToastr('top-right', 'danger', 'Online Exam Question Not Found');
         this.back();
         return;
       }
@@ -219,7 +217,7 @@ export class AddOnlineTestQuestionsComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['../manage'], { relativeTo: this.route });
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

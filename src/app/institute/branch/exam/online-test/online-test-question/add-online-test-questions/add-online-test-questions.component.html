@@ -180,6 +180,22 @@
                       <th>Online Exam Question</th>
                       <td>{{ onlineExamQuestionForm.value.question }}</td>
                     </tr>
+                    <tr
+                      *ngFor="
+                        let answer of onlineExamQuestionForm.get('answers')['controls'];
+                        let i = index
+                      "
+                    >
+                      <th>Answer {{ i + 1 }}</th>
+                      <td>
+                        <nb-icon
+                          [status]="answer.value.isCorrect ? 'success' : 'danger'"
+                          [icon]="answer.value.isCorrect ? 'checkmark-outline' : 'close-outline'"
+                        ></nb-icon>
+                        &nbsp;&nbsp;
+                        <span>{{ answer.value.answer }}</span>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
