@@ -128,10 +128,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   changeSelectBranch(id: string) {
     if (id !== '') {
-      this.branchService.setBranchId(id);
-      this.router.navigate(['/' + this.user.userRole + '/branch/dashboard'], {
-        relativeTo: this.route,
-      });
+      const branch = this.branches.find((curBranch: BranchModel) => curBranch._id === id);
+
+      if (branch && branch.status) {
+        this.branchService.setBranchId(id);
+        this.router.navigate(['/' + this.user.userRole + '/branch/dashboard'], {
+          relativeTo: this.route,
+        });
+      }
     }
   }
 

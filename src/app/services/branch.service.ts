@@ -147,6 +147,18 @@ export class BranchService {
     );
   }
 
+  checkBranchStatus(id: string) {
+    const data = { api: 'checkBranchStatus', data: { id } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
   getBranchesForStudent() {
     const data = { api: 'getBranchesForStudent', data: {} };
     return this.httpService.httpPost(data).pipe(
