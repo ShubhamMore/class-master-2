@@ -96,13 +96,17 @@
           <div class="col-12 pt-3 pb-3">
             <p class="text-center" *ngIf="calculatingResult">Calculating Result</p>
             <p class="text-center" *ngIf="!calculatingResult">
-              Attempted: {{ onlineExamResult.answeredQuestions }}, Unattempted:
-              {{ onlineExamResult.unAnsweredQuestions }} <br />
-              Correct Answers {{ onlineExamResult.correctAnswers }}, Wrong Answers
-              {{ onlineExamResult.wrongAnswers }},<br />
+              <span>Attempted: {{ onlineExamResult.answeredQuestions }} </span>
+              <span>,</span>
+              <span>Unattempted: {{ onlineExamResult.unAnsweredQuestions }} </span>
+              <br />
+              <span>Correct Answers: {{ onlineExamResult.correctAnswers }}</span>
+              <span>,</span>
+              <span>Wrong Answers: {{ onlineExamResult.wrongAnswers }}</span>
+              <br />
               <strong>You got: </strong> {{ onlineExamResult.marks }}/{{ onlineExam.totalMarks }}
               <br />
-              <strong>{{ onlineExamResult.status ? 'Pass' : 'failed' }}</strong>
+              <strong>{{ onlineExamResult.status ? 'Pass' : 'Failed' }}</strong>
             </p>
           </div>
         </div>
