@@ -15,10 +15,17 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'question',
+        path: 'start',
         loadChildren: () =>
           import('./online-test-question/online-test-question.module').then(
             (m) => m.OnlineTestQuestionModule,
+          ),
+      },
+      {
+        path: 'result',
+        loadChildren: () =>
+          import('./online-test-result/online-test-result.module').then(
+            (m) => m.OnlineTestResultModule,
           ),
       },
 

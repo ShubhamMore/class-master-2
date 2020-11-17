@@ -1,14 +1,17 @@
-import { ManageOnlineTestQuestionsComponent } from './manage-online-test-questions.component';
+import { OnlineTestQuestionComponent } from './online-test-question.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', component: ManageOnlineTestQuestionsComponent },
+  {
+    path: '',
+    component: OnlineTestQuestionComponent,
+  },
 
   {
     path: 'page-not-found',
     loadChildren: () =>
-      import('../../../../../../shared/page-not-found/page-not-found.module').then(
+      import('../../../../../shared/page-not-found/page-not-found.module').then(
         (m) => m.PageNotFoundModule,
       ),
   },
@@ -24,4 +27,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ManageOnlineTestQuestionsRoutingModule {}
+export class OnlineTestQuestionRoutingModule {}

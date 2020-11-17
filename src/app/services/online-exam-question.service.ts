@@ -74,8 +74,8 @@ export class OnlineExamQuestionService {
     );
   }
 
-  getOnlineExamQuestionsForStudent(id: string, student: string) {
-    const data = { api: 'getOnlineExamQuestionsForStudent', data: { id, student } };
+  getOnlineExamQuestionsForStudent(id: string) {
+    const data = { api: 'getOnlineExamQuestionsForStudent', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

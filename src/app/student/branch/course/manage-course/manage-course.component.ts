@@ -77,6 +77,20 @@ export class ManageCourseComponent implements OnInit, OnDestroy {
     );
   }
 
+  getHeader() {
+    if (this.type === 'course') {
+      return null;
+    } else if (this.type === 'lecture') {
+      return 'Lectures';
+    } else if (this.type === 'report') {
+      return 'Reports';
+    } else if (this.type === 'assignment') {
+      return 'Assignment';
+    } else if (this.type === 'exam') {
+      return 'Exam';
+    }
+  }
+
   courseInstallments(studentCourse: StudentCourseModel) {
     if (this.type === 'course') {
       this.courseService.setCourseId(studentCourse.course);
@@ -118,6 +132,14 @@ export class ManageCourseComponent implements OnInit, OnDestroy {
       this.studentCourseService.setStudentCourseId(studentCourse._id);
       this.studentCourseService.setStudentCourseData(studentCourse);
       this.router.navigate(['../assignment'], { relativeTo: this.route });
+    }
+  }
+
+  courseOnlineExams(studentCourse: StudentCourseModel) {
+    if (this.type === 'exam') {
+      this.studentCourseService.setStudentCourseId(studentCourse._id);
+      this.studentCourseService.setStudentCourseData(studentCourse);
+      this.router.navigate(['../online-test'], { relativeTo: this.route });
     }
   }
 

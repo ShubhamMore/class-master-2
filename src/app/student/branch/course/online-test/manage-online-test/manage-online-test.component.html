@@ -1,0 +1,102 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <h3>
+        Online Exams
+        <small>for Course {{ studentCourse.courseName }}({{ studentCourse.batchName }})</small>
+      </h3>
+    </div>
+  </nb-card-header>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-3 col-sm-4"></div>
+
+      <div class="col-md-3 col-sm-4">
+        <nb-select
+          id="select-subject"
+          name="subject"
+          [selected]="subject"
+          fullWidth
+          placeholder="All Subjects"
+          (selectedChange)="onSelectSubject($event)"
+        >
+          <nb-option value="">All Subjects</nb-option>
+          <nb-option *ngFor="let subject of subjects" [value]="subject._id">{{
+            subject.subject
+          }}</nb-option>
+        </nb-select>
+      </div>
+
+      <div class="col-md-3 col-sm-4">
+        <nb-select
+          id="select-year"
+          name="year"
+          [selected]="year"
+          fullWidth
+          placeholder="All Years"
+          (selectedChange)="onSelectYear($event)"
+        >
+          <nb-option value="">All Years</nb-option>
+          <nb-option *ngFor="let year of years" [value]="year">{{ year }}</nb-option>
+        </nb-select>
+      </div>
+
+      <div class="col-md-3 col-sm-4">
+        <nb-select
+          id="select-month"
+          name="month"
+          [selected]="month"
+          fullWidth
+          placeholder="All Months"
+          (selectedChange)="onSelectMonth($event)"
+        >
+          <nb-option value="">All Months</nb-option>
+          <nb-option *ngFor="let month of months" [value]="month.monthNo">{{
+            month.month
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body *ngIf="!loading; else loadingTemplate">
+    <div class="table-responsive" *ngIf="onlineExams.length > 0; else noOnlineExams">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Duration</th>
+            <th>Subject</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let onlineExam of onlineExams">
+            <td>{{ onlineExam.title }}</td>
+            <td>{{ dateService.formatDate(onlineExam.date) }}</td>
+            <td>{{ dateService.formatTime(onlineExam.time) }}</td>
+            <td>{{ onlineExam.duration }} Min/s</td>
+            <td>{{ getSubject(onlineExam.subject) }}</td>
+            <td>
+              <button status="success" nbButton size="small" (click)="startExam(onlineExam)">
+                Start
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noOnlineExams>
+      <p class="text-center pt-5 pb-5">No Online Exams</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #loadingTemplate>
+  <p class="text-center pt-5 pb-5">Loading...</p>
+</ng-template>

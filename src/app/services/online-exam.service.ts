@@ -12,6 +12,16 @@ export class OnlineExamService {
 
   private onlineExam = new BehaviorSubject<OnlineExamModel>(null);
 
+  private date: string = null;
+
+  getSearchDate() {
+    return this.date;
+  }
+
+  setSearchDate(date: string) {
+    this.date = date;
+  }
+
   setOnlineExamData(onlineExam: OnlineExamModel) {
     this.onlineExam.next(onlineExam);
   }
@@ -90,11 +100,13 @@ export class OnlineExamService {
     category: string,
     course: string,
     batch: string,
-    date: string,
+    subject: string,
+    month: string,
+    year: string,
   ) {
     const data = {
       api: 'getOnlineExamsForStudent',
-      data: { branch, category, course, batch, date },
+      data: { branch, category, course, batch, subject, month, year },
     };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
@@ -154,8 +166,8 @@ export class OnlineExamService {
     );
   }
 
-  saveOnlineExamResult(onlineExamResult: any) {
-    const data = { api: 'saveOnlineExamResult', data: onlineExamResult };
+  saveOnlineExamResult(studentQuestionAnswers: any, onlineExam: string) {
+    const data = { api: 'saveOnlineExamResult', data: { studentQuestionAnswers, onlineExam } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -166,8 +178,8 @@ export class OnlineExamService {
     );
   }
 
-  getOnlineExamResult(id: string, student: string) {
-    const data = { api: 'getOnlineExamResult', data: { id, student } };
+  getOnlineExamResult(id: string) {
+    const data = { api: 'getOnlineExamResult', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

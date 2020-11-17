@@ -1,3 +1,10 @@
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbTooltipModule,
+  NbCheckboxModule,
+} from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -6,6 +13,14 @@ import { OnlineTestQuestionComponent } from './online-test-question.component';
 
 @NgModule({
   declarations: [OnlineTestQuestionComponent],
-  imports: [CommonModule, OnlineTestQuestionRoutingModule],
+  imports: [
+    CommonModule,
+    OnlineTestQuestionRoutingModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbTooltipModule,
+    NbCheckboxModule,
+  ],
 })
 export class OnlineTestQuestionModule {}

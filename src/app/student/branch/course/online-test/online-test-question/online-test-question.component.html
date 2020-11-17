@@ -1,0 +1,123 @@
+<nb-card>
+  <nb-card-header>
+    <button
+      type="button"
+      class="float-right"
+      nbButton
+      size="small"
+      status="success"
+      (click)="!examStarted ? startExam() : submitExam()"
+      *ngIf="!examSubmitted && !waitingToStart"
+    >
+      {{ !examStarted ? 'Start' : 'Submit' }} Exam
+    </button>
+    <h3>
+      {{ onlineExam ? onlineExam.title : 'Online Exam' }}
+    </h3>
+    <p *ngIf="onlineExam">
+      <span>{{ getDate(onlineExam.date) }}.&nbsp;{{ getTime(onlineExam.time) }}</span>
+    </p>
+  </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="!waitingToStart; else examStartCountDown">
+      <div *ngIf="!examStarted">
+        <p class="pt-5 pb-5 text-center" id="countDown">Click on Start Exam</p>
+      </div>
+      <div *ngIf="examStarted">
+        <div class="row">
+          <div class="col-12">
+            <p class="text-right" id="examCountDownTimer" *ngIf="examCountDownTimer">
+              Exam will End In <br />{{ examCountDownTimer }}
+            </p>
+            <p
+              class="text-right"
+              id="examCountDownTimer"
+              *ngIf="!examCountDownTimer && examSubmitted"
+            >
+              Exam Ended
+            </p>
+          </div>
+
+          <div class="col-6">
+            <button
+              type="button"
+              nbButton
+              size="small"
+              status="success"
+              (click)="previousQuestion()"
+              nbTooltip="Previous Question"
+              *ngIf="currentQuestionIndex > 0 && !examSubmitted"
+            >
+              <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+            </button>
+          </div>
+
+          <div class="col-6">
+            <button
+              class="float-right"
+              type="button"
+              nbButton
+              size="small"
+              status="success"
+              (click)="nextQuestion()"
+              nbTooltip="Next Question"
+              *ngIf="currentQuestionIndex < questions.length - 1 && !examSubmitted"
+            >
+              <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+            </button>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="row" *ngIf="!examSubmitted">
+          <div class="col-12">
+            <p class="text-center">
+              <strong>Question {{ currentQuestionIndex + 1 }}</strong>
+            </p>
+            <p>
+              <Strong>{{ currentQuestion.question }}</Strong>
+            </p>
+            <div *ngFor="let answer of currentQuestion.answers; let i = index">
+              <nb-checkbox
+                (checkedChange)="
+                  markAnswer(currentQuestion._id, currentQuestionIndex, answer._id, i, $event)
+                "
+              >
+                <strong>{{ i + 1 }}.</strong>
+                &nbsp;&nbsp;
+                <span>{{ answer.answer }}</span>
+              </nb-checkbox>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="examSubmitted">
+          <div class="col-12 pt-3 pb-3">
+            <p class="text-center" *ngIf="calculatingResult">Calculating Result</p>
+            <p class="text-center" *ngIf="!calculatingResult">
+              Attempted: {{ onlineExamResult.answeredQuestions }}, Unattempted:
+              {{ onlineExamResult.unAnsweredQuestions }} <br />
+              Correct Answers {{ onlineExamResult.correctAnswers }}, Wrong Answers
+              {{ onlineExamResult.wrongAnswers }},<br />
+              <strong>You got: </strong> {{ onlineExamResult.marks }}/{{ onlineExam.totalMarks }}
+              <br />
+              <strong>{{ onlineExamResult.status ? 'Pass' : 'failed' }}</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #examStartCountDown>
+  <p class="pt-5 pb-5 text-center" id="waitingToStart">
+    <span *ngIf="waitingToStart === 'loading'">
+      Loading...
+    </span>
+    <span *ngIf="waitingToStart !== 'loading'">
+      Exam will Start In <br />{{ waitingToStart }}
+    </span>
+  </p>
+</ng-template>

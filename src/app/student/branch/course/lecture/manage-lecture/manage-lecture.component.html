@@ -14,22 +14,34 @@
   <nb-card-body *ngIf="!loading; else loadingTemplate">
     <div class="table-responsive" *ngIf="lectures.length > 0; else noLecture">
       <table class="table">
-        <tr *ngFor="let lecture of lectures">
-          <td>{{ getTime(lecture.startTime, lecture.endTime) }}</td>
-          <td>{{ lecture.subject }}</td>
-          <td>{{ lecture.topic }}</td>
-          <td>By {{ lecture.teacher }}</td>
-          <td>
-            <button status="warning" nbButton size="small" (click)="lectureMaterial(lecture)">
-              Study Material
-            </button>
-          </td>
-          <td>
-            <button status="success" nbButton size="small" (click)="questionAnswers(lecture)">
-              Q&A
-            </button>
-          </td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Subject</th>
+            <th>Topic</th>
+            <th>Teacher</th>
+            <th>Study Material</th>
+            <th>Q&A</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lecture of lectures">
+            <td>{{ getTime(lecture.startTime, lecture.endTime) }}</td>
+            <td>{{ lecture.subject }}</td>
+            <td>{{ lecture.topic }}</td>
+            <td>By {{ lecture.teacher }}</td>
+            <td>
+              <button status="warning" nbButton size="small" (click)="lectureMaterial(lecture)">
+                Study Material
+              </button>
+            </td>
+            <td>
+              <button status="success" nbButton size="small" (click)="questionAnswers(lecture)">
+                Q&A
+              </button>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
     <ng-template #noLecture>

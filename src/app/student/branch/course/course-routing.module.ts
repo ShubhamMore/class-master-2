@@ -49,6 +49,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'online-test',
+        loadChildren: () =>
+          import('./online-test/online-test.module').then((m) => m.OnlineTestModule),
+      },
+
+      {
         path: '',
         redirectTo: 'manage?type=course',
         pathMatch: 'full',

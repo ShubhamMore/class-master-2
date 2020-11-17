@@ -1,26 +1,27 @@
+import { SubjectService } from './../../../../../services/subject.service';
+import { SubjectModel } from './../../../../../models/course.model';
+import { OnlineExamModel } from './../../../../../models/online-exam.model';
+import { OnlineExamService } from './../../../../../services/online-exam.service';
 import { StudentBranchService } from './../../../student-branch.service';
 import { StudentCourseService } from './../../../../../services/student-course.service';
 import { StudentCourseModel } from './../../../../../models/student-course.model';
-import { SubjectService } from './../../../../../services/subject.service';
 import { NbToastrService } from '@nebular/theme';
-import { Router, ActivatedRoute } from '@angular/router';
+import { LectureService } from './../../../../../services/lecture.service';
 import { DateService, Month } from './../../../../../services/shared-services/date.service';
-import { AssignmentService } from './../../../../../services/assignment.service';
-import { BranchService } from './../../../../../services/branch.service';
-import { AssignmentModel } from './../../../../../models/assignment.model';
-import { SubjectModel } from './../../../../../models/course.model';
 import { Component, OnInit } from '@angular/core';
+import { BranchService } from './../../../../../services/branch.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'ngx-manage-assignment',
-  templateUrl: './manage-assignment.component.html',
-  styleUrls: ['./manage-assignment.component.scss'],
+  selector: 'ngx-manage-online-test',
+  templateUrl: './manage-online-test.component.html',
+  styleUrls: ['./manage-online-test.component.scss'],
 })
-export class ManageAssignmentComponent implements OnInit {
+export class ManageOnlineTestComponent implements OnInit {
   loading: boolean;
-
   branchId: string;
 
+  onlineExams: OnlineExamModel[];
   studentCourse: StudentCourseModel;
 
   months: Month[];
@@ -32,14 +33,12 @@ export class ManageAssignmentComponent implements OnInit {
   subjects: SubjectModel[];
   subject: string;
 
-  assignments: AssignmentModel[];
-
   constructor(
     private branchService: BranchService,
-    private studentCourseService: StudentCourseService,
-    private studentBranchService: StudentBranchService,
     private subjectService: SubjectService,
-    private assignmentService: AssignmentService,
+    private onlineExamService: OnlineExamService,
+    private studentBranchService: StudentBranchService,
+    private studentCourseService: StudentCourseService,
     public dateService: DateService,
     private router: Router,
     private route: ActivatedRoute,
@@ -48,21 +47,15 @@ export class ManageAssignmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
 
-    this.studentBranchService.setType('assignment');
+    this.studentBranchService.setType('lecture');
 
-    this.studentCourseService
-      .getStudentCourseData()
-      .subscribe((studentCourse: StudentCourseModel) => {
-        this.studentCourse = studentCourse;
-      });
-
+    this.onlineExams = [];
     this.subjects = [];
     this.subject = '';
 
@@ -76,17 +69,27 @@ export class ManageAssignmentComponent implements OnInit {
     this.month = (this.dateService.getDate().getMonth() + 1).toString().padStart(2, '0');
     this.year = this.years[this.years.length - 1];
 
-    this.getAssignments();
+    this.studentCourseService
+      .getStudentCourseData()
+      .subscribe((studentCourse: StudentCourseModel) => {
+        this.studentCourse = studentCourse;
+
+        if (studentCourse) {
+          this.getOnlineExam();
+        } else {
+          this.back();
+        }
+      });
   }
 
   onSelectSubject(subject: string) {
     this.subject = subject;
-    this.getAssignments();
+    this.getOnlineExam();
   }
 
   onSelectMonth(month: string) {
     this.month = month;
-    this.getAssignments();
+    this.getOnlineExam();
   }
 
   onSelectYear(year: string) {
@@ -94,13 +97,26 @@ export class ManageAssignmentComponent implements OnInit {
     if (year === '') {
       this.month = '';
     }
-    this.getAssignments();
+    this.getOnlineExam();
   }
 
-  getAssignments() {
+  getTime(startTime: string, endTime: string) {
+    startTime = this.dateService.formatTime(startTime);
+    endTime = this.dateService.formatTime(endTime);
+    return startTime + ' - ' + endTime;
+  }
+
+  startExam(onlineExam: OnlineExamModel) {
+    this.onlineExamService.setOnlineExamId(onlineExam._id);
+    this.onlineExamService.setOnlineExamData(onlineExam);
+    this.router.navigate(['../start'], { relativeTo: this.route });
+  }
+
+  getOnlineExam() {
     this.loading = true;
-    this.assignmentService
-      .getAssignmentsForStudent(
+
+    this.onlineExamService
+      .getOnlineExamsForStudent(
         this.branchId,
         this.studentCourse.category,
         this.studentCourse.course,
@@ -110,8 +126,8 @@ export class ManageAssignmentComponent implements OnInit {
         this.year,
       )
       .subscribe(
-        (assignments: AssignmentModel[]) => {
-          this.assignments = assignments;
+        (onlineExams: OnlineExamModel[]) => {
+          this.onlineExams = onlineExams;
           this.loading = false;
         },
         (error: any) => {
@@ -121,26 +137,19 @@ export class ManageAssignmentComponent implements OnInit {
       );
   }
 
-  assignmentSubmission(assignment: AssignmentModel) {
-    this.assignmentService.setAssignmentId(assignment._id);
-    this.assignmentService.setAssignmentData(assignment);
-    this.router.navigate(['../submission'], { relativeTo: this.route });
-  }
-
-  getSubjectName(id: string) {
-    const subject = this.subjects.find((curSubject: SubjectModel) => curSubject._id === id);
-    if (subject) {
-      return subject.subject;
-    }
-
-    return '--';
-  }
-
   private showToastr(position: any, status: any, message: string) {
     this.toastrService.show(status, message, {
       position,
       status,
     });
+  }
+
+  getSubject(subjectId: string) {
+    const subject = this.subjects.find((curSubject: SubjectModel) => curSubject._id === subjectId);
+    if (subject) {
+      return subject.subject;
+    }
+    return '--';
   }
 
   back() {

@@ -1,0 +1,64 @@
+<nb-card>
+  <nb-card-header>
+    <button class="float-right" nbButton size="small" status="basic" (click)="back()">
+      <nb-icon icon="close-outline"></nb-icon>
+    </button>
+    <h3>
+      Result of <small>{{ onlineExam.title }}</small>
+    </h3>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <tr>
+          <th>Exam Title:</th>
+          <td>{{ onlineExam.title }}</td>
+        </tr>
+        <tr>
+          <th>Exam Date:</th>
+          <td>{{ onlineExam.date }}</td>
+        </tr>
+        <tr>
+          <th>Exam Time:</th>
+          <td>{{ onlineExam.time }}</td>
+        </tr>
+        <tr>
+          <th>Total Marks:</th>
+          <td>{{ onlineExam.totalMarks }}</td>
+        </tr>
+        <tr>
+          <th>Passing Marks:</th>
+          <td>{{ getPassingMarks(onlineExam.passingMarks, onlineExam.totalMarks) }}</td>
+        </tr>
+        <tr>
+          <th>Student Marks:</th>
+          <td>{{ onlineExamResult.marks }}</td>
+        </tr>
+        <tr>
+          <th>Status:</th>
+          <td>{{ onlineExamResult.status }}</td>
+        </tr>
+        <tr>
+          <th>Answered Questions:</th>
+          <td>{{ onlineExamResult.answeredQuestions }}</td>
+        </tr>
+        <tr>
+          <th>Unanswered Questions:</th>
+          <td>{{ onlineExamResult.unAnsweredQuestions }}</td>
+        </tr>
+        <tr>
+          <th>Correct Answers:</th>
+          <td>{{ onlineExamResult.correctAnswers }}</td>
+        </tr>
+        <tr>
+          <th>Wrong Answers:</th>
+          <td>{{ onlineExamResult.wrongAnswers }}</td>
+        </tr>
+        <!-- <tr>
+          <th></th>
+          <td></td>
+        </tr> -->
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>

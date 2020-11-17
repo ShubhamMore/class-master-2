@@ -58,7 +58,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Online Exam',
     icon: '',
-    link: '/student/branch/exam/online-test/manage',
+    link: '/student/branch/course/manage',
     hidden: true,
+    queryParams: { type: 'exam' },
   },
 ];

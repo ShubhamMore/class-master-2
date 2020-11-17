@@ -13,11 +13,6 @@ const routes: Routes = [
       },
 
       {
-        path: 'exam',
-        loadChildren: () => import('./exam/exam.module').then((m) => m.ExamModule),
-      },
-
-      {
         path: 'course',
         loadChildren: () => import('./course/course.module').then((m) => m.CourseModule),
       },
