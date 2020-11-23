@@ -1,3 +1,4 @@
+import { NbToastrService } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../services/shared-services/http.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -10,15 +11,16 @@ import { Router } from '@angular/router';
 })
 export class ForgotPasswordComponent implements OnInit {
   form: FormGroup;
-  success: string;
   loading: boolean;
-  error: string;
 
-  constructor(private httpService: HttpService, private router: Router) {}
+  constructor(
+    private httpService: HttpService,
+    private toastrService: NbToastrService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.loading = true;
-    this.success = null;
     this.form = new FormGroup({
       email: new FormControl(null, {
         validators: [Validators.required, Validators.email],
@@ -28,30 +30,41 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   forgotPassword() {
-    if (this.form.valid) {
-      this.loading = true;
-      this.error = null;
-      this.success = null;
-      const data = {
-        api: 'forgotPassword',
-        data: {
-          email: this.form.value.email,
-        },
-      };
-
-      this.httpService.httpPost(data).subscribe(
-        (resData: any) => {
-          this.success = 'Email send Successfully!!';
-          this.form.reset();
-          this.loading = false;
-        },
-        (errorMessage: any) => {
-          this.error = errorMessage;
-          this.loading = false;
-        },
-      );
-    } else {
-      this.error = 'Please Enter Email';
+    this.form.markAllAsTouched();
+    if (this.form.invalid) {
+      this.showToastr('top-right', 'danger', 'Enter Valid Email Address');
+      return;
     }
+
+    this.loading = true;
+    const data = {
+      api: 'forgotPassword',
+      data: {
+        email: this.form.value.email,
+      },
+    };
+
+    this.httpService.httpPost(data).subscribe(
+      (res: any) => {
+        this.form.reset();
+        this.showToastr(
+          'top-right',
+          'success',
+          'Reset Password Link Send to your Email Successfully',
+        );
+        this.loading = false;
+      },
+      (error: any) => {
+        this.showToastr('top-right', 'danger', error);
+        this.loading = false;
+      },
+    );
+  }
+
+  showToastr(position: any, status: any, message: string) {
+    this.toastrService.show(status, message, {
+      position,
+      status,
+    });
   }
 }

@@ -1,3 +1,4 @@
+import { NbToastrService } from '@nebular/theme';
 import { AuthService } from './../auth/auth-service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../services/shared-services/http.service';
@@ -13,10 +14,10 @@ import { EncryptService } from '../../services/shared-services/encrypt.service';
 export class ChangePasswordComponent implements OnInit {
   form: FormGroup;
   loading: boolean;
-  error: string;
 
   constructor(
     private httpService: HttpService,
+    private toastrService: NbToastrService,
     private authService: AuthService,
     private encryptService: EncryptService,
     private formBuilder: FormBuilder,
@@ -51,35 +52,41 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   changePassword() {
-    if (this.form.valid && !this.form.hasError('invalidPassword')) {
-      this.loading = true;
-      this.error = null;
-
-      const data = {
-        api: 'changePassword',
-        data: {
-          email: this.authService.getUserData().email,
-          password: this.encryptService.encrypt(this.form.value.oldPassword, environment.encKey),
-          newPassword: this.encryptService.encrypt(this.form.value.password, environment.encKey),
-        },
-      };
-      this.httpService.httpPost(data).subscribe(
-        (resData: any) => {
-          this.error = null;
-          this.form.reset();
-          this.loading = false;
-        },
-        (errorMessage: any) => {
-          this.error = errorMessage;
-          this.loading = false;
-        },
-      );
-    } else {
-      this.error = 'Please Fill all The Fields Correctly';
+    this.form.markAllAsTouched();
+    if (this.form.invalid) {
+      this.showToastr('top-right', 'danger', 'Please Fill all Details Correctly');
+      return;
+    } else if (this.form.hasError('invalidPassword')) {
+      this.showToastr('top-right', 'danger', 'Password & Forgot Password Does not Match');
+      return;
     }
+    this.loading = true;
+
+    const data = {
+      api: 'changePassword',
+      data: {
+        email: this.authService.getUserData().email,
+        password: this.encryptService.encrypt(this.form.value.oldPassword, environment.encKey),
+        newPassword: this.encryptService.encrypt(this.form.value.password, environment.encKey),
+      },
+    };
+    this.httpService.httpPost(data).subscribe(
+      (res: any) => {
+        this.form.reset();
+        this.showToastr('top-right', 'success', 'Password Changed Successfully');
+        this.loading = false;
+      },
+      (error: any) => {
+        this.showToastr('top-right', 'danger', error);
+        this.loading = false;
+      },
+    );
   }
 
-  onErrorClose() {
-    this.error = null;
+  showToastr(position: any, status: any, message: string) {
+    this.toastrService.show(status, message, {
+      position,
+      status,
+    });
   }
 }

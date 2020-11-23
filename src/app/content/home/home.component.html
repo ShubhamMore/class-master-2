@@ -1,37 +1,266 @@
-<h1>CLASS MASTER</h1>
-<div id="home-corousel" class="carousel slide" data-ride="carousel">
-  <ul class="carousel-indicators">
-    <li data-target="#home-corousel" data-slide-to="0" class="active"></li>
-    <li data-target="#home-corousel" data-slide-to="1"></li>
-    <li data-target="#home-corousel" data-slide-to="2"></li>
-  </ul>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="la.jpg" alt="Los Angeles" width="100%" height="auto" />
-      <div class="carousel-caption">
-        <h3>Los Angeles</h3>
-        <p>We had such a great time in LA!</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="chicago.jpg" alt="Chicago" width="1100" height="500" />
-      <div class="carousel-caption">
-        <h3>Chicago</h3>
-        <p>Thank you, Chicago!</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="ny.jpg" alt="New York" width="1100" height="500" />
-      <div class="carousel-caption">
-        <h3>New York</h3>
-        <p>We love the Big Apple!</p>
-      </div>
-    </div>
+<carousel [isAnimated]="true">
+  <slide>
+    <img
+      class="slide-content-image"
+      src="./../../../assets/images/home/slide-1.jpg"
+      alt="first slide"
+    />
+  </slide>
+  <slide>
+    <img
+      class="slide-content-image"
+      src="./../../../assets/images/home/slide-2.jpg"
+      alt="second slide"
+    />
+  </slide>
+  <slide>
+    <img
+      class="slide-content-image"
+      src="./../../../assets/images/home/slide-3.jpg"
+      alt="third slide"
+    />
+  </slide>
+</carousel>
+
+<br />
+
+<div class="row">
+  <div class="col-md-3 card-color text-center">
+    <h2 class="counter">
+      <span>
+        {{ cities }}
+        +
+      </span>
+    </h2>
+    <h5 class="counter-text">Cities</h5>
   </div>
-  <a class="carousel-control-prev" href="#home-corousel" data-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </a>
-  <a class="carousel-control-next" href="#home-corousel" data-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </a>
+  <div class="col-md-3 card-color text-center">
+    <h2 class="counter">
+      <span>
+        {{ institutes }}
+        +
+      </span>
+    </h2>
+    <h5 class="counter-text">Institutes</h5>
+  </div>
+  <div class="col-md-3 card-color text-center">
+    <h2 class="counter">
+      <span>
+        {{ teachers }}
+        +
+      </span>
+    </h2>
+    <h5 class="counter-text">Teachers</h5>
+  </div>
+  <div class="col-md-3 card-color text-center">
+    <h2 class="counter">
+      <span>
+        {{ students }}
+        +
+      </span>
+    </h2>
+    <h5 class="counter-text">Students</h5>
+  </div>
+</div>
+
+<br />
+
+<h1>POWER TO YOU</h1>
+<div class="row">
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>CLASS MANAGEMENT</h2>
+        <p>
+          No more tedious paperwork and running after students to communicate your schedule. Easily
+          maintain and communicate your schedules to students and parents.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>STUDENT MANAGEMENT</h2>
+        <p>
+          Maintain and manage your enrollments hassle free. Add students with a single click and
+          view their details anytime, anywhere.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>ATTENDANCE MANAGEMENT</h2>
+        <p>
+          Mark your attendance digitally and instantly update parents about their child’s
+          attendance. Instant communication means happier parents.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>FEE RECORDS & MANAGEMENT</h2>
+        <p>
+          Go paperless with automatic receipt generations for fee collections. Get reminded of and
+          send reminders of fee instalment dates automatically.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>EMPLOYEE MANAGEMENT & ACCESS CONTROL</h2>
+        <p>
+          Add teachers, managers and counsellors and control what they can view for your students
+          and batches. Divide roles and responsibilities and keep your data secure.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>INSIGHTFUL BUSINESS REPORTS</h2>
+        <p>
+          Class Master enables you to look at your key business metrics consolidated into a single
+          dashboard. Understand your business trends better.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>STUDENT PERFORMANCE TRACKER</h2>
+        <p>
+          Don’t just learn. Benchmark! Now get a personalized performance record of your child’s
+          performance.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>REAL TIME NOTIFICATIONS & ALERTS</h2>
+        <p>
+          Everything at Class Master is Real time. Reduce your cost and effort of communication and
+          maintain a log to ensure that no student misses an important update.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>ENHANCED LIVE CLASS EXPERIENCE</h2>
+        <p>
+          Go Online! Integrate your platform of choice and provide students the comfort of learning
+          from their homes and reach out to students across larger geographies to increase your
+          reach and enrollments.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>LECTURE MANAGEMENT</h2>
+        <p>
+          No more tedious paperwork and running after students to communicate your schedule. Easily
+          maintain and communicate your schedules to students and parents.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>SCHEDULE MANAGEMENT</h2>
+        <p>
+          No more tedious paperwork and running after students to communicate your schedule. Easily
+          maintain and communicate your schedules to students and parents.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>EXAM MANAGEMENT</h2>
+        <p>
+          No more tedious paperwork and running after students to communicate your schedule. Easily
+          maintain and communicate your schedules to students and parents.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>ONLINE EXAM MANAGEMENT</h2>
+        <p>
+          No more tedious paperwork and running after students to communicate your schedule. Easily
+          maintain and communicate your schedules to students and parents.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>ONLINE FEE COLLECTION</h2>
+        <p>
+          No more tedious paperwork and running after students to communicate your schedule. Easily
+          maintain and communicate your schedules to students and parents.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>ASSIGNMENT MANAGEMENT</h2>
+        <p>
+          No more tedious paperwork and running after students to communicate your schedule. Easily
+          maintain and communicate your schedules to students and parents.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h2>COURSE & LECTURE MATERIAL</h2>
+        <p>
+          Reduce your cost of photocopies. Share your notes and material digitally to a single
+          student or your entire institute at no additional cost.
+        </p>
+      </nb-card-header>
+    </nb-card>
+  </div>
+</div>
+
+<br />
+<h1>Why We?</h1>
+<div class="row">
+  <div class="col-md-6">
+    <h2>LOW COST</h2>
+    <p>
+      For the features it packs, Eduatlas is super value for money. We have priced our plans so that
+      you end up saving at least 5 times of what you spend.
+    </p>
+  </div>
+  <div class="col-md-6">
+    <h2>SECURE</h2>
+    <p>
+      We know that your data is your pot of gold and for that we have secured it using SSL AES
+      256-bit encryption and multiple layers of security.
+    </p>
+  </div>
 </div>
