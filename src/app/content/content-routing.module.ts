@@ -46,6 +46,22 @@ const routes: Routes = [
       },
 
       {
+        path: 'privacy-policy',
+        loadChildren: () =>
+          import('./privacy-policy/privacy-policy.module').then((m) => m.PrivacyPolicyModule),
+        canActivate: [],
+      },
+
+      {
+        path: 'terms-and-conditions',
+        loadChildren: () =>
+          import('./terms-and-conditions/terms-and-conditions.module').then(
+            (m) => m.TermsAndConditionsModule,
+          ),
+        canActivate: [],
+      },
+
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',
