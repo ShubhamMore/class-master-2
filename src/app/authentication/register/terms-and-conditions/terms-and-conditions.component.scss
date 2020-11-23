@@ -1,0 +1,33 @@
+.terms-and-conditions-box {
+  width: 60vw;
+  height: 75vh;
+  overflow: auto;
+}
+
+@media only screen and (max-width: 1200px) {
+  .terms-and-conditions-box {
+    width: 65vw;
+    height: 80vh;
+  }
+}
+
+@media only screen and (max-width: 840px) {
+  .terms-and-conditions-box {
+    width: 70vw;
+    height: 85vh;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .terms-and-conditions-box {
+    width: 90vw;
+    height: 90vh;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .terms-and-conditions-box {
+    width: 95vw;
+    height: 95vh;
+  }
+}

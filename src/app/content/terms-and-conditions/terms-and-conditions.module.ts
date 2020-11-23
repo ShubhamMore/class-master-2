@@ -1,3 +1,4 @@
+import { SharedModule } from './../../shared/shared.module';
 import { NbCardModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -7,6 +8,6 @@ import { TermsAndConditionsComponent } from './terms-and-conditions.component';
 
 @NgModule({
   declarations: [TermsAndConditionsComponent],
-  imports: [CommonModule, TermsAndConditionsRoutingModule, NbCardModule],
+  imports: [CommonModule, TermsAndConditionsRoutingModule, SharedModule],
 })
 export class TermsAndConditionsModule {}

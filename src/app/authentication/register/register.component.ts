@@ -1,4 +1,4 @@
-import { TermsAndConditionsComponent } from './../../content/terms-and-conditions/terms-and-conditions.component';
+import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RoleService } from './../../services/role.service';
 import { Component, OnInit } from '@angular/core';
@@ -72,9 +72,14 @@ export class RegisterComponent implements OnInit {
   }
 
   openTermsAndConditions() {
-    this.dialogService.open(TermsAndConditionsComponent, {
-      closeOnEsc: true,
-    });
+    this.dialogService
+      .open(TermsAndConditionsComponent, {
+        closeOnEsc: true,
+        hasScroll: false,
+      })
+      .onClose.subscribe((status: boolean) => {
+        this.termsConditions = status;
+      });
   }
 
   checkUser() {
@@ -102,6 +107,7 @@ export class RegisterComponent implements OnInit {
       return;
     } else if (!this.termsConditions) {
       this.showToastr('top-right', 'warning', 'Accept Terms & Conditions');
+      this.openTermsAndConditions();
       return;
     }
 

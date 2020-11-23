@@ -204,7 +204,11 @@
 
           <br />
           <div class="form-control-group accept-group">
-            <nb-checkbox name="terms" (checkedChange)="acceptTermsConditions($event)">
+            <nb-checkbox
+              name="terms"
+              [checked]="termsConditions"
+              (checkedChange)="acceptTermsConditions($event)"
+            >
               Agree to
               <a class="pointer" (click)="openTermsAndConditions()"
                 ><strong>Terms & Conditions</strong></a

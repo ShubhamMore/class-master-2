@@ -1,4 +1,4 @@
-import { TermsConditionsComponent } from './../terms-conditions/terms-conditions.component';
+import { SharedModule } from './../../shared/shared.module';
 import { RegisterComponent } from './register.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,9 +17,10 @@ import {
   NbAlertModule,
   NbSelectModule,
 } from '@nebular/theme';
+import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
 
 @NgModule({
-  declarations: [RegisterComponent, TermsConditionsComponent],
+  declarations: [RegisterComponent, TermsAndConditionsComponent],
   imports: [
     CommonModule,
     RegisterRoutingModule,
@@ -35,6 +36,7 @@ import {
     NbCheckboxModule,
     NbAlertModule,
     NbSelectModule,
+    SharedModule,
   ],
 })
 export class RegisterModule {}

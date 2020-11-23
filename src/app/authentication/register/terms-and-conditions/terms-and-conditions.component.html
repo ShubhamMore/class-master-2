@@ -1,0 +1,31 @@
+<nb-card class="terms-and-conditions-box">
+  <nb-card-body>
+    <ngx-terms-conditions></ngx-terms-conditions>
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="row">
+      <div class="col-12">
+        <button
+          class="float-right ml-3"
+          type="button"
+          nbButton
+          size="small"
+          status="success"
+          (click)="agree()"
+        >
+          Agree
+        </button>
+        <button
+          class="float-right ml-3"
+          type="button"
+          nbButton
+          size="small"
+          status="basic"
+          (click)="close()"
+        >
+          Disagree
+        </button>
+      </div>
+    </div>
+  </nb-card-footer>
+</nb-card>
