@@ -1,3 +1,4 @@
+import { TermsAndConditionsComponent } from './../../content/terms-and-conditions/terms-and-conditions.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RoleService } from './../../services/role.service';
 import { Component, OnInit } from '@angular/core';
@@ -7,7 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EncryptService } from '../../services/shared-services/encrypt.service';
 import { environment } from '../../../environments/environment';
 import { UserService } from '../../services/shared-services/user.service';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-register',
@@ -28,6 +29,7 @@ export class RegisterComponent implements OnInit {
     private route: ActivatedRoute,
     private encryptService: EncryptService,
     private userService: UserService,
+    private dialogService: NbDialogService,
   ) {}
 
   ngOnInit() {
@@ -67,6 +69,12 @@ export class RegisterComponent implements OnInit {
       return { invalidConfirmPassword: true };
     }
     return null;
+  }
+
+  openTermsAndConditions() {
+    this.dialogService.open(TermsAndConditionsComponent, {
+      closeOnEsc: true,
+    });
   }
 
   checkUser() {

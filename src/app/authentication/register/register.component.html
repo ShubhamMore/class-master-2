@@ -205,7 +205,10 @@
           <br />
           <div class="form-control-group accept-group">
             <nb-checkbox name="terms" (checkedChange)="acceptTermsConditions($event)">
-              Agree to <a href="#" target="_blank"><strong>Terms & Conditions</strong></a>
+              Agree to
+              <a class="pointer" (click)="openTermsAndConditions()"
+                ><strong>Terms & Conditions</strong></a
+              >
             </nb-checkbox>
           </div>
           <br />
