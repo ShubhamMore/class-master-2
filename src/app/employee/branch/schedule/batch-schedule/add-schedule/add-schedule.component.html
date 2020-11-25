@@ -5,7 +5,7 @@
         <h3>{{ schedule ? 'Edit' : 'Add' }} Schedule</h3>
       </div>
       <div class="col-3">
-        <button class="float-right" nbButton size="tiny" status="warning" (click)="back()">
+        <button class="float-right" nbButton size="small" status="warning" (click)="back()">
           Back
         </button>
       </div>
@@ -272,7 +272,7 @@
               <hr />
               <div class="row">
                 <div class="col-12">
-                  <button type="submit" class="float-right" nbButton status="basic" size="medium">
+                  <button type="submit" class="float-right" nbButton size="small" status="basic">
                     Next
                   </button>
                 </div>
@@ -386,7 +386,7 @@
                               type="button"
                               nbTooltip="Edit"
                               nbButton
-                              size="tiny"
+                              size="small"
                               status="basic"
                               (click)="editRepeatSchedule(schedule, i)"
                             >
@@ -398,7 +398,7 @@
                               type="button"
                               nbTooltip="Clone"
                               nbButton
-                              size="tiny"
+                              size="small"
                               status="primary"
                               (click)="cloneRepeatSchedule(schedule, i)"
                             >
@@ -411,7 +411,7 @@
                               type="button"
                               nbTooltip="Remove"
                               nbButton
-                              size="tiny"
+                              size="small"
                               status="danger"
                               (click)="removeRepeatSchedule(i)"
                             >
@@ -440,13 +440,13 @@
 
               <div class="row">
                 <div class="col-sm-6 text-left">
-                  <button type="button" class="" size="medium" nbButton (click)="previousStep()">
+                  <button type="button" class="" nbButton size="small" (click)="previousStep()">
                     <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                     <span>prev</span>
                   </button>
                 </div>
                 <div class="col-sm-6 text-left">
-                  <button type="submit" class="float-right" nbButton status="basic" size="medium">
+                  <button type="submit" class="float-right" nbButton size="small" status="basic">
                     Next
                   </button>
                 </div>
@@ -509,13 +509,13 @@
 
               <div class="row">
                 <div class="col-sm-6 text-left">
-                  <button type="button" size="medium" class="" nbButton (click)="previousStep()">
+                  <button type="button" class="" nbButton size="small" (click)="previousStep()">
                     <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                     <span>prev</span>
                   </button>
                 </div>
                 <div class="col-sm-6 text-right">
-                  <button type="button" nbButton size="medium" (click)="saveSchedule()">
+                  <button type="button" nbButton size="small" (click)="saveSchedule()">
                     <span>Submit</span>
                   </button>
                 </div>

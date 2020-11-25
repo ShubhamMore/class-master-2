@@ -63,7 +63,7 @@
           type="button"
           nbTooltip="Budget Summery"
           nbButton
-          size="medium"
+          size="small"
           fullWidth
           status="success"
           (click)="viewStatement()"
@@ -101,7 +101,7 @@
       </div>
 
       <div class="col-md-3 col-sm-5 col-7 pt-3 mx-auto">
-        <button nbButton status="primary" fullWidth (click)="openChart(budgetChart)">
+        <button nbButton size="small" status="primary" fullWidth (click)="openChart(budgetChart)">
           View Chart&nbsp;<nb-icon icon="pie-chart-outline"></nb-icon>
         </button>
       </div>
@@ -205,7 +205,7 @@
       <chart type="pie" [data]="chartData.data" [options]="chartData.options"></chart>
     </nb-card-body>
     <nb-card-footer>
-      <button class="float-right" size="small" nbButton (click)="ref.close()">Close</button>
+      <button class="float-right" nbButton size="small" (click)="ref.close()">Close</button>
     </nb-card-footer>
   </nb-card>
 </ng-template>

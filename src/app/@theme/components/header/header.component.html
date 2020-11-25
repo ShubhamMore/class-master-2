@@ -8,8 +8,8 @@
     /></a>
   </div>
   <nb-select
-    [selected]="branchId"
     size="medium"
+    [selected]="branchId"
     (selectedChange)="changeSelectBranch($event)"
     status="primary"
     *ngIf="user.userRole !== 'admin'"
@@ -22,7 +22,7 @@
 </div>
 
 <div class="header-container">
-  <nb-actions size="small">
+  <nb-actions>
     <nb-action
       class="control-item"
       icon="bell-outline"

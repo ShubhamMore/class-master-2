@@ -29,8 +29,8 @@
                     <button
                       class="mr-3"
                       nbButton
-                      status="basic"
                       size="small"
+                      status="basic"
                       (click)="editBranchEmployee(branchEmployee._id, branchEmployee.employee)"
                     >
                       Edit
@@ -38,8 +38,8 @@
                     <button
                       class="mr-3"
                       nbButton
-                      status="success"
                       size="small"
+                      status="success"
                       (click)="branchEmployeeSalary(branchEmployee)"
                     >
                       Salary
@@ -47,8 +47,8 @@
                     <button
                       class=""
                       nbButton
-                      [status]="!branchEmployee.status ? 'warning' : 'danger'"
                       size="small"
+                      [status]="!branchEmployee.status ? 'warning' : 'danger'"
                       (click)="
                         changeBranchEmployeeStatus(branchEmployee._id, !branchEmployee.status, i)
                       "

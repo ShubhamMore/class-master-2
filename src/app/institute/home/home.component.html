@@ -6,13 +6,15 @@
         <br />
         <h2>No Institute Added</h2>
         <br />
-        <button nbButton status="primary" routerLink="../membership-plans">Add Institute</button>
+        <button nbButton size="small" status="primary" routerLink="../membership-plans">
+          Add Institute
+        </button>
       </nb-card-body>
     </nb-card>
   </div>
 </div>
 
-<ng-container *ngIf="branches.length > 0">
+<!-- <ng-container *ngIf="branches.length > 0">
   <div class="row">
     <div class="col-md-3 col-sm-6">
       <nb-card status="success">
@@ -42,78 +44,75 @@
         </nb-card-header>
       </nb-card>
     </div>
-  </div>
+  </div> -->
 
-  <div class="row">
-    <div class="col-md-8">
-      <nb-card>
-        <nb-card-header>
-          <div class="row">
-            <div class="col-md-12">
-              <button
-                class="float-right"
-                nbButton
-                status="warning"
-                size="small"
-                routerLink="../membership-plans"
-              >
-                <span class="btn-add-branch-text">New Branch</span>
-                <nb-icon icon="plus-circle-outline"></nb-icon>
-              </button>
-              <h3>My Branches</h3>
-            </div>
-          </div>
-        </nb-card-header>
-        <nb-card-body>
-          <div class="table-responsive">
-            <table class="table">
-              <tbody>
-                <tr *ngFor="let branch of branches">
-                  <td>
-                    <nb-user
-                      size="medium"
-                      [name]="branch.basicDetails.branchName | uppercase"
-                      [title]="branch.address.city"
-                    >
-                    </nb-user>
-                  </td>
-                  <td>
-                    <span class="">+91 {{ branch.basicDetails.phone }}</span>
-                  </td>
-                  <td>
-                    <span [ngClass]="branch.status ? 'active' : 'inactive'">
-                      <strong>{{ branch.status ? 'Active' : 'Inactive' }}</strong>
-                    </span>
-                  </td>
-                  <td>
-                    <button
-                      *ngIf="branch.status"
-                      class=""
-                      nbButton
-                      status="warning"
-                      size="small"
-                      (click)="manageBranch(branch._id)"
-                    >
-                      Manage
-                    </button>
-
-                    <button
-                      *ngIf="!branch.status"
-                      class=""
-                      nbButton
-                      status="danger"
-                      size="small"
-                      (click)="activateBranch(branch._id)"
-                    >
-                      Activate Now
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </nb-card-body>
-      </nb-card>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-12">
+        <button
+          class="float-right"
+          nbButton
+          size="small"
+          status="warning"
+          routerLink="../membership-plans"
+        >
+          <span class="">New Institute</span>
+          <nb-icon icon="plus-circle-outline"></nb-icon>
+        </button>
+        <h3>My Institutes</h3>
+      </div>
     </div>
+  </nb-card-header>
+</nb-card>
+
+<div class="row">
+  <div class="col-md-3 col-sm-4 col-12" *ngFor="let branch of branches">
+    <nb-card class="shadow-sm">
+      <nb-card-header style="position: relative;">
+        <nb-badge
+          [text]="branch.status ? 'Active' : 'Inactive'"
+          [status]="branch.status ? 'success' : 'danger'"
+          position="top right"
+        ></nb-badge>
+        <nb-user
+          class="text-center"
+          size="medium"
+          [name]="branch.basicDetails.branchName"
+        ></nb-user>
+      </nb-card-header>
+      <nb-card-body>
+        <div class="text-center">
+          <h4>{{ branch.basicDetails.branchName | uppercase }}</h4>
+          <p>
+            {{ branch.address.city }}<br />
+            +91 {{ branch.basicDetails.phone }}
+          </p>
+        </div>
+      </nb-card-body>
+      <nb-card-footer class="text-right">
+        <button
+          *ngIf="branch.status"
+          class=""
+          nbButton
+          size="small"
+          status="warning"
+          (click)="manageBranch(branch._id)"
+        >
+          Manage
+        </button>
+
+        <button
+          *ngIf="!branch.status"
+          class=""
+          nbButton
+          size="small"
+          status="danger"
+          (click)="activateBranch(branch._id)"
+        >
+          Activate Now
+        </button>
+      </nb-card-footer>
+    </nb-card>
   </div>
-</ng-container>
+</div>

@@ -5,7 +5,7 @@
         <h3>{{ onlineExam ? 'Edit' : 'Add' }} Online Exam Question</h3>
       </div>
       <div class="col-3">
-        <button class="float-right" nbButton size="tiny" status="warning" (click)="back()">
+        <button class="float-right" nbButton size="small" status="warning" (click)="back()">
           Back
         </button>
       </div>
@@ -76,8 +76,8 @@
                             class="float-right"
                             type="button"
                             nbButton
+                            size="small"
                             status="danger"
-                            size="tiny"
                             (click)="deleteOption(i)"
                             *ngIf="i !== 0 && i !== 1"
                           >
@@ -131,8 +131,8 @@
                     class="float-right"
                     type="button"
                     nbButton
-                    status="primary"
                     size="small"
+                    status="primary"
                     (click)="generateOption()"
                   >
                     Add Option
@@ -163,7 +163,7 @@
               <hr />
               <div class="row">
                 <div class="col-12">
-                  <button type="submit" class="float-right" nbButton status="basic" size="small">
+                  <button type="submit" class="float-right" nbButton size="small" status="basic">
                     Next
                   </button>
                 </div>
@@ -204,13 +204,13 @@
 
               <div class="row">
                 <div class="col-md-6 text-left">
-                  <button type="button" class="" nbButton (click)="previousStep()">
+                  <button type="button" class="" nbButton size="small" (click)="previousStep()">
                     <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                     <span>prev</span>
                   </button>
                 </div>
                 <div class="col-md-6 text-right">
-                  <button nbButton size="medium" (click)="saveOnlineExamQuestion()">
+                  <button nbButton size="small" (click)="saveOnlineExamQuestion()">
                     <span>Submit</span>
                   </button>
                 </div>

@@ -1,6 +1,6 @@
 <nb-card>
   <nb-card-header>
-    <button class="float-right" nbButton status="warning" size="tiny" (click)="back()">
+    <button class="float-right" nbButton size="small" status="warning" (click)="back()">
       Back
     </button>
     <h3 class="">
@@ -160,7 +160,7 @@
 
           <div class="row">
             <div class="col-md-12 text-right">
-              <button nbButton type="submit">
+              <button nbButton size="small" type="submit">
                 <span>Next</span>
                 <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
               </button>
@@ -176,7 +176,7 @@
               <p>Click on following button to add more Subjects</p>
             </div>
             <div class="col-md-3 col-sm-4 mb-3">
-              <button type="button" nbButton fullWidth size="small" (click)="generateSubject()">
+              <button type="button" nbButton size="small" fullWidth (click)="generateSubject()">
                 Add Subject
               </button>
             </div>
@@ -206,7 +206,13 @@
                         : 'basic'
                     "
                   />
-                  <button nbSuffix nbButton ghost (click)="deleteSubject()" *ngIf="i !== 0">
+                  <button
+                    nbSuffixnbButton
+                    size="small"
+                    ghost
+                    (click)="deleteSubject()"
+                    *ngIf="i !== 0"
+                  >
                     <nb-icon icon="minus-outline" status="danger"> </nb-icon>
                   </button>
                 </nb-form-field>
@@ -225,13 +231,13 @@
 
           <div class="row">
             <div class="col-md-6 text-left">
-              <button class="" nbButton nbStepperPrevious>
+              <button class="" nbButton size="small" nbStepperPrevious>
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                 <span>prev</span>
               </button>
             </div>
             <div class="col-md-6 text-right">
-              <button nbButton type="submit">
+              <button nbButton size="small" type="submit">
                 <span>Next</span><nb-icon icon="arrow-ios-forward-outline"></nb-icon>
               </button>
             </div>
@@ -399,13 +405,13 @@
 
           <div class="row">
             <div class="col-md-6 text-left">
-              <button class="" nbButton nbStepperPrevious>
+              <button class="" nbButton size="small" nbStepperPrevious>
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                 <span>prev</span>
               </button>
             </div>
             <div class="col-md-6 text-right">
-              <button nbButton type="submit">
+              <button nbButton size="small" type="submit">
                 <span>Next</span>
                 <span>
                   <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
@@ -467,13 +473,13 @@
 
           <div class="row">
             <div class="col-md-6 text-left">
-              <button class="" nbButton nbStepperPrevious>
+              <button class="" nbButton size="small" nbStepperPrevious>
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                 <span>prev</span>
               </button>
             </div>
             <div class="col-md-6 text-right">
-              <button nbButton (click)="saveCourse()"><span>Submit</span></button>
+              <button nbButton size="small" (click)="saveCourse()"><span>Submit</span></button>
             </div>
           </div>
         </div>

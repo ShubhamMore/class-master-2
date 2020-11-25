@@ -6,7 +6,9 @@
         <br />
         <h2>No Institute Added</h2>
         <br />
-        <button nbButton status="primary" routerLink="/institute/add">Add Institute</button>
+        <button nbButton size="small" status="primary" routerLink="/institute/add">
+          Add Institute
+        </button>
       </nb-card-body>
     </nb-card>
   </div>
@@ -25,7 +27,6 @@
               <tr *ngFor="let branch of branches">
                 <td>
                   <nb-user
-                    size="medium"
                     [name]="branch.basicDetails.branchName | uppercase"
                     [title]="branch.address.city"
                   >
@@ -46,8 +47,8 @@
                   <button
                     class="mr-2"
                     nbButton
-                    status="info"
                     size="small"
+                    status="info"
                     (click)="viewBranch(branch._id)"
                   >
                     View
@@ -57,8 +58,8 @@
                   <button
                     class="mr-2"
                     nbButton
-                    status="basic"
                     size="small"
+                    status="basic"
                     (click)="editBranch(branch._id)"
                   >
                     Edit
@@ -69,8 +70,8 @@
                     *ngIf="branch.status"
                     class=""
                     nbButton
-                    status="warning"
                     size="small"
+                    status="warning"
                     (click)="manageBranch(branch._id)"
                   >
                     Manage
@@ -80,8 +81,8 @@
                     *ngIf="!branch.status"
                     class=""
                     nbButton
-                    status="danger"
                     size="small"
+                    status="danger"
                     (click)="activateBranch(branch._id)"
                   >
                     Activate Now

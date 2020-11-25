@@ -11,6 +11,7 @@ import {
   NbIconModule,
   NbTooltipModule,
   NbUserModule,
+  NbBadgeModule,
 } from '@nebular/theme';
 
 @NgModule({
@@ -24,6 +25,7 @@ import {
     NbButtonModule,
     NbTooltipModule,
     NbUserModule,
+    NbBadgeModule,
   ],
 })
 export class HomeModule {}

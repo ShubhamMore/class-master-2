@@ -6,8 +6,8 @@
           type="button"
           class="float-right"
           nbButton
+          size="small"
           status="warning"
-          size="tiny"
           (click)="back()"
         >
           Back
@@ -49,8 +49,8 @@
                   <td>
                     <button
                       nbButton
-                      status="info"
                       size="small"
+                      status="info"
                       (click)="
                         courseInstallments(
                           studentCourse._id,
@@ -66,8 +66,8 @@
                   <td>
                     <button
                       nbButton
-                      status="info"
                       size="small"
+                      status="info"
                       (click)="courseAttendance(studentCourse)"
                     >
                       Attendance
@@ -77,8 +77,8 @@
                   <td>
                     <button
                       nbButton
-                      status="success"
                       size="small"
+                      status="success"
                       (click)="coursePerformance(studentCourse)"
                     >
                       Performance
@@ -88,8 +88,8 @@
                   <td>
                     <button
                       nbButton
-                      status="basic"
                       size="small"
+                      status="basic"
                       (click)="
                         courseEdit(studentCourse._id, studentCourse.studentCourseInstallment)
                       "
@@ -102,8 +102,8 @@
                     <button
                       class=""
                       nbButton
-                      [status]="!studentCourse.status ? 'warning' : 'danger'"
                       size="small"
+                      [status]="!studentCourse.status ? 'warning' : 'danger'"
                       (click)="changeCourseStatus(studentCourse._id, !studentCourse.status, i)"
                     >
                       {{ !studentCourse.status ? 'Activate' : 'Deactivate' }}

@@ -7,7 +7,7 @@
         </h3>
       </div>
       <div class="col-md-3 col-sm-4">
-        <button nbButton status="primary" fullWidth size="small" (click)="addCourseMaterial()">
+        <button nbButton size="small" status="primary" fullWidth (click)="addCourseMaterial()">
           Add Course Material <nb-icon icon="plus-circle-outline"></nb-icon>
         </button>
       </div>
@@ -63,8 +63,8 @@
                   <td>
                     <button
                       nbButton
-                      status="info"
                       size="small"
+                      status="info"
                       (click)="viewCourseMaterial(courseMaterial)"
                     >
                       View
@@ -73,8 +73,8 @@
                   <td>
                     <button
                       nbButton
-                      [status]="!courseMaterial.status ? 'warning' : 'danger'"
                       size="small"
+                      [status]="!courseMaterial.status ? 'warning' : 'danger'"
                       (click)="
                         changeCourseMaterialStatus(courseMaterial._id, !courseMaterial.status, i)
                       "
@@ -85,8 +85,8 @@
                   <td>
                     <button
                       nbButton
-                      status="danger"
                       size="small"
+                      status="danger"
                       (click)="deleteCourseMaterial(courseMaterial._id)"
                     >
                       Delete

@@ -5,7 +5,7 @@
         <h3>Courses</h3>
       </div>
       <div class="col-md-3 col-sm-4">
-        <button nbButton status="primary" fullWidth size="small" (click)="addCourse()">
+        <button nbButton size="small" status="primary" fullWidth (click)="addCourse()">
           Add Course <nb-icon icon="plus-circle-outline"></nb-icon>
         </button>
       </div>
@@ -61,8 +61,8 @@
                     <button
                       class="mr-3"
                       nbButton
-                      status="info"
                       size="small"
+                      status="info"
                       (click)="courseBatches(course)"
                     >
                       Batches
@@ -72,8 +72,8 @@
                     <button
                       class="mr-3"
                       nbButton
-                      status="success"
                       size="small"
+                      status="success"
                       (click)="courseMaterial(course)"
                     >
                       Course Material
@@ -83,8 +83,8 @@
                     <button
                       class="mr-3"
                       nbButton
-                      status="basic"
                       size="small"
+                      status="basic"
                       (click)="editCourse(course._id)"
                     >
                       Edit
@@ -94,8 +94,8 @@
                     <button
                       class=""
                       nbButton
-                      [status]="!course.status ? 'warning' : 'danger'"
                       size="small"
+                      [status]="!course.status ? 'warning' : 'danger'"
                       (click)="changeCourseStatus(course._id, !course.status, i)"
                     >
                       {{ !course.status ? 'Activate' : 'Deactivate' }}

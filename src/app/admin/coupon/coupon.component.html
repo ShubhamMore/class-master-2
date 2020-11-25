@@ -5,7 +5,7 @@
         <h3>Coupons</h3>
       </div>
       <div class="col-md-3 col-sm-4">
-        <button nbButton status="primary" size="small" fullWidth (click)="addCoupon()">
+        <button nbButton size="small" status="primary" fullWidth (click)="addCoupon()">
           Add Coupon <nb-icon icon="plus-circle-outline"></nb-icon>
         </button>
       </div>
@@ -35,8 +35,8 @@
                   <button
                     type="button"
                     nbButton
-                    status="basic"
                     size="small"
+                    status="basic"
                     (click)="editCoupon(coupon)"
                   >
                     Edit
@@ -46,8 +46,8 @@
                   <button
                     type="button"
                     nbButton
-                    status="danger"
                     size="small"
+                    status="danger"
                     (click)="deleteCoupon(coupon._id)"
                   >
                     Delete

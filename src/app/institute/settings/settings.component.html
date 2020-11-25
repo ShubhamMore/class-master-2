@@ -1,6 +1,8 @@
 <nb-card>
   <nb-card-header>
-    <button class="float-right" nbButton status="warning" size="tiny" (click)="back()">Back</button>
+    <button class="float-right" nbButton size="small" status="warning" (click)="back()">
+      Back
+    </button>
     <h3>Settings</h3>
   </nb-card-header>
   <nb-card-body>
@@ -67,7 +69,13 @@
                         : 'basic'
                     "
                   />
-                  <button type="button" nbSuffix nbButton ghost (click)="toggleShowZoomSecret()">
+                  <button
+                    type="button"
+                    nbSuffixnbButton
+                    size="small"
+                    ghost
+                    (click)="toggleShowZoomSecret()"
+                  >
                     <nb-icon
                       [icon]="zoomShowSecret ? 'eye-outline' : 'eye-off-2-outline'"
                       pack="eva"
@@ -175,6 +183,7 @@
                     type="button"
                     nbSuffix
                     nbButton
+                    size="small"
                     ghost
                     (click)="toggleShowPaymentGatewaySecret()"
                   >

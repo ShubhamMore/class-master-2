@@ -1,6 +1,6 @@
 <nb-card>
   <nb-card-header>
-    <button class="float-right" nbButton status="warning" size="tiny" (click)="back()">
+    <button class="float-right" nbButton size="small" status="warning" (click)="back()">
       Back
     </button>
     <h3 class="">
@@ -177,6 +177,7 @@
                     type="button"
                     nbPrefix
                     nbButton
+                    size="small"
                     ghost
                     (click)="filePicker.click()"
                     nbTooltip="Attach File"
@@ -196,6 +197,7 @@
                     type="button"
                     nbSuffix
                     nbButton
+                    size="small"
                     ghost
                     (click)="clearFile()"
                     nbTooltip="Remove File"
@@ -293,7 +295,7 @@
 
           <div class="row">
             <div class="col-md-12 text-right">
-              <button nbButton type="submit">
+              <button nbButton size="small" type="submit">
                 <span>Next</span>
                 <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
               </button>
@@ -343,13 +345,13 @@
 
           <div class="row">
             <div class="col-md-6 text-left">
-              <button class="" nbButton nbStepperPrevious>
+              <button class="" nbButton size="small" nbStepperPrevious>
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                 <span>prev</span>
               </button>
             </div>
             <div class="col-md-6 text-right">
-              <button nbButton (click)="saveAssignment()"><span>Submit</span></button>
+              <button nbButton size="small" (click)="saveAssignment()"><span>Submit</span></button>
             </div>
           </div>
         </div>

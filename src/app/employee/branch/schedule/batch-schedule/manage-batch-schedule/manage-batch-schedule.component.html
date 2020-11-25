@@ -7,7 +7,7 @@
         </h3>
       </div>
       <div class="col-md-3 col-sm-4">
-        <button nbButton fullWidth (click)="addSchedule()" status="primary" size="small">
+        <button nbButton size="small" fullWidth (click)="addSchedule()" status="primary">
           Add Schedule
         </button>
       </div>
@@ -19,13 +19,13 @@
         <div class="row">
           <div class="col-md-3 pt-2">
             <div class="btn-group">
-              <button nbButton status="primary" size="small" (click)="previous()">
+              <button nbButton size="small" status="primary" (click)="previous()">
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
               </button>
-              <button nbButton status="primary" size="small" (click)="goToToday()">
+              <button nbButton size="small" status="primary" (click)="goToToday()">
                 Today
               </button>
-              <button nbButton status="primary" size="small" (click)="next()">
+              <button nbButton size="small" status="primary" (click)="next()">
                 <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
               </button>
             </div>
@@ -39,24 +39,24 @@
             <div class="btn-group">
               <button
                 nbButton
-                status="primary"
                 size="small"
+                status="primary"
                 (click)="changeScheduleCalenderType(0)"
               >
                 Day
               </button>
               <button
                 nbButton
-                status="primary"
                 size="small"
+                status="primary"
                 (click)="changeScheduleCalenderType(1)"
               >
                 Week
               </button>
               <button
                 nbButton
-                status="primary"
                 size="small"
+                status="primary"
                 (click)="changeScheduleCalenderType(2)"
               >
                 Month
@@ -74,9 +74,9 @@
             <div class="col-12">
               <button
                 nbButton
+                size="small"
                 class="float-right"
                 status="primary"
-                size="tiny"
                 (click)="addScheduleOfDay(day)"
               >
                 <nb-icon nbTooltip="Add Schedule" icon="plus-outline"></nb-icon>

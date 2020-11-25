@@ -7,10 +7,9 @@
       <div class="col-md-3 col-sm-4">
         <button
           nbButton
-          type="button"
-          size="medium"
-          fullWidth
           size="small"
+          type="button"
+          fullWidth
           status="primary"
           (click)="saveLectureMaterial()"
         >
@@ -41,9 +40,9 @@
           />
           <button
             nbButton
+            size="small"
             type="button"
             fullWidth
-            size="small"
             status="warning"
             id="files"
             (click)="filePicker.click()"
@@ -87,10 +86,10 @@
                   <button
                     type="button"
                     nbButton
+                    size="tiny"
                     shape="round"
                     (click)="removeFile(i)"
                     status="danger"
-                    size="tiny"
                     nbTooltip="Remove {{ file.name }}"
                   >
                     <nb-icon icon="close-outline"></nb-icon>

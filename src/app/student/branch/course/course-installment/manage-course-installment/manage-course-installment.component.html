@@ -80,8 +80,8 @@
                   <td>
                     <button
                       nbButton
-                      [status]="installment.receiptId ? 'success' : 'info'"
                       size="small"
+                      [status]="installment.receiptId ? 'success' : 'info'"
                       (click)="
                         installment.receiptId
                           ? showReceipt(installment.receiptId)

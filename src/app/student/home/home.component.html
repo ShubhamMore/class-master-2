@@ -28,7 +28,6 @@
                 <tr *ngFor="let branch of branches">
                   <td>
                     <nb-user
-                      size="medium"
                       [name]="branch.basicDetails.branchName | uppercase"
                       [title]="branch.address.city"
                     >
@@ -42,8 +41,8 @@
                       k
                       class=""
                       nbButton
-                      status="warning"
                       size="small"
+                      status="warning"
                       (click)="manageBranch(branch._id)"
                     >
                       Manage

@@ -67,9 +67,9 @@
                     <div class="btn-group">
                       <button
                         nbButton
+                        size="small"
                         status="success"
                         nbPrefix
-                        size="small"
                         (click)="
                           branchStudentCourses(
                             branchStudent._id,
@@ -83,10 +83,10 @@
                       <button
                         class=""
                         nbButton
+                        size="small"
                         nbTooltip="Add Course"
                         nbSuffix
                         status="success"
-                        size="small"
                         (click)="
                           branchAddStudentCourses(
                             branchStudent._id,
@@ -103,8 +103,8 @@
                   <td>
                     <button
                       nbButton
-                      status="basic"
                       size="small"
+                      status="basic"
                       (click)="editBranchStudent(branchStudent._id, branchStudent.student)"
                     >
                       Edit
@@ -115,8 +115,8 @@
                     <button
                       class=""
                       nbButton
-                      [status]="!branchStudent.status ? 'warning' : 'danger'"
                       size="small"
+                      [status]="!branchStudent.status ? 'warning' : 'danger'"
                       (click)="
                         changeBranchStudentStatus(branchStudent._id, !branchStudent.status, i)
                       "

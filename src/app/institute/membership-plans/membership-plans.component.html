@@ -178,6 +178,7 @@
           <td class="first-footer">
             <button
               nbButton
+              size="small"
               (click)="activate('membership', 'monthly')"
               *ngIf="isMembershipPlanAvailable('monthly'); else noMembership"
             >
@@ -187,6 +188,7 @@
           <td class="second-footer">
             <button
               nbButton
+              size="small"
               (click)="activate('membership', 'quarterly')"
               *ngIf="isMembershipPlanAvailable('quarterly'); else noMembership"
             >
@@ -196,6 +198,7 @@
           <td class="third-footer">
             <button
               nbButton
+              size="small"
               (click)="activate('membership', 'half-yearly')"
               *ngIf="isMembershipPlanAvailable('half-yearly'); else noMembership"
             >
@@ -205,6 +208,7 @@
           <td class="fourth-footer">
             <button
               nbButton
+              size="small"
               (click)="activate('membership', 'yearly')"
               *ngIf="isMembershipPlanAvailable('yearly'); else noMembership"
             >
@@ -219,5 +223,5 @@
 </nb-card>
 
 <ng-template #noMembership>
-  <button nbButton>Comming Soon</button>
+  <button nbButton size="small">Comming Soon</button>
 </ng-template>

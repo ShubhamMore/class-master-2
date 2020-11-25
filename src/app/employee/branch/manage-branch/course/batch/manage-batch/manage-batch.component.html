@@ -7,7 +7,7 @@
         </h3>
       </div>
       <div class="col-md-3 col-sm-4">
-        <button nbButton status="primary" fullWidth size="small" (click)="addBatch()">
+        <button nbButton size="small" status="primary" fullWidth (click)="addBatch()">
           Add Batch <nb-icon icon="plus-circle-outline"></nb-icon>
         </button>
       </div>
@@ -37,8 +37,8 @@
                     <button
                       class="mr-3"
                       nbButton
-                      status="basic"
                       size="small"
+                      status="basic"
                       (click)="editBatch(batch._id)"
                     >
                       Edit
@@ -46,8 +46,8 @@
                     <button
                       class=""
                       nbButton
-                      [status]="!batch.status ? 'warning' : 'danger'"
                       size="small"
+                      [status]="!batch.status ? 'warning' : 'danger'"
                       (click)="changeBatchStatus(batch._id, !batch.status, i)"
                     >
                       {{ !batch.status ? 'Activate' : 'Deactivate' }}

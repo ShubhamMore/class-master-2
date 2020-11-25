@@ -79,8 +79,8 @@
                   <td>
                     <button
                       nbButton
-                      [status]="installment.receiptId ? 'success' : 'info'"
                       size="small"
+                      [status]="installment.receiptId ? 'success' : 'info'"
                       (click)="
                         installment.receiptId
                           ? showReceipt(installment.receiptId)
@@ -94,8 +94,8 @@
                     <button
                       *ngIf="installment.receiptId"
                       nbButton
-                      status="basic"
                       size="small"
+                      status="basic"
                       (click)="editReceipt(installment._id, installment.receiptId)"
                     >
                       <nb-icon nbTooltip="Edit Receipt" icon="edit-outline"></nb-icon>
@@ -105,8 +105,8 @@
                     <button
                       *ngIf="installment.receiptId"
                       nbButton
-                      status="danger"
                       size="small"
+                      status="danger"
                       (click)="deleteReceipt(installment._id, installment.receiptId)"
                     >
                       <nb-icon nbTooltip="Delete Receipt" icon="trash-outline"></nb-icon>

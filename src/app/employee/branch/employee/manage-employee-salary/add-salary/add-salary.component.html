@@ -6,8 +6,8 @@
           type="button"
           class="float-right"
           nbButton
+          size="small"
           status="warning"
-          size="tiny"
           (click)="back()"
         >
           Back
@@ -245,7 +245,7 @@
                 type="submit"
                 class="mt-4"
                 nbButton
-                size="medium"
+                size="small"
                 [status]="ernDeduction ? 'success' : 'danger'"
               >
                 Add {{ ernDeduction ? 'Earning' : 'Deduction' }}
@@ -281,7 +281,7 @@
                         <td>
                           <button
                             nbButton
-                            size="tiny"
+                            size="small"
                             outline
                             status="danger"
                             shape="round"
@@ -328,7 +328,7 @@
                         <td>
                           <button
                             nbButton
-                            size="tiny"
+                            size="small"
                             outline
                             status="danger"
                             shape="round"
@@ -482,7 +482,7 @@
 
           <div class="row">
             <div class="col-md-6 text-left">
-              <button type="button" class="" nbButton size="medium" (click)="previousStep()">
+              <button type="button" class="" nbButton size="small" (click)="previousStep()">
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                 <span>prev</span>
               </button>
@@ -618,13 +618,13 @@
 
           <div class="row">
             <div class="col-md-6 text-left">
-              <button type="button" class="" nbButton size="medium" (click)="previousStep()">
+              <button type="button" class="" nbButton size="small" (click)="previousStep()">
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                 <span>prev</span>
               </button>
             </div>
             <div class="col-md-6 text-right">
-              <button nbButton (click)="saveEmployee()" size="medium"><span>Submit</span></button>
+              <button nbButton size="small" (click)="saveEmployee()"><span>Submit</span></button>
             </div>
           </div>
         </div>

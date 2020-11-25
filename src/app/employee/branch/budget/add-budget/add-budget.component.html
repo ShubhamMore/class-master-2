@@ -4,8 +4,8 @@
       title="button"
       class="float-right"
       nbButton
+      size="small"
       status="warning"
-      size="tiny"
       (click)="back()"
     >
       Back
@@ -181,7 +181,7 @@
 
           <div class="row">
             <div class="col-md-12 text-right">
-              <button nbButton title="submit">
+              <button nbButton size="small" title="submit">
                 <span>Next</span>
                 <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
               </button>
@@ -223,13 +223,13 @@
 
           <div class="row">
             <div class="col-md-6 text-left">
-              <button title="button" class="" nbButton (click)="previousStep()">
+              <button title="button" class="" nbButton size="small" (click)="previousStep()">
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                 <span>prev</span>
               </button>
             </div>
             <div class="col-md-6 text-right">
-              <button nbButton (click)="saveBudget()"><span>Submit</span></button>
+              <button nbButton size="small" (click)="saveBudget()"><span>Submit</span></button>
             </div>
           </div>
         </div>

@@ -89,27 +89,27 @@
                   <td>{{ category.category }}</td>
                   <td>{{ course.basicDetails.courseName }}</td>
                   <td>
-                    <button nbButton status="primary" size="small" (click)="editExam(exam)">
+                    <button nbButton size="small" status="primary" (click)="editExam(exam)">
                       Edit
                     </button>
                   </td>
                   <td>
-                    <button nbButton status="warning" size="small" (click)="addExamScore(exam)">
+                    <button nbButton size="small" status="warning" (click)="addExamScore(exam)">
                       Score
                     </button>
                   </td>
                   <td>
                     <button
                       nbButton
-                      [status]="exam.status ? 'success' : 'danger'"
                       size="small"
+                      [status]="exam.status ? 'success' : 'danger'"
                       (click)="changeExamStatus(exam._id, !exam.status, i)"
                     >
                       {{ exam.status ? 'Inactive' : 'Active' }}
                     </button>
                   </td>
                   <td>
-                    <button nbButton status="danger" size="small" (click)="deleteExam(exam._id, i)">
+                    <button nbButton size="small" status="danger" (click)="deleteExam(exam._id, i)">
                       Delete
                     </button>
                   </td>

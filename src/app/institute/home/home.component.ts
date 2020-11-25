@@ -2,7 +2,7 @@ import { MembershipService } from './../../services/membership.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../../authentication/auth/auth-service/auth.service';
 import { BranchService } from './../../services/branch.service';
-import { BranchModel } from './../../models/branch.model';
+import { BranchModel, BranchAddressModel } from './../../models/branch.model';
 import { MenuService } from './../menu.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -39,6 +39,21 @@ export class HomeComponent implements OnInit {
       (err: any) => {
         this.loading = false;
       },
+    );
+  }
+
+  getAddress(address: BranchAddressModel) {
+    const address2 = address.address2 ? address.address2 + ', ' : '';
+
+    return (
+      address.address1 +
+      ', ' +
+      address2 +
+      address.city +
+      ' - ' +
+      address.pinCode +
+      ', ' +
+      address.state
     );
   }
 
