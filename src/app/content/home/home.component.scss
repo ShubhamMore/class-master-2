@@ -13,3 +13,31 @@
 .card-color {
   background-color: #fcce02;
 }
+
+.main-container {
+  background-color: #fff;
+}
+
+.mark-attendance-selector input {
+  display: none !important;
+}
+
+.icon {
+  display: inline-block;
+  font-size: 75%;
+  border-radius: 50%;
+  background: #fcce02;
+  height: 3.5rem;
+  width: 3.5rem;
+  padding-top: 0.9rem;
+  margin: 0.25rem;
+  line-height: 1.5rem;
+  text-align: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.service {
+  height: 21rem;
+}

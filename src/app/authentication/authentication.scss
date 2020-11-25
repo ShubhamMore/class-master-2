@@ -1,0 +1,32 @@
+.main-container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+@media only screen and (max-width: 1200px) {
+  .main-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+@media only screen and (max-width: 840px) {
+  .main-container {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .main-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .main-container {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
