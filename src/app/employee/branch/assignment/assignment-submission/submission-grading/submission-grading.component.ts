@@ -58,7 +58,6 @@ export class SubmissionGradingComponent implements OnInit, OnDestroy {
           this.assignmentSubmission = assignmentSubmission;
 
           if (!assignmentSubmission) {
-            this.showToastr('top-right', 'danger', 'Assignment Submission Not Found');
             this.back();
             return;
           }

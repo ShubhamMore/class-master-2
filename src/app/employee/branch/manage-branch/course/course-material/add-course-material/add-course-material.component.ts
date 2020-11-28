@@ -51,7 +51,6 @@ export class AddCourseMaterialComponent implements OnInit {
     this.subject = '';
     this.courseService.getCourseData().subscribe((course: CourseModel) => {
       if (!course) {
-        this.showToastr('top-right', 'danger', 'Course Not Available');
         this.cancel();
         return;
       }

@@ -41,12 +41,13 @@ export class AddBatchComponent implements OnInit, OnDestroy {
     private batchService: BatchService,
     private courseService: CourseService,
     private toastrService: NbToastrService,
-
     private router: Router,
     private route: ActivatedRoute,
   ) {
     this.route.queryParams.subscribe((param: Params) => {
-      this.ngOnInit();
+      if (param.mode) {
+        this.ngOnInit();
+      }
     });
   }
 

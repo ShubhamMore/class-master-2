@@ -32,7 +32,7 @@
                 <tr *ngFor="let batch of batches; let i = index">
                   <td>{{ i + 1 }}</td>
                   <td>{{ batch.basicDetails.batchName }}</td>
-                  <td>{{ batch.basicDetails.startDate }}</td>
+                  <td>{{ dateService.formatDate(batch.basicDetails.startDate) }}</td>
                   <td>
                     <button
                       class="mr-3"

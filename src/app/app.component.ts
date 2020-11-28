@@ -1,3 +1,4 @@
+// import { LocationStrategy } from '@angular/common';
 import { AuthService, UserData } from './authentication/auth/auth-service/auth.service';
 /**
  * @license
@@ -16,8 +17,10 @@ export class AppComponent implements OnInit {
   constructor(
     private analytics: AnalyticsService,
     private seoService: SeoService,
-    private authService: AuthService,
-  ) {}
+    private authService: AuthService, // private locationStrategy: LocationStrategy,
+  ) {
+    // this.preventBackButton();
+  }
 
   ngOnInit(): void {
     this.analytics.trackPageViews();
@@ -30,4 +33,11 @@ export class AppComponent implements OnInit {
 
     this.authService.autoLogin(userData);
   }
+
+  // preventBackButton() {
+  //   history.pushState(null, null, location.href);
+  //   this.locationStrategy.onPopState(() => {
+  //     history.pushState(null, null, location.href);
+  //   });
+  // }
 }

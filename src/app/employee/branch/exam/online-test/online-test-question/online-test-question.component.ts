@@ -1,3 +1,4 @@
+import { OnlineExamQuestionService } from './../../../../../services/online-exam-question.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OnlineExamModel } from './../../../../../models/online-exam.model';
 import { OnlineExamService } from './../../../../../services/online-exam.service';
@@ -13,6 +14,7 @@ export class OnlineTestQuestionComponent implements OnInit, OnDestroy {
 
   constructor(
     private onlineExamService: OnlineExamService,
+    private onlineExamQuestionService: OnlineExamQuestionService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -29,6 +31,8 @@ export class OnlineTestQuestionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.onlineExamQuestionService.deleteOnlineExamQuestionId();
+    this.onlineExamQuestionService.deleteOnlineExamQuestionData();
     this.onlineExamService.deleteOnlineExamId();
     this.onlineExamService.deleteOnlineExamData();
   }

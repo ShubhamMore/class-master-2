@@ -62,7 +62,7 @@ export class AddOnlineTestComponent implements OnInit, OnDestroy {
       // this.router.navigate(['../page-not-found'], { relativeTo: this.route });
       return;
     } else if (mode && !this.onlineExamId) {
-      this.showToastr('top-right', 'danger', 'OnlineExam Not Found');
+      this.showToastr('top-right', 'danger', 'Online Exam Not Found');
       // this.router.navigate(['../page-not-found'], { relativeTo: this.route });
       return;
     }

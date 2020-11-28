@@ -32,7 +32,9 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) {
     this.route.queryParams.subscribe((param: Params) => {
-      this.ngOnInit();
+      if (param.mode) {
+        this.ngOnInit();
+      }
     });
   }
 

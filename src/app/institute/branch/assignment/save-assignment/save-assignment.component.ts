@@ -51,7 +51,9 @@ export class SaveAssignmentComponent implements OnInit, OnDestroy {
     private toastrService: NbToastrService,
   ) {
     this.route.queryParams.subscribe((param: Params) => {
-      this.ngOnInit();
+      if (param.mode) {
+        this.ngOnInit();
+      }
     });
   }
 

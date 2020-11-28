@@ -37,7 +37,9 @@ export class AddCourseComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) {
     this.route.queryParams.subscribe((param: Params) => {
-      this.ngOnInit();
+      if (param.mode) {
+        this.ngOnInit();
+      }
     });
   }
 
@@ -159,7 +161,9 @@ export class AddCourseComponent implements OnInit, OnDestroy {
 
   private getCategories() {
     this.branchService.getBranchData().subscribe((branch: BranchModel) => {
-      this.categories = branch.categories;
+      if (branch) {
+        this.categories = branch.categories;
+      }
     });
 
     if (!this.categories) {

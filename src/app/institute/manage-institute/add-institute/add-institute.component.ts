@@ -50,7 +50,9 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) {
     this.route.queryParams.subscribe((param: Params) => {
-      this.ngOnInit();
+      if (param.mode) {
+        this.ngOnInit();
+      }
     });
   }
 
