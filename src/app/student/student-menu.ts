@@ -13,15 +13,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 2
   {
     title: 'Dashboard',
-    icon: '',
+    icon: 'shield-outline',
     link: '/student/branch/dashboard',
     hidden: true,
   },
 
   // 3
   {
-    title: 'My Course',
-    icon: '',
+    title: 'My Courses',
+    icon: 'share-outline',
     link: '/student/branch/course/manage',
     hidden: true,
     queryParams: { type: 'course' },
@@ -29,8 +29,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 4
   {
-    title: 'Lecture',
-    icon: '',
+    title: 'Lectures',
+    icon: 'book-open-outline',
     link: '/student/branch/course/manage',
     hidden: true,
     queryParams: { type: 'lecture' },
@@ -38,8 +38,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 5
   {
-    title: 'Assignment',
-    icon: '',
+    title: 'Assignments',
+    icon: 'archive-outline',
     link: '/student/branch/course/manage',
     hidden: true,
     queryParams: { type: 'assignment' },
@@ -47,8 +47,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 6
   {
-    title: 'Report',
-    icon: '',
+    title: 'Reports',
+    icon: 'bar-chart-outline',
     link: '/student/branch/course/manage',
     hidden: true,
     queryParams: { type: 'report' },
@@ -56,8 +56,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 7
   {
-    title: 'Online Exam',
-    icon: '',
+    title: 'Online Exams',
+    icon: 'edit-2-outline',
     link: '/student/branch/course/manage',
     hidden: true,
     queryParams: { type: 'exam' },
