@@ -71,7 +71,7 @@
               <nb-icon
                 icon="trash-2-outline"
                 nbTooltip="Delete"
-                (click)="openNotificationBox(notification, i, notificationDialog)"
+                (click)="deleteNotification(notification._id, notification.status, i)"
               ></nb-icon>
             </span>
           </div>
