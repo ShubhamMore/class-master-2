@@ -51,7 +51,7 @@
     <nb-list *ngIf="notifications && notifications.length > 0; else noNotifications">
       <nb-list-item
         *ngFor="let notification of notifications; let i = index"
-        [ngClass]="notification.status ? 'new-notification' : ''"
+        [ngClass]="!notification.status ? 'new-notification' : ''"
       >
         <div class="row">
           <div class="col-10">

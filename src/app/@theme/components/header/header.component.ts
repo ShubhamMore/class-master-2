@@ -145,7 +145,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.notifications = notifications;
         if (notifications.length > 0) {
           this.unseenNotificationCount = notifications.filter(
-            (notification: NotificationModel) => notification.status,
+            (notification: NotificationModel) => !notification.status,
           ).length;
         }
       },
