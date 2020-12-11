@@ -132,6 +132,7 @@ export class MembershipPlansComponent implements OnInit, OnDestroy {
     const paymentDetails = {
       amount: this.paymentDetails.amount,
       planType: this.paymentDetails.planType,
+      packageType: this.paymentDetails.packageType,
       orderId: orderId,
       receiptId: ReceiptId,
     };
