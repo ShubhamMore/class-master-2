@@ -89,6 +89,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
       userPhone: this.user.phone,
       userName: this.user.name,
       userEmail: this.user.email,
+      imsMasterId: this.user.imsMasterId,
       amount: this.paymentDetails.amount,
       packageType: this.paymentDetails.packageType,
       planType: this.paymentDetails.planType,
