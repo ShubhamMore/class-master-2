@@ -15,6 +15,13 @@ const routes: Routes = [
       },
 
       {
+        path: 'transaction',
+        loadChildren: () =>
+          import('./transaction/transaction.module').then((m) => m.TransactionModule),
+        canActivate: [],
+      },
+
+      {
         path: 'settings',
         loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
         canActivate: [],

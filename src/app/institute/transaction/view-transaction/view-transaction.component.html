@@ -1,0 +1,101 @@
+<nb-card>
+  <nb-card-header>
+    <button
+      type="button"
+      nbButton
+      class="float-right"
+      status="warning"
+      size="small"
+      (click)="back()"
+    >
+      Back
+    </button>
+    <h3>Transaction</h3>
+  </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="!loading; else loadingData">
+      <div class="row m-5">
+        <div class="col-md-9 col-11 mx-auto">
+          <div class="row">
+            <div class="col-md-4 col-sm-6 co-10 mx-auto">
+              <div class="text-center">
+                <img
+                  src="./../../../../assets/brand/class-master.png"
+                  alt="Class Master"
+                  width="75%"
+                />
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="text-cener pt-2">
+                <h6>
+                  Thane, Thane - 400605
+                </h6>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-md-6 col-10 mx-auto">
+              <strong>Name: </strong>{{ transaction.userName }}
+            </div>
+            <div class="col-md-6 col-10 mx-auto">
+              <strong>Transaction Id: </strong>{{ transaction.order_id }}
+            </div>
+            <div class="col-md-6 col-10 mx-auto">
+              <!-- <strong>Branch: </strong>{{ transaction.branchBasicDetails.branchName }} -->
+            </div>
+            <div class="col-md-6 col-10 mx-auto">
+              <!-- <strong>Branch City: </strong>{{ transaction.branchAddress.city }} -->
+            </div>
+            <div class="col-10 mx-auto"><strong>Date: </strong>{{ transaction.createdAt }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-8 col-sm-10 col-12 mx-auto">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead class="text-center">
+                    <tr>
+                      <th>Description</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ transaction.packageType }}&nbsp;{{ transaction.planType }}</td>
+                      <td>{{ transaction.amount }}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>Total:</th>
+                      <th>{{ transaction.amount }}</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <br />
+          <hr />
+
+          <div class="row">
+            <div class="col-12">
+              <h6 class="text-center">
+                <small>This is computer generated receipt and requires no signature.</small>
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #loadingData>
+  <p class="pt-5 pb-5 text-center">
+    Loading...
+  </p>
+</ng-template>

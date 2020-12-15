@@ -84,6 +84,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.userMenu.push({ title: 'Profile', link: '/' + this.user.userRole + '/profile' });
     }
 
+    if (this.user.userRole === 'institute' || this.user.userRole === 'student') {
+      this.userMenu.push({
+        title: 'Transactions',
+        link: '/' + this.user.userRole + '/transaction',
+      });
+    }
+
     if (this.user.userRole === 'institute') {
       this.userMenu.push({ title: 'Settings', link: '/institute/settings' });
     }

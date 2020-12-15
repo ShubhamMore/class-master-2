@@ -1,12 +1,42 @@
+import { StudentTransactionModel } from './../models/student-transaction.model';
+import { InstituteTransactionModel } from './../models/institute-transaction.model';
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { HttpService } from './shared-services/http.service';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TransactionService {
+  private instituteTransaction = new BehaviorSubject<InstituteTransactionModel>(null);
+
+  private studentTransaction = new BehaviorSubject<StudentTransactionModel>(null);
+
+  setInstituteTransactionData(instituteTransaction: InstituteTransactionModel) {
+    this.instituteTransaction.next(instituteTransaction);
+  }
+
+  getInstituteTransactionData() {
+    return this.instituteTransaction;
+  }
+
+  deleteInstituteTransactionData() {
+    this.instituteTransaction.next(null);
+  }
+
+  setStudentTransactionData(studentTransaction: StudentTransactionModel) {
+    this.studentTransaction.next(studentTransaction);
+  }
+
+  getStudentTransactionData() {
+    return this.studentTransaction;
+  }
+
+  deleteStudentTransactionData() {
+    this.studentTransaction.next(null);
+  }
+
   constructor(private httpService: HttpService) {}
 
   getTransactionHistory() {
@@ -71,7 +101,7 @@ export class TransactionService {
 
   getStudentTransactions() {
     const data = {
-      api: 'getTransactionHistory',
+      api: 'getStudentTransactions',
       data: {},
     };
     return this.httpService.httpPost(data).pipe(
