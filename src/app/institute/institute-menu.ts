@@ -190,6 +190,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Budget Management',
     icon: 'activity-outline',
     link: '/institute/branch/budget/manage',
+    // badge: {
+    //   text: '30',
+    //   status: 'primary',
+    // },
     hidden: true,
   },
 ];
