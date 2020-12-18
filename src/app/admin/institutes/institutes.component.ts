@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'ngx-institutes',
   templateUrl: './institutes.component.html',
-  styleUrls: ['./institutes.component.scss']
+  styleUrls: ['./institutes.component.scss'],
 })
 export class InstitutesComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
