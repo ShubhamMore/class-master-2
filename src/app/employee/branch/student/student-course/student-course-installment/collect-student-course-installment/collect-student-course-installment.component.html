@@ -10,9 +10,7 @@
     >
       Back
     </button>
-    <h3 class="">
-      Collect Installment
-    </h3>
+    <h3 class="">Collect Installment</h3>
   </nb-card-header>
   <nb-card-body>
     <nb-stepper #stepper [linear]="true" [disableStepNavigation]="true">
@@ -501,13 +499,13 @@
           <hr />
 
           <div class="row">
-            <div class="col-md-6 text-left">
+            <div class="col-6 text-left">
               <button type="button" class="" nbButton size="small" (click)="previousStep()">
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                 <span>prev</span>
               </button>
             </div>
-            <div class="col-md-6 text-right">
+            <div class="col-6 text-right">
               <button nbButton size="small" type="button" (click)="saveCourseInstallmentReceipt()">
                 <span>Submit</span>
               </button>

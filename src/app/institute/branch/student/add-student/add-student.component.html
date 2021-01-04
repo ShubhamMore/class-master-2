@@ -470,13 +470,13 @@
           <hr />
 
           <div class="row">
-            <div class="col-md-6 text-left">
+            <div class="col-6 text-left">
               <button type="button" class="" nbButton size="small" (click)="previousStep()">
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                 <span>prev</span>
               </button>
             </div>
-            <div class="col-md-6 text-right">
+            <div class="col-6 text-right">
               <button nbButton size="small" type="submit">
                 <span>Next</span><nb-icon icon="arrow-ios-forward-outline"></nb-icon>
               </button>
@@ -508,19 +508,23 @@
                 </tr>
                 <tr>
                   <th>Address</th>
-                  <td>{{ studentForm.value.address }}</td>
+                  <td>{{ studentForm.value.address ? studentForm.value.address : '--' }}</td>
                 </tr>
                 <tr>
                   <th>Parent Name</th>
-                  <td>{{ studentForm.value.parentName }}</td>
+                  <td>{{ studentForm.value.parentName ? studentForm.value.parentName : '--' }}</td>
                 </tr>
                 <tr>
                   <th>Parent Email</th>
-                  <td>{{ studentForm.value.parentEmail }}</td>
+                  <td>
+                    {{ studentForm.value.parentEmail ? studentForm.value.parentEmail : '--' }}
+                  </td>
                 </tr>
                 <tr>
                   <th>Parent Phone</th>
-                  <td>{{ studentForm.value.parentPhone }}</td>
+                  <td>
+                    {{ studentForm.value.parentPhone ? studentForm.value.parentPhone : '--' }}
+                  </td>
                 </tr>
                 <tr>
                   <th>Category</th>
@@ -532,7 +536,9 @@
                 </tr>
                 <tr>
                   <th>Description</th>
-                  <td>{{ branchStudentForm.value.description }}</td>
+                  <td>
+                    {{ branchStudentForm.value.description ? studentForm.value.description : '--' }}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -541,13 +547,13 @@
           <hr />
 
           <div class="row">
-            <div class="col-md-6 text-left">
+            <div class="col-6 text-left">
               <button type="button" class="" nbButton size="small" (click)="previousStep()">
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                 <span>prev</span>
               </button>
             </div>
-            <div class="col-md-6 text-right">
+            <div class="col-6 text-right">
               <button nbButton size="small" (click)="saveStudent()"><span>Submit</span></button>
             </div>
           </div>
