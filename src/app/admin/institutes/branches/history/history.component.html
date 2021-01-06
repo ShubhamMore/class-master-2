@@ -1,0 +1,96 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-12">
+        <button
+          type="button"
+          class="float-right"
+          size="small"
+          nbButton
+          status="warning"
+          (click)="back()"
+        >
+          Back
+        </button>
+        <h3>Branch Details</h3>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row" *ngIf="!loading; else loadingData">
+      <div class="col-sm-6 col-12">
+        <strong>Branch Name: </strong>{{ branch.basicDetails.branchName }}
+      </div>
+      <div class="col-sm-6 col-12">
+        <button
+          class=""
+          nbButton
+          size="small"
+          [status]="branch.status ? 'danger' : 'success'"
+          fullWidth
+          (click)="changeBranchStatus(!branch.status)"
+        >
+          {{ branch.status ? 'Deactivate' : 'Activate Now' }}
+        </button>
+      </div>
+
+      <div class="col-md-6 col-12"><strong>Email: </strong>{{ branch.basicDetails.email }}</div>
+      <div class="col-md-6 col-12"><strong>Contact: </strong>{{ branch.basicDetails.phone }}</div>
+
+      <div class="col-12"><strong>Address: </strong> {{ getAddress(branch.address) }}</div>
+      <div class="col-md-3 col-sm-5 col-12">
+        <strong>Category: </strong>
+      </div>
+      <div class="col-md-9 col-sm-7 col-12" *ngIf="branch.categories.length > 0">
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead>
+              <th>#</th>
+              <th>Category</th>
+              <th>Status</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let category of branch.categories; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ category.category }}</td>
+                <td>{{ category.status ? 'Active' : 'Inactive' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <hr />
+      <div class="col-12">
+        <h5>History:</h5>
+        <div class="table-responsive" *ngIf="history.length > 0; else noHistory">
+          <table class="table">
+            <thead>
+              <th>#</th>
+              <th>Plan Type</th>
+              <th>Amount</th>
+              <th>Activation Date</th>
+              <th>Expiry Date</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let curHistory of history; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ curHistory.planType }}</td>
+                <td>{{ curHistory.amount }}</td>
+                <td>{{ curHistory.activationDate }}</td>
+                <td>{{ curHistory.expiryDate }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #loadingData>
+  <p class="pt-5 pb-5 text-center">Loading...</p>
+</ng-template>
+
+<ng-template #noHistory>
+  <p class="pt-5 pb-5 text-center">No Branch History Available</p>
+</ng-template>

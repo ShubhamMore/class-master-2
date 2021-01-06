@@ -1,7 +1,17 @@
 <nb-card>
   <nb-card-header>
     <div class="row">
-      <div class="col-md-9 col-sm-8">
+      <div class="col-md-12">
+        <button
+          type="button"
+          class="float-right"
+          size="small"
+          nbButton
+          status="warning"
+          (click)="back()"
+        >
+          Back
+        </button>
         <h3>Membership Plans</h3>
       </div>
     </div>
@@ -9,28 +19,28 @@
   <nb-card-body>
     <div class="row" *ngIf="!loading; else loadingData">
       <div class="col-12">
-        <div class="table-responsive" *ngIf="institutes.length > 0; else noInstitutes">
+        <div class="table-responsive" *ngIf="branches.length > 0; else noBranches">
           <table class="table">
             <thead>
               <th>#</th>
               <th>Institute</th>
-              <th>IMS Master Id</th>
               <th>Contact</th>
+              <th>Status</th>
               <th>Action</th>
             </thead>
             <tbody>
-              <tr *ngFor="let institute of institutes; let i = index">
+              <tr *ngFor="let branch of branches; let i = index">
                 <td>{{ i + 1 }}</td>
-                <td>{{ institute.name | uppercase }}</td>
-                <td>{{ institute.imsMasterId }}</td>
+                <td>{{ branch.basicDetails.branchName | uppercase }}</td>
                 <td>{{ institute.phone }}</td>
+                <td>{{ branch.status ? 'Active' : 'Inactive' }}</td>
                 <td>
                   <button
                     type="button"
                     nbButton
                     size="small"
-                    status="primary"
-                    (click)="viewInstitute(institute)"
+                    status="warning"
+                    (click)="viewBranch(branch)"
                   >
                     View
                   </button>
@@ -48,6 +58,6 @@
   <p class="pt-5 pb-5 text-center">Loading...</p>
 </ng-template>
 
-<ng-template #noInstitutes>
-  <p class="pt-5 pb-5 text-center">No Institutes Available</p>
+<ng-template #noBranches>
+  <p class="pt-5 pb-5 text-center">No Branches Available</p>
 </ng-template>

@@ -1,22 +1,24 @@
-import { InstitutesComponent } from './institutes.component';
+import { BranchesComponent } from './branches.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
     path: '',
-    component: InstitutesComponent,
+    component: BranchesComponent,
   },
 
   {
-    path: 'branch',
-    loadChildren: () => import('./branches/branches.module').then((m) => m.BranchesModule),
+    path: 'history',
+    loadChildren: () => import('./history/history.module').then((m) => m.HistoryModule),
   },
 
   {
     path: 'page-not-found',
     loadChildren: () =>
-      import('../../shared/page-not-found/page-not-found.module').then((m) => m.PageNotFoundModule),
+      import('../../../shared/page-not-found/page-not-found.module').then(
+        (m) => m.PageNotFoundModule,
+      ),
   },
 
   {
@@ -30,4 +32,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class InstitutesRoutingModule {}
+export class BranchesRoutingModule {}

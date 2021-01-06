@@ -7,9 +7,9 @@
     </div>
   </nb-card-header>
   <nb-card-body>
-    <div class="row">
+    <div class="row" *ngIf="!loading; else loadingData">
       <div class="col-12">
-        <div class="table-responsive">
+        <div class="table-responsive" *ngIf="memberships.length > 0; else noMemberships">
           <table class="table">
             <thead>
               <th>#</th>
@@ -43,3 +43,11 @@
     </div>
   </nb-card-body>
 </nb-card>
+
+<ng-template #loadingData>
+  <p class="pt-5 pb-5 text-center">Loading...</p>
+</ng-template>
+
+<ng-template #noMemberships>
+  <p class="pt-5 pb-5 text-center">No Membership Plans Available</p>
+</ng-template>

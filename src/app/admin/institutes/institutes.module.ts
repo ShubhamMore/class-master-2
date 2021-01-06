@@ -1,9 +1,9 @@
 import {
-  NbIconModule,
-  NbSelectModule,
-  NbButtonModule,
-  NbInputModule,
   NbCardModule,
+  NbIconModule,
+  NbInputModule,
+  NbButtonModule,
+  NbTooltipModule,
 } from '@nebular/theme';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -18,10 +18,10 @@ import { InstitutesComponent } from './institutes.component';
     CommonModule,
     InstitutesRoutingModule,
     NbCardModule,
+    NbIconModule,
     NbInputModule,
     NbButtonModule,
-    NbSelectModule,
-    NbIconModule,
+    NbTooltipModule,
     ReactiveFormsModule,
   ],
 })
