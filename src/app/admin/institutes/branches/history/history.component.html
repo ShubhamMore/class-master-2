@@ -75,9 +75,9 @@
               <tr *ngFor="let curHistory of history; let i = index">
                 <td>{{ i + 1 }}</td>
                 <td>{{ curHistory.planType }}</td>
-                <td>{{ curHistory.amount }}</td>
-                <td>{{ curHistory.activationDate }}</td>
-                <td>{{ curHistory.expiryDate }}</td>
+                <td>{{ curHistory.amount }}/-</td>
+                <td>{{ dateService.formatDate(curHistory.activationDate) }}</td>
+                <td>{{ dateService.formatDate(curHistory.expiryDate) }}</td>
               </tr>
             </tbody>
           </table>

@@ -143,10 +143,10 @@ export class InstituteService {
     );
   }
 
-  activateInstituteBranch(branch: string, planType: string) {
+  activateInstituteBranch(branch: string, planType: string, amount: any) {
     const data = {
       api: 'activateInstituteBranch',
-      data: { branch, planType },
+      data: { branch, planType, amount },
     };
 
     return this.httpService.httpPost(data).pipe(

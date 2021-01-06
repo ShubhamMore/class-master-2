@@ -1,1 +1,53 @@
-<p>plan-type works!</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>Membership Plans</h3>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row" *ngIf="!loading; else loadingData">
+      <div class="col-12">
+        <div class="table-responsive" *ngIf="memberships.length > 0; else noMemberships">
+          <table class="table">
+            <thead>
+              <th>#</th>
+              <th>Membership Type</th>
+              <th>Duration</th>
+              <th>Price</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let membership of memberships; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ membership.name | uppercase }}</td>
+                <td>{{ membership.duration }} Month/s</td>
+                <td>{{ getAmount(membership.price) }}/-</td>
+                <td>
+                  <button
+                    type="button"
+                    nbButton
+                    size="small"
+                    status="primary"
+                    (click)="selectPlanType(membership)"
+                  >
+                    Select
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #loadingData>
+  <p class="pt-5 pb-5 text-center">Loading...</p>
+</ng-template>
+
+<ng-template #noMemberships>
+  <p class="pt-5 pb-5 text-center">No Membership Plans Available</p>
+</ng-template>

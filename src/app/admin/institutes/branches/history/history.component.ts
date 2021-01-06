@@ -1,7 +1,10 @@
+import { DateService } from './../../../../services/shared-services/date.service';
+import { MembershipPlanModel } from './../../../../models/membership-plan.model';
+import { PlanTypeComponent } from './plan-type/plan-type.component';
 import { BranchHistoryModel } from './../../../../models/branch-history.model';
 import { BranchModel, BranchAddressModel, CategoryModel } from './../../../../models/branch.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbDialogService } from '@nebular/theme';
 import { InstituteModel } from './../../../../models/institute.model';
 import { Component, OnInit } from '@angular/core';
 import { InstituteService } from '../../../services/institute.service';
@@ -21,6 +24,8 @@ export class HistoryComponent implements OnInit {
   constructor(
     private instituteService: InstituteService,
     private toastrService: NbToastrService,
+    private dialogService: NbDialogService,
+    public dateService: DateService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -74,10 +79,43 @@ export class HistoryComponent implements OnInit {
 
   changeBranchStatus(status: boolean) {
     if (status) {
-      this.activateBranch();
+      this.openPlanTypeDialog();
     } else {
       this.deactivateBranch();
     }
+  }
+
+  openPlanTypeDialog() {
+    this.dialogService
+      .open(PlanTypeComponent, {
+        context: {},
+      })
+      .onClose.subscribe(
+        (membershipPlan: MembershipPlanModel) =>
+          membershipPlan && this.activateBranch(membershipPlan),
+      );
+  }
+
+  private activateBranch(membershipPlan: MembershipPlanModel) {
+    if (!membershipPlan) {
+      this.showToastr('top right', 'danger', 'Invalid Membership Plan');
+      return;
+    }
+
+    this.loading = true;
+
+    this.instituteService
+      .activateInstituteBranch(this.branch._id, membershipPlan.name, membershipPlan.price)
+      .subscribe(
+        (res: any) => {
+          this.branch.status = true;
+          this.loading = false;
+        },
+        (error: any) => {
+          this.showToastr('top right', 'danger', error);
+          this.loading = false;
+        },
+      );
   }
 
   private deactivateBranch() {
@@ -86,23 +124,6 @@ export class HistoryComponent implements OnInit {
     this.instituteService.deactivateInstituteBranch(this.branch._id).subscribe(
       (res: any) => {
         this.branch.status = false;
-        this.loading = false;
-      },
-      (error: any) => {
-        this.showToastr('top right', 'danger', error);
-        this.loading = false;
-      },
-    );
-  }
-
-  private activateBranch() {
-    const planType = '';
-
-    this.loading = true;
-
-    this.instituteService.activateInstituteBranch(this.branch._id, planType).subscribe(
-      (res: any) => {
-        this.branch.status = true;
         this.loading = false;
       },
       (error: any) => {
