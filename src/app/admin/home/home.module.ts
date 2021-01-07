@@ -1,9 +1,9 @@
 import {
-  NbIconModule,
-  NbSelectModule,
-  NbButtonModule,
-  NbInputModule,
   NbCardModule,
+  NbInputModule,
+  NbButtonModule,
+  NbIconModule,
+  NbActionsModule,
 } from '@nebular/theme';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -18,9 +18,9 @@ import { HomeComponent } from './home.component';
     CommonModule,
     HomeRoutingModule,
     NbCardModule,
+    NbActionsModule,
     NbInputModule,
     NbButtonModule,
-    NbSelectModule,
     NbIconModule,
     ReactiveFormsModule,
   ],

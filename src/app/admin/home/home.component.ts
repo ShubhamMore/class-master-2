@@ -1,4 +1,16 @@
+import { NbToastrService } from '@nebular/theme';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AdminService } from './../services/admin.service';
 import { Component, OnInit } from '@angular/core';
+
+interface DashboardInfo {
+  activeInstitutes: number;
+  inactiveInstitutes: number;
+  activeStudents: number;
+  inactiveStudents: number;
+  activeEmployees: number;
+  inactiveEmployees: number;
+}
 
 @Component({
   selector: 'ngx-home',
@@ -6,7 +18,34 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  loading: boolean;
+  dashboardInfo: DashboardInfo;
 
-  ngOnInit(): void {}
+  constructor(
+    private adminService: AdminService,
+    private toastrService: NbToastrService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
+
+  ngOnInit(): void {
+    this.loading = true;
+    this.adminService.getAdminDashboard().subscribe(
+      (dashboardInfo: any) => {
+        this.dashboardInfo = dashboardInfo;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.showToastr('top-right', 'danger', error);
+        this.router.navigate(['./page-not-found'], { relativeTo: this.route });
+      },
+    );
+  }
+
+  private showToastr(position: any, status: any, message: string) {
+    this.toastrService.show(status, message, {
+      position,
+      status,
+    });
+  }
 }

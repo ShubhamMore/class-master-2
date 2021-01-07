@@ -1,1 +1,85 @@
-<p>home works!</p>
+<div class="row" *ngIf="!loading">
+  <div class="col-md-4 col-sm-6 col-12">
+    <nb-card status="warning">
+      <nb-card-header>
+        <h3 class="text-white"><span class="pointer">INstitutes</span></h3>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-actions size="giant" fullWidth>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.activeInstitutes }}</h4>
+                <h6>Active</h6>
+              </div>
+            </div>
+          </nb-action>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.inactiveInstitutes }}</h4>
+                <h6>Inactive</h6>
+              </div>
+            </div>
+          </nb-action>
+        </nb-actions>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-md-4 col-sm-6 col-12">
+    <nb-card status="success">
+      <nb-card-header>
+        <h3 class="text-white"><span class="pointer">Student</span></h3>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-actions size="giant" fullWidth>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.activeStudents }}</h4>
+                <h6>Active</h6>
+              </div>
+            </div>
+          </nb-action>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.inactiveStudents }}</h4>
+                <h6>Inactive</h6>
+              </div>
+            </div>
+          </nb-action>
+        </nb-actions>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-md-4 col-sm-6 col-12">
+    <nb-card status="danger">
+      <nb-card-header>
+        <h3 class="text-white"><span class="pointer">Employee</span></h3>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-actions size="giant" fullWidth>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.activeEmployees }}</h4>
+                <h6>Active</h6>
+              </div>
+            </div>
+          </nb-action>
+          <nb-action>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center">{{ dashboardInfo.inactiveEmployees }}</h4>
+                <h6>Inactive</h6>
+              </div>
+            </div>
+          </nb-action>
+        </nb-actions>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
