@@ -4,12 +4,9 @@ import { AdminService } from './../services/admin.service';
 import { Component, OnInit } from '@angular/core';
 
 interface DashboardInfo {
-  activeInstitutes: number;
-  inactiveInstitutes: number;
-  activeStudents: number;
-  inactiveStudents: number;
-  activeEmployees: number;
-  inactiveEmployees: number;
+  institutes: number;
+  students: number;
+  employees: number;
 }
 
 @Component({

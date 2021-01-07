@@ -2,84 +2,39 @@
   <div class="col-md-4 col-sm-6 col-12">
     <nb-card status="warning">
       <nb-card-header>
-        <h3 class="text-white"><span class="pointer">Institute</span></h3>
+        <h3 class="text-white">
+          <span class="float-right">
+            <i class="fa fa-university" aria-hidden="true"></i>
+          </span>
+          {{ dashboardInfo.institutes }} Institute
+        </h3>
       </nb-card-header>
-      <nb-card-body>
-        <nb-actions size="giant" fullWidth>
-          <nb-action>
-            <div class="row">
-              <div class="col-12">
-                <h4 class="text-center">{{ dashboardInfo.activeInstitutes }}</h4>
-                <h6>Active</h6>
-              </div>
-            </div>
-          </nb-action>
-          <nb-action>
-            <div class="row">
-              <div class="col-12">
-                <h4 class="text-center">{{ dashboardInfo.inactiveInstitutes }}</h4>
-                <h6>Inactive</h6>
-              </div>
-            </div>
-          </nb-action>
-        </nb-actions>
-      </nb-card-body>
     </nb-card>
   </div>
 
   <div class="col-md-4 col-sm-6 col-12">
     <nb-card status="success">
       <nb-card-header>
-        <h3 class="text-white"><span class="pointer">Student</span></h3>
+        <h3 class="text-white">
+          <span class="float-right">
+            <i class="fas fa-user-graduate" aria-hidden="true"></i>
+          </span>
+          {{ dashboardInfo.students }} Student
+        </h3>
       </nb-card-header>
-      <nb-card-body>
-        <nb-actions size="giant" fullWidth>
-          <nb-action>
-            <div class="row">
-              <div class="col-12">
-                <h4 class="text-center">{{ dashboardInfo.activeStudents }}</h4>
-                <h6>Active</h6>
-              </div>
-            </div>
-          </nb-action>
-          <nb-action>
-            <div class="row">
-              <div class="col-12">
-                <h4 class="text-center">{{ dashboardInfo.inactiveStudents }}</h4>
-                <h6>Inactive</h6>
-              </div>
-            </div>
-          </nb-action>
-        </nb-actions>
-      </nb-card-body>
     </nb-card>
   </div>
 
   <div class="col-md-4 col-sm-6 col-12">
     <nb-card status="danger">
       <nb-card-header>
-        <h3 class="text-white"><span class="pointer">Employee</span></h3>
+        <h3 class="text-white">
+          <span class="float-right">
+            <i class="fas fa-user-friends" aria-hidden="true"></i>
+          </span>
+          {{ dashboardInfo.employees }} Employee
+        </h3>
       </nb-card-header>
-      <nb-card-body>
-        <nb-actions size="giant" fullWidth>
-          <nb-action>
-            <div class="row">
-              <div class="col-12">
-                <h4 class="text-center">{{ dashboardInfo.activeEmployees }}</h4>
-                <h6>Active</h6>
-              </div>
-            </div>
-          </nb-action>
-          <nb-action>
-            <div class="row">
-              <div class="col-12">
-                <h4 class="text-center">{{ dashboardInfo.inactiveEmployees }}</h4>
-                <h6>Inactive</h6>
-              </div>
-            </div>
-          </nb-action>
-        </nb-actions>
-      </nb-card-body>
     </nb-card>
   </div>
 </div>
