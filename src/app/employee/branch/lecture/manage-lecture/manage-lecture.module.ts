@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 
 import { ManageLectureRoutingModule } from './manage-lecture-routing.module';
 import { ManageLectureComponent } from './manage-lecture.component';
+import { SafeUrlPipe } from '../../../../pipe/safe-url.pipe';
 
 @NgModule({
   declarations: [ManageLectureComponent, OnlineLectureComponent],

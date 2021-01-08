@@ -272,6 +272,6 @@ export class SaveAssignmentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.assignmentService.deleteAssignmentId();
+    // this.assignmentService.deleteAssignmentId();
   }
 }

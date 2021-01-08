@@ -268,7 +268,7 @@ export class AddSalaryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.employeeService.deleteEmployeeId();
-    this.branchEmployeeService.deleteBranchEmployeeId();
+    // this.employeeService.deleteEmployeeId();
+    // this.branchEmployeeService.deleteBranchEmployeeId();
   }
 }

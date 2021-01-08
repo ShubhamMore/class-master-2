@@ -43,7 +43,7 @@ export class LeadComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.courseService.deleteCoursesData();
-    this.leadService.deleteLeadType();
+    // this.courseService.deleteCoursesData();
+    // this.leadService.deleteLeadType();
   }
 }

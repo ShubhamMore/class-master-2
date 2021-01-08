@@ -5,7 +5,14 @@
         <h3>{{ onlineExam ? 'Edit' : 'Add' }} Online Exam Question</h3>
       </div>
       <div class="col-3">
-        <button class="float-right" nbButton size="small" status="warning" (click)="back()">
+        <button
+          class="float-right"
+          nbButton
+          size="small"
+          
+          status="warning"
+           (click)="back()"
+        >
           Back
         </button>
       </div>
@@ -78,6 +85,7 @@
                             nbButton
                             size="small"
                             status="danger"
+                            
                             (click)="deleteOption(i)"
                             *ngIf="i !== 0 && i !== 1"
                           >

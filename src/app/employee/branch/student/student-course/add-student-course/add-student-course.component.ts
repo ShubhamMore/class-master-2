@@ -12,14 +12,11 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../../services/branch.service';
-
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { StudentCourseInstallmentService } from '../../../../../services/student-course-installment.service';
 import { StudentCourseInstallmentModel } from '../../../../../models/student-course-installment.model';
 import { ObjectId } from 'bson';
 import { DiscountAndOfferService } from '../../../../../services/discount-and-offer.service';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'ngx-add-student-course',

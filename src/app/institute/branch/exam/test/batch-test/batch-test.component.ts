@@ -31,13 +31,13 @@ export class BatchTestComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.branchService.deleteCategoryId();
-    this.branchService.deleteCategoryData();
+    // this.branchService.deleteCategoryId();
+    // this.branchService.deleteCategoryData();
 
-    this.courseService.deleteCourseId();
-    this.courseService.deleteCourseData();
+    // this.courseService.deleteCourseId();
+    // this.courseService.deleteCourseData();
 
-    this.batchService.deleteBatchId();
-    this.batchService.deleteBatchData();
+    // this.batchService.deleteBatchId();
+    // this.batchService.deleteBatchData();
   }
 }

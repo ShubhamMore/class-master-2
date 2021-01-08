@@ -63,8 +63,8 @@ export class LectureComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.courseService.deleteCoursesData();
-    this.batchService.deleteBatchesData();
-    this.lectureService.setSearchDate(null);
+    // this.courseService.deleteCoursesData();
+    // this.batchService.deleteBatchesData();
+    // this.lectureService.setSearchDate(null);
   }
 }

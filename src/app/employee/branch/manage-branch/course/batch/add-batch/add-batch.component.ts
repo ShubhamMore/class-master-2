@@ -41,7 +41,6 @@ export class AddBatchComponent implements OnInit, OnDestroy {
     private batchService: BatchService,
     private courseService: CourseService,
     private toastrService: NbToastrService,
-
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -332,6 +331,6 @@ export class AddBatchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.batchService.deleteBatchId();
+    // this.batchService.deleteBatchId();
   }
 }

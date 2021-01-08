@@ -74,6 +74,6 @@ export class CourseInstallmentReceiptComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.studentCourseInstallmentReceiptService.deleteStudentCourseInstallmentReceiptId();
+    // this.studentCourseInstallmentReceiptService.deleteStudentCourseInstallmentReceiptId();
   }
 }

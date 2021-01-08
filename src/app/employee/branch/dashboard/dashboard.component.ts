@@ -1,5 +1,4 @@
-import { LectureService } from './../../../services/lecture.service';
-import { RoleService } from './../../../services/role.service';
+import { MenuService } from './../../menu.service';
 import { BranchStorageModel } from '../../../models/branch-storage.model';
 import { StorageService } from './../../../services/shared-services/storage.service';
 import { BudgetService } from './../../../services/budget.service';
@@ -51,13 +50,8 @@ export class DashboardComponent implements OnInit {
   availableStorage: string;
   usedStorageInPercentage: number;
 
-  upcomingLectures: any[];
-
-  role: string;
-
   constructor(
     private branchService: BranchService,
-    private lectureService: LectureService,
     private dashboardService: DashboardService,
     private toastrService: NbToastrService,
     private storageService: StorageService,
@@ -65,8 +59,8 @@ export class DashboardComponent implements OnInit {
     private route: ActivatedRoute,
     public dateService: DateService,
     public budgetService: BudgetService,
+    private menuService: MenuService,
     private themeService: NbThemeService,
-    private roleService: RoleService,
   ) {}
 
   ngOnInit(): void {
@@ -76,19 +70,10 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
-
-    this.roleService.getEmployeeRole().subscribe((role: string) => {
-      this.role = role;
-    });
-
     this.currentYear = +this.dateService.getCurrentYear();
     this.year = +this.dateService.getCurrentYear();
-
-    this.upcomingLectures = [];
-
     this.getDashboardData();
     this.getBudgetData();
-    this.getUpcomingLectures();
 
     this.themeSubscription = this.themeService.getJsTheme().subscribe((config: any) => {
       this.colors = config.variables;
@@ -130,17 +115,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getUpcomingLectures() {
-    this.lectureService.getUpcomingLecturesForEmployee(this.branchId).subscribe(
-      (upcomingLectures: any[]) => {
-        this.upcomingLectures = upcomingLectures;
-      },
-      (error: any) => {
-        this.showToastr('top-right', 'danger', error);
-      },
-    );
-  }
-
   calculateStorage(branchStorage: BranchStorageModel) {
     const totalStorage: any = this.storageService.convertByteToUnit(
       branchStorage.totalStorageAssigned,
@@ -162,17 +136,16 @@ export class DashboardComponent implements OnInit {
   }
 
   getDashboardData() {
-    this.dashboardService.getBranchDashboardForEmployee(this.branchId).subscribe(
+    this.dashboardService.getBranchDashboard(this.branchId).subscribe(
       (dashboardInfo: DashboardInfo) => {
         this.dashboardInfo = dashboardInfo;
-        if (dashboardInfo && dashboardInfo.branchStorage) {
-          this.calculateStorage(dashboardInfo.branchStorage);
-        }
+        this.calculateStorage(dashboardInfo.branchStorage);
+        this.menuService.showMenu();
         this.loading = false;
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-        this.loading = false;
+        this.router.navigate(['../../'], { relativeTo: this.route });
       },
     );
   }
@@ -289,10 +262,6 @@ export class DashboardComponent implements OnInit {
         },
       ],
     };
-  }
-
-  getTime(startTime: string, endTime: string) {
-    return this.dateService.formatTime(startTime) + ' - ' + this.dateService.formatTime(endTime);
   }
 
   private showToastr(position: any, status: any, message: string) {

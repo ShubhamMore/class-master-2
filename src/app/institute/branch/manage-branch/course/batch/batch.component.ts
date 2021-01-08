@@ -39,7 +39,7 @@ export class BatchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.courseService.deleteCourseId();
-    this.courseService.deleteCourseData();
+    // this.courseService.deleteCourseId();
+    // this.courseService.deleteCourseData();
   }
 }

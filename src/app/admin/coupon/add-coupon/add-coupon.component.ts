@@ -158,6 +158,6 @@ export class AddCouponComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.couponService.deleteCouponData();
+    // this.couponService.deleteCouponData();
   }
 }

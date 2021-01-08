@@ -1,6 +1,5 @@
 import { ExamService } from './../../../../../../services/exam.service';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
-import { Subject } from 'rxjs';
 import { BatchService } from './../../../../../../services/batch.service';
 import { CourseService } from './../../../../../../services/course.service';
 import { BatchModel } from './../../../../../../models/batch.model';
@@ -204,7 +203,7 @@ export class AddTestComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.examService.deleteExamId();
-    this.examService.deleteExamData();
+    // this.examService.deleteExamId();
+    // this.examService.deleteExamData();
   }
 }

@@ -29,6 +29,6 @@ export class StudentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.studentService.deleteStudentType();
+    // this.studentService.deleteStudentType();
   }
 }

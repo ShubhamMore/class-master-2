@@ -375,6 +375,6 @@ export class AddCourseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.courseService.deleteCourseId();
+    // this.courseService.deleteCourseId();
   }
 }

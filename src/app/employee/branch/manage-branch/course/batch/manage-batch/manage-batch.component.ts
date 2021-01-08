@@ -1,3 +1,4 @@
+import { DateService } from './../../../../../../services/shared-services/date.service';
 import { CourseModel } from './../../../../../../models/course.model';
 import { CourseService } from './../../../../../../services/course.service';
 import { BatchService } from './../../../../../../services/batch.service';
@@ -22,6 +23,7 @@ export class ManageBatchComponent implements OnInit {
     private branchService: BranchService,
     private courseService: CourseService,
     private batchService: BatchService,
+    public dateService: DateService,
     private toastrService: NbToastrService,
     private router: Router,
     private route: ActivatedRoute,

@@ -31,9 +31,9 @@ export class OnlineTestQuestionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.onlineExamQuestionService.deleteOnlineExamQuestionId();
-    this.onlineExamQuestionService.deleteOnlineExamQuestionData();
-    this.onlineExamService.deleteOnlineExamId();
-    this.onlineExamService.deleteOnlineExamData();
+    // this.onlineExamQuestionService.deleteOnlineExamQuestionId();
+    // this.onlineExamQuestionService.deleteOnlineExamQuestionData();
+    // this.onlineExamService.deleteOnlineExamId();
+    // this.onlineExamService.deleteOnlineExamData();
   }
 }

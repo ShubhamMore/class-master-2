@@ -79,8 +79,8 @@ export class OnlineTestComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.courseService.deleteCourseData();
-    this.batchService.deleteBatchData();
-    this.subjectService.deleteSubjectsData();
+    // this.courseService.deleteCourseData();
+    // this.batchService.deleteBatchData();
+    // this.subjectService.deleteSubjectsData();
   }
 }

@@ -343,7 +343,7 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.employeeService.deleteEmployeeId();
-    this.branchEmployeeService.deleteBranchEmployeeId();
+    // this.employeeService.deleteEmployeeId();
+    // this.branchEmployeeService.deleteBranchEmployeeId();
   }
 }

@@ -25,14 +25,14 @@
                   <th>#</th>
                   <th>Batch</th>
                   <th>Start Date</th>
-                  <th>Action</th>
+                  <th colspan="2">Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let batch of batches; let i = index">
                   <td>{{ i + 1 }}</td>
                   <td>{{ batch.basicDetails.batchName }}</td>
-                  <td>{{ batch.basicDetails.startDate }}</td>
+                  <td>{{ dateService.formatDate(batch.basicDetails.startDate) }}</td>
                   <td>
                     <button
                       class="mr-3"
@@ -43,6 +43,8 @@
                     >
                       Edit
                     </button>
+                  </td>
+                  <td>
                     <button
                       class=""
                       nbButton

@@ -29,6 +29,6 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.employeeService.deleteEmployeeType();
+    // this.employeeService.deleteEmployeeType();
   }
 }

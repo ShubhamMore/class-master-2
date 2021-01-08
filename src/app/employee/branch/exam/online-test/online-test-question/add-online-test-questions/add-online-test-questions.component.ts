@@ -61,11 +61,9 @@ export class AddOnlineTestQuestionsComponent implements OnInit, OnDestroy {
 
       if (mode && mode !== 'edit') {
         this.showToastr('top-right', 'danger', 'Invalid Route');
-        // this.router.navigate(['../page-not-found'], { relativeTo: this.route });
         return;
       } else if (mode && !this.onlineExamQuestionId) {
         this.showToastr('top-right', 'danger', 'Online Exam Question Not Found');
-        // this.router.navigate(['../page-not-found'], { relativeTo: this.route });
         return;
       }
 
@@ -221,7 +219,7 @@ export class AddOnlineTestQuestionsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.onlineExamQuestionService.deleteOnlineExamQuestionId();
-    this.onlineExamQuestionService.deleteOnlineExamQuestionData();
+    // this.onlineExamQuestionService.deleteOnlineExamQuestionId();
+    // this.onlineExamQuestionService.deleteOnlineExamQuestionData();
   }
 }

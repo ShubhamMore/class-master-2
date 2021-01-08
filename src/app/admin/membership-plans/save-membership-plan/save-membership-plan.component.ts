@@ -87,6 +87,6 @@ export class SaveMembershipPlanComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.membershipService.setMembershipPlan(null);
+    // this.membershipService.setMembershipPlan(null);
   }
 }

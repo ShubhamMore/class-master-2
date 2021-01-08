@@ -77,7 +77,6 @@ export class AddStudyMaterialComponent implements OnInit {
     }
     this.fileInput.nativeElement.value = '';
   }
-
   saveLectureMaterial() {
     if (this.uploadLectureMaterials.length < 1) {
       this.showToastr('top-right', 'danger', 'Select at least 1 Lecture material File');

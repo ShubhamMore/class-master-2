@@ -44,8 +44,8 @@ export class BatchScheduleComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.branchService.deleteCategoryId();
-    this.branchService.deleteCategoryData();
+    // this.branchService.deleteCategoryId();
+    // this.branchService.deleteCategoryData();
 
     this.courseService.deleteCourseId();
     this.courseService.deleteCourseData();
