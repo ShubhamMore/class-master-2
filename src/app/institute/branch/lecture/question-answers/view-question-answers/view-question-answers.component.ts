@@ -93,7 +93,9 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
     );
   }
 
-  addQuestionAnswer() {
+  addQuestionAnswer(lectureQuestion: LectureQuestionModel) {
+    this.questionAnswersService.setQuestionId(lectureQuestion._id);
+    this.questionAnswersService.setQuestion(lectureQuestion);
     this.openAnswerDialog();
   }
 

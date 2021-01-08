@@ -207,7 +207,8 @@
                     "
                   />
                   <button
-                    nbSuffixnbButton
+                    nbSuffix
+                    nbButton
                     size="small"
                     ghost
                     (click)="deleteSubject()"
@@ -433,7 +434,7 @@
                 </tr>
                 <tr>
                   <th>Course Duration</th>
-                  <td>{{ courseBasicDetailsForm.value.duration }}</td>
+                  <td>{{ courseBasicDetailsForm.value.duration }} Month/s</td>
                 </tr>
                 <tr>
                   <th>Category</th>
@@ -441,7 +442,13 @@
                 </tr>
                 <tr>
                   <th>Description</th>
-                  <td>{{ courseBasicDetailsForm.value.description }}</td>
+                  <td>
+                    {{
+                      courseBasicDetailsForm.value.description
+                        ? courseBasicDetailsForm.value.description
+                        : '--'
+                    }}
+                  </td>
                 </tr>
                 <tr>
                   <th>Subjects</th>

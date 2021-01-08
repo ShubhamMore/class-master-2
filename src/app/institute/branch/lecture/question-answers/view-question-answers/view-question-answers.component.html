@@ -35,7 +35,7 @@
                     nbButton
                     size="small"
                     status="success"
-                    (click)="addQuestionAnswer()"
+                    (click)="addQuestionAnswer(lectureQuestion)"
                   >
                     Answer
                   </button>
@@ -114,9 +114,7 @@
       </div>
 
       <ng-template #noAnswers>
-        <p class="pt-5 pb-5 text-center">
-          You are first to Answer this Question..
-        </p>
+        <p class="pt-5 pb-5 text-center">You are first to Answer this Question..</p>
       </ng-template>
     </ng-container>
     <ng-template #loadingData>
