@@ -14,6 +14,9 @@
     "comment-format": [true, "check-space"],
     "eofline": true,
     "forin": true,
+    "deprecation": {
+      "severity": "warning"
+    },
     "import-blacklist": [true],
     "import-spacing": true,
     "indent": [true, "spaces"],
@@ -37,7 +40,6 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
-    "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
@@ -85,7 +87,6 @@
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
-    "directive-class-suffix": true,
-    "no-unused-variable": true
+    "directive-class-suffix": true
   }
 }
