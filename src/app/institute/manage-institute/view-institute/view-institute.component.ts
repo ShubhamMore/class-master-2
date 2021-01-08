@@ -53,6 +53,6 @@ export class ViewInstituteComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.branchService.deleteBranchId();
+    this.branchService.deleteBranchId();
   }
 }

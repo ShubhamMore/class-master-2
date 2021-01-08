@@ -140,7 +140,7 @@ export class DashboardComponent implements OnInit {
       (dashboardInfo: DashboardInfo) => {
         this.dashboardInfo = dashboardInfo;
         this.calculateStorage(dashboardInfo.branchStorage);
-        this.menuService.showMenu();
+        this.menuService.showMenus();
         this.loading = false;
       },
       (error: any) => {

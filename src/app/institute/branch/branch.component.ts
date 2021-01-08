@@ -53,7 +53,7 @@ export class BranchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.branchService.deleteBranchId();
-    // this.branchService.deleteBranchData();
+    this.branchService.deleteBranchId();
+    this.branchService.deleteBranchData();
   }
 }

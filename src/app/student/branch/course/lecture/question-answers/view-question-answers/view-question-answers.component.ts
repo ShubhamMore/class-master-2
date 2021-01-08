@@ -192,7 +192,7 @@ export class ViewQuestionAnswersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.questionAnswersService.deleteQuestionAnswersId();
-    // this.questionAnswersService.deleteQuestionAnswers();
+    this.questionAnswersService.deleteQuestionAnswersId();
+    this.questionAnswersService.deleteQuestionAnswers();
   }
 }

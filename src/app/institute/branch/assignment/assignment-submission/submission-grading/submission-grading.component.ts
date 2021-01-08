@@ -118,6 +118,6 @@ export class SubmissionGradingComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.assignmentSubmissionService.deleteAssignmentSubmissionData();
+    this.assignmentSubmissionService.deleteAssignmentSubmissionData();
   }
 }

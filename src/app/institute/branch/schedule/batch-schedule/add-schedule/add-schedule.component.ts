@@ -404,8 +404,8 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.scheduleService.deleteScheduleId();
-    // this.scheduleService.deleteScheduleDay();
-    // this.scheduleService.deleteScheduleData();
+    this.scheduleService.deleteScheduleId();
+    this.scheduleService.deleteScheduleDay();
+    this.scheduleService.deleteScheduleData();
   }
 }

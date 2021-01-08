@@ -219,6 +219,6 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.discountAndOfferService.deleteDiscountAndOfferId();
+    this.discountAndOfferService.deleteDiscountAndOfferId();
   }
 }

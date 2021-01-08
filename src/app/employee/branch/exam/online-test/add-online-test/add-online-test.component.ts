@@ -236,7 +236,7 @@ export class AddOnlineTestComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.onlineExamService.deleteOnlineExamId();
-    // this.onlineExamService.deleteOnlineExamData();
+    this.onlineExamService.deleteOnlineExamId();
+    this.onlineExamService.deleteOnlineExamData();
   }
 }

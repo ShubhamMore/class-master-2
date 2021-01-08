@@ -65,9 +65,9 @@ export class AssignmentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.courseService.deleteCourseData();
-    // this.batchService.deleteBatchData();
-    // this.subjectService.deleteSubjectsData();
-    // this.lectureService.setSearchDate(null);
+    this.courseService.deleteCourseData();
+    this.batchService.deleteBatchData();
+    this.subjectService.deleteSubjectsData();
+    this.lectureService.setSearchDate(null);
   }
 }

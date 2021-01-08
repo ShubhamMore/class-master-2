@@ -55,7 +55,7 @@ export class ViewStudyMaterialComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.lectureMaterialService.deleteLectureMaterialId();
-    // this.lectureMaterialService.deleteLectureMaterialData();
+    this.lectureMaterialService.deleteLectureMaterialId();
+    this.lectureMaterialService.deleteLectureMaterialData();
   }
 }

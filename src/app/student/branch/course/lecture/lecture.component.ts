@@ -33,7 +33,7 @@ export class LectureComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.lectureService.setSearchDate(null);
-    // this.studentCourseService.deleteStudentCourseData();
+    this.lectureService.setSearchDate(null);
+    this.studentCourseService.deleteStudentCourseData();
   }
 }

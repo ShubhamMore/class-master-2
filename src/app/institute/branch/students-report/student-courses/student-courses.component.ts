@@ -102,11 +102,11 @@ export class StudentCoursesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.branchService.deleteCategoryId();
-    // this.studentService.deleteStudentId();
-    // this.studentService.deleteStudentData();
-    // this.courseService.deleteCoursesData();
-    // this.batchService.deleteBatchesData();
-    // this.discountAndOfferService.deleteDiscountAndOffersData();
+    this.branchService.deleteCategoryId();
+    this.studentService.deleteStudentId();
+    this.studentService.deleteStudentData();
+    this.courseService.deleteCoursesData();
+    this.batchService.deleteBatchesData();
+    this.discountAndOfferService.deleteDiscountAndOffersData();
   }
 }

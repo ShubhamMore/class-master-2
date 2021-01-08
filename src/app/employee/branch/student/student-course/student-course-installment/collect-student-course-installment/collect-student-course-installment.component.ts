@@ -257,7 +257,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
   }
 
   ngOnDestroy() {
-    // this.studentCourseInstallmentReceiptService.deleteStudentCourseInstallmentReceiptId();
-    // this.studentCourseInstallmentService.deleteCourseInstallmentId();
+    this.studentCourseInstallmentReceiptService.deleteStudentCourseInstallmentReceiptId();
+    this.studentCourseInstallmentService.deleteCourseInstallmentId();
   }
 }

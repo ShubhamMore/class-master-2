@@ -40,7 +40,7 @@ export class CourseMaterialComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.courseService.deleteCourseId();
-    // this.courseService.deleteCourseData();
+    this.courseService.deleteCourseId();
+    this.courseService.deleteCourseData();
   }
 }

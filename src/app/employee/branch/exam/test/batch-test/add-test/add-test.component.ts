@@ -203,7 +203,7 @@ export class AddTestComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.examService.deleteExamId();
-    // this.examService.deleteExamData();
+    this.examService.deleteExamId();
+    this.examService.deleteExamData();
   }
 }

@@ -77,8 +77,8 @@ export class StudentCourseInstallmentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.courseService.deleteCourseId();
-    // this.studentCourseInstallmentService.deleteStudentCourseInstallmentId();
-    // this.studentCourseInstallmentService.deleteStudentCourseInstallmentData();
+    this.courseService.deleteCourseId();
+    this.studentCourseInstallmentService.deleteStudentCourseInstallmentId();
+    this.studentCourseInstallmentService.deleteStudentCourseInstallmentData();
   }
 }

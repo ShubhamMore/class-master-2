@@ -404,7 +404,7 @@ export class AddStudentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.studentService.deleteStudentId();
-    // this.branchStudentService.deleteBranchStudentId();
+    this.studentService.deleteStudentId();
+    this.branchStudentService.deleteBranchStudentId();
   }
 }
