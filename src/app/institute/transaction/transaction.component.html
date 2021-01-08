@@ -20,7 +20,7 @@
               <td>{{ i + 1 }}</td>
               <td>{{ transaction.order_id }}</td>
               <td>
-                {{ transaction.createdAt }}
+                {{ dateService.formatDate(dateService.convertToDateString(transaction.createdAt)) }}
               </td>
               <td>{{ transaction.amount }}</td>
               <td>

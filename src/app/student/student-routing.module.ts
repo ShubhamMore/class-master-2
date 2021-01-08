@@ -15,13 +15,6 @@ const routes: Routes = [
       },
 
       {
-        path: 'transaction',
-        loadChildren: () =>
-          import('./transaction/transaction.module').then((m) => m.TransactionModule),
-        canActivate: [],
-      },
-
-      {
         path: 'home',
         loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
         canActivate: [],

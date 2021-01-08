@@ -3,6 +3,7 @@ import { NbToastrService } from '@nebular/theme';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InstituteTransactionModel } from './../../../models/institute-transaction.model';
 import { TransactionService } from './../../../services/transaction.service';
+import { environment } from './../../../../environments/environment';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
@@ -13,7 +14,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class ViewTransactionComponent implements OnInit, OnDestroy {
   loading: boolean;
   transaction: InstituteTransactionModel;
-
+  address: string;
   constructor(
     private transactionService: TransactionService,
     private router: Router,
@@ -24,6 +25,9 @@ export class ViewTransactionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+
+    this.address = environment.address;
+
     this.transactionService
       .getInstituteTransactionData()
       .subscribe((transaction: InstituteTransactionModel) => {

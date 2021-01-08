@@ -11,6 +11,7 @@
 export const environment = {
   production: false,
   backend: 'http://localhost:3000/',
+  address: 'Thane, Thane - 400605',
   encKey: 'b417cf7714f5c803ac31ea7ea4ee3a11',
   aesKey: 'b417cf7714f5c803ac31ea7ea4ee3a11',
   razorpayKeyId: 'rzp_test_1JFxmyJ8eg8wQZ',
