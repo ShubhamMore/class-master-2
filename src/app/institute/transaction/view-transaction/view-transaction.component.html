@@ -27,11 +27,9 @@
               </div>
             </div>
             <div class="col-12">
-              <div class="text-cener pt-2">
-                <h6>
-                  {{ address }}
-                </h6>
-              </div>
+              <h6 class="text-center pt-2">
+                {{ address }}
+              </h6>
             </div>
           </div>
           <hr />
@@ -48,7 +46,10 @@
             <div class="col-md-6 col-10 mx-auto">
               <!-- <strong>Branch City: </strong>{{ transaction.branchAddress.city }} -->
             </div>
-            <div class="col-10 mx-auto"><strong>Date: </strong>{{ transaction.createdAt }}</div>
+            <div class="col-10 mx-auto">
+              <strong>Date: </strong>
+              {{ dateService.formatDate(dateService.convertToDateString(transaction.createdAt)) }}
+            </div>
           </div>
 
           <div class="row">
