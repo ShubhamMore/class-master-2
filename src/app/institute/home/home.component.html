@@ -2,8 +2,7 @@
   <div class="col-md-10 col-12 mx-auto text-center">
     <nb-card>
       <nb-card-body>
-        <img src="" alt="Institute" />
-        <br />
+        <h1><i class="fa fa-university" aria-hidden="true"></i></h1>
         <h2>No Institute Added</h2>
         <br />
         <button nbButton size="small" status="primary" routerLink="../membership-plans">
@@ -69,7 +68,7 @@
 <div class="row" *ngIf="branches.length > 0">
   <div class="col-md-3 col-sm-4 col-12" *ngFor="let branch of branches">
     <nb-card class="shadow-sm">
-      <nb-card-header style="position: relative;">
+      <nb-card-header style="position: relative">
         <nb-badge
           [text]="branch.status ? 'Active' : 'Inactive'"
           [status]="branch.status ? 'success' : 'danger'"

@@ -14,6 +14,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'material',
+        loadChildren: () =>
+          import('./course-material/course-material.module').then((m) => m.CourseMaterialModule),
+      },
+
+      {
         path: 'installment',
         loadChildren: () =>
           import('./course-installment/course-installment.module').then(

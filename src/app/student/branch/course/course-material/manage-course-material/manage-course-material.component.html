@@ -1,0 +1,79 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-12">
+        <button class="float-right" nbButton size="small" status="warning" (click)="back()">
+          Back
+        </button>
+        <h3>Course Material</h3>
+      </div>
+    </div>
+  </nb-card-header>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-4"></div>
+
+      <div class="col-md-3 col-sm-4">
+        <nb-select
+          id="select-subject"
+          name="subject"
+          [selected]="subject"
+          fullWidth
+          placeholder="All Subjects"
+          (selectedChange)="onSelectSubject($event)"
+        >
+          <nb-option value="">All Subjects</nb-option>
+          <nb-option *ngFor="let subject of subjects" [value]="subject._id">{{
+            subject.subject
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="body-container">
+    <div class="row">
+      <div class="col-md-12">
+        <ng-container *ngIf="!loading; else loadingData">
+          <div class="table-responsive" *ngIf="courseMaterials.length > 0; else noCourseMaterials">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Subject</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let courseMaterial of courseMaterials; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ courseMaterial.title }}</td>
+                  <td>{{ getSubject(courseMaterial.subject) }}</td>
+                  <td>
+                    <button
+                      nbButton
+                      size="small"
+                      status="info"
+                      (click)="viewCourseMaterial(courseMaterial)"
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noCourseMaterials>
+            <p class="text-center pt-5 pb-5">No Course Material Available</p>
+          </ng-template>
+        </ng-container>
+        <ng-template #loadingData>
+          <p class="text-center pt-5 pb-5">Loading...</p>
+        </ng-template>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

@@ -91,6 +91,14 @@ export class ManageCourseComponent implements OnInit, OnDestroy {
     }
   }
 
+  courseMaterial(studentCourse: StudentCourseModel) {
+    if (this.type === 'course') {
+      this.studentCourseService.setStudentCourseId(studentCourse._id);
+      this.studentCourseService.setStudentCourseData(studentCourse);
+      this.router.navigate(['../material'], { relativeTo: this.route });
+    }
+  }
+
   courseInstallments(studentCourse: StudentCourseModel) {
     if (this.type === 'course') {
       this.courseService.setCourseId(studentCourse.course);

@@ -22,6 +22,7 @@
                   <th>Batch</th>
                   <th>Roll Number</th>
                   <th>Activation date</th>
+                  <th *ngIf="type === 'course'">Course Material</th>
                   <th *ngIf="type === 'course'">Installments</th>
                   <th *ngIf="type === 'report'">Attendance</th>
                   <th *ngIf="type === 'report'">Performance</th>
@@ -38,6 +39,17 @@
                   <td>{{ studentCourse.batchName }}</td>
                   <td>{{ studentCourse.rollNumber }}</td>
                   <td>{{ dateService.formatDate(studentCourse.activationDate) }}</td>
+
+                  <td *ngIf="type === 'course'">
+                    <button
+                      nbButton
+                      size="small"
+                      status="success"
+                      (click)="courseMaterial(studentCourse)"
+                    >
+                      Course Material
+                    </button>
+                  </td>
 
                   <td *ngIf="type === 'course'">
                     <button
