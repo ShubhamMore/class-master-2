@@ -20,16 +20,26 @@
               </thead>
               <tbody>
                 <tr class="p-2">
-                  <td>{{ studentCourseInstallmentReceipt.description }}</td>
-                  <td>{{ studentCourseInstallmentReceipt.amount }}.00/-</td>
+                  <td>
+                    {{
+                      studentCourseInstallmentReceipt.description
+                        ? studentCourseInstallmentReceipt.description
+                        : course.basicDetails.courseName
+                    }}
+                  </td>
+                  <td>{{ amount }}/-</td>
+                </tr>
+                <tr class="p-2" *ngIf="instituteBilling.gstNumber">
+                  <td>GST {{ course.feeDetails.gst }}%</td>
+                  <td>{{ gstAmount }}/-</td>
                 </tr>
                 <tr class="p-2" *ngIf="studentCourseInstallmentReceipt.lateFee > 0">
                   <td>Late Fee</td>
-                  <td>{{ studentCourseInstallmentReceipt.lateFee }}.00/-</td>
+                  <td>{{ lateFee }}/-</td>
                 </tr>
                 <tr class="p-2">
                   <td><strong>Total</strong></td>
-                  <td>{{ studentCourseInstallmentReceipt.totalAmount }}.00/-</td>
+                  <td>{{ totalAmount }}/-</td>
                 </tr>
               </tbody>
             </table>

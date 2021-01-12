@@ -65,17 +65,17 @@
                   <tbody>
                     <tr>
                       <td>{{ transaction.packageType }}&nbsp;{{ transaction.planType }}</td>
-                      <td>{{ transaction.amount }}</td>
+                      <td>{{ amount }}/-</td>
                     </tr>
                     <tr>
                       <td>GST 18%</td>
-                      <td>0</td>
+                      <td>{{ gstAmount }}/-</td>
                     </tr>
                   </tbody>
                   <tfoot>
                     <tr>
                       <th>Total:</th>
-                      <th>{{ transaction.amount }}</th>
+                      <th>{{ totalAmount }}/-</th>
                     </tr>
                   </tfoot>
                 </table>
@@ -100,7 +100,5 @@
 </nb-card>
 
 <ng-template #loadingData>
-  <p class="pt-5 pb-5 text-center">
-    Loading...
-  </p>
+  <p class="pt-5 pb-5 text-center">Loading...</p>
 </ng-template>

@@ -1,3 +1,4 @@
+import { CourseModel } from './../../../../../models/course.model';
 import { NbToastrService } from '@nebular/theme';
 import { StudentCourseInstallmentReceiptService } from './../../../../../services/student-course-installment-receipt.service';
 import { InstituteBillingModel } from './../../../../../models/institute-billing.model';
@@ -17,8 +18,13 @@ export class CourseInstallmentReceiptComponent implements OnInit, OnDestroy {
   private studentCourseInstallmentReceiptId: string;
   studentCourseInstallmentReceipt: StudentCourseInstallmentReceiptModel;
   instituteBilling: InstituteBillingModel;
-
+  course: CourseModel;
   loading: boolean;
+
+  amount: string;
+  gstAmount: string;
+  lateFee: string;
+  totalAmount: string;
 
   constructor(
     private branchService: BranchService,
@@ -38,7 +44,6 @@ export class CourseInstallmentReceiptComponent implements OnInit, OnDestroy {
     if (!this.branchId || !this.studentCourseInstallmentReceiptId) {
       this.showToastr('top-right', 'danger', 'Invalid Receipt');
       this.router.navigate(['../'], { relativeTo: this.route });
-
       return;
     }
 
@@ -48,9 +53,27 @@ export class CourseInstallmentReceiptComponent implements OnInit, OnDestroy {
         (res: {
           studentCourseInstallmentReceipt: StudentCourseInstallmentReceiptModel;
           instituteBilling: InstituteBillingModel;
+          course: CourseModel;
         }) => {
           this.studentCourseInstallmentReceipt = res.studentCourseInstallmentReceipt;
           this.instituteBilling = res.instituteBilling;
+          this.course = res.course;
+
+          if (!res.instituteBilling.gstNumber) {
+            this.amount = res.studentCourseInstallmentReceipt.amount.toFixed(2);
+          } else {
+            const courseAmount = +res.studentCourseInstallmentReceipt.amount;
+            const gstPercentage = +res.course.feeDetails.gst;
+
+            const gstAmount = courseAmount * (gstPercentage / 100);
+            const amount = courseAmount - gstAmount;
+
+            this.gstAmount = gstAmount.toFixed(2);
+            this.amount = amount.toFixed(2);
+          }
+          this.lateFee = res.studentCourseInstallmentReceipt.lateFee.toFixed(2);
+          this.totalAmount = res.studentCourseInstallmentReceipt.totalAmount.toFixed(2);
+
           this.loading = false;
         },
         (err: any) => {

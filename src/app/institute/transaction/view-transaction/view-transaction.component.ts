@@ -15,6 +15,11 @@ export class ViewTransactionComponent implements OnInit, OnDestroy {
   loading: boolean;
   transaction: InstituteTransactionModel;
   address: string;
+
+  amount: string;
+  gstAmount: string;
+  totalAmount: string;
+
   constructor(
     private transactionService: TransactionService,
     private router: Router,
@@ -35,8 +40,18 @@ export class ViewTransactionComponent implements OnInit, OnDestroy {
           this.showToastr('top-right', 'danger', 'Transaction Not Available');
           this.back();
         }
-
         this.transaction = transaction;
+
+        const receiptAmount = +transaction.amount;
+
+        const gstAmount = receiptAmount * 0.18;
+        const amount = receiptAmount - gstAmount;
+
+        this.gstAmount = gstAmount.toFixed(2);
+        this.amount = amount.toFixed(2);
+
+        this.totalAmount = receiptAmount.toFixed(2);
+
         this.loading = false;
       });
   }
