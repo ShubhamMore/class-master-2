@@ -246,12 +246,8 @@
                           : 'basic'
                       "
                     >
-                      <nb-option value="classroom">
-                        Class Room
-                      </nb-option>
-                      <nb-option value="online">
-                        Online
-                      </nb-option>
+                      <nb-option value="classroom"> Class Room </nb-option>
+                      <nb-option value="online"> Online </nb-option>
                     </nb-select>
                     <ng-container
                       *ngIf="
@@ -518,13 +514,29 @@
 
               <div class="row">
                 <div class="col-sm-6 text-left">
-                  <button type="button" class="" nbButton size="small" (click)="previousStep()">
+                  <button
+                    type="button"
+                    class=""
+                    nbButton
+                    size="small"
+                    (click)="previousStep()"
+                    [disabled]="submit"
+                  >
                     <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                     <span>prev</span>
                   </button>
                 </div>
                 <div class="col-sm-6 text-right">
-                  <button type="button" nbButton size="small" (click)="saveSchedule()">
+                  <button
+                    type="button"
+                    nbButton
+                    size="small"
+                    (click)="saveSchedule()"
+                    [disabled]="submit"
+                    [nbSpinner]="submit"
+                    nbSpinnerStatus="primary"
+                    nbSpinnerSize="small"
+                  >
                     <span>Submit</span>
                   </button>
                 </div>

@@ -24,6 +24,8 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
+  submit: boolean;
+
   branchId: string;
   category: CategoryModel;
   course: CourseModel;
@@ -64,6 +66,8 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
+
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
@@ -331,7 +335,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.loading = true;
+    this.submit = true;
 
     if (!this.schedule) {
       this.scheduleService.addSchedule(this.repeatSchedules).subscribe(
@@ -341,7 +345,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else {
@@ -355,7 +359,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     }

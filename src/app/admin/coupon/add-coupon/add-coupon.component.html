@@ -1,6 +1,8 @@
 <nb-card class="coupon-box">
   <nb-card-header>
-    <nb-icon class="float-right pointer" icon="close-outline" (click)="onClose()"></nb-icon>
+    <button class="float-right" nbButton size="small" status="basic" (click)="onClose()">
+      <nb-icon icon="close-outline"></nb-icon>
+    </button>
     <h3 class="">
       {{ !coupon ? 'Add New Coupon' : 'Edit Coupon ' + (coupon.code | uppercase) }}
     </h3>
@@ -222,13 +224,23 @@
 
           <div class="row">
             <div class="col-6 text-left">
-              <button class="" nbButton size="small" nbStepperPrevious>
+              <button class="" nbButton size="small" nbStepperPrevious [disabled]="submit">
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                 <span>prev</span>
               </button>
             </div>
             <div class="col-6 text-right">
-              <button nbButton size="small" (click)="saveCoupon()"><span>Submit</span></button>
+              <button
+                nbButton
+                size="small"
+                (click)="saveCoupon()"
+                [disabled]="submit"
+                [nbSpinner]="submit"
+                nbSpinnerStatus="primary"
+                nbSpinnerSize="small"
+              >
+                <span>Submit</span>
+              </button>
             </div>
           </div>
         </div>

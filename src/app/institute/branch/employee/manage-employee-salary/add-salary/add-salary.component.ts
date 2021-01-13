@@ -20,6 +20,8 @@ export class AddSalaryComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
+  submit: boolean;
+
   private branchId: string;
 
   employee: EmployeeModel;
@@ -53,6 +55,8 @@ export class AddSalaryComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
+
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
@@ -229,7 +233,8 @@ export class AddSalaryComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.loading = true;
+    this.submit = true;
+
     const employeeSalary: any = {
       branch: this.branchId,
       employee: this.employee.imsMasterId,
@@ -246,11 +251,10 @@ export class AddSalaryComponent implements OnInit, OnDestroy {
       (res: any) => {
         this.showToastr('top-right', 'success', 'Employee Salary Added Successfully');
         this.back();
-        this.loading = false;
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-        this.loading = false;
+        this.submit = false;
       },
     );
   }

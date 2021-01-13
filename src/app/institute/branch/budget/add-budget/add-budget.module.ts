@@ -2,6 +2,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {
   NbCardModule,
   NbSelectModule,
+  NbSpinnerModule,
   NbInputModule,
   NbButtonModule,
   NbIconModule,
@@ -19,6 +20,7 @@ import { AddBudgetComponent } from './add-budget.component';
     CommonModule,
     AddBudgetRoutingModule,
     NbCardModule,
+    NbSpinnerModule,
     NbSelectModule,
     NbInputModule,
     NbButtonModule,

@@ -15,6 +15,8 @@ import { ScheduleModel as LectureModel } from '../../../../../../models/schedule
 })
 export class AddAnswerComponent implements OnInit, OnDestroy {
   loading: boolean;
+  submit: boolean;
+
   answerForm: FormGroup;
 
   branchId: string;
@@ -32,6 +34,7 @@ export class AddAnswerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
@@ -82,6 +85,8 @@ export class AddAnswerComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.submit = true;
+
     const answer: string = this.answerForm.value.answer;
 
     const lectureQuestionAnswer: any = {
@@ -102,7 +107,7 @@ export class AddAnswerComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else {
@@ -116,7 +121,7 @@ export class AddAnswerComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     }

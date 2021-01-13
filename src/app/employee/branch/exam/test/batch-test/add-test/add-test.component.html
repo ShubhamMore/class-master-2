@@ -323,13 +323,30 @@
 
               <div class="row">
                 <div class="col-md-6 text-left">
-                  <button type="button" class="" nbButton size="small" (click)="previousStep()">
+                  <button
+                    type="button"
+                    class=""
+                    nbButton
+                    size="small"
+                    (click)="previousStep()"
+                    [disabled]="submit"
+                  >
                     <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                     <span>prev</span>
                   </button>
                 </div>
                 <div class="col-md-6 text-right">
-                  <button nbButton size="small" (click)="saveExam()"><span>Submit</span></button>
+                  <button
+                    nbButton
+                    size="small"
+                    (click)="saveExam()"
+                    [disabled]="submit"
+                    [nbSpinner]="submit"
+                    nbSpinnerStatus="primary"
+                    nbSpinnerSize="small"
+                  >
+                    <span>Submit</span>
+                  </button>
                 </div>
               </div>
             </div>

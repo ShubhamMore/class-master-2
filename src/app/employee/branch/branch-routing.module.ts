@@ -29,6 +29,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'assignment',
+        loadChildren: () =>
+          import('./assignment/assignment.module').then((m) => m.AssignmentModule),
+      },
+
+      {
         path: 'lead',
         loadChildren: () => import('./lead/lead.module').then((m) => m.LeadModule),
       },
@@ -62,16 +68,6 @@ const routes: Routes = [
       {
         path: 'leave',
         loadChildren: () => import('./leave/leave.module').then((m) => m.LeaveModule),
-      },
-
-      {
-        path: 'my-leave',
-        loadChildren: () => import('./my-leave/my-leave.module').then((m) => m.MyLeaveModule),
-      },
-
-      {
-        path: 'my-salary',
-        loadChildren: () => import('./salary/salary.module').then((m) => m.SalaryModule),
       },
 
       {

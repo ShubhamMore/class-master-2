@@ -5,6 +5,7 @@ import {
   NbSelectModule,
   NbButtonModule,
   NbIconModule,
+  NbSpinnerModule,
   NbStepperModule,
 } from '@nebular/theme';
 import { NgModule } from '@angular/core';
@@ -24,6 +25,7 @@ import { CollectStudentCourseInstallmentComponent } from './collect-student-cour
     NbSelectModule,
     NbButtonModule,
     NbIconModule,
+    NbSpinnerModule,
     NbStepperModule,
 
     ReactiveFormsModule,

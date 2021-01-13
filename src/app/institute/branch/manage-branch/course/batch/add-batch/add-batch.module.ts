@@ -12,6 +12,7 @@ import {
   NbIconModule,
   NbInputModule,
   NbCheckboxModule,
+  NbSpinnerModule,
   NbStepperModule,
   NbFormFieldModule,
 } from '@nebular/theme';
@@ -28,6 +29,7 @@ import {
     NbInputModule,
     NbFormFieldModule,
     NbCheckboxModule,
+    NbSpinnerModule,
     NbStepperModule,
     NbFormFieldModule,
 

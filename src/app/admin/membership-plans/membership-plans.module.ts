@@ -3,6 +3,7 @@ import {
   NbSelectModule,
   NbButtonModule,
   NbInputModule,
+  NbSpinnerModule,
   NbCardModule,
 } from '@nebular/theme';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +23,7 @@ import { SaveMembershipPlanComponent } from './save-membership-plan/save-members
     NbInputModule,
     NbButtonModule,
     NbSelectModule,
+    NbSpinnerModule,
     NbIconModule,
     ReactiveFormsModule,
   ],

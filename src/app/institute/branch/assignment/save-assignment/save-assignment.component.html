@@ -345,13 +345,23 @@
 
           <div class="row">
             <div class="col-6 text-left">
-              <button class="" nbButton size="small" nbStepperPrevious>
+              <button class="" nbButton size="small" nbStepperPrevious [disabled]="submit">
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
                 <span>prev</span>
               </button>
             </div>
             <div class="col-6 text-right">
-              <button nbButton size="small" (click)="saveAssignment()"><span>Submit</span></button>
+              <button
+                nbButton
+                size="small"
+                (click)="saveAssignment()"
+                [disabled]="submit"
+                [nbSpinner]="submit"
+                nbSpinnerStatus="primary"
+                nbSpinnerSize="small"
+              >
+                <span>Submit</span>
+              </button>
             </div>
           </div>
         </div>

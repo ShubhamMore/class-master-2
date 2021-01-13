@@ -26,6 +26,8 @@ export class AddBatchComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
+  submit: boolean;
+
   private branchId: string;
   private batchId: string;
   batch: BatchModel;
@@ -53,6 +55,8 @@ export class AddBatchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
+
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
@@ -282,8 +286,7 @@ export class AddBatchComponent implements OnInit, OnDestroy {
       this.showToastr('top-right', 'danger', 'At least 1 Subject is required');
       return;
     }
-
-    this.loading = true;
+    this.submit = true;
 
     const batch: any = {
       branch: this.branchId,
@@ -300,7 +303,7 @@ export class AddBatchComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else {
@@ -313,7 +316,7 @@ export class AddBatchComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     }

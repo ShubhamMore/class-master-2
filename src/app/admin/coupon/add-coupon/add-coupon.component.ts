@@ -14,6 +14,7 @@ export class AddCouponComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
+  submit: boolean;
 
   private branchId: string;
   private couponId: string;
@@ -34,6 +35,7 @@ export class AddCouponComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
 
     this.discountTypes = this.couponService.getDiscountTypes();
 
@@ -116,8 +118,7 @@ export class AddCouponComponent implements OnInit, OnDestroy {
       this.showToastr('top-right', 'danger', 'This Coupon Code Already Exist');
       return;
     }
-
-    this.loading = true;
+    this.submit = true;
 
     const coupon: any = { ...this.couponForm.value };
 
@@ -128,7 +129,7 @@ export class AddCouponComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else {
@@ -140,7 +141,7 @@ export class AddCouponComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     }

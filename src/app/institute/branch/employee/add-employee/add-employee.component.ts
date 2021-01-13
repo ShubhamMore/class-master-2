@@ -22,6 +22,8 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
+  submit: boolean;
+
   private branchId: string;
   private employeeId: string;
   private branchEmployeeId: string;
@@ -56,6 +58,9 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+
+    this.submit = false;
+
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
@@ -277,7 +282,7 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.loading = true;
+    this.submit = true;
 
     if (!this.employeeId && !this.branchEmployeeId) {
       const newEmployee: any = this.employeeForm.value;
@@ -288,11 +293,10 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Employee Added Successfully');
           this.back();
-          this.loading = false;
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else if (this.employeeId && !this.branchEmployeeId) {
@@ -303,11 +307,10 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Branch Employee added Successfully');
           this.back();
-          this.loading = false;
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else if (this.employeeId && this.branchEmployeeId) {
@@ -317,16 +320,15 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
         (res: any) => {
           this.showToastr('top-right', 'success', 'Employee Updated Successfully');
           this.back();
-          this.loading = false;
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else {
       this.showToastr('top-right', 'danger', 'Invalid data');
-      this.loading = false;
+      this.submit = false;
     }
   }
 

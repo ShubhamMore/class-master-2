@@ -4,6 +4,7 @@ import {
   NbIconModule,
   NbButtonModule,
   NbInputModule,
+  NbSpinnerModule,
   NbStepperModule,
   NbCheckboxModule,
   NbFormFieldModule,
@@ -23,8 +24,8 @@ import { AddStudentCourseComponent } from './add-student-course.component';
     NbCardModule,
     NbIconModule,
     NbButtonModule,
-
     NbInputModule,
+    NbSpinnerModule,
     NbStepperModule,
     NbCheckboxModule,
     NbFormFieldModule,

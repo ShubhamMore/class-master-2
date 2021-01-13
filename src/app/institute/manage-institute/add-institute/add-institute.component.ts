@@ -23,6 +23,7 @@ import { CheckoutComponent } from '../../checkout/checkout.component';
 export class AddInstituteComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
+  submit: boolean;
   loading: boolean;
 
   branchBasicDetailsForm: FormGroup;
@@ -58,6 +59,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loading = true;
+    this.submit = false;
 
     this.menuService.hideMenu();
     this.paymentDetails = this.paymentService.getPaymentDetails();
@@ -238,6 +240,8 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
   }
 
   private activateBranch(id: string, orderId: string, ReceiptId: string) {
+    this.submit = true;
+
     const paymentDetails = {
       amount: this.paymentDetails.amount,
       planType: this.paymentDetails.planType,
@@ -252,6 +256,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
+        this.submit = false;
       },
     );
   }
@@ -323,17 +328,20 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.submit = true;
+
     const branch: any = {
       basicDetails: this.branchBasicDetailsForm.value,
       address: this.branchAddressForm.value,
       categories: this.branchCategoriesForm.value.categories,
     };
+
     if (!this.branch) {
       this.branchService.addBranch(branch).subscribe(
         (res: any) => {
+          this.submit = false;
           this.branchId = res.branchId;
           this.branchService.setBranchId(this.branchId);
-
           this.dialogService
             .open(CheckoutComponent, {
               context: {},
@@ -343,6 +351,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
             .onClose.subscribe((checkout: any) => checkout && this.onCheckout(checkout));
         },
         (error: any) => {
+          this.submit = false;
           this.showToastr('top-right', 'danger', error);
         },
       );

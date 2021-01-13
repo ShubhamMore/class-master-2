@@ -18,6 +18,7 @@ export class AssignmentSubmissionComponent implements OnInit, OnDestroy {
   @ViewChild('filePicker') private fileInput: any;
 
   loading: boolean;
+  submit: boolean;
 
   branchId: string;
 
@@ -41,6 +42,7 @@ export class AssignmentSubmissionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
 
     this.invalidFile = false;
     this.fileName = null;
@@ -137,7 +139,7 @@ export class AssignmentSubmissionComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.loading = true;
+    this.submit = true;
 
     const assignmentSubmission = new FormData();
 
@@ -167,7 +169,7 @@ export class AssignmentSubmissionComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else {
@@ -180,7 +182,7 @@ export class AssignmentSubmissionComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     }

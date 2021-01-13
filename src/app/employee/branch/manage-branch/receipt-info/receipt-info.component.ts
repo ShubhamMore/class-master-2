@@ -14,6 +14,8 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 })
 export class ReceiptInfoComponent implements OnInit {
   loading: boolean;
+  submit: boolean;
+
   branchId: string;
   billingForm: FormGroup;
   billingDetails: InstituteBillingModel;
@@ -29,6 +31,8 @@ export class ReceiptInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
+
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
@@ -74,7 +78,9 @@ export class ReceiptInfoComponent implements OnInit {
       this.showToastr('top-right', 'danger', 'Fill Billing Details Correctly');
       return;
     }
-    this.loading = true;
+
+    this.submit = true;
+
     const billingDetails: any = this.billingForm.value;
     billingDetails.branch = this.branchId;
     if (this.billingDetails) {
@@ -84,12 +90,10 @@ export class ReceiptInfoComponent implements OnInit {
       (res: any) => {
         this.showToastr('top-right', 'success', 'Billing Details Updated Successfully!');
         this.router.navigate(['../'], { relativeTo: this.route });
-
-        this.loading = false;
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-        this.loading = false;
+        this.submit = false;
       },
     );
   }

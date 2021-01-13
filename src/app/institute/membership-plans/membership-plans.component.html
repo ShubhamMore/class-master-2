@@ -181,6 +181,7 @@
               size="small"
               (click)="activate('membership', 'monthly')"
               *ngIf="isMembershipPlanAvailable('monthly'); else noMembership"
+              [disabled]="submit"
             >
               Activate
             </button>
@@ -191,6 +192,7 @@
               size="small"
               (click)="activate('membership', 'quarterly')"
               *ngIf="isMembershipPlanAvailable('quarterly'); else noMembership"
+              [disabled]="submit"
             >
               Activate
             </button>
@@ -201,6 +203,7 @@
               size="small"
               (click)="activate('membership', 'half-yearly')"
               *ngIf="isMembershipPlanAvailable('half-yearly'); else noMembership"
+              [disabled]="submit"
             >
               Activate
             </button>
@@ -211,6 +214,7 @@
               size="small"
               (click)="activate('membership', 'yearly')"
               *ngIf="isMembershipPlanAvailable('yearly'); else noMembership"
+              [disabled]="submit"
             >
               Activate
             </button>

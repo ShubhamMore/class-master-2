@@ -19,6 +19,8 @@ export class AddLeadComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
+  submit: boolean;
+
   private branchId: string;
 
   private leadId: string;
@@ -51,6 +53,8 @@ export class AddLeadComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
+
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
@@ -199,12 +203,12 @@ export class AddLeadComponent implements OnInit, OnDestroy {
   }
 
   saveLead() {
-    this.loading = true;
     this.leadForm.markAllAsTouched();
     if (this.leadForm.invalid) {
       this.showToastr('top-right', 'danger', 'Fill all Details Correctly');
       return;
     }
+    this.submit = true;
 
     const lead = this.leadForm.value;
     lead.branch = this.branchId;
@@ -213,11 +217,11 @@ export class AddLeadComponent implements OnInit, OnDestroy {
       this.leadService.saveLead(lead).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Lead Added Successfully!');
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.back();
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else {
@@ -225,11 +229,11 @@ export class AddLeadComponent implements OnInit, OnDestroy {
       this.leadService.editLead(lead).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'Lead Updated Successfully!');
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.back();
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     }

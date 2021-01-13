@@ -18,6 +18,8 @@ export class AddOnlineTestQuestionsComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
+  submit: boolean;
+
   branchId: string;
   onlineExam: OnlineExamModel;
   onlineExamQuestion: OnlineExamQuestionModel;
@@ -36,6 +38,7 @@ export class AddOnlineTestQuestionsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
@@ -176,7 +179,7 @@ export class AddOnlineTestQuestionsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.loading = true;
+    this.submit = true;
 
     const onlineExamQuestion: any = this.onlineExamQuestionForm.value;
     onlineExamQuestion.onlineExam = this.onlineExam._id;
@@ -189,7 +192,7 @@ export class AddOnlineTestQuestionsComponent implements OnInit, OnDestroy {
         },
         (err: any) => {
           this.showToastr('top-right', 'danger', err);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else {
@@ -201,7 +204,7 @@ export class AddOnlineTestQuestionsComponent implements OnInit, OnDestroy {
         },
         (err: any) => {
           this.showToastr('top-right', 'danger', err);
-          this.loading = false;
+          this.submit = false;
         },
       );
     }

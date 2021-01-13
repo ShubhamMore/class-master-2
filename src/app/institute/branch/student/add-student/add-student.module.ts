@@ -11,6 +11,7 @@ import {
   NbInputModule,
   NbButtonModule,
   NbIconModule,
+  NbSpinnerModule,
   NbStepperModule,
   NbTooltipModule,
   NbFormFieldModule,
@@ -31,6 +32,7 @@ import { AddStudentComponent } from './add-student.component';
     NbInputModule,
     NbButtonModule,
     NbIconModule,
+    NbSpinnerModule,
     NbStepperModule,
     NbTooltipModule,
 

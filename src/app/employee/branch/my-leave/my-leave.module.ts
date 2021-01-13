@@ -6,6 +6,7 @@ import {
   NbTooltipModule,
   NbIconModule,
   NbInputModule,
+  NbSpinnerModule,
   NbStepperModule,
   NbTabsetModule,
 } from '@nebular/theme';
@@ -22,6 +23,7 @@ import { SaveLeaveComponent } from './save-leave/save-leave.component';
     CommonModule,
     MyLeaveRoutingModule,
     NbCardModule,
+    NbSpinnerModule,
     NbStepperModule,
     NbTabsetModule,
     NbSelectModule,

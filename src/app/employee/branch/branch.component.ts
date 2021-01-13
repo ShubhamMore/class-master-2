@@ -1,10 +1,7 @@
 import { NbToastrService } from '@nebular/theme';
-import { RoleService } from './../../services/role.service';
-import { BranchEmployeeService } from './../../services/branch-employee.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { BranchModel } from './../../models/branch.model';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BranchService } from './../../services/branch.service';
-import { MenuService } from './../menu.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
@@ -17,11 +14,8 @@ export class BranchComponent implements OnInit, OnDestroy {
   branchId: string;
 
   constructor(
-    private menuService: MenuService,
-    private toastrService: NbToastrService,
     private branchService: BranchService,
-    private branchEmployeeService: BranchEmployeeService,
-    private roleService: RoleService,
+    private toastrService: NbToastrService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -35,15 +29,18 @@ export class BranchComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.branchEmployeeService.getBranchEmployeeRole(this.branchId).subscribe(
-      (res: any) => {
-        this.roleService.setEmployeeRole(res.role);
-        this.menuService.showMenus();
-        this.loading = false;
+    this.branchService.checkBranchStatus(this.branchId).subscribe(
+      (branchStatus: { activated: boolean }) => {
+        if (branchStatus.activated) {
+          this.loading = false;
+        } else {
+          this.showToastr('top-right', 'danger', 'Please Activate Branch');
+          this.router.navigate(['../page-not-found'], { relativeTo: this.route });
+        }
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.router.navigate(['../page-not-found'], { relativeTo: this.route });
       },
     );
   }
@@ -58,6 +55,5 @@ export class BranchComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.branchService.deleteBranchId();
     this.branchService.deleteBranchData();
-    this.roleService.setEmployeeRole(null);
   }
 }

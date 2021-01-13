@@ -16,6 +16,8 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
+  submit: boolean;
+
   private branchId: string;
   private discountAndOfferId: string;
   discountAndOffer: DiscountAndOfferModel;
@@ -40,6 +42,8 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
+
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
@@ -174,8 +178,7 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
       this.showToastr('top-right', 'danger', 'This Offer Code Already Exist');
       return;
     }
-
-    this.loading = true;
+    this.submit = true;
 
     const discountAndOffer: any = this.discountAndOfferForm.value;
     discountAndOffer.branch = this.branchId;
@@ -184,11 +187,11 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
       this.discountAndOfferService.addDiscountAndOffer(discountAndOffer).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Discount And Offer Added Successfully!');
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.back();
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else {
@@ -197,11 +200,11 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
       this.discountAndOfferService.editDiscountAndOffer(discountAndOffer).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'Discount And Offer Updated Successfully!');
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.back();
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     }

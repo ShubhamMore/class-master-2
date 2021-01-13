@@ -15,6 +15,8 @@ export class AddBudgetComponent implements OnInit {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
+  submit: boolean;
+
   private branchId: string;
 
   budgetForm: FormGroup;
@@ -30,6 +32,7 @@ export class AddBudgetComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
@@ -74,6 +77,7 @@ export class AddBudgetComponent implements OnInit {
       this.showToastr('top-right', 'danger', 'Please Fill All data Correctly');
       return;
     }
+    this.submit = true;
 
     const budget: any = this.budgetForm.value;
     budget.branch = this.branchId;
@@ -83,6 +87,7 @@ export class AddBudgetComponent implements OnInit {
         this.back();
       },
       (error: any) => {
+        this.submit = false;
         this.showToastr('top-right', 'danger', error);
       },
     );

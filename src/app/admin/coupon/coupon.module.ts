@@ -5,6 +5,7 @@ import {
   NbButtonModule,
   NbSelectModule,
   NbIconModule,
+  NbSpinnerModule,
   NbStepperModule,
 } from '@nebular/theme';
 import { NgModule } from '@angular/core';
@@ -25,6 +26,7 @@ import { AddCouponComponent } from './add-coupon/add-coupon.component';
     NbSelectModule,
     NbIconModule,
     ReactiveFormsModule,
+    NbSpinnerModule,
     NbStepperModule,
   ],
 })

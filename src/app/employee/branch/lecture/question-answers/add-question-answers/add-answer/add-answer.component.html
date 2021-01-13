@@ -46,7 +46,18 @@
           </button>
         </div>
         <div class="col-6 text-right">
-          <button type="submit" nbButton size="small" status="success">Save</button>
+          <button
+            type="submit"
+            nbButton
+            size="small"
+            status="success"
+            [disabled]="submit"
+            [nbSpinner]="submit"
+            nbSpinnerStatus="primary"
+            nbSpinnerSize="small"
+          >
+            Save
+          </button>
         </div>
       </div>
     </form>

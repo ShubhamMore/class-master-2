@@ -27,6 +27,8 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
+  submit: boolean;
+
   private branchId: string;
   private studentId: string;
   private categoryId: string;
@@ -74,6 +76,8 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
+
     this.branchId = this.branchService.getBranchId();
     this.categoryId = this.branchService.getCategoryId();
     this.studentId = this.studentService.getStudentId();
@@ -825,8 +829,7 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
       this.showToastr('top-right', 'danger', 'Student Course Installment Details are Required');
       return;
     }
-
-    this.loading = true;
+    this.submit = true;
 
     const studentCourseDetails: any = this.studentCourseForm.getRawValue();
     studentCourseDetails.branch = this.branchId;
@@ -847,11 +850,10 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
           (res: any) => {
             this.showToastr('top-right', 'success', 'Student Course Created Successfully!');
             this.back();
-            this.loading = false;
           },
           (err: any) => {
             this.showToastr('top-right', 'danger', err);
-            this.loading = false;
+            this.submit = false;
           },
         );
     } else if (this.studentCourse && !this.studentCourseInstallment) {
@@ -865,11 +867,10 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
               'Student Course Installments Created Successfully!',
             );
             this.back();
-            this.loading = false;
           },
           (err: any) => {
             this.showToastr('top-right', 'danger', err);
-            this.loading = false;
+            this.submit = false;
           },
         );
     } else {
@@ -881,16 +882,13 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
           (res: any) => {
             this.showToastr('top-right', 'success', 'Student Course Updated Successfully!');
             this.back();
-            this.loading = false;
           },
           (err: any) => {
             this.showToastr('top-right', 'danger', err);
-            this.loading = false;
+            this.submit = false;
           },
         );
     }
-
-    this.loading = false;
   }
 
   private showToastr(position: any, status: any, message: string) {

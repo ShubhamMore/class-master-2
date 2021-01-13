@@ -23,6 +23,8 @@ export class AddStudentComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
+  submit: boolean;
+
   private branchId: string;
   private studentId: string;
   private branchStudentId: string;
@@ -57,6 +59,8 @@ export class AddStudentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
+
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
@@ -326,7 +330,7 @@ export class AddStudentComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.loading = true;
+    this.submit = true;
 
     if (!this.studentId && !this.branchStudentId) {
       const newStudent: any = this.studentForm.value;
@@ -337,11 +341,10 @@ export class AddStudentComponent implements OnInit, OnDestroy {
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Student Added Successfully');
           this.back();
-          this.loading = false;
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else if (this.studentId && !this.branchStudentId) {
@@ -352,11 +355,10 @@ export class AddStudentComponent implements OnInit, OnDestroy {
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Branch Student added Successfully');
           this.back();
-          this.loading = false;
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else if (this.studentId && this.branchStudentId) {
@@ -366,16 +368,15 @@ export class AddStudentComponent implements OnInit, OnDestroy {
         (res: any) => {
           this.showToastr('top-right', 'success', 'Student Updated Successfully');
           this.back();
-          this.loading = false;
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else {
       this.showToastr('top-right', 'danger', 'Invalid data');
-      this.loading = false;
+      this.submit = false;
     }
   }
 

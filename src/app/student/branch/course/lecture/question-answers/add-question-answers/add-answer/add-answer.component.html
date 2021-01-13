@@ -41,12 +41,30 @@
 
       <div class="row">
         <div class="col-6">
-          <button type="button" nbButton size="small" status="danger" (click)="onClose()">
+          <button
+            type="button"
+            nbButton
+            size="small"
+            status="danger"
+            (click)="onClose()"
+            [disabled]="submit"
+          >
             Cancel
           </button>
         </div>
         <div class="col-6 text-right">
-          <button type="submit" nbButton size="small" status="success">Save</button>
+          <button
+            type="submit"
+            nbButton
+            size="small"
+            status="success"
+            [disabled]="submit"
+            [nbSpinner]="submit"
+            nbSpinnerStatus="primary"
+            nbSpinnerSize="small"
+          >
+            Save
+          </button>
         </div>
       </div>
     </form>

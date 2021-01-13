@@ -11,6 +11,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 })
 export class SaveMembershipPlanComponent implements OnInit, OnDestroy {
   loading: boolean;
+  submit: boolean;
 
   membership: MembershipModel;
   membershipForm: FormGroup;
@@ -23,6 +24,7 @@ export class SaveMembershipPlanComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
 
     this.membershipService.getMembershipPlan().subscribe((membership: MembershipModel) => {
       this.membership = membership;
@@ -56,7 +58,7 @@ export class SaveMembershipPlanComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.loading = true;
+    this.submit = true;
 
     const membership: any = { ...this.membershipForm.value };
 
@@ -70,7 +72,7 @@ export class SaveMembershipPlanComponent implements OnInit, OnDestroy {
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-        this.loading = false;
+        this.submit = false;
       },
     );
   }

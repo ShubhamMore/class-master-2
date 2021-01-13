@@ -15,6 +15,7 @@ export class SaveLeaveComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
+  submit: boolean;
 
   private branchId: string;
 
@@ -35,6 +36,7 @@ export class SaveLeaveComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
@@ -146,7 +148,7 @@ export class SaveLeaveComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.loading = true;
+    this.submit = true;
 
     const leave: any = { branch: this.branchId, ...this.leaveForm.getRawValue() };
 
@@ -157,7 +159,7 @@ export class SaveLeaveComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else {
@@ -169,7 +171,7 @@ export class SaveLeaveComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     }

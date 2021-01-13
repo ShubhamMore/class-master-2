@@ -4,6 +4,7 @@ import {
   NbButtonModule,
   NbSelectModule,
   NbIconModule,
+  NbSpinnerModule,
   NbStepperModule,
   NbInputModule,
 } from '@nebular/theme';
@@ -23,6 +24,7 @@ import { AddLeadRoutingModule } from './add-lead-routing.module';
     ReactiveFormsModule,
     NbSelectModule,
     NbIconModule,
+    NbSpinnerModule,
     NbStepperModule,
     NbInputModule,
   ],

@@ -22,6 +22,9 @@ import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
+  loading: boolean;
+  submit: boolean;
+
   private branchId: string;
   private categoryId: string;
   courseId: string;
@@ -34,7 +37,6 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
   private studentCourseInstallmentReceiptId: string;
   private studentCourseInstallmentReceipt: StudentCourseInstallmentReceiptModel;
   courseInstallmentReceiptForm: FormGroup;
-  loading: boolean;
 
   constructor(
     public dateService: DateService,
@@ -50,6 +52,8 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
+
     this.branchId = this.branchService.getBranchId();
     this.categoryId = this.branchService.getCategoryId();
     this.courseId = this.courseService.getCourseId();
@@ -192,8 +196,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
       this.showToastr('top-right', 'danger', 'Receipt Details are Required');
       return;
     }
-
-    this.loading = true;
+    this.submit = true;
 
     const receiptDetails: any = this.courseInstallmentReceiptForm.getRawValue();
     receiptDetails.studentCourseInstallmentId = this.studentCourseInstallmentId;
@@ -217,7 +220,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
           },
           (err: any) => {
             this.showToastr('top-right', 'danger', err);
-            this.loading = false;
+            this.submit = false;
           },
         );
     } else {
@@ -231,7 +234,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
           },
           (err: any) => {
             this.showToastr('top-right', 'danger', err);
-            this.loading = false;
+            this.submit = false;
           },
         );
     }

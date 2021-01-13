@@ -1,5 +1,11 @@
 import { ReactiveFormsModule } from '@angular/forms';
-import { NbCardModule, NbButtonModule, NbInputModule, NbIconModule } from '@nebular/theme';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbSpinnerModule,
+  NbIconModule,
+} from '@nebular/theme';
 import { AddAnswerComponent } from './add-answer/add-answer.component';
 import { AddQuestionComponent } from './add-question/add-question.component';
 import { NgModule } from '@angular/core';
@@ -16,6 +22,7 @@ import { AddQuestionAnswersRoutingModule } from './add-question-answers-routing.
     NbButtonModule,
     NbInputModule,
     NbIconModule,
+    NbSpinnerModule,
     ReactiveFormsModule,
   ],
   exports: [AddQuestionComponent, AddAnswerComponent],

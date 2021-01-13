@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import {
   NbInputModule,
   NbButtonModule,
+  NbSpinnerModule,
   NbCardModule,
   NbStepperModule,
   NbSelectModule,
@@ -17,6 +18,7 @@ import { AddOnlineTestRoutingModule } from './add-online-test-routing.module';
   imports: [
     CommonModule,
     AddOnlineTestRoutingModule,
+    NbSpinnerModule,
     NbInputModule,
     NbButtonModule,
     NbCardModule,

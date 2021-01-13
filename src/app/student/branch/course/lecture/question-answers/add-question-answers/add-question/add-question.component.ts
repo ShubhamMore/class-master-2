@@ -14,6 +14,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class AddQuestionComponent implements OnInit, OnDestroy {
   loading: boolean;
+  submit: boolean;
+
   lectureQuestion: LectureQuestionModel;
   branchId: string;
   lecture: LectureModel;
@@ -29,6 +31,7 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
@@ -66,6 +69,8 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.submit = true;
+
     const question: string = this.lectureQuestionForm.value.question;
 
     const lectureQuestion: any = {
@@ -85,7 +90,7 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else {
@@ -98,7 +103,7 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     }

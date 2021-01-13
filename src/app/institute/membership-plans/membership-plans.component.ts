@@ -16,6 +16,7 @@ import { MembershipService } from '../../services/membership.service';
 })
 export class MembershipPlansComponent implements OnInit, OnDestroy {
   loading: boolean;
+  submit: boolean;
 
   branchId: string;
   membershipType: string;
@@ -36,6 +37,8 @@ export class MembershipPlansComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
+
     this.branchId = this.branchService.getBranchId();
     this.membershipType = this.membershipService.getMembershipType();
 
@@ -129,6 +132,8 @@ export class MembershipPlansComponent implements OnInit, OnDestroy {
   }
 
   private activateBranch(id: string, orderId: string, ReceiptId: string) {
+    this.submit = true;
+
     const paymentDetails = {
       amount: this.paymentDetails.amount,
       planType: this.paymentDetails.planType,
@@ -142,6 +147,7 @@ export class MembershipPlansComponent implements OnInit, OnDestroy {
         this.router.navigate(['/institute']);
       },
       (error: any) => {
+        this.submit = false;
         this.showToastr('top-right', 'danger', error);
       },
     );

@@ -18,6 +18,8 @@ export class AddCourseComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent;
 
   loading: boolean;
+  submit: boolean;
+
   private branchId: string;
   private courseId: string;
   course: CourseModel;
@@ -45,6 +47,8 @@ export class AddCourseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
+
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
@@ -297,8 +301,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
       this.showToastr('top-right', 'danger', 'Fee Details are required');
       return;
     }
-
-    this.loading = true;
+    this.submit = true;
 
     const course: any = {
       branch: this.branchId,
@@ -315,7 +318,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     } else {
@@ -328,7 +331,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
     }

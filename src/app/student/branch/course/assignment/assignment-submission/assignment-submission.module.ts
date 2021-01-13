@@ -12,6 +12,7 @@ import {
   NbInputModule,
   NbTooltipModule,
   NbFormFieldModule,
+  NbSpinnerModule,
   NbStepperModule,
 } from '@nebular/theme';
 
@@ -27,6 +28,7 @@ import {
     NbInputModule,
     NbTooltipModule,
     NbFormFieldModule,
+    NbSpinnerModule,
     NbStepperModule,
     ReactiveFormsModule,
   ],
