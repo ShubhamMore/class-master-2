@@ -144,7 +144,7 @@ export class MembershipPlansComponent implements OnInit, OnDestroy {
     this.branchService.activateBranch(id, paymentDetails).subscribe(
       (res: any) => {
         this.showToastr('top-right', 'success', 'Institute Activated Successfully');
-        this.router.navigate(['/institute']);
+        this.router.navigate(['/institute'], { relativeTo: this.route });
       },
       (error: any) => {
         this.submit = false;
