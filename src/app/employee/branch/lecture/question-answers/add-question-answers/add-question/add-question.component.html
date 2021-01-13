@@ -47,7 +47,14 @@
 
       <div class="row">
         <div class="col-6">
-          <button type="button" nbButton size="small" status="danger" (click)="onClose()">
+          <button
+            type="button"
+            nbButton
+            size="small"
+            status="danger"
+            (click)="onClose()"
+            [disabled]="submit"
+          >
             Cancel
           </button>
         </div>

@@ -14,7 +14,7 @@ import { EncryptService } from '../../services/shared-services/encrypt.service';
 export class ChangePasswordComponent implements OnInit {
   form: FormGroup;
   loading: boolean;
-
+  submit: boolean;
   constructor(
     private httpService: HttpService,
     private toastrService: NbToastrService,
@@ -25,6 +25,7 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.submit = false;
     this.form = this.formBuilder.group(
       {
         oldPassword: new FormControl(null, {
@@ -60,7 +61,8 @@ export class ChangePasswordComponent implements OnInit {
       this.showToastr('top-right', 'danger', 'Password & Forgot Password Does not Match');
       return;
     }
-    this.loading = true;
+
+    this.submit = true;
 
     const data = {
       api: 'changePassword',
@@ -74,11 +76,12 @@ export class ChangePasswordComponent implements OnInit {
       (res: any) => {
         this.form.reset();
         this.showToastr('top-right', 'success', 'Password Changed Successfully');
-        this.loading = false;
+
+        this.submit = false;
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-        this.loading = false;
+        this.submit = false;
       },
     );
   }

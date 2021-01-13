@@ -16,6 +16,8 @@ export class AddCourseMaterialComponent implements OnInit {
   uploadCourseMaterials: File[];
 
   loading: boolean;
+  submit: boolean;
+
   invalidFile: boolean;
 
   private branchId: string;
@@ -36,6 +38,8 @@ export class AddCourseMaterialComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.submit = false;
+
     this.invalidFile = false;
     this.invalidSubject = false;
 
@@ -103,7 +107,7 @@ export class AddCourseMaterialComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
+    this.submit = true;
     this.invalidFile = false;
 
     const courseMaterials = new FormData();
@@ -147,11 +151,12 @@ export class AddCourseMaterialComponent implements OnInit {
         }
 
         this.uploadCourseMaterials = [];
+        this.submit = false;
         this.cancel();
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-        this.loading = false;
+        this.submit = false;
       },
     );
   }

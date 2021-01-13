@@ -25,6 +25,8 @@ import { NbToastrService, NbDialogService } from '@nebular/theme';
 export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
   loading: boolean;
 
+  submit: boolean;
+
   private branchId: string;
   private studentCourseInstallmentId: string;
 
@@ -49,6 +51,8 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
+
     this.branchId = this.branchService.getBranchId();
     this.studentCourseInstallmentId = this.studentCourseInstallmentService.getStudentCourseInstallmentId();
 
@@ -125,17 +129,19 @@ export class ManageCourseInstallmentComponent implements OnInit, OnDestroy {
   }
 
   generateStudentCourseInstallmentReceipt(order: string, receipt: string) {
-    this.loading = true;
+    this.submit = true;
+
     this.studentCourseInstallmentReceiptService
       .generateStudentCourseInstallmentReceipt(order, receipt)
       .subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'Receipt Generated Successfully');
+          this.submit = false;
           this.getStudentCourseInstallment();
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
-          this.loading = false;
+          this.submit = false;
         },
       );
   }

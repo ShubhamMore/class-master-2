@@ -14,6 +14,7 @@ import { environment } from '../../../environments/environment';
 export class ResetPasswordComponent implements OnInit {
   form: FormGroup;
   loading: boolean;
+  submit: boolean;
 
   token: string;
   user: string;
@@ -29,6 +30,7 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.submit = false;
 
     this.form = this.formBuilder.group({
       password: new FormControl(null, {
@@ -79,7 +81,8 @@ export class ResetPasswordComponent implements OnInit {
       this.showToastr('top-right', 'danger', 'Password & Forgot Password Does not Match');
       return;
     }
-    this.loading = true;
+
+    this.submit = true;
 
     const resetPassword = {
       // user: this.user,
@@ -93,11 +96,10 @@ export class ResetPasswordComponent implements OnInit {
         this.form.reset();
         this.showToastr('top-right', 'success', 'Password Changed Successfully');
         this.router.navigate(['/login'], { relativeTo: this.roure });
-        this.loading = false;
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-        this.loading = false;
+        this.submit = false;
       },
     );
   }

@@ -2,6 +2,7 @@ import {
   NbCardModule,
   NbButtonModule,
   NbSelectModule,
+  NbSpinnerModule,
   NbIconModule,
   NbTooltipModule,
 } from '@nebular/theme';
@@ -18,6 +19,7 @@ import { AddStudyMaterialRoutingModule } from './add-study-material-routing.modu
     AddStudyMaterialRoutingModule,
     NbCardModule,
     NbButtonModule,
+    NbSpinnerModule,
     NbSelectModule,
     NbIconModule,
     NbTooltipModule,

@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class ForgotPasswordComponent implements OnInit {
   form: FormGroup;
   loading: boolean;
+  submit: boolean;
 
   constructor(
     private httpService: HttpService,
@@ -21,6 +22,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.submit = false;
     this.form = new FormGroup({
       email: new FormControl(null, {
         validators: [Validators.required, Validators.email],
@@ -35,8 +37,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.showToastr('top-right', 'danger', 'Enter Valid Email Address');
       return;
     }
-
-    this.loading = true;
+    this.submit = true;
     const data = {
       api: 'forgotPassword',
       data: {
@@ -52,11 +53,11 @@ export class ForgotPasswordComponent implements OnInit {
           'success',
           'Reset Password Link Send to your Email Successfully',
         );
-        this.loading = false;
+        this.submit = false;
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-        this.loading = false;
+        this.submit = false;
       },
     );
   }

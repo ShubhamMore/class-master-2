@@ -16,9 +16,10 @@ import { NbToastrService, NbDialogService } from '@nebular/theme';
   styleUrls: ['./register.component.scss', '../authentication.scss'],
 })
 export class RegisterComponent implements OnInit {
+  loading: boolean;
+  submit: boolean;
   form: FormGroup;
   userExist: boolean;
-  loading: boolean;
   termsConditions: boolean;
   roles: string[];
   constructor(
@@ -34,6 +35,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.submit = false;
     this.roles = this.roleService.getUserRoles();
     this.userExist = false;
     this.form = new FormGroup(
@@ -111,7 +113,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
+    this.submit = true;
 
     const data = {
       name: this.form.value.name.toLowerCase(),
@@ -127,13 +129,12 @@ export class RegisterComponent implements OnInit {
 
     authObs.subscribe(
       (res: any) => {
-        this.loading = false;
         this.showToastr('top-right', 'success', 'New User Created Successfully');
         this.router.navigate(['/login'], { relativeTo: this.route });
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-        this.loading = false;
+        this.submit = false;
       },
     );
   }

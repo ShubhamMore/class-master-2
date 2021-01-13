@@ -17,6 +17,7 @@ export class AddStudyMaterialComponent implements OnInit {
   uploadLectureMaterials: File[];
 
   loading: boolean;
+  submit: boolean;
   invalidFile: boolean;
 
   private branchId: string;
@@ -34,6 +35,7 @@ export class AddStudyMaterialComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.submit = false;
     this.invalidFile = false;
 
     this.branchId = this.branchService.getBranchId();
@@ -77,6 +79,7 @@ export class AddStudyMaterialComponent implements OnInit {
     }
     this.fileInput.nativeElement.value = '';
   }
+
   saveLectureMaterial() {
     if (this.uploadLectureMaterials.length < 1) {
       this.showToastr('top-right', 'danger', 'Select at least 1 Lecture material File');
@@ -84,7 +87,7 @@ export class AddStudyMaterialComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
+    this.submit = true;
     this.invalidFile = false;
 
     const lectureMaterials = new FormData();
@@ -127,12 +130,13 @@ export class AddStudyMaterialComponent implements OnInit {
             } not Uploaded`,
           );
         }
-
         this.uploadLectureMaterials = [];
+        this.submit = false;
         this.cancel();
       },
       (error: any) => {
-        this.loading = false;
+        this.showToastr('top-right', 'danger', error);
+        this.submit = false;
       },
     );
   }

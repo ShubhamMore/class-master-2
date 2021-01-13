@@ -16,6 +16,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class SubmissionGradingComponent implements OnInit, OnDestroy {
   loading: boolean;
+  submit: boolean;
 
   branchId: string;
 
@@ -36,6 +37,7 @@ export class SubmissionGradingComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submit = false;
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
@@ -87,7 +89,8 @@ export class SubmissionGradingComponent implements OnInit, OnDestroy {
       this.showToastr('top-right', 'danger', 'All grading Fields are required');
       return;
     }
-    this.loading = true;
+
+    this.submit = true;
 
     const submissionGrades = {
       _id: this.assignmentSubmission._id,
@@ -101,7 +104,7 @@ export class SubmissionGradingComponent implements OnInit, OnDestroy {
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-        this.loading = false;
+        this.submit = false;
       },
     );
   }

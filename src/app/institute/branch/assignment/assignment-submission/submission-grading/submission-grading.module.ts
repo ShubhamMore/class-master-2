@@ -3,6 +3,7 @@ import {
   NbCardModule,
   NbButtonModule,
   NbIconModule,
+  NbSpinnerModule,
   NbTooltipModule,
   NbInputModule,
 } from '@nebular/theme';
@@ -21,6 +22,7 @@ import { SubmissionGradingRoutingModule } from './submission-grading-routing.mod
     NbButtonModule,
     NbIconModule,
     NbTooltipModule,
+    NbSpinnerModule,
     NbInputModule,
     ReactiveFormsModule,
   ],

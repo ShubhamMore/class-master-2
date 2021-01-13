@@ -10,7 +10,6 @@ import { ManageCourseInstallmentComponent } from './manage-course-installment.co
   imports: [
     CommonModule,
     ManageCourseInstallmentRoutingModule,
-
     NbCardModule,
     NbButtonModule,
     NbIconModule,

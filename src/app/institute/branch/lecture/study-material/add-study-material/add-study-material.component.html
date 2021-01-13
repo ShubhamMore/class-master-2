@@ -11,6 +11,10 @@
           type="button"
           fullWidth
           status="primary"
+          [disabled]="submit"
+          [nbSpinner]="submit"
+          nbSpinnerStatus="primary"
+          nbSpinnerSize="small"
           (click)="saveLectureMaterial()"
         >
           Upload&nbsp;
@@ -99,9 +103,7 @@
             </tbody>
           </table>
         </div>
-        <ng-template #noFiles>
-          No Files Selected, Please Select Files to Upload
-        </ng-template>
+        <ng-template #noFiles> No Files Selected, Please Select Files to Upload </ng-template>
       </div>
     </div>
   </nb-card-body>

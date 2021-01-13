@@ -16,6 +16,7 @@ import { NbToastrService } from '@nebular/theme';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   loading: boolean;
+  submit: boolean;
 
   authObs: Observable<AuthResponseData>;
 
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.submit = false;
 
     this.form = new FormGroup({
       email: new FormControl(null, {
@@ -45,7 +47,8 @@ export class LoginComponent implements OnInit {
     if (!this.form.valid) {
       return;
     }
-    this.loading = true;
+
+    this.submit = true;
 
     const email = this.form.value.email;
     const password = this.encryptService.encrypt(this.form.value.password, environment.encKey);
@@ -57,7 +60,6 @@ export class LoginComponent implements OnInit {
   authSubscribe() {
     this.authObs.subscribe(
       (user: any) => {
-        this.loading = false;
         this.showToastr('top-right', 'success', 'Login successful!');
         if (user.userRole === 'admin') {
           this.router.navigate(['/admin'], { relativeTo: this.route });
@@ -68,6 +70,7 @@ export class LoginComponent implements OnInit {
         } else if (user.userRole === 'student') {
           this.router.navigate(['/student'], { relativeTo: this.route });
         } else {
+          this.submit = false;
           this.router.navigate(['/login'], {
             relativeTo: this.route,
           });
@@ -76,7 +79,7 @@ export class LoginComponent implements OnInit {
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
-        this.loading = false;
+        this.submit = false;
       },
     );
   }

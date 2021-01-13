@@ -2,9 +2,7 @@
   <nb-card-header>
     <div class="row">
       <div class="col-md-9">
-        <h3>
-          Installments
-        </h3>
+        <h3>Installments</h3>
       </div>
     </div>
   </nb-card-header>
@@ -87,6 +85,7 @@
                           ? showReceipt(installment.receiptId)
                           : payInstallment(installment)
                       "
+                      [disabled]="submit"
                       *ngIf="installment.receiptId || paymentGatewayAccessKey"
                     >
                       {{ installment.receiptId ? 'Receipt' : ' Pay' }}

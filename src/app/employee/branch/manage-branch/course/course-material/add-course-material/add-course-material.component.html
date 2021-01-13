@@ -11,6 +11,10 @@
           type="button"
           fullWidth
           status="primary"
+          [disabled]="submit"
+          [nbSpinner]="submit"
+          nbSpinnerStatus="primary"
+          nbSpinnerSize="small"
           (click)="saveCourseMaterial()"
         >
           Upload&nbsp;
@@ -42,9 +46,7 @@
           </nb-select>
 
           <ng-container *ngIf="invalidSubject">
-            <p class="caption status-danger" *ngIf="subject === ''">
-              Subject is required!
-            </p>
+            <p class="caption status-danger" *ngIf="subject === ''">Subject is required!</p>
           </ng-container>
         </div>
       </div>
@@ -127,9 +129,7 @@
             </tbody>
           </table>
         </div>
-        <ng-template #noFiles>
-          No Files Selected, Please Select Files to Upload
-        </ng-template>
+        <ng-template #noFiles> No Files Selected, Please Select Files to Upload </ng-template>
       </div>
     </div>
   </nb-card-body>
