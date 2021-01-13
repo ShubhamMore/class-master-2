@@ -13,7 +13,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 2
   {
     title: 'Institutes',
-    icon: '',
+    icon: 'layers-outline',
     link: '/admin/institutes',
     hidden: false,
   },
@@ -21,7 +21,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 3
   {
     title: 'Membership Plans',
-    icon: '',
+    icon: 'pricetags-outline',
     link: '/admin/membership-plans',
     hidden: false,
   },
@@ -29,7 +29,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 4
   {
     title: 'Coupon Codes',
-    icon: '',
+    icon: 'credit-card-outline',
     link: '/admin/coupon',
     hidden: false,
   },
@@ -37,7 +37,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 5
   {
     title: 'Users',
-    icon: '',
+    icon: 'people-outline',
     link: '/admin/users',
     hidden: false,
   },
@@ -45,7 +45,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 6
   {
     title: 'Setting',
-    icon: '',
+    icon: 'settings-2-outline',
     link: '/admin/settings',
     hidden: false,
   },

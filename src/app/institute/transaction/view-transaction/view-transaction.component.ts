@@ -16,6 +16,7 @@ export class ViewTransactionComponent implements OnInit, OnDestroy {
   transaction: InstituteTransactionModel;
   address: string;
 
+  gstNo: string;
   amount: string;
   gstAmount: string;
   totalAmount: string;
@@ -31,6 +32,7 @@ export class ViewTransactionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loading = true;
 
+    this.gstNo = environment.gstNo;
     this.address = environment.address;
 
     this.transactionService
@@ -44,8 +46,8 @@ export class ViewTransactionComponent implements OnInit, OnDestroy {
 
         const receiptAmount = +transaction.amount;
 
-        const gstAmount = receiptAmount * 0.18;
-        const amount = receiptAmount - gstAmount;
+        const amount = receiptAmount / 1.18;
+        const gstAmount = receiptAmount - amount;
 
         this.gstAmount = gstAmount.toFixed(2);
         this.amount = amount.toFixed(2);

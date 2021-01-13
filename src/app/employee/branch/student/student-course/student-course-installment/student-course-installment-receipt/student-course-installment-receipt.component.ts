@@ -76,8 +76,8 @@ export class StudentCourseInstallmentReceiptComponent implements OnInit, OnDestr
             const courseAmount = +res.studentCourseInstallmentReceipt.amount;
             const gstPercentage = +res.course.feeDetails.gst;
 
-            const gstAmount = courseAmount * (gstPercentage / 100);
-            const amount = courseAmount - gstAmount;
+            const amount = courseAmount / (1 + gstPercentage / 100);
+            const gstAmount = courseAmount - amount;
 
             this.gstAmount = gstAmount.toFixed(2);
             this.amount = amount.toFixed(2);
