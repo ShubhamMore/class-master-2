@@ -4,7 +4,13 @@ import { CommonModule } from '@angular/common';
 
 import { MembershipPlansRoutingModule } from './membership-plans-routing.module';
 import { ThemeModule } from './../../@theme/theme.module';
-import { NbCardModule, NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbTooltipModule,
+} from '@nebular/theme';
 
 @NgModule({
   declarations: [MembershipPlansComponent],
@@ -15,6 +21,7 @@ import { NbCardModule, NbButtonModule, NbIconModule, NbTooltipModule } from '@ne
     NbCardModule,
     NbIconModule,
     NbButtonModule,
+    NbSpinnerModule,
     NbTooltipModule,
   ],
 })

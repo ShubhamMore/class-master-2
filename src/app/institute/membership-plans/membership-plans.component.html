@@ -182,6 +182,9 @@
               (click)="activate('membership', 'monthly')"
               *ngIf="isMembershipPlanAvailable('monthly'); else noMembership"
               [disabled]="submit"
+              [nbSpinner]="submit && paymentDetails.packageType === 'monthly'"
+              nbSpinnerStatus="primary"
+              nbSpinnerSize="small"
             >
               Activate
             </button>
@@ -193,6 +196,9 @@
               (click)="activate('membership', 'quarterly')"
               *ngIf="isMembershipPlanAvailable('quarterly'); else noMembership"
               [disabled]="submit"
+              [nbSpinner]="submit && paymentDetails.packageType === 'quarterly'"
+              nbSpinnerStatus="primary"
+              nbSpinnerSize="small"
             >
               Activate
             </button>
@@ -204,6 +210,9 @@
               (click)="activate('membership', 'half-yearly')"
               *ngIf="isMembershipPlanAvailable('half-yearly'); else noMembership"
               [disabled]="submit"
+              [nbSpinner]="submit && paymentDetails.packageType === 'half-yearly'"
+              nbSpinnerStatus="primary"
+              nbSpinnerSize="small"
             >
               Activate
             </button>
@@ -215,6 +224,9 @@
               (click)="activate('membership', 'yearly')"
               *ngIf="isMembershipPlanAvailable('yearly'); else noMembership"
               [disabled]="submit"
+              [nbSpinner]="submit && paymentDetails.packageType === 'yearly'"
+              nbSpinnerStatus="primary"
+              nbSpinnerSize="small"
             >
               Activate
             </button>
