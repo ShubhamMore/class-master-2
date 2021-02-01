@@ -1,0 +1,75 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9 col-sm-8">
+        <h3>Membership Plans</h3>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row" *ngIf="!loading; else loadingData">
+      <div class="col-12">
+        <div class="table-responsive" *ngIf="smsPackages.length > 0; else noSMSPackages">
+          <table class="table">
+            <thead>
+              <th>#</th>
+              <th>SMS Package</th>
+              <th>SMS Count</th>
+              <th>Price</th>
+              <th colspan="3">Action</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let smsPackage of smsPackages; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ smsPackage.name | uppercase }}</td>
+                <td>{{ smsPackage.smsCount }}</td>
+                <td>{{ getAmount(membership.price) }}/-</td>
+                <td>
+                  <button
+                    type="button"
+                    nbButton
+                    size="small"
+                    status="basic"
+                    (click)="editSMSPackage(smsPackage)"
+                  >
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    nbButton
+                    size="small"
+                    [status]="smsPackage.status ? 'warning' : 'success'"
+                    (click)="changeSMSPackageStatus(smsPackage._id, !smsPackage.status)"
+                  >
+                    {{ smsPackage.status ? 'Deactivate' : 'Activate' }}
+                  </button>
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    nbButton
+                    size="small"
+                    status="danger"
+                    (click)="deleteSMSPackage(smsPackage._id)"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #loadingData>
+  <p class="pt-5 pb-5 text-center">Loading...</p>
+</ng-template>
+
+<ng-template #noSMSPackages>
+  <p class="pt-5 pb-5 text-center">No SMS Packages Available</p>
+</ng-template>

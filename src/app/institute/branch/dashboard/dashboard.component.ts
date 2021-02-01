@@ -1,3 +1,4 @@
+import { BranchSMSModel } from './../../../models/branch-sms.model';
 import { MenuService } from './../../menu.service';
 import { BranchStorageModel } from '../../../models/branch-storage.model';
 import { StorageService } from './../../../services/shared-services/storage.service';
@@ -20,6 +21,7 @@ interface DashboardInfo {
   openLeads: number;
   lostLeads: number;
   wonLeads: number;
+  branchSMS: BranchSMSModel;
 }
 
 interface Budget {
