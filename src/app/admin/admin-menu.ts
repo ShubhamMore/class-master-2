@@ -28,13 +28,29 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 4
   {
+    title: 'SMS Packages',
+    icon: 'message-circle-outline',
+    link: '/admin/sms-packages',
+    hidden: false,
+  },
+
+  // 5
+  {
+    title: 'Storage Packages',
+    icon: 'hard-drive-outline',
+    link: '/admin/storage-packages',
+    hidden: false,
+  },
+
+  // 6
+  {
     title: 'Coupon Codes',
     icon: 'credit-card-outline',
     link: '/admin/coupon',
     hidden: false,
   },
 
-  // 5
+  // 7
   {
     title: 'Users',
     icon: 'people-outline',
@@ -42,7 +58,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: false,
   },
 
-  // 6
+  // 8
   {
     title: 'Setting',
     icon: 'settings-2-outline',

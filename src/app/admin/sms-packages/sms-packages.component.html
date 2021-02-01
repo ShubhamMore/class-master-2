@@ -2,7 +2,12 @@
   <nb-card-header>
     <div class="row">
       <div class="col-md-9 col-sm-8">
-        <h3>Membership Plans</h3>
+        <h3>SMS Packages</h3>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <button nbButton status="primary" size="small" fullWidth (click)="openSMSPackageDialog()">
+          Add SMS Package
+        </button>
       </div>
     </div>
   </nb-card-header>
@@ -21,9 +26,9 @@
             <tbody>
               <tr *ngFor="let smsPackage of smsPackages; let i = index">
                 <td>{{ i + 1 }}</td>
-                <td>{{ smsPackage.name | uppercase }}</td>
+                <td>{{ smsPackage.packageName }}</td>
                 <td>{{ smsPackage.smsCount }}</td>
-                <td>{{ getAmount(membership.price) }}/-</td>
+                <td>{{ getAmount(smsPackage.price) }}/-</td>
                 <td>
                   <button
                     type="button"
@@ -41,7 +46,7 @@
                     nbButton
                     size="small"
                     [status]="smsPackage.status ? 'warning' : 'success'"
-                    (click)="changeSMSPackageStatus(smsPackage._id, !smsPackage.status)"
+                    (click)="changeSMSPackageStatus(smsPackage._id, !smsPackage.status, i)"
                   >
                     {{ smsPackage.status ? 'Deactivate' : 'Activate' }}
                   </button>
@@ -52,7 +57,7 @@
                     nbButton
                     size="small"
                     status="danger"
-                    (click)="deleteSMSPackage(smsPackage._id)"
+                    (click)="deleteSMSPackage(smsPackage._id, i)"
                   >
                     Delete
                   </button>

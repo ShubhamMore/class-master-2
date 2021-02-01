@@ -36,7 +36,7 @@ export class SMSPackageService {
   }
   constructor(private httpService: HttpService) {}
 
-  addSMSPackage(smsPackage: any) {
+  saveSMSPackage(smsPackage: any) {
     const data = { api: 'newSMSPackage', data: smsPackage };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {

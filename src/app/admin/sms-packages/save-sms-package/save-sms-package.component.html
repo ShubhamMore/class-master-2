@@ -1,1 +1,144 @@
-<p>save-sms-package works!</p>
+<nb-card class="smsPackage-box">
+  <nb-card-header>
+    <nb-icon class="float-right pointer" icon="close-outline" (click)="onClose()"></nb-icon>
+    <h3 class="">{{ smsPackage ? 'Update' : 'Add' }} SMS Package</h3>
+  </nb-card-header>
+  <nb-card-body>
+    <form class="" (submit)="saveSMSPackage()" [formGroup]="smsPackageForm">
+      <div class="table-responsive">
+        <table class="table table-borderless">
+          <tbody>
+            <tr>
+              <th>Package Name</th>
+              <td>:</td>
+              <td>
+                <div class="form-control-group">
+                  <input
+                    type="text"
+                    nbInput
+                    id="input-package-name"
+                    name="packageName"
+                    formControlName="packageName"
+                    placeholder="Package Name"
+                    fullWidth
+                    [status]="
+                      smsPackageForm.get('packageName').touched
+                        ? smsPackageForm.get('packageName').invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                  <ng-container *ngIf="smsPackageForm.get('packageName').touched">
+                    <p
+                      class="caption status-danger"
+                      *ngIf="smsPackageForm.get('packageName').errors?.required"
+                    >
+                      SMS Package Name is required!
+                    </p>
+                  </ng-container>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>SMS Count</th>
+              <td>:</td>
+              <td>
+                <div class="form-control-group">
+                  <input
+                    type="number"
+                    nbInput
+                    id="input-sms-count"
+                    name="smsCount"
+                    min="0"
+                    formControlName="smsCount"
+                    placeholder="SMS Count"
+                    fullWidth
+                    [status]="
+                      smsPackageForm.get('smsCount').touched
+                        ? smsPackageForm.get('smsCount').invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                  <ng-container *ngIf="smsPackageForm.get('smsCount').touched">
+                    <p
+                      class="caption status-danger"
+                      *ngIf="smsPackageForm.get('smsCount').errors?.required"
+                    >
+                      SMS Count is required!
+                    </p>
+                    <p
+                      class="caption status-danger"
+                      *ngIf="smsPackageForm.get('smsCount').errors?.min"
+                    >
+                      SMS Count should be more than or equal to 0
+                    </p>
+                  </ng-container>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>Price</th>
+              <td>:</td>
+              <td>
+                <div class="form-control-group">
+                  <input
+                    type="number"
+                    nbInput
+                    id="input-price"
+                    name="price"
+                    min="0"
+                    formControlName="price"
+                    placeholder="Price"
+                    fullWidth
+                    [status]="
+                      smsPackageForm.get('price').touched
+                        ? smsPackageForm.get('price').invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                  <ng-container *ngIf="smsPackageForm.get('price').touched">
+                    <p
+                      class="caption status-danger"
+                      *ngIf="smsPackageForm.get('price').errors?.required"
+                    >
+                      Price Amount is required!
+                    </p>
+                    <p
+                      class="caption status-danger"
+                      *ngIf="smsPackageForm.get('price').errors?.min"
+                    >
+                      Price Amount should be more than or equal to 0
+                    </p>
+                  </ng-container>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-md-12 text-right">
+          <button
+            type="submit"
+            nbButton
+            size="small"
+            [disabled]="submit"
+            [nbSpinner]="submit"
+            nbSpinnerStatus="primary"
+            nbSpinnerSize="small"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

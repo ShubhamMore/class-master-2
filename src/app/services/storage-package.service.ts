@@ -37,7 +37,7 @@ export class StoragePackageService {
 
   constructor(private httpService: HttpService) {}
 
-  addStoragePackage(storagePackage: any) {
+  saveStoragePackage(storagePackage: any) {
     const data = { api: 'newStoragePackage', data: storagePackage };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {

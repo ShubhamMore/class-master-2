@@ -1,1 +1,183 @@
-<p>save-storage-package works!</p>
+<nb-card class="storagePackage-box">
+  <nb-card-header>
+    <nb-icon class="float-right pointer" icon="close-outline" (click)="onClose()"></nb-icon>
+    <h3 class="">{{ storagePackage ? 'Update' : 'Add' }} Storage Package</h3>
+  </nb-card-header>
+  <nb-card-body>
+    <form class="" (submit)="saveStoragePackage()" [formGroup]="storagePackageForm">
+      <div class="table-responsive">
+        <table class="table table-borderless">
+          <tbody>
+            <tr>
+              <th>Package Name</th>
+              <td>:</td>
+              <td>
+                <div class="form-control-group">
+                  <input
+                    type="text"
+                    nbInput
+                    id="input-package-name"
+                    name="packageName"
+                    formControlName="packageName"
+                    placeholder="Package Name"
+                    fullWidth
+                    [status]="
+                      storagePackageForm.get('packageName').touched
+                        ? storagePackageForm.get('packageName').invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                  <ng-container *ngIf="storagePackageForm.get('packageName').touched">
+                    <p
+                      class="caption status-danger"
+                      *ngIf="storagePackageForm.get('packageName').errors?.required"
+                    >
+                      Storage Package Name is required!
+                    </p>
+                  </ng-container>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>Storage (in MB)</th>
+              <td>:</td>
+              <td>
+                <div class="form-control-group">
+                  <input
+                    type="number"
+                    nbInput
+                    id="input-storage"
+                    name="storage"
+                    min="0"
+                    formControlName="storage"
+                    placeholder="Storage (in MB)"
+                    fullWidth
+                    [status]="
+                      storagePackageForm.get('storage').touched
+                        ? storagePackageForm.get('storage').invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                  <ng-container *ngIf="storagePackageForm.get('storage').touched">
+                    <p
+                      class="caption status-danger"
+                      *ngIf="storagePackageForm.get('storage').errors?.required"
+                    >
+                      Storage is required!
+                    </p>
+                    <p
+                      class="caption status-danger"
+                      *ngIf="storagePackageForm.get('storage').errors?.min"
+                    >
+                      Storage should be more than 0
+                    </p>
+                  </ng-container>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>Storage Validity (in Days)</th>
+              <td>:</td>
+              <td>
+                <div class="form-control-group">
+                  <input
+                    type="date"
+                    nbInput
+                    id="input-validity"
+                    name="validity"
+                    [min]="dateService.getDateString()"
+                    formControlName="validity"
+                    placeholder="Storage Validity (in Days)"
+                    fullWidth
+                    [status]="
+                      storagePackageForm.get('validity').touched
+                        ? storagePackageForm.get('validity').invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                  <ng-container *ngIf="storagePackageForm.get('validity').touched">
+                    <p
+                      class="caption status-danger"
+                      *ngIf="storagePackageForm.get('validity').errors?.required"
+                    >
+                      Storage Validity is required!
+                    </p>
+                    <p
+                      class="caption status-danger"
+                      *ngIf="storagePackageForm.get('validity').errors?.min"
+                    >
+                      Storage Validity should be more than 0
+                    </p>
+                  </ng-container>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>Price</th>
+              <td>:</td>
+              <td>
+                <div class="form-control-group">
+                  <input
+                    type="number"
+                    nbInput
+                    id="input-price"
+                    name="price"
+                    min="0"
+                    formControlName="price"
+                    placeholder="Price"
+                    fullWidth
+                    [status]="
+                      storagePackageForm.get('price').touched
+                        ? storagePackageForm.get('price').invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                  <ng-container *ngIf="storagePackageForm.get('price').touched">
+                    <p
+                      class="caption status-danger"
+                      *ngIf="storagePackageForm.get('price').errors?.required"
+                    >
+                      Price Amount is required!
+                    </p>
+                    <p
+                      class="caption status-danger"
+                      *ngIf="storagePackageForm.get('price').errors?.min"
+                    >
+                      Price Amount should be more than or equal to 0
+                    </p>
+                  </ng-container>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-md-12 text-right">
+          <button
+            type="submit"
+            nbButton
+            size="small"
+            [disabled]="submit"
+            [nbSpinner]="submit"
+            nbSpinnerStatus="primary"
+            nbSpinnerSize="small"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

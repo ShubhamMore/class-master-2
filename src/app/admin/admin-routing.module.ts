@@ -34,6 +34,20 @@ const routes: Routes = [
       },
 
       {
+        path: 'sms-packages',
+        loadChildren: () =>
+          import('./sms-packages/sms-packages.module').then((m) => m.SmsPackagesModule),
+        canActivate: [],
+      },
+
+      {
+        path: 'storage-packages',
+        loadChildren: () =>
+          import('./storage-packages/storage-packages.module').then((m) => m.StoragePackagesModule),
+        canActivate: [],
+      },
+
+      {
         path: 'settings',
         loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
         canActivate: [],
