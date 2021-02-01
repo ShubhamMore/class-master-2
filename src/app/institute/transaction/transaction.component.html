@@ -18,7 +18,7 @@
           <tbody>
             <tr *ngFor="let transaction of transactions; let i = index">
               <td>{{ i + 1 }}</td>
-              <td>{{ transaction.order_id }}</td>
+              <td>{{ transaction._id | uppercase }}</td>
               <td>
                 {{ dateService.formatDate(dateService.convertToDateString(transaction.createdAt)) }}
               </td>
@@ -43,13 +43,9 @@
 </nb-card>
 
 <ng-template #loadingData>
-  <p class="pt-5 pb-5 text-center">
-    Loading...
-  </p>
+  <p class="pt-5 pb-5 text-center">Loading...</p>
 </ng-template>
 
 <ng-template #noTransactions>
-  <p class="pt-5 pb-5 text-center">
-    No Transactions Available
-  </p>
+  <p class="pt-5 pb-5 text-center">No Transactions Available</p>
 </ng-template>

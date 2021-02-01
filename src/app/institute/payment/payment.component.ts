@@ -52,7 +52,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
       amount: '', // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       currency: 'INR',
       name: 'IMS Master',
-      description: 'Class Master Transaction',
+      description: 'The Class Master Transaction',
       image: '../../../assets/brand/class-master-mini.png',
       // tslint:disable-next-line: max-line-length
       order_id: '', // This is a sample Order ID. Pass the `id` obtained in the response of Step 1 order_9A33XWu170gUtm

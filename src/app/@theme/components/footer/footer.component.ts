@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   template: `
     <span class="created-by">
       Created with ♥ by TEAM
-      <strong><a href="https://www.google.com" target="_blank">CLASS MASTER</a></strong> 2020
+      <strong><a href="https://www.google.com" target="_blank">THE CLASS MASTER</a></strong> 2020
     </span>
   `,
 })

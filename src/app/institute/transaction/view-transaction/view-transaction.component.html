@@ -41,17 +41,20 @@
               <strong>Name: </strong>{{ transaction.userName }}
             </div>
             <div class="col-md-6 col-10 mx-auto">
-              <strong>Transaction Id: </strong>{{ transaction.order_id }}
+              <strong>Transaction Id: </strong>{{ transaction._id | uppercase }}
+            </div>
+            <div class="col-md-6 col-10 mx-auto">
+              <strong>Order Id: </strong>{{ transaction.order_id }}
+            </div>
+            <div class="col-md-6 col-10 mx-auto">
+              <strong>Date: </strong>
+              {{ dateService.formatDate(dateService.convertToDateString(transaction.createdAt)) }}
             </div>
             <div class="col-md-6 col-10 mx-auto">
               <!-- <strong>Branch: </strong>{{ transaction.branchBasicDetails.branchName }} -->
             </div>
             <div class="col-md-6 col-10 mx-auto">
               <!-- <strong>Branch City: </strong>{{ transaction.branchAddress.city }} -->
-            </div>
-            <div class="col-10 mx-auto">
-              <strong>Date: </strong>
-              {{ dateService.formatDate(dateService.convertToDateString(transaction.createdAt)) }}
             </div>
           </div>
 
