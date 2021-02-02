@@ -24,8 +24,9 @@
           <table class="table">
             <thead>
               <th>#</th>
-              <th>Storage Package</th>
-              <th>Storage Count</th>
+              <th>Package</th>
+              <th>Storage Size</th>
+              <th>Validity</th>
               <th>Price</th>
               <th colspan="3">Action</th>
             </thead>
@@ -33,7 +34,8 @@
               <tr *ngFor="let storagePackage of storagePackages; let i = index">
                 <td>{{ i + 1 }}</td>
                 <td>{{ storagePackage.packageName }}</td>
-                <td>{{ storagePackage.storage }}</td>
+                <td>{{ calculateStorage(storagePackage.storage) }}</td>
+                <td>{{ storagePackage.validity }} Days</td>
                 <td>{{ getAmount(storagePackage.price) }}/-</td>
                 <td>
                   <button

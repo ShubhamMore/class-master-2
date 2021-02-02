@@ -85,11 +85,11 @@
               <td>
                 <div class="form-control-group">
                   <input
-                    type="date"
+                    type="number"
                     nbInput
                     id="input-validity"
                     name="validity"
-                    [min]="dateService.getDateString()"
+                    min="0"
                     formControlName="validity"
                     placeholder="Storage Validity (in Days)"
                     fullWidth

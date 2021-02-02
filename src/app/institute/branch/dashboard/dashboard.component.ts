@@ -202,6 +202,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['../students-report'], { relativeTo: this.route });
   }
 
+  manageStorage() {
+    this.router.navigate(['../storage'], { relativeTo: this.route });
+  }
+
   previousYear() {
     if (this.year >= 2018) {
       this.year--;

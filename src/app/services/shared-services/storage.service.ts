@@ -15,6 +15,19 @@ export class StorageService {
     this.GB = 1024 * 1024 * 1024;
   }
 
+  convertUnitToBytes(value: any, unit: string) {
+    value = +value;
+    if (unit === 'GB') {
+      return value * this.GB;
+    } else if (unit === 'MB') {
+      return value * this.MB;
+    } else if (unit === 'KB') {
+      return value * this.KB;
+    } else {
+      return value;
+    }
+  }
+
   convertByteToUnit(bytes: any): { value: number; unit: string } {
     bytes = +bytes;
     let value: number;

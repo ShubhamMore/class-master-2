@@ -1,0 +1,91 @@
+<nb-card>
+  <nb-card-header>
+    <button class="float-right" nbButton size="small" status="warning" (click)="back()">
+      Back
+    </button>
+    <h4>Storage</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row" *ngIf="!loading; else loadingData">
+      <div class="col-md-6 col-12">
+        <p>
+          <strong>Regular Storage: </strong>
+          {{ convertByteToUnit(branchStorage.regularStorageAssigned) }}
+        </p>
+        <!-- <p>
+          <strong>Extra Storage: </strong>
+          {{ convertByteToUnit(branchStorage.extraStorageAssigned) }}
+        </p>
+        <p>
+          <strong>Extra Storage Expires On: </strong>
+          {{ branchStorage.extraStorageExpireOn ? branchStorage.extraStorageExpireOn : '--' }}
+        </p> -->
+        <p>
+          <strong>Total Storage: </strong>
+          {{ convertByteToUnit(branchStorage.totalStorageAssigned) }}
+        </p>
+      </div>
+
+      <div class="col-md-6 col-12">
+        <div class="progress-info">
+          <h4>
+            {{ availableStorage }} <small>left of {{ totalStorage }}</small>
+          </h4>
+          <nb-progress-bar [value]="usedStorageInPercentage" status="danger" [displayValue]="true">
+            <span *ngIf="usedStorageInPercentage >= 25">&nbsp;Used</span>
+          </nb-progress-bar>
+          <div class="caption description">
+            <bdi>{{ usedStorage }} Used</bdi>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<!-- <nb-card>
+  <nb-card-header>
+    <h6>Want to increase Storage?</h6>
+    <h4>Storage Packages</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <ng-container *ngIf="!loadingPackages; else loadingData">
+      <div class="table-responsive" *ngIf="storagePackages.length > 0; else noPackages">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Package</th>
+              <th>Size</th>
+              <th>Validity</th>
+              <th>Price</th>
+              <th>Activate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let package of storagePackages; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ package.packageName }}</td>
+              <td>{{ calculateStorageSize(package.storage) }}</td>
+              <td>{{ package.validity }} Days</td>
+              <td>{{ getAmount(package.price) }}/-</td>
+              <td>
+                <button nbButton size="small" status="success" (click)="activate(package)">
+                  Activate
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+  </nb-card-body>
+</nb-card> -->
+
+<ng-template #loadingData>
+  <p class="pt-5 pb-5 text-center">Loading...</p>
+</ng-template>
+
+<ng-template #noPackages>
+  <p class="pt-5 pb-5 text-center">No Storage Packages</p>
+</ng-template>

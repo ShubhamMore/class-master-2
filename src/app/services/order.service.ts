@@ -35,8 +35,32 @@ export class OrderService {
     );
   }
 
-  generateOrder(order: any) {
-    const data = { api: 'generateOrder', data: order };
+  generateStorageOrder(order: any) {
+    const data = { api: 'generateStorageOrder', data: order };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  generateSMSOrder(order: any) {
+    const data = { api: 'generateSMSOrder', data: order };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  generateMembershipOrder(order: any) {
+    const data = { api: 'generateMembershipOrder', data: order };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

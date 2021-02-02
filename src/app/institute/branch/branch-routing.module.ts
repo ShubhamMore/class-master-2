@@ -50,6 +50,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'storage',
+        loadChildren: () => import('./storage/storage.module').then((m) => m.StorageModule),
+      },
+
+      {
         path: 'student',
         loadChildren: () => import('./student/student.module').then((m) => m.StudentModule),
       },

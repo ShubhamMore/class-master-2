@@ -1,3 +1,4 @@
+import { StorageService } from './../../services/shared-services/storage.service';
 import { SaveStoragePackageComponent } from './save-storage-package/save-storage-package.component';
 import { StoragePackageModel } from './../../models/storage-package.model';
 import { NbToastrService, NbDialogService } from '@nebular/theme';
@@ -16,6 +17,7 @@ export class StoragePackagesComponent implements OnInit {
   storagePackages: StoragePackageModel[];
 
   constructor(
+    private storageService: StorageService,
     private storagePackageService: StoragePackageService,
     private toastrService: NbToastrService,
     private dialogService: NbDialogService,
@@ -48,6 +50,12 @@ export class StoragePackagesComponent implements OnInit {
         context: {},
       })
       .onClose.subscribe((storagePackage: any) => storagePackage && this.getStoragePackages());
+  }
+
+  calculateStorage(storage: any) {
+    const storageInBytes = this.storageService.convertUnitToBytes(storage, 'MB');
+    const storageSizeWithUnit = this.storageService.convertByteToUnit(storageInBytes);
+    return storageSizeWithUnit.value.toFixed(1) + ' ' + storageSizeWithUnit.unit;
   }
 
   getAmount(amount: any) {

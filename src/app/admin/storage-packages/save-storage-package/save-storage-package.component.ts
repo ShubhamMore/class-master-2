@@ -20,15 +20,12 @@ export class SaveStoragePackageComponent implements OnInit, OnDestroy {
   constructor(
     private storagePackageService: StoragePackageService,
     private toastrService: NbToastrService,
-    public dateService: DateService,
     protected ref: NbDialogRef<SaveStoragePackageComponent>,
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.submit = false;
-
-    console.log(this.dateService.getDateString());
 
     this.storagePackageService
       .getStoragePackageData()
@@ -41,7 +38,7 @@ export class SaveStoragePackageComponent implements OnInit, OnDestroy {
             validators: [Validators.required, Validators.min(0)],
           }),
           validity: new FormControl(null, {
-            validators: [Validators.required],
+            validators: [Validators.required, Validators.min(0)],
           }),
           price: new FormControl(null, {
             validators: [Validators.required, Validators.min(0)],

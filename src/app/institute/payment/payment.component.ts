@@ -31,6 +31,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   private placedOrderReceipt: any;
 
   paymentDetails: any;
+
   constructor(
     private branchService: BranchService,
     private paymentService: PaymentService,
@@ -105,24 +106,67 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private generateOrder() {
-    this.orderService.generateOrder(this.orderDetails).subscribe(
-      (res: any) => {
-        this.placedOrderReceipt = res.paymentReceipt;
-        // this.options.amount = res.order.amount;
-        this.options.amount = '1';
-        this.options.order_id = res.order.id;
-        this.options.currency = res.order.currency;
-        this.options.prefill.name = this.user.name;
-        this.options.prefill.email = this.user.email;
-        this.options.prefill.contact = this.user.phone;
-        this.razorPay = new Razorpay(this.options);
-        this.pay();
-      },
-      (err: any) => {
-        this.showToastr('top-right', 'danger', err);
-        this.onClose();
-      },
-    );
+    if (this.paymentDetails.planType === 'membership') {
+      this.orderService.generateMembershipOrder(this.orderDetails).subscribe(
+        (res: any) => {
+          this.placedOrderReceipt = res.paymentReceipt;
+          // this.options.amount = res.order.amount;
+          this.options.amount = '1';
+          this.options.order_id = res.order.id;
+          this.options.currency = res.order.currency;
+          this.options.prefill.name = this.user.name;
+          this.options.prefill.email = this.user.email;
+          this.options.prefill.contact = this.user.phone;
+          this.razorPay = new Razorpay(this.options);
+          this.pay();
+        },
+        (err: any) => {
+          this.showToastr('top-right', 'danger', err);
+          this.onClose();
+        },
+      );
+    } else if (this.paymentDetails.planType === 'storage') {
+      this.orderService.generateStorageOrder(this.orderDetails).subscribe(
+        (res: any) => {
+          this.placedOrderReceipt = res.paymentReceipt;
+          // this.options.amount = res.order.amount;
+          this.options.amount = '1';
+          this.options.order_id = res.order.id;
+          this.options.currency = res.order.currency;
+          this.options.prefill.name = this.user.name;
+          this.options.prefill.email = this.user.email;
+          this.options.prefill.contact = this.user.phone;
+          this.razorPay = new Razorpay(this.options);
+          this.pay();
+        },
+        (err: any) => {
+          this.showToastr('top-right', 'danger', err);
+          this.onClose();
+        },
+      );
+    } else if (this.paymentDetails.planType === 'sms') {
+      this.orderService.generateSMSOrder(this.orderDetails).subscribe(
+        (res: any) => {
+          this.placedOrderReceipt = res.paymentReceipt;
+          // this.options.amount = res.order.amount;
+          this.options.amount = '1';
+          this.options.order_id = res.order.id;
+          this.options.currency = res.order.currency;
+          this.options.prefill.name = this.user.name;
+          this.options.prefill.email = this.user.email;
+          this.options.prefill.contact = this.user.phone;
+          this.razorPay = new Razorpay(this.options);
+          this.pay();
+        },
+        (err: any) => {
+          this.showToastr('top-right', 'danger', err);
+          this.onClose();
+        },
+      );
+    } else {
+      this.showToastr('top-right', 'danger', 'Invalid Plan');
+      this.onClose();
+    }
   }
 
   private pay() {
