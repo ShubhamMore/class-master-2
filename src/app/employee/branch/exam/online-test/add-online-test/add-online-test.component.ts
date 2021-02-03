@@ -237,7 +237,7 @@ export class AddOnlineTestComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['../manage'], { relativeTo: this.route });
+    this.router.navigate(['../manage'], { relativeTo: this.route, replaceUrl: true });
   }
 
   ngOnDestroy() {

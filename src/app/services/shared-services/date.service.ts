@@ -140,6 +140,7 @@ export class DateService {
       return '--';
     }
     date = new Date(date);
+
     return (
       date.getFullYear() +
       '-' +

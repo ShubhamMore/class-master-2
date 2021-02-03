@@ -36,7 +36,7 @@ export class ManageStudyMaterialComponent implements OnInit {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
 
       return;
     }
@@ -45,7 +45,7 @@ export class ManageStudyMaterialComponent implements OnInit {
     this.lectureService.getLectureData().subscribe((lecture: LectureModel) => {
       this.lecture = lecture;
       if (!this.lecture) {
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.back();
         return;
       }
       this.getLectureMaterials(this.subject);

@@ -33,7 +33,7 @@ export class ManageBatchComponent implements OnInit {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
@@ -42,7 +42,7 @@ export class ManageBatchComponent implements OnInit {
     this.courseService.getCourseData().subscribe((course: CourseModel) => {
       this.course = course;
       if (!this.course) {
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.back();
         return;
       }
       this.getBatches();
@@ -91,6 +91,10 @@ export class ManageBatchComponent implements OnInit {
         this.loading = false;
       },
     );
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   showToastr(position: any, status: any, message: string) {

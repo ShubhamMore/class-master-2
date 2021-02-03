@@ -39,7 +39,8 @@ export class BatchAssignmentComponent implements OnInit {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
+
       return;
     }
     this.categories = [];
@@ -149,6 +150,10 @@ export class BatchAssignmentComponent implements OnInit {
     }
 
     return '--';
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   private showToastr(position: any, status: any, message: string) {

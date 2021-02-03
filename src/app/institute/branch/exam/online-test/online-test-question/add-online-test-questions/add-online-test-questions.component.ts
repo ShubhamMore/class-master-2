@@ -218,7 +218,7 @@ export class AddOnlineTestQuestionsComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../'], { relativeTo: this.route, replaceUrl: true });
   }
 
   ngOnDestroy() {

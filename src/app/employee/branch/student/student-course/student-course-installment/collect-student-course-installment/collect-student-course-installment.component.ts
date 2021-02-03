@@ -61,7 +61,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
     this.courseInstallmentId = this.studentCourseInstallmentService.getCourseInstallmentId();
 
     if (!this.branchId || !this.categoryId || !this.courseId || !this.studentId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
 
       return;
     }
@@ -92,7 +92,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
 
     if (mode && mode !== 'edit') {
       this.showToastr('top-right', 'danger', 'Invalid Route');
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
 
       return;
     }
@@ -102,7 +102,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
 
     if (mode && !this.studentCourseInstallmentReceiptId) {
       this.showToastr('top-right', 'danger', 'Receipt Id Not Provided');
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
 
       return;
     }
@@ -114,7 +114,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
           (studentCourseInstallmentReceipt: StudentCourseInstallmentReceiptModel) => {
             if (!studentCourseInstallmentReceipt) {
               this.showToastr('top-right', 'danger', 'Receipt Not Available');
-              this.router.navigate(['../'], { relativeTo: this.route });
+              this.back();
 
               return;
             }
@@ -138,7 +138,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
           },
           (err: any) => {
             this.showToastr('top-right', 'danger', 'Receipt Not Available');
-            this.router.navigate(['../'], { relativeTo: this.route });
+            this.back();
           },
         );
     } else {
@@ -146,8 +146,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
         .getCourseInstallment(this.courseInstallmentId)
         .subscribe((courseInstallment: InstallmentModel) => {
           if (!courseInstallment) {
-            this.router.navigate(['../'], { relativeTo: this.route });
-
+            this.back();
             return;
           }
 
@@ -249,7 +248,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
   }
 
   back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../'], { relativeTo: this.route, replaceUrl: true });
   }
 
   private showToastr(position: any, status: any, message: string) {

@@ -47,7 +47,7 @@ export class StudentCourseInstallmentComponent implements OnInit, OnDestroy {
       // !this.studentId ||
       // !this.studentCourseInstallmentId
     ) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
@@ -64,7 +64,7 @@ export class StudentCourseInstallmentComponent implements OnInit, OnDestroy {
     //       },
     //       (err: any) => {
     //         this.showToastr('top-right', 'danger', err);
-    //         this.router.navigate(['../'], { relativeTo: this.route });
+    //         this.back()
     //       },
     //     );
     // }
@@ -74,6 +74,10 @@ export class StudentCourseInstallmentComponent implements OnInit, OnDestroy {
     //     position,
     //     status,
     //   });
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

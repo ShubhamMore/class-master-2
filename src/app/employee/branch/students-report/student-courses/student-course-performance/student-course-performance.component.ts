@@ -57,7 +57,7 @@ export class StudentCoursePerformanceComponent implements OnInit {
     this.studentId = this.studentService.getStudentId();
 
     if (!this.branchId || !this.categoryId || !this.studentCourseId || !this.studentId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
     this.studentCourseService

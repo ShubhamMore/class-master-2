@@ -26,16 +26,20 @@ export class BatchComponent implements OnInit, OnDestroy {
     this.branchId = this.branchService.getBranchId();
     this.courseId = this.courseService.getCourseId();
     if (!this.branchId || !this.courseId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
     const course = this.courseService.getCourseData();
     if (!course) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
     this.loading = false;
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

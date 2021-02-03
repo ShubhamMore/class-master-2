@@ -341,7 +341,11 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
 
   back() {
     const type = this.employeeService.getEmployeeType();
-    this.router.navigate(['../'], { relativeTo: this.route, queryParams: { type } });
+    this.router.navigate(['../'], {
+      relativeTo: this.route,
+      queryParams: { type },
+      replaceUrl: true,
+    });
   }
 
   ngOnDestroy() {

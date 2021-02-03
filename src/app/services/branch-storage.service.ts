@@ -36,8 +36,8 @@ export class BranchStorageService {
     );
   }
 
-  updateBranchStorage(branch: string, storagePackage: string) {
-    const data = { api: 'updateBranchStorage', data: { branch, storagePackage } };
+  updateBranchStorage(branch: string, storagePackage: string, order: string, receipt: string) {
+    const data = { api: 'updateBranchStorage', data: { branch, storagePackage, order, receipt } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

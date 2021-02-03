@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
     this.currentYear = +this.dateService.getCurrentYear();
@@ -262,6 +262,10 @@ export class DashboardComponent implements OnInit {
         },
       ],
     };
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   private showToastr(position: any, status: any, message: string) {

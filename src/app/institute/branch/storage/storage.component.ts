@@ -1,4 +1,7 @@
-import { NbToastrService } from '@nebular/theme';
+import { CheckoutComponent } from './../../checkout/checkout.component';
+import { PaymentComponent } from './../../payment/payment.component';
+import { PaymentService } from './../../../services/payment.service';
+import { NbToastrService, NbDialogService } from '@nebular/theme';
 import { DateService } from './../../../services/shared-services/date.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BranchStorageService } from './../../../services/branch-storage.service';
@@ -16,7 +19,6 @@ import { StorageService } from '../../../services/shared-services/storage.servic
 })
 export class StorageComponent implements OnInit {
   loading: boolean;
-  loadingPackages: boolean;
   branchId: string;
 
   branchStorage: BranchStorageModel;
@@ -27,8 +29,12 @@ export class StorageComponent implements OnInit {
   availableStorage: string;
   usedStorageInPercentage: number;
 
+  paymentDetails: { planType: string; packageType: string; amount: string };
+
   constructor(
     private branchService: BranchService,
+    private dialogService: NbDialogService,
+    private paymentService: PaymentService,
     private storageService: StorageService,
     private storagePackageService: StoragePackageService,
     private branchStorageService: BranchStorageService,
@@ -40,7 +46,6 @@ export class StorageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.loadingPackages = true;
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
@@ -53,24 +58,99 @@ export class StorageComponent implements OnInit {
         this.branchStorage = branchStorage;
         this.calculateStorage(branchStorage);
 
-        this.loading = false;
+        this.storagePackageService.getStoragePackages().subscribe(
+          (storagePackages: StoragePackageModel[]) => {
+            this.storagePackages = storagePackages;
+            this.loading = false;
+          },
+          (error: any) => {
+            this.showToastr('top-right', 'danger', error);
+            this.loading = false;
+          },
+        );
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
         this.loading = false;
       },
+    );
+  }
+
+  onClosePayment(order: any) {
+    if (order.status) {
+      this.updateStorage(order.order, order.receipt);
+    }
+  }
+
+  updateStorage(order: string, receipt: string) {
+    this.branchStorageService
+      .updateBranchStorage(this.branchId, this.paymentDetails.packageType, order, receipt)
+      .subscribe(
+        (res: any) => {},
+        (error: any) => {},
+      );
+  }
+
+  isDisable(storagePackage: StoragePackageModel) {
+    if (!this.branchStorage.storagePackage) {
+      return false;
+    } else if (this.branchStorage.storagePackage === storagePackage.packageName) {
+      return true;
+    } else {
+      const upgradableAmount = this.upgradeAmount(storagePackage.price);
+      if (upgradableAmount <= 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  upgradeAmount(price: number) {
+    const remainingDays = this.dateService.dateDifferenceInDays(
+      this.dateService.getDateString(),
+      this.branchStorage.extraStorageExpireOn,
     );
 
-    this.storagePackageService.getStoragePackages().subscribe(
-      (storagePackages: StoragePackageModel[]) => {
-        this.storagePackages = storagePackages;
-        this.loadingPackages = false;
-      },
-      (error: any) => {
-        this.showToastr('top-right', 'danger', error);
-        this.loadingPackages = false;
-      },
+    const branchStoragePackage = this.storagePackages.find(
+      (storage: StoragePackageModel) => storage.packageName === this.branchStorage.storagePackage,
     );
+
+    const remainingAmount =
+      (+branchStoragePackage.price / +branchStoragePackage.validity) * +remainingDays;
+
+    const upgradableAmount = +(price - remainingAmount).toFixed(2);
+
+    return upgradableAmount;
+  }
+
+  onCheckout(checkout: any) {
+    if (checkout.status) {
+      this.dialogService
+        .open(PaymentComponent, {
+          context: {},
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+        })
+        .onClose.subscribe((order: any) => order && this.onClosePayment(order));
+    }
+  }
+
+  activate(storagePackage: StoragePackageModel) {
+    this.paymentService.setPaymentDetails(
+      'storage',
+      storagePackage.packageName,
+      storagePackage.price.toString(),
+    );
+
+    this.paymentDetails = this.paymentService.getPaymentDetails();
+    this.dialogService
+      .open(CheckoutComponent, {
+        context: {},
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe((checkout: any) => checkout && this.onCheckout(checkout));
   }
 
   convertByteToUnit(bytes: any) {
@@ -112,8 +192,6 @@ export class StorageComponent implements OnInit {
   back() {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
-
-  activate(storagePackage: StoragePackageModel) {}
 
   private showToastr(position: any, status: any, message: string) {
     this.toastrService.show(status, message, {

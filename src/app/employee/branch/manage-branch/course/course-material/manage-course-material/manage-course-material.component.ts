@@ -34,7 +34,7 @@ export class ManageCourseMaterialComponent implements OnInit {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
 
       return;
     }
@@ -43,7 +43,7 @@ export class ManageCourseMaterialComponent implements OnInit {
     this.courseService.getCourseData().subscribe((course: CourseModel) => {
       this.course = course;
       if (!this.course) {
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.back();
         return;
       }
       this.getCourseMaterials(this.subject);
@@ -130,6 +130,10 @@ export class ManageCourseMaterialComponent implements OnInit {
         this.loading = false;
       },
     );
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   showToastr(position: any, status: any, message: string) {

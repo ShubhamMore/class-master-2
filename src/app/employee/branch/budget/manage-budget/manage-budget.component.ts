@@ -43,7 +43,7 @@ export class ManageBudgetComponent implements OnInit {
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
@@ -181,6 +181,10 @@ export class ManageBudgetComponent implements OnInit {
         this.loading = false;
       },
     );
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   private showToastr(position: any, status: any, message: string) {

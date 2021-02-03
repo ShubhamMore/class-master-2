@@ -53,7 +53,7 @@ export class StudentCourseInstallmentReceiptComponent implements OnInit, OnDestr
       !this.studentCourseInstallmentReceiptId
     ) {
       this.showToastr('top-right', 'danger', 'Invalid Receipt');
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
 
       return;
     }
@@ -89,7 +89,7 @@ export class StudentCourseInstallmentReceiptComponent implements OnInit, OnDestr
         },
         (err: any) => {
           this.showToastr('top-right', 'danger', err);
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.back();
 
           return;
         },
@@ -98,6 +98,10 @@ export class StudentCourseInstallmentReceiptComponent implements OnInit, OnDestr
 
   print() {
     window.print();
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   private showToastr(position: any, status: any, message: string) {

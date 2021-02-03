@@ -55,7 +55,7 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
       !this.studentId ||
       !this.studentCourseInstallmentId
     ) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
@@ -72,7 +72,7 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
         },
         (err: any) => {
           this.showToastr('top-right', 'danger', err);
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.back();
         },
       );
 
@@ -138,6 +138,10 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
       position,
       status,
     });
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {}

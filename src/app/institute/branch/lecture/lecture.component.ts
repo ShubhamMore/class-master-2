@@ -32,7 +32,7 @@ export class LectureComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
@@ -57,9 +57,13 @@ export class LectureComponent implements OnInit, OnDestroy {
         this.loading = false;
       },
       (error: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.back();
       },
     );
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

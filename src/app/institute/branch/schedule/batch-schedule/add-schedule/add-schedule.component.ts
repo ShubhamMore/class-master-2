@@ -70,7 +70,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
@@ -84,11 +84,11 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
 
     if (mode && !['edit', 'date'].includes(mode)) {
       this.showToastr('top-right', 'danger', 'Invalid Route');
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     } else if (mode && mode === 'edit' && !this.scheduleId) {
       this.showToastr('top-right', 'danger', 'Schedule Not Found');
-      // this.router.navigate(['../'], { relativeTo: this.route });
+      //this.back()
       return;
     }
 

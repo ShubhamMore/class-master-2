@@ -43,7 +43,7 @@ export class CourseInstallmentReceiptComponent implements OnInit, OnDestroy {
 
     if (!this.branchId || !this.studentCourseInstallmentReceiptId) {
       this.showToastr('top-right', 'danger', 'Invalid Receipt');
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
@@ -78,11 +78,15 @@ export class CourseInstallmentReceiptComponent implements OnInit, OnDestroy {
         },
         (err: any) => {
           this.showToastr('top-right', 'danger', err);
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.back();
 
           return;
         },
       );
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   print() {

@@ -35,8 +35,7 @@ export class ReceiptInfoComponent implements OnInit {
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
-
+      this.back();
       return;
     }
 
@@ -89,13 +88,17 @@ export class ReceiptInfoComponent implements OnInit {
     this.billingService.saveBillingDetails(billingDetails).subscribe(
       (res: any) => {
         this.showToastr('top-right', 'success', 'Billing Details Updated Successfully!');
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.back();
       },
       (error: any) => {
         this.showToastr('top-right', 'danger', error);
         this.submit = false;
       },
     );
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   showToastr(position: any, status: any, message: string) {

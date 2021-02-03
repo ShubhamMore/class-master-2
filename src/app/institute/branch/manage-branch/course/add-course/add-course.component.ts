@@ -51,7 +51,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
 
       return;
     }
@@ -314,7 +314,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
       this.courseService.addCourse(course).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'New Course Added Successfully!');
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.back();
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
@@ -327,7 +327,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
       this.courseService.editCourse(course).subscribe(
         (res: any) => {
           this.showToastr('top-right', 'success', 'Course Updated Successfully!');
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.back();
         },
         (error: any) => {
           this.showToastr('top-right', 'danger', error);
@@ -374,7 +374,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../'], { relativeTo: this.route, replaceUrl: true });
   }
 
   ngOnDestroy() {

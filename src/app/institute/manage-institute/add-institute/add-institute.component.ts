@@ -77,12 +77,12 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
       return;
     } else if (!mode && !this.paymentDetails) {
       this.showToastr('top-right', 'danger', 'Invalid Payment Details');
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
 
       return;
     } else if (mode && !this.branchId) {
       this.showToastr('top-right', 'danger', 'Branch not Available');
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
 
       return;
     }
@@ -400,7 +400,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../'], { relativeTo: this.route, replaceUrl: true });
   }
 
   ngOnDestroy() {

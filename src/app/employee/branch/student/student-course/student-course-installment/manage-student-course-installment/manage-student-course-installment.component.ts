@@ -55,7 +55,7 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
       !this.studentId ||
       !this.studentCourseInstallmentId
     ) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
@@ -72,7 +72,7 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
         },
         (err: any) => {
           this.showToastr('top-right', 'danger', err);
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.back();
         },
       );
 
@@ -110,6 +110,10 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
   showReceipt(receiptId: string) {
     this.studentCourseInstallmentReceiptService.setStudentCourseInstallmentReceiptId(receiptId);
     this.router.navigate(['../receipt'], { relativeTo: this.route });
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   deleteReceipt(installmentId: string, receiptId: string) {

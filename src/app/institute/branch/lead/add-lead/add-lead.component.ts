@@ -241,7 +241,11 @@ export class AddLeadComponent implements OnInit, OnDestroy {
 
   back() {
     const leadType = this.leadService.getLeadType();
-    this.router.navigate(['../'], { relativeTo: this.route, queryParams: { type: leadType } });
+    this.router.navigate(['../'], {
+      relativeTo: this.route,
+      queryParams: { type: leadType },
+      replaceUrl: true,
+    });
   }
 
   getCategory(categoryId: string) {

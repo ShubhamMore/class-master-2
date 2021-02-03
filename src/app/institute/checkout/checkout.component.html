@@ -21,47 +21,49 @@
             <th>Amount:</th>
             <td>{{ getAmount(checkoutData.amount) }}/-</td>
           </tr>
-          <tr *ngIf="!coupon">
-            <th>Coupon Code:</th>
-            <td>
-              <nb-form-field>
-                <input
-                  type="text"
-                  nbInput
-                  fullWidth
-                  (input)="changeCouponCode($event.target.value)"
-                />
-                <button
-                  type="button"
-                  nbSuffix
-                  nbButton
-                  size="small"
-                  ghost
-                  nbTooltip="Apply Coupon Now"
-                  (click)="applyCoupon()"
-                  status="success"
-                >
-                  <nb-icon icon="paper-plane-outline"> </nb-icon>
-                </button>
-              </nb-form-field>
-            </td>
-          </tr>
-          <tr *ngIf="coupon">
-            <th>Coupon Code:</th>
-            <td>{{ coupon.code }}</td>
-          </tr>
-          <tr *ngIf="coupon">
-            <th>Discount:</th>
-            <td>{{ coupon.discount }}</td>
-          </tr>
-          <tr *ngIf="coupon">
-            <th>Discount Amount:</th>
-            <td>{{ getAmount(coupon.discountAmount) }}/-</td>
-          </tr>
-          <tr *ngIf="coupon">
-            <th>Total Amount:</th>
-            <td>{{ getAmount(coupon.totalAmount) }}/-</td>
-          </tr>
+          <ng-container *ngIf="checkoutData.planType === 'membership'">
+            <tr *ngIf="!coupon">
+              <th>Coupon Code:</th>
+              <td>
+                <nb-form-field>
+                  <input
+                    type="text"
+                    nbInput
+                    fullWidth
+                    (input)="changeCouponCode($event.target.value)"
+                  />
+                  <button
+                    type="button"
+                    nbSuffix
+                    nbButton
+                    size="small"
+                    ghost
+                    nbTooltip="Apply Coupon Now"
+                    (click)="applyCoupon()"
+                    status="success"
+                  >
+                    <nb-icon icon="paper-plane-outline"> </nb-icon>
+                  </button>
+                </nb-form-field>
+              </td>
+            </tr>
+            <tr *ngIf="coupon">
+              <th>Coupon Code:</th>
+              <td>{{ coupon.code }}</td>
+            </tr>
+            <tr *ngIf="coupon">
+              <th>Discount:</th>
+              <td>{{ coupon.discount }}</td>
+            </tr>
+            <tr *ngIf="coupon">
+              <th>Discount Amount:</th>
+              <td>{{ getAmount(coupon.discountAmount) }}/-</td>
+            </tr>
+            <tr *ngIf="coupon">
+              <th>Total Amount:</th>
+              <td>{{ getAmount(coupon.totalAmount) }}/-</td>
+            </tr>
+          </ng-container>
         </tbody>
       </table>
     </div>

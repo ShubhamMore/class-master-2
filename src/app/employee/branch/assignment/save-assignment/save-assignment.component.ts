@@ -66,8 +66,7 @@ export class SaveAssignmentComponent implements OnInit, OnDestroy {
     this.fileName = null;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
-
+      this.back();
       return;
     }
 
@@ -271,7 +270,7 @@ export class SaveAssignmentComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['../manage'], { relativeTo: this.route });
+    this.router.navigate(['../manage'], { relativeTo: this.route, replaceUrl: true });
   }
 
   ngOnDestroy() {

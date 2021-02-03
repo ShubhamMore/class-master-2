@@ -60,7 +60,7 @@ export class OnlineTestQuestionComponent implements OnInit, OnDestroy {
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
