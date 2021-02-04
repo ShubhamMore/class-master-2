@@ -1,4 +1,10 @@
-import { NbCardModule, NbButtonModule, NbIconModule, NbProgressBarModule } from '@nebular/theme';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbProgressBarModule,
+  NbTooltipModule,
+} from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -14,6 +20,7 @@ import { StorageComponent } from './storage.component';
     NbButtonModule,
     NbIconModule,
     NbProgressBarModule,
+    NbTooltipModule,
   ],
 })
 export class StorageModule {}

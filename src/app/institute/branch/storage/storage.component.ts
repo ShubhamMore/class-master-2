@@ -86,23 +86,22 @@ export class StorageComponent implements OnInit {
     this.branchStorageService
       .updateBranchStorage(this.branchId, this.paymentDetails.packageType, order, receipt)
       .subscribe(
-        (res: any) => {},
-        (error: any) => {},
+        (res: any) => {
+          this.ngOnInit();
+        },
+        (error: any) => {
+          this.showToastr('top-right', 'danger', error);
+        },
       );
   }
 
-  isDisable(storagePackage: StoragePackageModel) {
+  isUpgradable(storagePackage: StoragePackageModel) {
     if (!this.branchStorage.storagePackage) {
       return false;
-    } else if (this.branchStorage.storagePackage === storagePackage.packageName) {
-      return true;
+    } else if (storagePackage.packageName > this.branchStorage.storagePackage) {
+      return false;
     } else {
-      const upgradableAmount = this.upgradeAmount(storagePackage.price);
-      if (upgradableAmount <= 0) {
-        return true;
-      } else {
-        return false;
-      }
+      return true;
     }
   }
 
@@ -119,9 +118,12 @@ export class StorageComponent implements OnInit {
     const remainingAmount =
       (+branchStoragePackage.price / +branchStoragePackage.validity) * +remainingDays;
 
-    const upgradableAmount = +(price - remainingAmount).toFixed(2);
+    console.log(branchStoragePackage.price, branchStoragePackage.validity, remainingDays);
 
-    return upgradableAmount;
+    const upgradableAmount = this.getAmount(Math.round(+(price - remainingAmount) * 1.1));
+    console.log(upgradableAmount);
+
+    return upgradableAmount.toString();
   }
 
   onCheckout(checkout: any) {
@@ -137,11 +139,19 @@ export class StorageComponent implements OnInit {
   }
 
   activate(storagePackage: StoragePackageModel) {
-    this.paymentService.setPaymentDetails(
-      'storage',
-      storagePackage.packageName,
-      storagePackage.price.toString(),
-    );
+    const amount: string =
+      this.branchStorage.storagePackage &&
+      storagePackage.packageName > this.branchStorage.storagePackage
+        ? this.upgradeAmount(storagePackage.price)
+        : storagePackage.price.toString();
+
+    const type =
+      this.branchStorage.storagePackage &&
+      storagePackage.packageName > this.branchStorage.storagePackage
+        ? 'upgrade'
+        : 'new';
+
+    this.paymentService.setPaymentDetails('storage', storagePackage.packageName, amount, type);
 
     this.paymentDetails = this.paymentService.getPaymentDetails();
     this.dialogService

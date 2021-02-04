@@ -12,18 +12,20 @@
           <strong>Regular Storage: </strong>
           {{ convertByteToUnit(branchStorage.regularStorageAssigned) }}
         </p>
-        <p>
-          <strong>Extra Storage: </strong>
-          {{ convertByteToUnit(branchStorage.extraStorageAssigned) }}
-        </p>
-        <p>
-          <strong>Extra Storage Expires On: </strong>
-          {{
-            branchStorage.extraStorageExpireOn
-              ? dateService.formatDate(branchStorage.extraStorageExpireOn)
-              : '--'
-          }}
-        </p>
+        <ng-container *ngIf="!!branchStorage.storagePackage">
+          <p>
+            <strong>Extra Storage Package: </strong>
+            {{ branchStorage.storagePackage }}
+          </p>
+          <p>
+            <strong>Extra Storage: </strong>
+            {{ convertByteToUnit(branchStorage.extraStorageAssigned) }}
+          </p>
+          <p>
+            <strong>Extra Storage Expires On: </strong>
+            {{ dateService.formatDate(branchStorage.extraStorageExpireOn) }}
+          </p>
+        </ng-container>
         <p>
           <strong>Total Storage: </strong>
           {{ convertByteToUnit(branchStorage.totalStorageAssigned) }}
@@ -54,41 +56,64 @@
   </nb-card-header>
   <nb-card-body>
     <ng-container *ngIf="!loading; else loadingData">
-      <div class="table-responsive" *ngIf="storagePackages.length > 0; else noPackages">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Package</th>
-              <th>Size</th>
-              <th>Validity</th>
-              <th>Price</th>
-              <th>Activate</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let package of storagePackages; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td>{{ package.packageName }}</td>
-              <td>{{ calculateStorageSize(package.storage) }}</td>
-              <td>{{ package.validity }} Days</td>
-              <td>{{ getAmount(package.price) }}/-</td>
-              <td>
-                <button
-                  nbButton
-                  size="small"
-                  [status]="
-                    branchStorage.storagePackage === package.packageName ? 'basic' : 'success'
-                  "
-                  (click)="activate(package)"
-                  [disabled]="isDisable(package)"
-                >
-                  {{ branchStorage.storagePackage === package.packageName ? 'Active' : 'Activate' }}
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="row" *ngIf="storagePackages.length > 0; else noPackages">
+        <div
+          class="col-md-3 col-sm-6 col-12 mx-auto"
+          *ngFor="let package of storagePackages; let i = index"
+        >
+          <nb-card class="card">
+            <nb-card-header>
+              <h4 class="text-center">{{ package.packageName }}</h4>
+            </nb-card-header>
+            <nb-card-body>
+              <div>
+                <nb-icon icon="hard-drive-outline"></nb-icon>
+                &nbsp;
+                <span>{{ calculateStorageSize(package.storage) }}</span>
+              </div>
+              <div>
+                <nb-icon icon="clock-outline"></nb-icon>
+                &nbsp;
+                <span>{{ dateService.convertDaysToMonths(package.validity) }} Month/s</span>
+              </div>
+              <div
+                [ngClass]="
+                  branchStorage.storagePackage && package.packageName > branchStorage.storagePackage
+                    ? 'line-on-text'
+                    : ''
+                "
+              >
+                <nb-icon icon="pricetags-outline"></nb-icon>
+                &nbsp;
+                <span>{{ getAmount(package.price) }}/-</span>
+              </div>
+              <div *ngIf="package.packageName > branchStorage.storagePackage">
+                <nb-icon icon="pricetags-outline"></nb-icon>
+                &nbsp;
+                <span>{{ upgradeAmount(package.price) }}/-</span>
+              </div>
+            </nb-card-body>
+            <nb-card-footer>
+              <button
+                class="float-right"
+                nbButton
+                outline
+                size="small"
+                [status]="'success'"
+                [nbTooltip]="isUpgradable(package) ? 'Can\'t Downgrade Package' : 'Upgrade Package'"
+                (click)="activate(package)"
+                [disabled]="isUpgradable(package)"
+                *ngIf="branchStorage.storagePackage !== package.packageName; else activePackage"
+              >
+                {{
+                  branchStorage.storagePackage && package.packageName > branchStorage.storagePackage
+                    ? 'Upgrade'
+                    : 'Activate'
+                }}
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </div>
       </div>
     </ng-container>
   </nb-card-body>
@@ -100,4 +125,10 @@
 
 <ng-template #noPackages>
   <p class="pt-5 pb-5 text-center">No Storage Packages</p>
+</ng-template>
+
+<ng-template #activePackage>
+  <button class="float-right" nbButton size="small" [status]="'success'">
+    {{ 'Active' }}
+  </button>
 </ng-template>

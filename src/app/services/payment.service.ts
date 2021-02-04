@@ -7,15 +7,15 @@ import { throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class PaymentService {
-  private paymentDetails: { planType: string; packageType: string; amount: string };
+  private paymentDetails: { planType: string; packageType: string; amount: string; type?: string };
   private institutePaymentDetails: { amount: string };
 
   getPaymentDetails() {
     return this.paymentDetails;
   }
 
-  setPaymentDetails(planType: string, packageType: string, amount: string) {
-    this.paymentDetails = { planType, packageType, amount };
+  setPaymentDetails(planType: string, packageType: string, amount: string, type?: string) {
+    this.paymentDetails = { planType, packageType, amount, type };
   }
 
   deletePaymentDetails() {

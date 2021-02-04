@@ -275,4 +275,8 @@ export class DateService {
       return '';
     }
   }
+
+  convertDaysToMonths(days: any) {
+    return Math.floor(+days / 30);
+  }
 }

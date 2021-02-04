@@ -30,7 +30,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   private razorPay: any;
   private placedOrderReceipt: any;
 
-  paymentDetails: any;
+  paymentDetails: { planType: string; packageType: string; amount: string; type?: string };
 
   constructor(
     private branchService: BranchService,
@@ -126,6 +126,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         },
       );
     } else if (this.paymentDetails.planType === 'storage') {
+      this.orderDetails.type = this.paymentDetails.type;
       this.orderService.generateStorageOrder(this.orderDetails).subscribe(
         (res: any) => {
           this.placedOrderReceipt = res.paymentReceipt;
