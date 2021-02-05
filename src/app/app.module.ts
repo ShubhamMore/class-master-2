@@ -21,6 +21,7 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +42,7 @@ import {
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    FontAwesomeModule,
   ],
   bootstrap: [AppComponent],
 })
