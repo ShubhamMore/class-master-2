@@ -118,10 +118,7 @@ export class StorageComponent implements OnInit {
     const remainingAmount =
       (+branchStoragePackage.price / +branchStoragePackage.validity) * +remainingDays;
 
-    console.log(branchStoragePackage.price, branchStoragePackage.validity, remainingDays);
-
     const upgradableAmount = this.getAmount(Math.round(+(price - remainingAmount) * 1.1));
-    console.log(upgradableAmount);
 
     return upgradableAmount.toString();
   }

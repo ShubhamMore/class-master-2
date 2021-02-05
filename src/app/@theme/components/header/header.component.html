@@ -32,7 +32,8 @@
       badgePosition="top right"
       badgeStatus="danger"
       *ngIf="user.userRole !== 'admin'"
-    ></nb-action>
+    >
+    </nb-action>
     <!-- <nb-action class="control-item" icon="power-outline" (click)="logOut()"></nb-action> -->
     <nb-action class="user-action" *nbIsGranted="['view', 'user']">
       <nb-user
