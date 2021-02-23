@@ -22,7 +22,7 @@
               <td>
                 {{ dateService.formatDate(dateService.convertToDateString(transaction.createdAt)) }}
               </td>
-              <td>{{ transaction.amount }}</td>
+              <td>{{ getAmount(transaction.amount) }}</td>
               <td>
                 <button
                   type="button"

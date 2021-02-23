@@ -1,0 +1,72 @@
+<nb-card>
+  <nb-card-header>
+    <button class="float-right" nbButton size="small" status="warning" (click)="back()">
+      Back
+    </button>
+    <h4>SMS</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row" *ngIf="!loading; else loadingData">
+      <div class="col-md-6 col-12">
+        <h5>SMS Balance {{ BranchSMS.smsCount }}</h5>
+      </div>
+
+      <div class="col-md-6 col-12"></div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <h6>Want to increase SMS Balance?</h6>
+    <h4>SMS Packages</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <ng-container *ngIf="!loading; else loadingData">
+      <div class="row" *ngIf="smsPackages.length > 0; else noPackages">
+        <div
+          class="col-md-3 col-sm-6 col-12 mx-auto"
+          *ngFor="let package of smsPackages; let i = index"
+        >
+          <nb-card class="card">
+            <nb-card-header>
+              <h4 class="text-center">{{ package.packageName }}</h4>
+            </nb-card-header>
+            <nb-card-body>
+              <div>
+                <nb-icon icon="hard-drive-outline"></nb-icon>
+                &nbsp;
+                <span>{{ package.smsCount }}</span>
+              </div>
+              <div>
+                <nb-icon icon="pricetags-outline"></nb-icon>
+                &nbsp;
+                <span>{{ getAmount(package.price) }}/-</span>
+              </div>
+            </nb-card-body>
+            <nb-card-footer>
+              <button
+                class="float-right"
+                nbButton
+                outline
+                size="small"
+                [status]="'success'"
+                (click)="activate(package)"
+              >
+                {{ 'Activate' }}
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </div>
+      </div>
+    </ng-container>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #loadingData>
+  <p class="pt-5 pb-5 text-center">Loading...</p>
+</ng-template>
+
+<ng-template #noPackages>
+  <p class="pt-5 pb-5 text-center">No SMS Packages</p>
+</ng-template>

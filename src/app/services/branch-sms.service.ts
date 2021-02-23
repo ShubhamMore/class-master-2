@@ -36,8 +36,8 @@ export class BranchSMSService {
     );
   }
 
-  updateBranchSMS(branch: string, smsPackage: string) {
-    const data = { api: 'updateBranchSMS', data: { branch, smsPackage } };
+  updateBranchSMS(branch: string, smsPackage: string, order: string, receipt: string) {
+    const data = { api: 'updateBranchSMS', data: { branch, smsPackage, order, receipt } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

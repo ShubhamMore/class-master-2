@@ -41,6 +41,11 @@ export class TransactionComponent implements OnInit {
     this.router.navigate(['./view'], { relativeTo: this.route });
   }
 
+  getAmount(amount: any) {
+    amount = parseFloat(amount.toString());
+    return amount.toFixed(2).toString();
+  }
+
   private showToastr(position: any, status: any, message: string) {
     this.toastrService.show(status, message, {
       position,
