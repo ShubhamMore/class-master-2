@@ -117,9 +117,7 @@
 
 <ng-template #examStartCountDown>
   <p class="pt-5 pb-5 text-center" id="waitingToStart">
-    <span *ngIf="waitingToStart === 'loading'">
-      Loading...
-    </span>
+    <span *ngIf="waitingToStart === 'loading'"> Loading... </span>
     <span *ngIf="waitingToStart !== 'loading'">
       Exam will Start In <br />{{ waitingToStart }}
     </span>

@@ -1,3 +1,4 @@
+import { isPlatformBrowser } from '@angular/common';
 // import { LocationStrategy } from '@angular/common';
 import { AuthService, UserData } from './authentication/auth/auth-service/auth.service';
 /**
@@ -5,7 +6,7 @@ import { AuthService, UserData } from './authentication/auth/auth-service/auth.s
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { AnalyticsService } from './@core/utils/analytics.service';
 import { SeoService } from './@core/utils/seo.service';
 
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
     private analytics: AnalyticsService,
     private seoService: SeoService,
     private authService: AuthService, // private locationStrategy: LocationStrategy,
+    @Inject(PLATFORM_ID) private platformId,
   ) {
     // this.preventBackButton();
   }
@@ -26,12 +28,14 @@ export class AppComponent implements OnInit {
     this.analytics.trackPageViews();
     this.seoService.trackCanonicalChanges();
 
-    const userData: UserData = JSON.parse(localStorage.getItem('userData'));
-    if (!userData) {
-      return;
-    }
+    if (isPlatformBrowser(this.platformId)) {
+      const userData: UserData = JSON.parse(localStorage.getItem('userData'));
+      if (!userData) {
+        return;
+      }
 
-    this.authService.autoLogin(userData);
+      this.authService.autoLogin(userData);
+    }
   }
 
   // preventBackButton() {

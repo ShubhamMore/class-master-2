@@ -69,5 +69,19 @@ export class ViewTransactionComponent implements OnInit, OnDestroy {
     });
   }
 
+  print() {
+    // const divContents = document.getElementById('printable-bill').innerHTML;
+    // const a = window.open('', '', '');
+    // a.document.write('<html><body>');
+    // a.document.write(divContents);
+    // a.document.write('</body></html>');
+    // a.document.close();
+    // a.print();
+    // setTimeout(() => {
+    //   a.close();
+    // }, 100);
+    window.print();
+  }
+
   ngOnDestroy() {}
 }

@@ -103,7 +103,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
       currency: 'INR',
       name: this.branch ? this.branch.basicDetails.branchName : 'Institute Fees',
       description: this.getPaymentDescription(),
-      // image: '../../../assets/brand/class-master-mini.png',
+      // image: '../../../assets/brand/the-class-master-mini.png',
       // tslint:disable-next-line: max-line-length
       order_id: '', // This is a sample Order ID. Pass the `id` obtained in the response of Step 1 order_9A33XWu170gUtm
       handler: (response: any) => {

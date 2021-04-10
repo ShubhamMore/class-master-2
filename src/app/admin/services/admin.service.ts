@@ -7,7 +7,6 @@ import { throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class AdminService {
-
   constructor(private httpService: HttpService) {}
 
   getAdminDashboard() {

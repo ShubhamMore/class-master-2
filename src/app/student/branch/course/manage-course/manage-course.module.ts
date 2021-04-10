@@ -7,13 +7,6 @@ import { ManageCourseComponent } from './manage-course.component';
 
 @NgModule({
   declarations: [ManageCourseComponent],
-  imports: [
-    CommonModule,
-    ManageCourseRoutingModule,
-
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-  ],
+  imports: [CommonModule, ManageCourseRoutingModule, NbCardModule, NbButtonModule, NbIconModule],
 })
 export class ManageCourseModule {}

@@ -19,8 +19,9 @@
   <nb-card-body>
     <div class="row" *ngIf="!loading; else loadingData">
       <div class="col-sm-6 col-12">
-        <strong>Branch Name: </strong>{{ branch.basicDetails.branchName }}
+        <p><strong>Branch Name: </strong>{{ branch.basicDetails.branchName }}</p>
       </div>
+
       <div class="col-sm-6 col-12">
         <button
           class=""
@@ -34,13 +35,24 @@
         </button>
       </div>
 
-      <div class="col-md-6 col-12"><strong>Email: </strong>{{ branch.basicDetails.email }}</div>
-      <div class="col-md-6 col-12"><strong>Contact: </strong>{{ branch.basicDetails.phone }}</div>
-
-      <div class="col-12"><strong>Address: </strong> {{ getAddress(branch.address) }}</div>
-      <div class="col-md-3 col-sm-5 col-12">
-        <strong>Category: </strong>
+      <div class="col-md-6 col-12">
+        <p><strong>Email: </strong>{{ branch.basicDetails.email }}</p>
       </div>
+
+      <div class="col-md-6 col-12">
+        <p><strong>Contact: </strong>{{ branch.basicDetails.phone }}</p>
+      </div>
+
+      <div class="col-12">
+        <p><strong>Address: </strong> {{ getAddress(branch.address) }}</p>
+      </div>
+
+      <div class="col-md-3 col-sm-5 col-12">
+        <p>
+          <strong>Category: </strong>
+        </p>
+      </div>
+
       <div class="col-md-9 col-sm-7 col-12" *ngIf="branch.categories.length > 0">
         <div class="table-responsive">
           <table class="table table-sm">

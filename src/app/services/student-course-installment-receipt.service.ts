@@ -9,9 +9,9 @@ import { StudentCourseInstallmentReceiptModel } from '../models/student-course-i
 })
 export class StudentCourseInstallmentReceiptService {
   private studentCourseInstallmentReceiptId: string;
-  private studentCourseInstallmentReceipt = new BehaviorSubject<
-    StudentCourseInstallmentReceiptModel
-  >(null);
+  private studentCourseInstallmentReceipt = new BehaviorSubject<StudentCourseInstallmentReceiptModel>(
+    null,
+  );
 
   setStudentCourseInstallmentReceiptData(
     studentCourseInstallmentReceipt: StudentCourseInstallmentReceiptModel,

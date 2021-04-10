@@ -4,12 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ViewBudgetRoutingModule } from './view-budget-routing.module';
 import { ViewBudgetComponent } from './view-budget.component';
 
-
 @NgModule({
   declarations: [ViewBudgetComponent],
-  imports: [
-    CommonModule,
-    ViewBudgetRoutingModule
-  ]
+  imports: [CommonModule, ViewBudgetRoutingModule],
 })
-export class ViewBudgetModule { }
+export class ViewBudgetModule {}

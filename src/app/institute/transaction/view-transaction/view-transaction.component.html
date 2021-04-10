@@ -14,48 +14,63 @@
   </nb-card-header>
   <nb-card-body>
     <div *ngIf="!loading; else loadingData">
-      <div class="row m-5">
+      <div class="row m-5" id="printable-bill">
         <div class="col-md-9 col-11 mx-auto">
           <div class="row">
             <div class="col-md-4 col-sm-6 co-10 mx-auto">
               <div class="text-center">
                 <img
-                  src="./../../../../assets/brand/class-master.png"
+                  src="./../../../../assets/brand/the-class-master.png"
                   alt="Class Master"
                   width="75%"
                 />
               </div>
             </div>
+
             <div class="col-12">
               <h6 class="text-center pt-2">
                 {{ address }}
               </h6>
             </div>
+
             <div class="col-12">
               <h6 class="pt-2">GSTN: {{ gstNo }}</h6>
             </div>
           </div>
+
           <hr />
+
           <div class="row">
             <div class="col-md-6 col-10 mx-auto">
-              <strong>Name: </strong>{{ transaction.userName }}
+              <p><strong>Name: </strong>{{ transaction.userName }}</p>
             </div>
+
             <div class="col-md-6 col-10 mx-auto">
-              <strong>Transaction Id: </strong>{{ transaction._id | uppercase }}
+              <p><strong>Transaction Id: </strong>trans_{{ transaction._id }}</p>
             </div>
+
             <div class="col-md-6 col-10 mx-auto">
-              <strong>Order Id: </strong>{{ transaction.order_id }}
+              <p><strong>Order Id: </strong>{{ transaction.order_id }}</p>
             </div>
+
             <div class="col-md-6 col-10 mx-auto">
-              <strong>Date: </strong>
-              {{ dateService.formatDate(dateService.convertToDateString(transaction.createdAt)) }}
+              <p>
+                <strong>Date: </strong>
+                {{ dateService.formatDate(dateService.convertToDateString(transaction.createdAt)) }}
+              </p>
             </div>
+
+            <!-- <div class="col-md-6 col-10 mx-auto">
+              <p>
+                <strong>Branch: </strong>{{ transaction.branchBasicDetails.branchName }}
+              </p>
+            </div>
+
             <div class="col-md-6 col-10 mx-auto">
-              <!-- <strong>Branch: </strong>{{ transaction.branchBasicDetails.branchName }} -->
-            </div>
-            <div class="col-md-6 col-10 mx-auto">
-              <!-- <strong>Branch City: </strong>{{ transaction.branchAddress.city }} -->
-            </div>
+              <p>
+                <strong>Branch City: </strong>{{ transaction.branchAddress.city }}
+              </p>
+            </div> -->
           </div>
 
           <div class="row">
@@ -97,6 +112,21 @@
               <h6 class="text-center">
                 <small>This is computer generated receipt and requires no signature.</small>
               </h6>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <button
+                class="float-right"
+                nbButton
+                status="success"
+                size="small"
+                nbTooltip="Print"
+                (click)="print()"
+              >
+                <nb-icon icon="printer-outline"></nb-icon>
+              </button>
             </div>
           </div>
         </div>

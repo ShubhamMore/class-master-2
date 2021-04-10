@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'ngx-view-budget',
   templateUrl: './view-budget.component.html',
-  styleUrls: ['./view-budget.component.scss']
+  styleUrls: ['./view-budget.component.scss'],
 })
 export class ViewBudgetComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

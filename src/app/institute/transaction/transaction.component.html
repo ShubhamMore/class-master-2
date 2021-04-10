@@ -18,11 +18,11 @@
           <tbody>
             <tr *ngFor="let transaction of transactions; let i = index">
               <td>{{ i + 1 }}</td>
-              <td>{{ transaction._id | uppercase }}</td>
+              <td>trans_{{ transaction._id }}</td>
               <td>
                 {{ dateService.formatDate(dateService.convertToDateString(transaction.createdAt)) }}
               </td>
-              <td>{{ getAmount(transaction.amount) }}</td>
+              <td>{{ getAmount(transaction.amount) }}/-</td>
               <td>
                 <button
                   type="button"
