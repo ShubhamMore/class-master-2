@@ -25,24 +25,25 @@
             <td>{{ dateService.formatDate(curBudgetSummery.date) }}</td>
             <td>{{ curBudgetSummery.title }}</td>
             <td>
-              {{ curBudgetSummery.type === 'income' ? curBudgetSummery.amount : '' }}
+              {{ curBudgetSummery.type === 'income' ? getAmount(curBudgetSummery.amount) : '' }}
             </td>
             <td>
-              {{ curBudgetSummery.type === 'expense' ? curBudgetSummery.amount : '' }}
+              {{ curBudgetSummery.type === 'expense' ? getAmount(curBudgetSummery.amount) : '' }}
             </td>
           </tr>
           <tr>
             <td colspan="3"><strong>Total</strong></td>
             <td>
-              <strong>{{ getTotalIncome() }}</strong>
+              <strong>{{ getAmount(getTotalIncome()) }}</strong>
             </td>
             <td>
-              <strong>{{ getTotalExpense() }}</strong>
+              <strong>{{ getAmount(getTotalExpense()) }}</strong>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+
     <ng-template #noBudgetSummery>
       <p class="text-center pt-2">No Budget Summery Available</p>
     </ng-template>

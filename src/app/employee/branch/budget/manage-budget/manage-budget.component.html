@@ -79,14 +79,14 @@
       <div class="col-md-4 col-sm-6 col-12">
         <h4>
           <strong>Income : </strong>
-          &#x20b9; <span>{{ getTotalIncome() }}/-</span>
+          &#x20b9; <span>{{ getAmount(getTotalIncome()) }}</span>
         </h4>
       </div>
 
       <div class="col-md-4 col-sm-6 col-12">
         <h4>
           <strong>Expense : </strong>
-          &#x20b9; <span>{{ getTotalExpense() }}/-</span>
+          &#x20b9; <span>{{ getAmount(getTotalExpense()) }}</span>
         </h4>
       </div>
 
@@ -94,9 +94,9 @@
         <h4>
           <strong>Balance : </strong>
           &#x20b9;
-          <span [ngClass]="getTotalBalance() >= 0 ? '' : 'negative-balance'"
-            >{{ getTotalBalance() }}/-</span
-          >
+          <span [ngClass]="getTotalBalance() >= 0 ? '' : 'negative-balance'">{{
+            getAmount(getTotalBalance())
+          }}</span>
         </h4>
       </div>
 
@@ -129,7 +129,7 @@
                     <span class="pointer">{{ income.title }}</span>
                   </td>
                   <td>
-                    <span>{{ income.amount }}</span>
+                    <span>{{ getAmount(income.amount) }}</span>
                   </td>
                   <td class="text-center">
                     <nb-icon
@@ -164,7 +164,7 @@
                     <span class="pointer">{{ expense.title }}</span>
                   </td>
                   <td>
-                    <span>{{ expense.amount }}</span>
+                    <span>{{ getAmount(expense.amount) }}</span>
                   </td>
                   <td class="text-center">
                     <nb-icon

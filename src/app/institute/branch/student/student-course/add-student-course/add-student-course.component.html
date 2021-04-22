@@ -825,7 +825,7 @@
                           >
                             <td>Installment {{ installment.value.installmentNo }}</td>
                             <td>
-                              {{ dateService.formatDate(installment.value.installmentDate) }}
+                              {{ dateService.formatDate(installment.getRawValue().installmentDate) }}
                             </td>
                             <td>{{ installment.value.installmentAmount }}</td>
                             <td>{{ installment.value.amountPending }}</td>

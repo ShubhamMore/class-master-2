@@ -72,6 +72,11 @@ export class AddBudgetComponent implements OnInit {
     this.stepper.next();
   }
 
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
+  }
+
   saveBudget() {
     if (this.budgetForm.invalid) {
       this.showToastr('top-right', 'danger', 'Please Fill All data Correctly');

@@ -9,4 +9,9 @@ export class ViewBudgetComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
+  }
 }

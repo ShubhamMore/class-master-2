@@ -107,8 +107,8 @@ export class StudentService {
     );
   }
 
-  searchStudent(studentId: string) {
-    const data = { api: 'searchStudent', data: { studentId } };
+  searchStudent(studentId: string, branchId: string) {
+    const data = { api: 'searchStudent', data: { studentId, branchId } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

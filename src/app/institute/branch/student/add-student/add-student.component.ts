@@ -227,7 +227,7 @@ export class AddStudentComponent implements OnInit, OnDestroy {
     }
     this.studentId = this.studentSearchForm.value.studentId;
     this.loading = true;
-    this.studentService.searchStudent(this.studentId).subscribe(
+    this.studentService.searchStudent(this.studentId, this.branchId).subscribe(
       (student: StudentModel) => {
         this.student = student;
 

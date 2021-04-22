@@ -230,7 +230,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
   }
 
   removeRepeatSchedule(i: number) {
-    this.repeatSchedules.splice(i, 1);
+    const repeatSchedule = this.repeatSchedules.splice(i, 1);
   }
 
   openRepeatScheduleDialog(type: string) {

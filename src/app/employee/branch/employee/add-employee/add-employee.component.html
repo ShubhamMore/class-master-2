@@ -418,11 +418,13 @@
                 </tr>
                 <tr>
                   <th>Address</th>
-                  <td>{{ employeeForm.value.address }}</td>
+                  <td>{{ employeeForm.value.address ? employeeForm.value.address : '--' }}</td>
                 </tr>
                 <tr>
                   <th>Qualification</th>
-                  <td>{{ employeeForm.value.qualification }}</td>
+                  <td>
+                    {{ employeeForm.value.qualification ? employeeForm.value.qualification : '--' }}
+                  </td>
                 </tr>
                 <tr>
                   <th>Role</th>

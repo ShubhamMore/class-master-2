@@ -1,6 +1,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "crypto": [
+        "./node_modules/crypto-js"
+      ],
+    },
     "importHelpers": true,
     "resolveJsonModule": true,
     "module": "es2020",

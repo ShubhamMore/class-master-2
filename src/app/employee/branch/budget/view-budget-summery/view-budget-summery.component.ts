@@ -88,7 +88,12 @@ export class ViewBudgetSummeryComponent implements OnInit {
       const toDate = this.dateService.formatDate(this.budgetSummery[budgetSummeryLength - 1].date);
       return ' From ' + fromDate + ' To ' + toDate;
     }
-    return '';
+    return '--';
+  }
+
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
   }
 
   print() {

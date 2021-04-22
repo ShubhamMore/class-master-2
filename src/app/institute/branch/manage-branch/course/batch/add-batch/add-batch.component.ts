@@ -11,6 +11,7 @@ import { BranchService } from './../../../../../../services/branch.service';
 
 import { ObjectId } from 'bson';
 import { BranchEmployeeService } from '../../../../../../services/branch-employee.service';
+import { DateService } from '../../../../../../services/shared-services/date.service';
 
 interface Teacher {
   imsMasterId: string;
@@ -43,6 +44,7 @@ export class AddBatchComponent implements OnInit, OnDestroy {
     private batchService: BatchService,
     private courseService: CourseService,
     private toastrService: NbToastrService,
+    public dateService: DateService,
     private router: Router,
     private route: ActivatedRoute,
   ) {

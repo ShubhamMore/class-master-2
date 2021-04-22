@@ -73,6 +73,11 @@ export class ManageBudgetComponent implements OnInit {
     this.router.navigate(['../summery'], { relativeTo: this.route });
   }
 
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
+  }
+
   onSelectYear(year: string) {
     this.year = year;
     this.budgetService.setYear(year);

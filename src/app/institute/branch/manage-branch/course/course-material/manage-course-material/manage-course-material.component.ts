@@ -85,7 +85,7 @@ export class ManageCourseMaterialComponent implements OnInit {
     this.courseMaterialService.deleteCourseMaterial(id).subscribe(
       (res: any) => {
         this.courseMaterials.splice(i, 1);
-        this.showToastr('top-right', 'success', `CourseMaterial Deleted Successfully!`);
+        this.showToastr('top-right', 'success', `Course Material Deleted Successfully!`);
         this.loading = false;
       },
       (err: any) => {

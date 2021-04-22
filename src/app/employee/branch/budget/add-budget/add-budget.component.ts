@@ -63,6 +63,11 @@ export class AddBudgetComponent implements OnInit {
     this.stepper.previous();
   }
 
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
+  }
+
   budgetFormSubmit() {
     this.budgetForm.markAllAsTouched();
     if (this.budgetForm.invalid) {

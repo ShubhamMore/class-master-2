@@ -305,11 +305,23 @@
                 </tr>
                 <tr>
                   <th>Description</th>
-                  <td>{{ discountAndOfferForm.value.description }}</td>
+                  <td>
+                    {{
+                      discountAndOfferForm.value.description
+                        ? discountAndOfferForm.value.description
+                        : '--'
+                    }}
+                  </td>
                 </tr>
                 <tr>
                   <th>Terms & Conditions</th>
-                  <td>{{ discountAndOfferForm.value.termsAndConditions }}</td>
+                  <td>
+                    {{
+                      discountAndOfferForm.value.termsAndConditions
+                        ? discountAndOfferForm.value.termsAndConditions
+                        : '--'
+                    }}
+                  </td>
                 </tr>
               </tbody>
             </table>

@@ -95,7 +95,7 @@
                       nbInput
                       id="input-schedule-end-time"
                       name="endTime"
-                      min="0"
+                      [min]="scheduleForm.value.startTime"
                       formControlName="endTime"
                       placeholder="Schedule End Time"
                       fullWidth

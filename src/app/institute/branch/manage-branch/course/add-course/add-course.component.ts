@@ -349,7 +349,15 @@ export class AddCourseComponent implements OnInit, OnDestroy {
     const gstPercentage = this.courseFeeDetailsForm.value.gst;
     const amount = totalFees / (1 + gstPercentage / 100);
     const gstAmount = totalFees - amount;
-    return Math.round(gstAmount).toString();
+    return Math.round(gstAmount).toFixed(2).toString() + '/-';
+  }
+
+  getAmount(amount: any) {
+    amount = +amount;
+    if (amount) {
+      return amount.toFixed(2).toString() + '/-';
+    }
+    return amount;
   }
 
   getCategory(categoryId: string) {

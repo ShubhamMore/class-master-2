@@ -456,11 +456,11 @@
                 </tr>
                 <tr>
                   <th>Fees</th>
-                  <td>{{ courseFeeDetailsForm.value.fees }}</td>
+                  <td>{{ getAmount(courseFeeDetailsForm.value.fees) }}</td>
                 </tr>
                 <tr>
                   <th>GST (in %)</th>
-                  <td>{{ courseFeeDetailsForm.value.gst }} %</td>
+                  <td>{{ courseFeeDetailsForm.value.gst }}%</td>
                 </tr>
                 <tr>
                   <th>GST Amount</th>
@@ -470,7 +470,7 @@
                 </tr>
                 <tr>
                   <th>Total Fees</th>
-                  <td>{{ courseFeeDetailsForm.value.totalFees }}</td>
+                  <td>{{ getAmount(courseFeeDetailsForm.value.totalFees) }}</td>
                 </tr>
               </tbody>
             </table>

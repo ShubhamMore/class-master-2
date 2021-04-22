@@ -43,6 +43,11 @@ export class ViewBudgetSummeryComponent implements OnInit {
     this.searchBudget();
   }
 
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
+  }
+
   searchBudget() {
     this.budgetService.getBudgetSummery(this.branchId, this.month, this.year).subscribe(
       (budget: BudgetModel[]) => {

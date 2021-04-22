@@ -187,7 +187,7 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
     }
     this.employeeId = this.employeeSearchForm.value.employeeId;
     this.loading = true;
-    this.employeeService.searchEmployee(this.employeeId).subscribe(
+    this.employeeService.searchEmployee(this.employeeId, this.branchId).subscribe(
       (employee: EmployeeModel) => {
         this.employee = employee;
 

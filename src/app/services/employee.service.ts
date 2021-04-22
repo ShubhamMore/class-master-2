@@ -98,8 +98,8 @@ export class EmployeeService {
     );
   }
 
-  searchEmployee(employeeId: string) {
-    const data = { api: 'searchEmployee', data: { employeeId } };
+  searchEmployee(employeeId: string, branchId: string) {
+    const data = { api: 'searchEmployee', data: { employeeId, branchId } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

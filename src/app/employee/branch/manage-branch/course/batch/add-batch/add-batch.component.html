@@ -194,13 +194,29 @@
                   <td>{{ batchBasicDetailsForm.value.batchName }}</td>
                 </tr>
                 <tr>
+                  <th>Batch Start Date</th>
+                  <td>{{ dateService.formatDate(batchBasicDetailsForm.value.startDate) }}</td>
+                </tr>
+                <tr>
                   <th>Batch Roll No Prefix</th>
-                  <td>{{ batchBasicDetailsForm.value.rollNoPrefix }}</td>
+                  <td>
+                    {{
+                      batchBasicDetailsForm.value.rollNoPrefix
+                        ? batchBasicDetailsForm.value.rollNoPrefix
+                        : '--'
+                    }}
+                  </td>
                 </tr>
 
                 <tr>
                   <th>Description</th>
-                  <td>{{ batchBasicDetailsForm.value.description }}</td>
+                  <td>
+                    {{
+                      batchBasicDetailsForm.value.description
+                        ? batchBasicDetailsForm.value.description
+                        : '--'
+                    }}
+                  </td>
                 </tr>
                 <tr>
                   <th>Subjects</th>

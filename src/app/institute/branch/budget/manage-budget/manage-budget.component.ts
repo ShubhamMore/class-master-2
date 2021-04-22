@@ -165,6 +165,11 @@ export class ManageBudgetComponent implements OnInit {
     return totalIncomes - totalExpenses;
   }
 
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
+  }
+
   deleteBudget(id: string, i: number, type: string) {
     this.budgetService.deleteBudget(id).subscribe(
       (budget: any) => {
