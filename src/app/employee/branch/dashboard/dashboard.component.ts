@@ -8,6 +8,7 @@ import { DashboardService } from './../../../services/dashboard.service';
 import { BranchService } from './../../../services/branch.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { RoleService } from './../../../services/role.service';
 
 interface DashboardInfo {
   branchStorage: BranchStorageModel;
@@ -37,6 +38,8 @@ export class DashboardComponent implements OnInit {
   branchId: string;
   dashboardInfo: DashboardInfo;
 
+  role: string;
+
   currentYear: number;
   year: number;
 
@@ -61,6 +64,7 @@ export class DashboardComponent implements OnInit {
     public budgetService: BudgetService,
     private menuService: MenuService,
     private themeService: NbThemeService,
+    private roleService: RoleService,
   ) {}
 
   ngOnInit(): void {
@@ -70,49 +74,59 @@ export class DashboardComponent implements OnInit {
       this.back();
       return;
     }
-    this.currentYear = +this.dateService.getCurrentYear();
-    this.year = +this.dateService.getCurrentYear();
-    this.getDashboardData();
-    this.getBudgetData();
 
-    this.themeSubscription = this.themeService.getJsTheme().subscribe((config: any) => {
-      this.colors = config.variables;
-      const chartjs: any = config.variables.chartjs;
-
-      this.options = {
-        maintainAspectRatio: false,
-        responsive: true,
-        legend: {
-          labels: {
-            fontColor: chartjs.textColor,
-          },
-        },
-        scales: {
-          xAxes: [
-            {
-              gridLines: {
-                display: false,
-                color: chartjs.axisLineColor,
-              },
-              ticks: {
-                fontColor: chartjs.textColor,
-              },
-            },
-          ],
-          yAxes: [
-            {
-              gridLines: {
-                display: true,
-                color: chartjs.axisLineColor,
-              },
-              ticks: {
-                fontColor: chartjs.textColor,
-              },
-            },
-          ],
-        },
-      };
+    this.roleService.getEmployeeRole().subscribe((role: string) => {
+      this.role = role;
     });
+
+    if (this.role === 'manager') {
+      this.currentYear = +this.dateService.getCurrentYear();
+      this.year = +this.dateService.getCurrentYear();
+
+      this.getDashboardData();
+      this.getBudgetData();
+
+      this.themeSubscription = this.themeService.getJsTheme().subscribe((config: any) => {
+        this.colors = config.variables;
+        const chartjs: any = config.variables.chartjs;
+
+        this.options = {
+          maintainAspectRatio: false,
+          responsive: true,
+          legend: {
+            labels: {
+              fontColor: chartjs.textColor,
+            },
+          },
+          scales: {
+            xAxes: [
+              {
+                gridLines: {
+                  display: false,
+                  color: chartjs.axisLineColor,
+                },
+                ticks: {
+                  fontColor: chartjs.textColor,
+                },
+              },
+            ],
+            yAxes: [
+              {
+                gridLines: {
+                  display: true,
+                  color: chartjs.axisLineColor,
+                },
+                ticks: {
+                  fontColor: chartjs.textColor,
+                },
+              },
+            ],
+          },
+        };
+      });
+    } else {
+      this.getEmployeeDashboardData();
+    }
   }
 
   calculateStorage(branchStorage: BranchStorageModel) {
@@ -140,6 +154,19 @@ export class DashboardComponent implements OnInit {
       (dashboardInfo: DashboardInfo) => {
         this.dashboardInfo = dashboardInfo;
         this.calculateStorage(dashboardInfo.branchStorage);
+        this.menuService.showMenus();
+        this.loading = false;
+      },
+      (error: any) => {
+        this.showToastr('top-right', 'danger', error);
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      },
+    );
+  }
+
+  getEmployeeDashboardData() {
+    this.dashboardService.getBranchDashboardForEmployee(this.branchId, this.role).subscribe(
+      (dashboardInfo: any) => {
         this.menuService.showMenus();
         this.loading = false;
       },

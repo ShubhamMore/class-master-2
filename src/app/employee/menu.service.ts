@@ -28,12 +28,13 @@ export class MenuService {
     this.menuItems.push(MENU_ITEMS[5]); // student management
     this.menuItems.push(MENU_ITEMS[6]); // schedule management
     this.menuItems.push(MENU_ITEMS[7]); // lecture management
-    this.menuItems.push(MENU_ITEMS[8]); // exam management
-    this.menuItems.push(MENU_ITEMS[9]); // employee management
-    this.menuItems.push(MENU_ITEMS[10]); // Leave management
-    this.menuItems.push(MENU_ITEMS[11]); // lead management
-    this.menuItems.push(MENU_ITEMS[12]); // students report
-    this.menuItems.push(MENU_ITEMS[13]); // budget managements
+    this.menuItems.push(MENU_ITEMS[8]); // assignment management
+    this.menuItems.push(MENU_ITEMS[9]); // exam management
+    this.menuItems.push(MENU_ITEMS[10]); // employee management
+    this.menuItems.push(MENU_ITEMS[11]); // Leave management
+    this.menuItems.push(MENU_ITEMS[12]); // lead management
+    this.menuItems.push(MENU_ITEMS[13]); // students report
+    this.menuItems.push(MENU_ITEMS[14]); // budget managements
   }
 
   showHideMenu(i: number, status: boolean) {
@@ -78,32 +79,35 @@ export class MenuService {
       this.showHideMenu(11, false);
       this.showHideMenu(12, false);
       this.showHideMenu(13, false);
+      this.showHideMenu(14, false);
     } else if (this.role === 'teacher') {
       this.showHideMenu(2, false);
       this.showHideMenu(3, false);
-      this.showHideMenu(4, false);
+      this.showHideMenu(4, true);
       this.showHideMenu(5, true);
       this.showHideMenu(6, false);
       this.showHideMenu(7, false);
       this.showHideMenu(8, false);
-      this.showHideMenu(9, true);
+      this.showHideMenu(9, false);
       this.showHideMenu(10, true);
       this.showHideMenu(11, true);
-      this.showHideMenu(12, false);
-      this.showHideMenu(13, true);
+      this.showHideMenu(12, true);
+      this.showHideMenu(13, false);
+      this.showHideMenu(14, true);
     } else if (this.role === 'councillor') {
       this.showHideMenu(2, false);
       this.showHideMenu(3, false);
-      this.showHideMenu(4, false);
+      this.showHideMenu(4, true);
       this.showHideMenu(5, true);
-      this.showHideMenu(6, false);
-      this.showHideMenu(7, false);
-      this.showHideMenu(8, false);
+      this.showHideMenu(6, true);
+      this.showHideMenu(7, true);
+      this.showHideMenu(8, true);
       this.showHideMenu(9, true);
       this.showHideMenu(10, true);
       this.showHideMenu(11, true);
       this.showHideMenu(12, false);
-      this.showHideMenu(13, true);
+      this.showHideMenu(13, false);
+      this.showHideMenu(14, true);
     } else {
       this.hideMenus();
     }

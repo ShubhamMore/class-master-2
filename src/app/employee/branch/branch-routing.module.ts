@@ -19,6 +19,16 @@ const routes: Routes = [
       },
 
       {
+        path: 'my-salary',
+        loadChildren: () => import('./salary/salary.module').then((m) => m.SalaryModule),
+      },
+
+      {
+        path: 'my-leave',
+        loadChildren: () => import('./my-leave/my-leave.module').then((m) => m.MyLeaveModule),
+      },
+
+      {
         path: 'schedule',
         loadChildren: () => import('./schedule/schedule.module').then((m) => m.ScheduleModule),
       },

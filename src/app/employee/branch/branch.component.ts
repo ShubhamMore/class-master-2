@@ -1,5 +1,4 @@
 import { NbToastrService } from '@nebular/theme';
-import { BranchModel } from './../../models/branch.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BranchService } from './../../services/branch.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';

@@ -6,6 +6,7 @@ export class BranchModel {
     public categories: CategoryModel[],
     public currentPlanDetails?: BranchPlanDetailsModel,
     public status?: boolean,
+    public role?: string, // Role only for Employee
   ) {}
 }
 

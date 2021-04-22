@@ -13,7 +13,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 2
   {
     title: 'Dashboard',
-    icon: '',
+    icon: 'shield-outline',
     link: '/employee/branch/dashboard',
     hidden: true,
   },
@@ -37,7 +37,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 5
   {
     title: 'Branch Management',
-    icon: '',
+    icon: 'share-outline',
     hidden: true,
     children: [
       {
@@ -61,7 +61,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 6
   {
     title: 'Student Management',
-    icon: '',
+    icon: 'person-outline',
     hidden: true,
     children: [
       {
@@ -102,8 +102,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   // 9
   {
+    title: 'Assignment Management',
+    icon: 'archive-outline',
+    link: '/employee/branch/assignment/batch',
+    hidden: true,
+  },
+
+  // 10
+  {
     title: 'Exam Management',
-    icon: '',
+    icon: 'edit-2-outline',
     hidden: true,
     children: [
       {
@@ -119,10 +127,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 10
+  // 11
   {
     title: 'Employee Management',
-    icon: '',
+    icon: 'people-outline',
     hidden: true,
     children: [
       {
@@ -145,18 +153,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 11
+  // 12
   {
     title: 'Leave Management',
-    icon: '',
+    icon: 'log-out-outline',
     link: '/employee/branch/leave',
     hidden: true,
   },
 
-  // 12
+  // 13
   {
     title: 'Lead Management',
-    icon: '',
+    icon: 'search-outline',
     hidden: true,
     children: [
       {
@@ -177,18 +185,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  // 13
+  // 14
   {
     title: 'Students Report',
-    icon: '',
+    icon: 'bar-chart-outline',
     link: '/employee/branch/students-report',
     hidden: true,
   },
 
-  // 14
+  // 15
   {
     title: 'Budget Management',
-    icon: '',
+    icon: 'activity-outline',
     link: '/employee/branch/budget/manage',
     hidden: true,
   },

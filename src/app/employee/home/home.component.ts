@@ -4,6 +4,7 @@ import { BranchService } from './../../services/branch.service';
 import { BranchModel } from './../../models/branch.model';
 import { MenuService } from './../menu.service';
 import { Component, OnInit } from '@angular/core';
+import { RoleService } from './../../services/role.service';
 
 @Component({
   selector: 'ngx-home',
@@ -17,6 +18,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private branchService: BranchService,
+    private roleService: RoleService,
     private authService: AuthService,
     private menuService: MenuService,
     private router: Router,
@@ -41,7 +43,8 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  manageBranch(id: string) {
+  manageBranch(id: string, role: string) {
+    this.roleService.setEmployeeRole(role);
     this.branchService.setBranchId(id);
     this.router.navigate(['../branch/dashboard'], { relativeTo: this.route });
   }
