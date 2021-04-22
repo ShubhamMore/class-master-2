@@ -11,16 +11,16 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RoleService } from './../../../services/role.service';
 
 interface DashboardInfo {
-  branchStorage: BranchStorageModel;
-  activeCourses: number;
-  inactiveCourses: number;
-  activeStudents: number;
-  inactiveStudents: number;
-  activeEmployees: number;
-  inactiveEmployees: number;
   openLeads: number;
   lostLeads: number;
   wonLeads: number;
+  branchStorage?: BranchStorageModel;
+  activeCourses?: number;
+  inactiveCourses?: number;
+  activeStudents?: number;
+  inactiveStudents?: number;
+  activeEmployees?: number;
+  inactiveEmployees?: number;
 }
 
 interface Budget {
@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
   loading: boolean;
   branchId: string;
   dashboardInfo: DashboardInfo;
+  upcomingLectures: any[];
 
   role: string;
 
@@ -79,11 +80,14 @@ export class DashboardComponent implements OnInit {
       this.role = role;
     });
 
+    this.upcomingLectures = [];
+
+    this.getEmployeeDashboardData();
+
     if (this.role === 'manager') {
       this.currentYear = +this.dateService.getCurrentYear();
       this.year = +this.dateService.getCurrentYear();
 
-      this.getDashboardData();
       this.getBudgetData();
 
       this.themeSubscription = this.themeService.getJsTheme().subscribe((config: any) => {
@@ -124,8 +128,6 @@ export class DashboardComponent implements OnInit {
           },
         };
       });
-    } else {
-      this.getEmployeeDashboardData();
     }
   }
 
@@ -149,24 +151,17 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  getDashboardData() {
-    this.dashboardService.getBranchDashboard(this.branchId).subscribe(
-      (dashboardInfo: DashboardInfo) => {
-        this.dashboardInfo = dashboardInfo;
-        this.calculateStorage(dashboardInfo.branchStorage);
-        this.menuService.showMenus();
-        this.loading = false;
-      },
-      (error: any) => {
-        this.showToastr('top-right', 'danger', error);
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      },
-    );
-  }
-
   getEmployeeDashboardData() {
     this.dashboardService.getBranchDashboardForEmployee(this.branchId, this.role).subscribe(
-      (dashboardInfo: any) => {
+      (dashboardInfo: DashboardInfo | any[]) => {
+        if (this.role === 'manager') {
+          this.dashboardInfo = <DashboardInfo>dashboardInfo;
+          this.calculateStorage(this.dashboardInfo.branchStorage);
+        } else if (this.role === 'teacher') {
+          this.upcomingLectures = <any[]>dashboardInfo;
+        } else {
+          this.dashboardInfo = <DashboardInfo>dashboardInfo;
+        }
         this.menuService.showMenus();
         this.loading = false;
       },

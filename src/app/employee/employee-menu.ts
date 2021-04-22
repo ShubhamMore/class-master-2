@@ -21,7 +21,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 3
   {
     title: 'My Salaries',
-    icon: '',
+    icon: 'credit-card-outline',
     link: '/employee/branch/my-salary/manage',
     hidden: true,
   },
@@ -29,7 +29,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // 4
   {
     title: 'My Leaves',
-    icon: '',
+    icon: 'corner-down-right-outline',
     link: '/employee/branch/my-leave',
     hidden: true,
   },
