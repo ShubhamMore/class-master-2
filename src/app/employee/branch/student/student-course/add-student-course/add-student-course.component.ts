@@ -223,7 +223,7 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
               (installment: InstallmentModel, i: number) => {
                 this.addStudentCourseInstallment(installment);
                 if (installment.receiptId) {
-                  // this.getStudentCourseInstallments()[i].get('installmentDate').disable();
+                  this.getStudentCourseInstallments()[i].get('installmentDate').disable();
                 }
               },
             );
@@ -286,6 +286,11 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
     );
     this.course = this.courses.find((curCourse: CourseModel) => curCourse._id === courseId);
     this.calculateNetPayableAmount();
+  }
+
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
   }
 
   onSelectBatch(batchId: string) {

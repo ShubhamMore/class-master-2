@@ -465,7 +465,11 @@
                 <tr>
                   <th>GST Amount</th>
                   <td>
-                    {{ inclusiveGST ? getGstAmount() + ' Included in Fee Amount' : getGstAmount() }}
+                    {{
+                      inclusiveGST
+                        ? getAmount(getGstAmount()) + ' Included in Fee Amount'
+                        : getAmount(getGstAmount())
+                    }}
                   </td>
                 </tr>
                 <tr>

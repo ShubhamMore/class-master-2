@@ -291,8 +291,11 @@
                 <tr>
                   <th>Discount Amount</th>
                   <td>
-                    {{ discountAndOfferForm.value.discountAmount }}
-                    {{ discountAndOfferForm.value.discountType === 'percentage' ? '%' : '' }}
+                    {{
+                      discountAndOfferForm.value.discountType === 'percentage'
+                        ? discountAndOfferForm.value.discountAmount + '%'
+                        : getAmount(discountAndOfferForm.value.discountAmount)
+                    }}
                   </td>
                 </tr>
                 <tr>

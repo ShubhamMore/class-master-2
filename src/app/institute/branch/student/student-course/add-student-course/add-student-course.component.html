@@ -570,7 +570,7 @@
                       "
                     >
                       <tr [formGroup]="installment">
-                        <td>Installment {{ installment.value.installmentNo }}</td>
+                        <td>Installment {{ installment.getRawValue().installmentNo }}</td>
                         <td>
                           <div class="form-control-group">
                             <input
@@ -741,27 +741,27 @@
                 </tr>
                 <tr>
                   <th>Course</th>
-                  <td>{{ getCourse(studentCourseForm.value.course) }}</td>
+                  <td>{{ getCourse(studentCourseForm.getRawValue().course) }}</td>
                 </tr>
                 <tr>
                   <th>Batch</th>
-                  <td>{{ getBatch(studentCourseForm.value.batch) }}</td>
+                  <td>{{ getBatch(studentCourseForm.getRawValue().batch) }}</td>
                 </tr>
                 <tr>
                   <th>Roll Number</th>
-                  <td>{{ studentCourseForm.value.rollNumber }}</td>
+                  <td>{{ studentCourseForm.getRawValue().rollNumber }}</td>
                 </tr>
                 <tr>
                   <th>Discount</th>
-                  <td>{{ getDiscount(studentCourseForm.value.discount) }}</td>
+                  <td>{{ getDiscount(studentCourseForm.getRawValue().discount) }}</td>
                 </tr>
                 <tr>
                   <th>Additional Discount</th>
                   <td>
                     {{
-                      studentCourseForm.value.additionalDiscountAmount
-                        ? studentCourseForm.value.additionalDiscountAmount +
-                          (studentCourseForm.value.additionalDiscountType === 'percentage'
+                      studentCourseForm.getRawValue().additionalDiscountAmount
+                        ? studentCourseForm.getRawValue().additionalDiscountAmount +
+                          (studentCourseForm.getRawValue().additionalDiscountType === 'percentage'
                             ? '%'
                             : '')
                         : '--'
@@ -770,18 +770,20 @@
                 </tr>
                 <tr>
                   <th>Net Payable</th>
-                  <td>{{ studentCourseForm.value.netPayable }}</td>
+                  <td>{{ getAmount(studentCourseForm.getRawValue().netPayable) }}</td>
                 </tr>
                 <tr>
                   <th>Activation Date</th>
-                  <td>{{ dateService.formatDate(studentCourseForm.value.activationDate) }}</td>
+                  <td>
+                    {{ dateService.formatDate(studentCourseForm.getRawValue().activationDate) }}
+                  </td>
                 </tr>
                 <tr>
                   <th colspan="2">Course Fee Details</th>
                 </tr>
                 <tr>
                   <th>Date</th>
-                  <td>{{ dateService.formatDate(studentCourseFeeForm.value.date) }}</td>
+                  <td>{{ dateService.formatDate(studentCourseFeeForm.getRawValue().date) }}</td>
                 </tr>
                 <tr>
                   <th>Number of Installments</th>
@@ -789,15 +791,15 @@
                 </tr>
                 <tr>
                   <th>Amount Collected</th>
-                  <td>{{ studentCourseFeeForm.value.amountCollected }}</td>
+                  <td>{{ getAmount(studentCourseFeeForm.getRawValue().amountCollected) }}</td>
                 </tr>
                 <tr>
                   <th>Pending Amount</th>
-                  <td>{{ studentCourseFeeForm.value.pendingAmount }}</td>
+                  <td>{{ getAmount(studentCourseFeeForm.getRawValue().pendingAmount) }}</td>
                 </tr>
                 <tr>
                   <th>Total Payable Amount</th>
-                  <td>{{ studentCourseFeeForm.value.totalAmount }}</td>
+                  <td>{{ getAmount(studentCourseFeeForm.getRawValue().totalAmount) }}</td>
                 </tr>
                 <tr>
                   <th colspan="2">Installment Details</th>
@@ -823,12 +825,14 @@
                               let i = index
                             "
                           >
-                            <td>Installment {{ installment.value.installmentNo }}</td>
+                            <td>Installment {{ installment.getRawValue().installmentNo }}</td>
                             <td>
-                              {{ dateService.formatDate(installment.getRawValue().installmentDate) }}
+                              {{
+                                dateService.formatDate(installment.getRawValue().installmentDate)
+                              }}
                             </td>
-                            <td>{{ installment.value.installmentAmount }}</td>
-                            <td>{{ installment.value.amountPending }}</td>
+                            <td>{{ getAmount(installment.getRawValue().installmentAmount) }}</td>
+                            <td>{{ getAmount(installment.getRawValue().amountPending) }}</td>
                           </tr>
                         </tbody>
                       </table>

@@ -134,6 +134,14 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
     }
   }
 
+  getAmount(amount: any) {
+    amount = +amount;
+    if (amount) {
+      return amount.toFixed(2).toString() + '/-';
+    }
+    return amount;
+  }
+
   discountPercentageValidator(group: FormGroup): { [s: string]: boolean } {
     const discountType = group.value.discountType;
     const amount = +group.value.discountAmount;

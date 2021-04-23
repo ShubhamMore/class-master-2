@@ -288,6 +288,11 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
     this.calculateNetPayableAmount();
   }
 
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
+  }
+
   onSelectBatch(batchId: string) {
     if (batchId !== '') {
       this.studentCourseForm.get('rollNumber').enable();
