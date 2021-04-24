@@ -1,5 +1,5 @@
 import { NbToastrService } from '@nebular/theme';
-import { CategoryModel, BranchModel } from './../../../../models/branch.model';
+import { CategoryModel, BranchModel } from '../../../../models/branch.model';
 import { StudentService } from './../../../../services/student.service';
 import { BranchStudentService } from '../../../../services/branch-student.service';
 import { BranchStudentModel } from '../../../../models/branch-student.model';

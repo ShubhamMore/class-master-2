@@ -39,6 +39,7 @@ const routes: Routes = [
         path: 'edit',
         loadChildren: () =>
           import('./save-assignment/save-assignment.module').then((m) => m.SaveAssignmentModule),
+        data: { mode: 'edit' },
       },
 
       {

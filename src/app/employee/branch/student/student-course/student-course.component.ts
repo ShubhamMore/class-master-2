@@ -1,11 +1,11 @@
 import { NbToastrService } from '@nebular/theme';
-import { BatchModel } from './../../../../models/batch.model';
-import { CourseModel } from './../../../../models/course.model';
+import { BatchModel } from '../../../../models/batch.model';
+import { CourseModel } from '../../../../models/course.model';
 import { BatchService } from './../../../../services/batch.service';
 import { CourseService } from './../../../../services/course.service';
-import { DiscountAndOfferModel } from './../../../../models/discount-and-offer.model';
+import { DiscountAndOfferModel } from '../../../../models/discount-and-offer.model';
 import { DiscountAndOfferService } from './../../../../services/discount-and-offer.service';
-import { StudentModel } from './../../../../models/student.model';
+import { StudentModel } from '../../../../models/student.model';
 import { StudentService } from './../../../../services/student.service';
 import { BranchService } from './../../../../services/branch.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';

@@ -7,8 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BranchStorageService } from './../../../services/branch-storage.service';
 import { BranchService } from './../../../services/branch.service';
 import { StoragePackageService } from './../../../services/storage-package.service';
-import { StoragePackageModel } from './../../../models/storage-package.model';
-import { BranchStorageModel } from './../../../models/branch-storage.model';
+import { StoragePackageModel } from '../../../models/storage-package.model';
+import { BranchStorageModel } from '../../../models/branch-storage.model';
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../../services/shared-services/storage.service';
 

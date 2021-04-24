@@ -23,6 +23,7 @@ export class BudgetComponent implements OnInit {
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.router.navigate(['../'], { relativeTo: this.route });
+
       return;
     }
   }

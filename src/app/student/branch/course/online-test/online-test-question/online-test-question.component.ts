@@ -1,12 +1,12 @@
-import { OnlineExamResultModel } from './../../../../../models/online-exam-result.model';
+import { OnlineExamResultModel } from '../../../../../models/online-exam-result.model';
 import { NbToastrService } from '@nebular/theme';
 import { BranchService } from './../../../../../services/branch.service';
 import { OnlineExamQuestionService } from './../../../../../services/online-exam-question.service';
 import { AuthService } from './../../../../../authentication/auth/auth-service/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OnlineExamService } from './../../../../../services/online-exam.service';
-import { OnlineExamModel } from './../../../../../models/online-exam.model';
-import { OnlineExamQuestionModel } from './../../../../../models/online-exam-question.model';
+import { OnlineExamModel } from '../../../../../models/online-exam.model';
+import { OnlineExamQuestionModel } from '../../../../../models/online-exam-question.model';
 import { Router, ActivatedRoute } from '@angular/router';
 
 interface StudentQuestionAnswers {

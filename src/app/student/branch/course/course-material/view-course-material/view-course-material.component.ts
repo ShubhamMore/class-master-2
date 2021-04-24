@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CourseMaterialModel } from './../../../../../models/course-material.model';
+import { CourseMaterialModel } from '../../../../../models/course-material.model';
 import { CourseMaterialService } from './../../../../../services/course-material.service';
 import { NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute } from '@angular/router';

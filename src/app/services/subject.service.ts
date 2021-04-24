@@ -1,4 +1,4 @@
-import { SubjectModel } from './../models/course.model';
+import { SubjectModel } from '../models/course.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { BehaviorSubject } from 'rxjs';

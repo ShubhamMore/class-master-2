@@ -1,7 +1,7 @@
 import { StorageService } from './../../../../../../services/shared-services/storage.service';
-import { CourseMaterialModel } from './../../../../../../models/course-material.model';
+import { CourseMaterialModel } from '../../../../../../models/course-material.model';
 import { Component, OnInit } from '@angular/core';
-import { CourseModel, SubjectModel } from './../../../../../../models/course.model';
+import { CourseModel, SubjectModel } from '../../../../../../models/course.model';
 import { CourseService } from './../../../../../../services/course.service';
 import { CourseMaterialService } from './../../../../../../services/course-material.service';
 import { BranchService } from './../../../../../../services/branch.service';

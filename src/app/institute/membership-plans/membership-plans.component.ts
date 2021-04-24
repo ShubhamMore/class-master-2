@@ -1,4 +1,4 @@
-import { MembershipPlanModel } from './../../models/membership-plan.model';
+import { MembershipPlanModel } from '../../models/membership-plan.model';
 import { PaymentComponent } from './../payment/payment.component';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { CheckoutComponent } from './../checkout/checkout.component';

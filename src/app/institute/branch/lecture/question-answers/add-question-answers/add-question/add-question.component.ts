@@ -1,10 +1,10 @@
 import { QuestionAnswersService } from './../../../../../../services/question-answers.service';
 import { LectureService } from './../../../../../../services/lecture.service';
 import { BranchService } from './../../../../../../services/branch.service';
-import { LectureQuestionModel } from './../../../../../../models/lecture-question.model';
+import { LectureQuestionModel } from '../../../../../../models/lecture-question.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NbToastrService, NbDialogRef } from '@nebular/theme';
-import { ScheduleModel as LectureModel } from './../../../../../../models/schedule.model';
+import { ScheduleModel as LectureModel } from '../../../../../../models/schedule.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({

@@ -27,7 +27,7 @@
         <strong>Role:</strong> {{ branchEmployee.role | uppercase }}
       </div>
       <div class="col-md-4 col-sm-6 col-12">
-        <strong>Basic Salary:</strong> {{ branchEmployee.basicSalary }}/-
+        <strong>Basic Salary:</strong> {{ getAmount(branchEmployee.basicSalary) }}
       </div>
     </div>
   </nb-card-header>
@@ -275,7 +275,7 @@
                       <tr *ngFor="let earning of earnings; let i = index">
                         <td>{{ i + 1 }}</td>
                         <td>{{ earning.description }}</td>
-                        <td>{{ earning.amount }}</td>
+                        <td>{{ getAmount(earning.amount) }}</td>
                         <td>
                           <button
                             nbButton
@@ -293,7 +293,7 @@
                       </tr>
                       <tr>
                         <th colspan="2">Total</th>
-                        <th colspan="2">{{ totalEarning() }}</th>
+                        <th colspan="2">{{ getAmount(totalEarning()) }}</th>
                       </tr>
                     </tbody>
                   </table>
@@ -322,7 +322,7 @@
                       <tr *ngFor="let deduction of deductions; let i = index">
                         <td>{{ i + 1 }}</td>
                         <td>{{ deduction.description }}</td>
-                        <td>{{ deduction.amount }}</td>
+                        <td>{{ getAmount(deduction.amount) }}</td>
                         <td>
                           <button
                             nbButton
@@ -339,7 +339,7 @@
                       </tr>
                       <tr>
                         <th colspan="2">Total</th>
-                        <th colspan="2">{{ totalDeduction() }}</th>
+                        <th colspan="2">{{ getAmount(totalDeduction()) }}</th>
                       </tr>
                     </tbody>
                   </table>
@@ -501,7 +501,7 @@
             <table class="table table-bordered">
               <tr>
                 <th>Date</th>
-                <td>{{ salaryForm.value.date }}</td>
+                <td>{{ dateService.formatDate(salaryForm.value.date) }}</td>
               </tr>
               <tr>
                 <th>Month/Year</th>
@@ -513,7 +513,7 @@
               </tr>
               <tr>
                 <th>Basic Salary</th>
-                <td>{{ branchEmployee.basicSalary }}</td>
+                <td>{{ getAmount(branchEmployee.basicSalary) }}</td>
               </tr>
               <tr>
                 <th>Description</th>
@@ -535,11 +535,11 @@
                         <tr *ngFor="let earning of earnings; let i = index">
                           <td>{{ i + 1 }}</td>
                           <td>{{ earning.description }}</td>
-                          <td>{{ earning.amount }}</td>
+                          <td>{{ getAmount(earning.amount) }}</td>
                         </tr>
                         <tr>
                           <th colspan="2">Total</th>
-                          <th>{{ totalEarning() }}</th>
+                          <th>{{ getAmount(totalEarning()) }}</th>
                         </tr>
                       </tbody>
                     </table>
@@ -562,11 +562,11 @@
                         <tr *ngFor="let deduction of deductions; let i = index">
                           <td>{{ i + 1 }}</td>
                           <td>{{ deduction.description }}</td>
-                          <td>{{ deduction.amount }}</td>
+                          <td>{{ getAmount(deduction.amount) }}</td>
                         </tr>
                         <tr>
                           <th colspan="2">Total</th>
-                          <th>{{ totalDeduction() }}</th>
+                          <th>{{ getAmount(totalDeduction()) }}</th>
                         </tr>
                       </tbody>
                     </table>
@@ -603,7 +603,7 @@
               </tr>
               <tr>
                 <th>Net Salary</th>
-                <td>{{ getNetSalary() }}</td>
+                <td>{{ getAmount(getNetSalary()) }}</td>
               </tr>
               <tr>
                 <th>Net Salary in Words</th>

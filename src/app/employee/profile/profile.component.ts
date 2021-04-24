@@ -1,7 +1,7 @@
 import { NbToastrService } from '@nebular/theme';
 import { environment } from './../../../environments/environment';
 import { AuthService } from './../../authentication/auth/auth-service/auth.service';
-import { EmployeeModel } from './../../models/employee.model';
+import { EmployeeModel } from '../../models/employee.model';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { UserService } from './../../services/shared-services/user.service';
 import { Component, OnInit } from '@angular/core';

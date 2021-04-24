@@ -25,6 +25,7 @@ const routes: Routes = [
         path: 'edit',
         loadChildren: () =>
           import('./add-schedule/add-schedule.module').then((m) => m.AddScheduleModule),
+        data: { mode: 'edit' },
       },
 
       {

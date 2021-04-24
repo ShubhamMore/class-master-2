@@ -1,4 +1,4 @@
-import { LectureMaterialModel } from './../../../../../models/lecture-material.model';
+import { LectureMaterialModel } from '../../../../../models/lecture-material.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LectureMaterialService } from './../../../../../services/lecture-material.service';
 import { NbToastrService } from '@nebular/theme';

@@ -1,7 +1,7 @@
-import { EmployeeNameIdModel } from './../../../../../../models/branch-employee.model'; // To be removed
+import { EmployeeNameIdModel } from '../../../../../../models/branch-employee.model'; // To be removed
 import { CourseService } from './../../../../../../services/course.service';
-import { SubjectModel, CourseModel } from './../../../../../../models/course.model';
-import { BatchModel, BatchSubjectModel } from './../../../../../../models/batch.model';
+import { SubjectModel, CourseModel } from '../../../../../../models/course.model';
+import { BatchModel, BatchSubjectModel } from '../../../../../../models/batch.model';
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { BatchService } from './../../../../../../services/batch.service';
@@ -47,13 +47,7 @@ export class AddBatchComponent implements OnInit, OnDestroy {
     public dateService: DateService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {
-    this.route.queryParams.subscribe((param: Params) => {
-      if (param.mode) {
-        this.ngOnInit();
-      }
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -62,6 +56,7 @@ export class AddBatchComponent implements OnInit, OnDestroy {
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.back();
+
       return;
     }
 
@@ -69,6 +64,7 @@ export class AddBatchComponent implements OnInit, OnDestroy {
       this.course = course;
       if (!this.course) {
         this.back();
+
         return;
       }
     });
@@ -77,8 +73,8 @@ export class AddBatchComponent implements OnInit, OnDestroy {
 
     let mode: string;
 
-    this.route.queryParams.subscribe((param: Params) => {
-      mode = param.mode;
+    this.route.data.subscribe((data: any) => {
+      mode = data.mode;
     });
 
     if (mode && mode !== 'edit') {

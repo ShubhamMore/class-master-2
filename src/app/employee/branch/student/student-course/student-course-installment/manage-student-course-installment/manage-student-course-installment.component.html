@@ -31,16 +31,17 @@
                   <td>
                     <span>
                       <strong>Collected Amount: </strong
-                      >{{ studentCourseInstallment.amountCollected }}
+                      >{{ getAmount(studentCourseInstallment.amountCollected) }}
                     </span>
                     <br />
                     <span>
-                      <strong>Pending Amount: </strong>{{ studentCourseInstallment.pendingAmount }}
+                      <strong>Pending Amount: </strong
+                      >{{ getAmount(studentCourseInstallment.pendingAmount) }}
                     </span>
                     <br />
                     <span
                       ><strong>Total Amount: </strong
-                      >{{ studentCourseInstallment.totalAmount }}</span
+                      >{{ getAmount(studentCourseInstallment.totalAmount) }}</span
                     >
                   </td>
                 </tr>
@@ -74,8 +75,8 @@
                 >
                   <td>Installment {{ installment.installmentNo }}</td>
                   <td>{{ dateService.formatDate(installment.installmentDate) }}</td>
-                  <td>{{ installment.installmentAmount }}</td>
-                  <td>{{ installment.amountPending }}</td>
+                  <td>{{ getAmount(installment.installmentAmount) }}</td>
+                  <td>{{ getAmount(installment.amountPending) }}</td>
                   <td>
                     <button
                       nbButton

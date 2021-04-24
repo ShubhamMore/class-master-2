@@ -1,4 +1,4 @@
-import { BranchModel } from './../../models/branch.model';
+import { BranchModel } from '../../models/branch.model';
 import { InstituteKeysService } from './../../services/institute-keys.service';
 import { NbToastrService } from '@nebular/theme';
 import { ActivatedRoute, Router } from '@angular/router';

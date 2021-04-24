@@ -1,13 +1,13 @@
 import { FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { BatchService } from './../../../../../../services/batch.service';
 import { CourseService } from './../../../../../../services/course.service';
-import { BatchModel } from './../../../../../../models/batch.model';
-import { CategoryModel } from './../../../../../../models/branch.model';
-import { SubjectModel, CourseModel } from './../../../../../../models/course.model';
+import { BatchModel } from '../../../../../../models/batch.model';
+import { CategoryModel } from '../../../../../../models/branch.model';
+import { SubjectModel, CourseModel } from '../../../../../../models/course.model';
 import { NbToastrService } from '@nebular/theme';
 import { DateService } from './../../../../../../services/shared-services/date.service';
 import { ExamService } from './../../../../../../services/exam.service';
-import { ExamModel } from './../../../../../../models/exam.model';
+import { ExamModel } from '../../../../../../models/exam.model';
 import { Component, OnInit } from '@angular/core';
 import { BranchService } from './../../../../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';

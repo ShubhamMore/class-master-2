@@ -2,7 +2,7 @@ import { StudentCourseInstallmentReceiptService } from './../../../../../../serv
 import { DateService } from './../../../../../../services/shared-services/date.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { StudentCourseInstallmentModel } from './../../../../../../models/student-course-installment.model';
+import { StudentCourseInstallmentModel } from '../../../../../../models/student-course-installment.model';
 import { StudentCourseInstallmentService } from './../../../../../../services/student-course-installment.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from '../../../../../../services/branch.service';
@@ -101,6 +101,11 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
     );
   }
 
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
+  }
+
   editReceipt(installmentId: string, receiptId: string) {
     this.studentCourseInstallmentReceiptService.setStudentCourseInstallmentReceiptId(receiptId);
     this.studentCourseInstallmentService.setCourseInstallmentId(installmentId);
@@ -110,10 +115,6 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
   showReceipt(receiptId: string) {
     this.studentCourseInstallmentReceiptService.setStudentCourseInstallmentReceiptId(receiptId);
     this.router.navigate(['../receipt'], { relativeTo: this.route });
-  }
-
-  back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   deleteReceipt(installmentId: string, receiptId: string) {
@@ -142,6 +143,10 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
       position,
       status,
     });
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {}

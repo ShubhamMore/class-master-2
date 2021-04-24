@@ -1,9 +1,9 @@
-import { CourseMaterialModel } from './../../../../../models/course-material.model';
+import { CourseMaterialModel } from '../../../../../models/course-material.model';
 import { StudentBranchService } from './../../../student-branch.service';
 import { CourseMaterialService } from './../../../../../services/course-material.service';
 import { BatchService } from './../../../../../services/batch.service';
-import { StudentCourseModel } from './../../../../../models/student-course.model';
-import { SubjectModel } from './../../../../../models/course.model';
+import { StudentCourseModel } from '../../../../../models/student-course.model';
+import { SubjectModel } from '../../../../../models/course.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StudentCourseService } from './../../../../../services/student-course.service';
 import { NbToastrService } from '@nebular/theme';

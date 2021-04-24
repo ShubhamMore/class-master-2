@@ -3,14 +3,17 @@
     <h4>Comment</h4>
   </nb-card-header>
   <nb-card-body>
-    <textArea
+    <textarea
+      type="text"
       nbInput
+      id="input-comment"
+      name="comment"
       fullWidth
       rows="2"
       (input)="changeComment($event.target.value)"
       placeholder="Comment"
     >
-    </textArea>
+    </textarea>
   </nb-card-body>
   <nb-card-footer>
     <div class="row">

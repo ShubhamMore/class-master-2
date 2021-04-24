@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { BranchModel } from './../../../models/branch.model';
+import { BranchModel } from '../../../models/branch.model';
 import { Component, OnInit } from '@angular/core';
 import { BranchService } from './../../../services/branch.service';
 

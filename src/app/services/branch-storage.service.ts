@@ -1,4 +1,4 @@
-import { BranchStorageModel } from './../models/branch-storage.model';
+import { BranchStorageModel } from '../models/branch-storage.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';

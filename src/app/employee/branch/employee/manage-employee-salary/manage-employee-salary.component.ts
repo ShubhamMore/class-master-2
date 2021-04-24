@@ -1,5 +1,5 @@
 import { NbToastrService } from '@nebular/theme';
-import { BranchEmployeeModel } from './../../../../models/branch-employee.model';
+import { BranchEmployeeModel } from '../../../../models/branch-employee.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BranchService } from './../../../../services/branch.service';
 import { BranchEmployeeService } from './../../../../services/branch-employee.service';

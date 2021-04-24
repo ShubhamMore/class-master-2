@@ -26,12 +26,14 @@ export class CourseMaterialComponent implements OnInit, OnDestroy {
     this.courseId = this.courseService.getCourseId();
     if (!this.branchId || !this.courseId) {
       this.back();
+
       return;
     }
 
     const course = this.courseService.getCourseData();
     if (!course) {
       this.back();
+
       return;
     }
     this.loading = false;

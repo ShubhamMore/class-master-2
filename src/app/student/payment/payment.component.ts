@@ -1,11 +1,11 @@
 import { StudentCourseService } from './../../services/student-course.service';
-import { StudentCourseModel } from './../../models/student-course.model';
-import { BranchModel } from './../../models/branch.model';
+import { StudentCourseModel } from '../../models/student-course.model';
+import { BranchModel } from '../../models/branch.model';
 import { BranchService } from './../../services/branch.service';
 import {
   StudentCourseInstallmentModel,
   InstallmentModel,
-} from './../../models/student-course-installment.model';
+} from '../../models/student-course-installment.model';
 import { InstituteOrderService } from './../../services/institute-order.service';
 import { StudentCourseInstallmentService } from './../../services/student-course-installment.service';
 import { InstituteKeysService } from './../../services/institute-keys.service';

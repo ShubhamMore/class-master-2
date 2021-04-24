@@ -1,7 +1,7 @@
 import { DateService } from './../../../../services/shared-services/date.service';
 import { NbToastrService } from '@nebular/theme';
-import { BatchModel } from './../../../../models/batch.model';
-import { CourseModel, SubjectModel } from './../../../../models/course.model';
+import { BatchModel } from '../../../../models/batch.model';
+import { CourseModel, SubjectModel } from '../../../../models/course.model';
 import { CourseService } from './../../../../services/course.service';
 import { BatchService } from './../../../../services/batch.service';
 import { LectureService } from './../../../../services/lecture.service';
@@ -9,7 +9,7 @@ import { AttendanceService } from './../../../../services/attendance.service';
 import { BranchService } from './../../../../services/branch.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ScheduleModel as LectureModel } from './../../../../models/schedule.model';
+import { ScheduleModel as LectureModel } from '../../../../models/schedule.model';
 
 interface StudentAttendance {
   name: string;

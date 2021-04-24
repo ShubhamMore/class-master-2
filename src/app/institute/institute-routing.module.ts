@@ -69,6 +69,7 @@ const routes: Routes = [
           import('./manage-institute/add-institute/add-institute.module').then(
             (m) => m.AddInstituteModule,
           ),
+        data: { mode: 'edit' },
         canActivate: [],
       },
 

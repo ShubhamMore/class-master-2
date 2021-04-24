@@ -16,9 +16,11 @@ const routes: Routes = [
         path: 'add',
         loadChildren: () => import('./add-batch/add-batch.module').then((m) => m.AddBatchModule),
       },
+
       {
         path: 'edit',
         loadChildren: () => import('./add-batch/add-batch.module').then((m) => m.AddBatchModule),
+        data: { mode: 'edit' },
       },
 
       {

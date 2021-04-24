@@ -1,5 +1,5 @@
 import { SMSPackageService } from './../../../services/sms-package.service';
-import { SMSPackageModel } from './../../../models/sms-package.model';
+import { SMSPackageModel } from '../../../models/sms-package.model';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';

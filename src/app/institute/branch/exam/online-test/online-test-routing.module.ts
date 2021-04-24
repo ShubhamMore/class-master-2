@@ -30,6 +30,7 @@ const routes: Routes = [
         path: 'edit',
         loadChildren: () =>
           import('./add-online-test/add-online-test.module').then((m) => m.AddOnlineTestModule),
+        data: { mode: 'edit' },
       },
       {
         path: 'question',

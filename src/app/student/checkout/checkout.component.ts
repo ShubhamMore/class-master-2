@@ -1,10 +1,10 @@
 import { DateService } from './../../services/shared-services/date.service';
 import { StudentCourseService } from './../../services/student-course.service';
-import { StudentCourseModel } from './../../models/student-course.model';
+import { StudentCourseModel } from '../../models/student-course.model';
 import {
   InstallmentModel,
   StudentCourseInstallmentModel,
-} from './../../models/student-course-installment.model';
+} from '../../models/student-course-installment.model';
 import { StudentCourseInstallmentService } from './../../services/student-course-installment.service';
 import { Component, OnInit } from '@angular/core';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';

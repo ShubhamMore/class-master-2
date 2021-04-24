@@ -1,9 +1,9 @@
 import { DateService } from './../../../../services/shared-services/date.service';
-import { CategoryModel, BranchModel } from './../../../../models/branch.model';
-import { CourseModel } from './../../../../models/course.model';
+import { CategoryModel, BranchModel } from '../../../../models/branch.model';
+import { CourseModel } from '../../../../models/course.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LeadService } from './../../../../services/lead.service';
-import { LeadModel } from './../../../../models/lead.model';
+import { LeadModel } from '../../../../models/lead.model';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { BranchService } from './../../../../services/branch.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -45,11 +45,7 @@ export class AddLeadComponent implements OnInit, OnDestroy {
     private courseService: CourseService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {
-    // route.queryParams.subscribe((param: Params) => {
-    //   this.ngOnInit();
-    // });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -63,8 +59,8 @@ export class AddLeadComponent implements OnInit, OnDestroy {
 
     let mode: string;
 
-    this.route.queryParams.subscribe((param: Params) => {
-      mode = param.mode;
+    this.route.data.subscribe((data: any) => {
+      mode = data.mode;
     });
 
     this.leadId = this.leadService.getLeadId();

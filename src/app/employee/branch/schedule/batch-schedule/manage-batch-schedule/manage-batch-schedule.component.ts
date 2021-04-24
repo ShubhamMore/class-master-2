@@ -1,10 +1,10 @@
 import { NbToastrService } from '@nebular/theme';
-import { BatchModel } from './../../../../../models/batch.model';
-import { CategoryModel } from './../../../../../models/branch.model';
-import { CourseModel, SubjectModel } from './../../../../../models/course.model';
+import { BatchModel } from '../../../../../models/batch.model';
+import { CategoryModel } from '../../../../../models/branch.model';
+import { CourseModel, SubjectModel } from '../../../../../models/course.model';
 import { CourseService } from './../../../../../services/course.service';
 import { ScheduleService } from './../../../../../services/schedule.service';
-import { ScheduleModel } from './../../../../../models/schedule.model';
+import { ScheduleModel } from '../../../../../models/schedule.model';
 import { DateService } from './../../../../../services/shared-services/date.service';
 import { Component, OnInit } from '@angular/core';
 import { BranchService } from './../../../../../services/branch.service';

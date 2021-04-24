@@ -1,5 +1,5 @@
 import { DateService } from './../../../../../services/shared-services/date.service';
-import { DiscountAndOfferModel } from './../../../../../models/discount-and-offer.model';
+import { DiscountAndOfferModel } from '../../../../../models/discount-and-offer.model';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { DiscountAndOfferService } from './../../../../../services/discount-and-offer.service';
@@ -32,13 +32,7 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
 
     private router: Router,
     private route: ActivatedRoute,
-  ) {
-    this.route.queryParams.subscribe((param: Params) => {
-      if (param.mode) {
-        this.ngOnInit();
-      }
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -55,8 +49,8 @@ export class AddDiscountAndOfferComponent implements OnInit, OnDestroy {
 
     let mode: string;
 
-    this.route.queryParams.subscribe((param: Params) => {
-      mode = param.mode;
+    this.route.data.subscribe((data: any) => {
+      mode = data.mode;
     });
 
     if (mode && mode !== 'edit') {

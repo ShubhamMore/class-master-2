@@ -2,7 +2,7 @@ import { DateService } from './../../services/shared-services/date.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
 import { TransactionService } from './../../services/transaction.service';
-import { InstituteTransactionModel } from './../../models/institute-transaction.model';
+import { InstituteTransactionModel } from '../../models/institute-transaction.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

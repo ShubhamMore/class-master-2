@@ -1,4 +1,4 @@
-import { CategoryModel, BranchModel } from './../../../../models/branch.model';
+import { CategoryModel, BranchModel } from '../../../../models/branch.model';
 import { DateService } from './../../../../services/shared-services/date.service';
 import { UserService } from './../../../../services/shared-services/user.service';
 import { environment } from './../../../../../environments/environment.prod';
@@ -6,7 +6,7 @@ import { EncryptService } from './../../../../services/shared-services/encrypt.s
 import { BranchStudentService } from '../../../../services/branch-student.service';
 import { StudentService } from './../../../../services/student.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { StudentModel } from './../../../../models/student.model';
+import { StudentModel } from '../../../../models/student.model';
 import { BranchStudentModel } from '../../../../models/branch-student.model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -50,12 +50,7 @@ export class AddStudentComponent implements OnInit, OnDestroy {
     private encryptService: EncryptService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {
-    // route.queryParams.subscribe((param: Params) => {
-    //   // put the code from `ngOnInit` here
-    //   this.ngOnInit();
-    // });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -72,8 +67,8 @@ export class AddStudentComponent implements OnInit, OnDestroy {
 
     let mode: string;
 
-    this.route.queryParams.subscribe((param: Params) => {
-      mode = param.mode;
+    this.route.data.subscribe((data: any) => {
+      mode = data.mode;
     });
 
     if (mode && mode !== 'edit') {

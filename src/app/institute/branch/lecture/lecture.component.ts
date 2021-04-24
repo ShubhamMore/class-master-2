@@ -1,8 +1,8 @@
 import { LectureService } from './../../../services/lecture.service';
 import { BranchEmployeeService } from './../../../services/branch-employee.service';
-import { BranchEmployeeModel } from './../../../models/branch-employee.model';
-import { BatchModel } from './../../../models/batch.model';
-import { CourseModel } from './../../../models/course.model';
+import { BranchEmployeeModel } from '../../../models/branch-employee.model';
+import { BatchModel } from '../../../models/batch.model';
+import { CourseModel } from '../../../models/course.model';
 import { CourseService } from './../../../services/course.service';
 import { BatchService } from './../../../services/batch.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';

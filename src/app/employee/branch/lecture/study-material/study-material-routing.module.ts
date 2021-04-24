@@ -29,6 +29,7 @@ const routes: Routes = [
           import('./add-study-material/add-study-material.module').then(
             (m) => m.AddStudyMaterialModule,
           ),
+        data: { mode: 'edit' },
       },
 
       {

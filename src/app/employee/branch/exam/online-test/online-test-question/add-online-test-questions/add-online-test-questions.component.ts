@@ -5,8 +5,8 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { OnlineExamService } from './../../../../../../services/online-exam.service';
-import { OnlineExamModel } from './../../../../../../models/online-exam.model';
-import { OnlineExamQuestionModel } from './../../../../../../models/online-exam-question.model';
+import { OnlineExamModel } from '../../../../../../models/online-exam.model';
+import { OnlineExamQuestionModel } from '../../../../../../models/online-exam-question.model';
 import { BranchService } from './../../../../../../services/branch.service';
 
 @Component({
@@ -56,8 +56,8 @@ export class AddOnlineTestQuestionsComponent implements OnInit, OnDestroy {
 
       let mode: string;
 
-      this.route.queryParams.subscribe((param: Params) => {
-        mode = param.mode;
+      this.route.data.subscribe((data: any) => {
+        mode = data.mode;
       });
 
       this.onlineExamQuestionId = this.onlineExamQuestionService.getOnlineExamQuestionId();

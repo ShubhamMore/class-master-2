@@ -43,7 +43,7 @@ export class ManageBudgetComponent implements OnInit {
 
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
 
@@ -71,11 +71,6 @@ export class ManageBudgetComponent implements OnInit {
 
   viewStatement() {
     this.router.navigate(['../summery'], { relativeTo: this.route });
-  }
-
-  getAmount(amount: any) {
-    amount = +amount;
-    return amount.toFixed(2).toString() + '/-';
   }
 
   onSelectYear(year: string) {
@@ -170,6 +165,11 @@ export class ManageBudgetComponent implements OnInit {
     return totalIncomes - totalExpenses;
   }
 
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
+  }
+
   deleteBudget(id: string, i: number, type: string) {
     this.budgetService.deleteBudget(id).subscribe(
       (budget: any) => {
@@ -186,10 +186,6 @@ export class ManageBudgetComponent implements OnInit {
         this.loading = false;
       },
     );
-  }
-
-  back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   private showToastr(position: any, status: any, message: string) {

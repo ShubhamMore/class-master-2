@@ -2,8 +2,8 @@ import { OnlineExamQuestionService } from './../../../../../../services/online-e
 import { NbToastrService } from '@nebular/theme';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OnlineExamService } from './../../../../../../services/online-exam.service';
-import { OnlineExamQuestionModel } from './../../../../../../models/online-exam-question.model';
-import { OnlineExamModel } from './../../../../../../models/online-exam.model';
+import { OnlineExamQuestionModel } from '../../../../../../models/online-exam-question.model';
+import { OnlineExamModel } from '../../../../../../models/online-exam.model';
 import { BranchService } from './../../../../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';
 

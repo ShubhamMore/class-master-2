@@ -1,13 +1,13 @@
 import { BranchEmployeeService } from './../../../../services/branch-employee.service';
 import { BranchService } from './../../../../services/branch.service';
 import { InstituteBillingService } from './../../../../services/billing.service';
-import { InstituteBillingModel } from './../../../../models/institute-billing.model';
+import { InstituteBillingModel } from '../../../../models/institute-billing.model';
 import { NbToastrService } from '@nebular/theme';
 import { DateService } from './../../../../services/shared-services/date.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EmployeeService } from './../../../../services/employee.service';
 import { EmployeeSalaryService } from './../../../../services/employee-salary.service';
-import { EmployeeSalaryModel } from './../../../../models/employee-salary.model';
+import { EmployeeSalaryModel } from '../../../../models/employee-salary.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
@@ -77,6 +77,11 @@ export class ViewSalaryReceiptComponent implements OnInit, OnDestroy {
       totalDeductionAmount += +deduction.amount;
     });
     return parseFloat(totalDeductionAmount).toFixed(2);
+  }
+
+  getAmount(amount: any) {
+    amount = parseFloat(amount.toString());
+    return amount.toFixed(2).toString() + '/-';
   }
 
   back() {

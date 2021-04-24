@@ -1,11 +1,11 @@
 import { DateService, Month } from './../../../../../../services/shared-services/date.service';
-import { CategoryModel } from './../../../../../../models/branch.model';
+import { CategoryModel } from '../../../../../../models/branch.model';
 import { CourseService } from './../../../../../../services/course.service';
 import { BatchService } from './../../../../../../services/batch.service';
-import { BatchModel } from './../../../../../../models/batch.model';
-import { CourseModel, SubjectModel } from './../../../../../../models/course.model';
+import { BatchModel } from '../../../../../../models/batch.model';
+import { CourseModel, SubjectModel } from '../../../../../../models/course.model';
 import { ExamService } from './../../../../../../services/exam.service';
-import { ExamModel } from './../../../../../../models/exam.model';
+import { ExamModel } from '../../../../../../models/exam.model';
 import { Component, OnInit } from '@angular/core';
 import { BranchService } from './../../../../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';

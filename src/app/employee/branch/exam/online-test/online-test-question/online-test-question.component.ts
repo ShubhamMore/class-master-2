@@ -1,6 +1,6 @@
 import { OnlineExamQuestionService } from './../../../../../services/online-exam-question.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OnlineExamModel } from './../../../../../models/online-exam.model';
+import { OnlineExamModel } from '../../../../../models/online-exam.model';
 import { OnlineExamService } from './../../../../../services/online-exam.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 

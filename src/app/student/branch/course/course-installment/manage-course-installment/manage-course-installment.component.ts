@@ -3,13 +3,13 @@ import { PaymentComponent } from './../../../../payment/payment.component';
 import { PaymentService } from './../../../../../services/payment.service';
 import { InstituteKeysService } from './../../../../../services/institute-keys.service';
 import { StudentCourseService } from './../../../../../services/student-course.service';
-import { StudentCourseModel } from './../../../../../models/student-course.model';
+import { StudentCourseModel } from '../../../../../models/student-course.model';
 import { StudentCourseInstallmentReceiptService } from './../../../../../services/student-course-installment-receipt.service';
 import { DateService } from './../../../../../services/shared-services/date.service';
 import {
   InstallmentModel,
   StudentCourseInstallmentModel,
-} from './../../../../../models/student-course-installment.model';
+} from '../../../../../models/student-course-installment.model';
 import { StudentCourseInstallmentService } from './../../../../../services/student-course-installment.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from './../../../../../services/branch.service';

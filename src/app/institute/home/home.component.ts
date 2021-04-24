@@ -2,7 +2,7 @@ import { MembershipService } from './../../services/membership.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../../authentication/auth/auth-service/auth.service';
 import { BranchService } from './../../services/branch.service';
-import { BranchModel, BranchAddressModel } from './../../models/branch.model';
+import { BranchModel, BranchAddressModel } from '../../models/branch.model';
 import { MenuService } from './../menu.service';
 import { Component, OnInit } from '@angular/core';
 

@@ -1,9 +1,9 @@
 import { DateService } from './../../../../../services/shared-services/date.service';
 import { BatchService } from './../../../../../services/batch.service';
 import { CourseService } from './../../../../../services/course.service';
-import { BatchModel } from './../../../../../models/batch.model';
-import { CourseModel } from './../../../../../models/course.model';
-import { CategoryModel, BranchModel } from './../../../../../models/branch.model';
+import { BatchModel } from '../../../../../models/batch.model';
+import { CourseModel } from '../../../../../models/course.model';
+import { CategoryModel, BranchModel } from '../../../../../models/branch.model';
 import { Component, OnInit } from '@angular/core';
 import { BranchService } from './../../../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';

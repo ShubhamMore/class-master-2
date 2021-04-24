@@ -1,7 +1,7 @@
 import { StorageService } from './../../../../../../services/shared-services/storage.service';
-import { CourseMaterialModel } from './../../../../../../models/course-material.model';
+import { CourseMaterialModel } from '../../../../../../models/course-material.model';
 import { Component, OnInit } from '@angular/core';
-import { CourseModel, SubjectModel } from './../../../../../../models/course.model';
+import { CourseModel, SubjectModel } from '../../../../../../models/course.model';
 import { CourseService } from './../../../../../../services/course.service';
 import { CourseMaterialService } from './../../../../../../services/course-material.service';
 import { BranchService } from './../../../../../../services/branch.service';
@@ -85,7 +85,7 @@ export class ManageCourseMaterialComponent implements OnInit {
     this.courseMaterialService.deleteCourseMaterial(id).subscribe(
       (res: any) => {
         this.courseMaterials.splice(i, 1);
-        this.showToastr('top-right', 'success', `CourseMaterial Deleted Successfully!`);
+        this.showToastr('top-right', 'success', `Course Material Deleted Successfully!`);
         this.loading = false;
       },
       (err: any) => {

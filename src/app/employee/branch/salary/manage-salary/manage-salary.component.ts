@@ -1,5 +1,5 @@
 import { BranchService } from './../../../../services/branch.service';
-import { EmployeeSalaryModel } from './../../../../models/employee-salary.model';
+import { EmployeeSalaryModel } from '../../../../models/employee-salary.model';
 import { DateService, Month } from './../../../../services/shared-services/date.service';
 import { EmployeeSalaryService } from './../../../../services/employee-salary.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -88,6 +88,11 @@ export class ManageSalaryComponent implements OnInit, OnDestroy {
       position,
       status,
     });
+  }
+
+  getAmount(amount: any) {
+    amount = parseFloat(amount.toString());
+    return amount.toFixed(2).toString() + '/-';
   }
 
   back() {

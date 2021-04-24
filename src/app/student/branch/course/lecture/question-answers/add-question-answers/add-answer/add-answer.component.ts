@@ -1,12 +1,12 @@
 import { LectureService } from './../../../../../../../services/lecture.service';
 import { BranchService } from './../../../../../../../services/branch.service';
 import { QuestionAnswersService } from './../../../../../../../services/question-answers.service';
-import { LectureQuestionModel } from './../../../../../../../models/lecture-question.model';
+import { LectureQuestionModel } from '../../../../../../../models/lecture-question.model';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LectureQuestionAnswerModel } from './../../../../../../../models/lecture-question-answers.model';
+import { LectureQuestionAnswerModel } from '../../../../../../../models/lecture-question-answers.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ScheduleModel as LectureModel } from './../../../../../../../models/schedule.model';
+import { ScheduleModel as LectureModel } from '../../../../../../../models/schedule.model';
 
 @Component({
   selector: 'ngx-add-answer',

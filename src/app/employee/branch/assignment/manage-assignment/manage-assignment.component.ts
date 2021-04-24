@@ -6,10 +6,10 @@ import { AssignmentService } from './../../../../services/assignment.service';
 import { BatchService } from './../../../../services/batch.service';
 import { CourseService } from './../../../../services/course.service';
 import { BranchService } from './../../../../services/branch.service';
-import { AssignmentModel } from './../../../../models/assignment.model';
-import { CategoryModel } from './../../../../models/branch.model';
-import { CourseModel, SubjectModel } from './../../../../models/course.model';
-import { BatchModel } from './../../../../models/batch.model';
+import { AssignmentModel } from '../../../../models/assignment.model';
+import { CategoryModel } from '../../../../models/branch.model';
+import { CourseModel, SubjectModel } from '../../../../models/course.model';
+import { BatchModel } from '../../../../models/batch.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

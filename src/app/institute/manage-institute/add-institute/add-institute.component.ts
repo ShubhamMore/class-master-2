@@ -6,7 +6,7 @@ import { NbToastrService, NbStepperComponent, NbDialogService } from '@nebular/t
 import { BranchService } from './../../../services/branch.service';
 import { MenuService } from './../../menu.service';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { BranchModel, CategoryModel } from './../../../models/branch.model';
+import { BranchModel, CategoryModel } from '../../../models/branch.model';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ObjectId } from 'bson';
@@ -49,13 +49,7 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
     private dialogService: NbDialogService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {
-    this.route.queryParams.subscribe((param: Params) => {
-      if (param.mode) {
-        this.ngOnInit();
-      }
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.loading = true;
@@ -65,8 +59,9 @@ export class AddInstituteComponent implements OnInit, OnDestroy {
     this.paymentDetails = this.paymentService.getPaymentDetails();
 
     let mode: string;
-    this.route.queryParams.subscribe((param: Params) => {
-      mode = param.mode;
+
+    this.route.data.subscribe((data: any) => {
+      mode = data.mode;
     });
 
     this.branchId = this.branchService.getBranchId();

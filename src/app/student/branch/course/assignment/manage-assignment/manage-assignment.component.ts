@@ -1,14 +1,14 @@
 import { StudentBranchService } from './../../../student-branch.service';
 import { StudentCourseService } from './../../../../../services/student-course.service';
-import { StudentCourseModel } from './../../../../../models/student-course.model';
+import { StudentCourseModel } from '../../../../../models/student-course.model';
 import { SubjectService } from './../../../../../services/subject.service';
 import { NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DateService, Month } from './../../../../../services/shared-services/date.service';
 import { AssignmentService } from './../../../../../services/assignment.service';
 import { BranchService } from './../../../../../services/branch.service';
-import { AssignmentModel } from './../../../../../models/assignment.model';
-import { SubjectModel } from './../../../../../models/course.model';
+import { AssignmentModel } from '../../../../../models/assignment.model';
+import { SubjectModel } from '../../../../../models/course.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

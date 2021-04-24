@@ -1,12 +1,12 @@
 import { AuthService } from './../../../../authentication/auth/auth-service/auth.service';
-import { AssignmentSubmissionModel } from './../../../../models/assignment-submission.model';
+import { AssignmentSubmissionModel } from '../../../../models/assignment-submission.model';
 import { AssignmentSubmissionService } from './../../../../services/assignment-submission.service';
 import { NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DateService } from './../../../../services/shared-services/date.service';
 import { AssignmentService } from './../../../../services/assignment.service';
 import { BranchService } from './../../../../services/branch.service';
-import { AssignmentModel } from './../../../../models/assignment.model';
+import { AssignmentModel } from '../../../../models/assignment.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

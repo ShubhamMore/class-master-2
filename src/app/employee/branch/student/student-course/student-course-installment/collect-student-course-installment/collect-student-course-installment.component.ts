@@ -1,12 +1,12 @@
 import { StudentCourseInstallmentService } from './../../../../../../services/student-course-installment.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { StudentCourseInstallmentReceiptModel } from './../../../../../../models/student-course-installment-receipt.model';
+import { StudentCourseInstallmentReceiptModel } from '../../../../../../models/student-course-installment-receipt.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { CourseService } from './../../../../../../services/course.service';
 import { DateService } from './../../../../../../services/shared-services/date.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { InstallmentModel } from './../../../../../../models/student-course-installment.model';
+import { InstallmentModel } from '../../../../../../models/student-course-installment.model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { BranchService } from '../../../../../../services/branch.service';
 import { StudentService } from '../../../../../../services/student.service';
@@ -86,8 +86,8 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
 
     let mode: string;
 
-    this.route.queryParams.subscribe((param: Params) => {
-      mode = param.mode;
+    this.route.data.subscribe((data: any) => {
+      mode = data.mode;
     });
 
     if (mode && mode !== 'edit') {
@@ -147,6 +147,7 @@ export class CollectStudentCourseInstallmentComponent implements OnInit, OnDestr
         .subscribe((courseInstallment: InstallmentModel) => {
           if (!courseInstallment) {
             this.back();
+
             return;
           }
 

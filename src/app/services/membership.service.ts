@@ -1,5 +1,5 @@
 import { map, catchError } from 'rxjs/operators';
-import { MembershipPlanModel } from './../models/membership-plan.model';
+import { MembershipPlanModel } from '../models/membership-plan.model';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';

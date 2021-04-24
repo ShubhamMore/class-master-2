@@ -1,6 +1,6 @@
 import { DateService } from './../../../services/shared-services/date.service';
 import { CouponService } from './../../../services/coupon.service';
-import { CouponModel } from './../../../models/coupon.model';
+import { CouponModel } from '../../../models/coupon.model';
 import { NbDialogRef, NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';

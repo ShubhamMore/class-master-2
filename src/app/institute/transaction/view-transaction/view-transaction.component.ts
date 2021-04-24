@@ -1,7 +1,7 @@
 import { DateService } from './../../../services/shared-services/date.service';
 import { NbToastrService } from '@nebular/theme';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InstituteTransactionModel } from './../../../models/institute-transaction.model';
+import { InstituteTransactionModel } from '../../../models/institute-transaction.model';
 import { TransactionService } from './../../../services/transaction.service';
 import { environment } from './../../../../environments/environment';
 import { Component, OnInit, OnDestroy } from '@angular/core';

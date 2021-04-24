@@ -50,6 +50,7 @@
                   <th>Follow Up</th>
                   <th>Category</th>
                   <th>Course</th>
+                  <th *ngIf="type === 'inactive'">Status</th>
 
                   <th>Action</th>
                   <th *ngIf="type === 'active'"></th>
@@ -65,6 +66,12 @@
                   <td>{{ dateService.formatDate(lead.followUpDate) }}</td>
                   <td>{{ getCategory(lead.category) }}</td>
                   <td>{{ getCourse(lead.course) }}</td>
+                  <td
+                    *ngIf="type === 'inactive'"
+                    [ngClass]="lead.status === 'lost' ? 'error' : 'success'"
+                  >
+                    <strong>{{ lead.status | uppercase }}</strong>
+                  </td>
 
                   <td>
                     <button nbButton size="small" status="basic" (click)="editLead(lead._id)">
@@ -78,7 +85,7 @@
                     </button>
                   </td>
 
-                  <td *ngIf="type === 'inactive'">
+                  <td *ngIf="type === 'inactive' && lead.status === 'lost'">
                     <button nbButton size="small" status="success" (click)="reOpenLead(lead._id)">
                       Reopen
                     </button>

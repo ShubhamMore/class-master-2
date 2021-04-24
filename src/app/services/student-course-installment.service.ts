@@ -1,7 +1,7 @@
 import {
   StudentCourseInstallmentModel,
   InstallmentModel,
-} from './../models/student-course-installment.model';
+} from '../models/student-course-installment.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError, take } from 'rxjs/operators';

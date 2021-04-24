@@ -15,6 +15,7 @@ const routes: Routes = [
       {
         path: 'edit',
         loadChildren: () => import('./add-lead/add-lead.module').then((m) => m.AddLeadModule),
+        data: { mode: 'edit' },
       },
 
       {

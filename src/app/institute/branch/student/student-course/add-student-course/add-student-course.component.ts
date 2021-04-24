@@ -1,10 +1,10 @@
-import { InstallmentModel } from './../../../../../models/student-course-installment.model';
+import { InstallmentModel } from '../../../../../models/student-course-installment.model';
 import { CourseService } from './../../../../../services/course.service';
 import { BatchService } from './../../../../../services/batch.service';
-import { DiscountAndOfferModel } from './../../../../../models/discount-and-offer.model';
-import { BatchModel } from './../../../../../models/batch.model';
-import { CourseModel } from './../../../../../models/course.model';
-import { StudentCourseModel } from './../../../../../models/student-course.model';
+import { DiscountAndOfferModel } from '../../../../../models/discount-and-offer.model';
+import { BatchModel } from '../../../../../models/batch.model';
+import { CourseModel } from '../../../../../models/course.model';
+import { StudentCourseModel } from '../../../../../models/student-course.model';
 import { StudentCourseService } from './../../../../../services/student-course.service';
 import { DateService } from './../../../../../services/shared-services/date.service';
 import { StudentService } from './../../../../../services/student.service';
@@ -68,11 +68,7 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
 
     private router: Router,
     private route: ActivatedRoute,
-  ) {
-    // route.queryParams.subscribe((param: Params) => {
-    //   this.ngOnInit();
-    // });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -91,8 +87,8 @@ export class AddStudentCourseComponent implements OnInit, OnDestroy {
 
     let mode: string;
 
-    this.route.queryParams.subscribe((param: Params) => {
-      mode = param.mode;
+    this.route.data.subscribe((data: any) => {
+      mode = data.mode;
     });
 
     if (mode && mode !== 'edit') {

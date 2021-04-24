@@ -1,8 +1,8 @@
-import { BatchModel } from './../../../../../../models/batch.model';
-import { CourseModel } from './../../../../../../models/course.model';
-import { LectureMaterialModel } from './../../../../../../models/lecture-material.model';
+import { BatchModel } from '../../../../../../models/batch.model';
+import { CourseModel } from '../../../../../../models/course.model';
+import { LectureMaterialModel } from '../../../../../../models/lecture-material.model';
 import { Component, OnInit } from '@angular/core';
-import { ScheduleModel as LectureModel } from './../../../../../../models/schedule.model';
+import { ScheduleModel as LectureModel } from '../../../../../../models/schedule.model';
 import { LectureService } from './../../../../../../services/lecture.service';
 import { LectureMaterialService } from './../../../../../../services/lecture-material.service';
 import { BranchService } from './../../../../../../services/branch.service';

@@ -3,8 +3,8 @@ import { DateService, Month } from './../../../../../services/shared-services/da
 import { BranchEmployeeService } from './../../../../../services/branch-employee.service';
 import { EmployeeService } from './../../../../../services/employee.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { EmployeeModel } from './../../../../../models/employee.model';
-import { BranchEmployeeModel } from './../../../../../models/branch-employee.model';
+import { EmployeeModel } from '../../../../../models/employee.model';
+import { BranchEmployeeModel } from '../../../../../models/branch-employee.model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../../services/branch.service';
@@ -46,12 +46,7 @@ export class AddSalaryComponent implements OnInit, OnDestroy {
     private toastrService: NbToastrService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {
-    // route.queryParams.subscribe((param: Params) => {
-    //   // put the code from `ngOnInit` here
-    //   this.ngOnInit();
-    // });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -77,7 +72,7 @@ export class AddSalaryComponent implements OnInit, OnDestroy {
     this.earnings = [
       {
         description: 'Basic Amount',
-        amount: parseFloat(this.branchEmployee.basicSalary).toFixed(2),
+        amount: parseFloat(this.branchEmployee.basicSalary),
       },
     ];
     this.deductions = [];
@@ -146,7 +141,7 @@ export class AddSalaryComponent implements OnInit, OnDestroy {
 
     const extras: any = {
       description: this.ernDeductForm.value.description,
-      amount: parseFloat(this.ernDeductForm.value.amount).toFixed(2),
+      amount: parseFloat(this.ernDeductForm.value.amount),
     };
     if (this.ernDeduction) {
       this.earnings.push(extras);
@@ -172,7 +167,7 @@ export class AddSalaryComponent implements OnInit, OnDestroy {
     this.earnings.forEach((earning) => {
       totalEarningAmount += +earning.amount;
     });
-    return parseFloat(totalEarningAmount).toFixed(2);
+    return parseFloat(totalEarningAmount);
   }
 
   totalDeduction() {
@@ -180,14 +175,19 @@ export class AddSalaryComponent implements OnInit, OnDestroy {
     this.deductions.forEach((deduction) => {
       totalDeductionAmount += +deduction.amount;
     });
-    return parseFloat(totalDeductionAmount).toFixed(2);
+    return parseFloat(totalDeductionAmount);
   }
 
   getNetSalary() {
     const totalEarnings = +this.totalEarning();
     const totalDeductions = +this.totalDeduction();
     const netSalary: number = totalEarnings - totalDeductions;
-    return netSalary.toFixed(2).toString();
+    return netSalary;
+  }
+
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
   }
 
   getNetSalaryInWords() {

@@ -1,6 +1,6 @@
 import { DateService } from './../../../services/shared-services/date.service';
 import { StoragePackageService } from './../../../services/storage-package.service';
-import { StoragePackageModel } from './../../../models/storage-package.model';
+import { StoragePackageModel } from '../../../models/storage-package.model';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';

@@ -17,6 +17,7 @@ const routes: Routes = [
         path: 'edit',
         loadChildren: () =>
           import('./add-student/add-student.module').then((m) => m.AddStudentModule),
+        data: { mode: 'edit' },
       },
 
       {

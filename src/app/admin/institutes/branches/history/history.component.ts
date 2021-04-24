@@ -1,11 +1,11 @@
 import { DateService } from './../../../../services/shared-services/date.service';
-import { MembershipPlanModel } from './../../../../models/membership-plan.model';
+import { MembershipPlanModel } from '../../../../models/membership-plan.model';
 import { PlanTypeComponent } from './plan-type/plan-type.component';
-import { BranchHistoryModel } from './../../../../models/branch-history.model';
-import { BranchModel, BranchAddressModel, CategoryModel } from './../../../../models/branch.model';
+import { BranchHistoryModel } from '../../../../models/branch-history.model';
+import { BranchModel, BranchAddressModel, CategoryModel } from '../../../../models/branch.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NbToastrService, NbDialogService } from '@nebular/theme';
-import { InstituteModel } from './../../../../models/institute.model';
+import { InstituteModel } from '../../../../models/institute.model';
 import { Component, OnInit } from '@angular/core';
 import { InstituteService } from '../../../services/institute.service';
 

@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { NbToastrService } from '@nebular/theme';
 import { InstituteBillingService } from './../../../../services/billing.service';
-import { InstituteBillingModel } from './../../../../models/institute-billing.model';
+import { InstituteBillingModel } from '../../../../models/institute-billing.model';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({

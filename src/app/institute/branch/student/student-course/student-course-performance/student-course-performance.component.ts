@@ -1,7 +1,7 @@
 import { ExamService } from './../../../../../services/exam.service';
 import { BatchService } from './../../../../../services/batch.service';
-import { StudentCourseModel } from './../../../../../models/student-course.model';
-import { SubjectModel } from './../../../../../models/course.model';
+import { StudentCourseModel } from '../../../../../models/student-course.model';
+import { SubjectModel } from '../../../../../models/course.model';
 import { AttendanceService } from './../../../../../services/attendance.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StudentCourseService } from './../../../../../services/student-course.service';

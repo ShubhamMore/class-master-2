@@ -1,7 +1,7 @@
-import { OnlineExamResultModel } from './../../../../../models/online-exam-result.model';
+import { OnlineExamResultModel } from '../../../../../models/online-exam-result.model';
 import { NbToastrService } from '@nebular/theme';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OnlineExamModel } from './../../../../../models/online-exam.model';
+import { OnlineExamModel } from '../../../../../models/online-exam.model';
 import { OnlineExamService } from './../../../../../services/online-exam.service';
 import { Component, OnInit } from '@angular/core';
 import { PlatformLocation } from '@angular/common';

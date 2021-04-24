@@ -1,6 +1,6 @@
 import { NbToastrService, NbDialogRef } from '@nebular/theme';
-import { EmployeeNameIdModel } from './../../../../../../models/branch-employee.model';
-import { SubjectModel } from './../../../../../../models/course.model';
+import { EmployeeNameIdModel } from '../../../../../../models/branch-employee.model';
+import { SubjectModel } from '../../../../../../models/course.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 

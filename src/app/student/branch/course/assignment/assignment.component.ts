@@ -1,13 +1,13 @@
 import { StudentBranchService } from './../../student-branch.service';
 import { NbToastrService } from '@nebular/theme';
-import { StudentCourseModel } from './../../../../models/student-course.model';
+import { StudentCourseModel } from '../../../../models/student-course.model';
 import { StudentCourseService } from './../../../../services/student-course.service';
 import { SubjectService } from './../../../../services/subject.service';
 import { LectureService } from './../../../../services/lecture.service';
 import { BranchEmployeeService } from './../../../../services/branch-employee.service';
-import { BranchEmployeeModel } from './../../../../models/branch-employee.model';
-import { BatchModel } from './../../../../models/batch.model';
-import { CourseModel, SubjectModel } from './../../../../models/course.model';
+import { BranchEmployeeModel } from '../../../../models/branch-employee.model';
+import { BatchModel } from '../../../../models/batch.model';
+import { CourseModel, SubjectModel } from '../../../../models/course.model';
 import { CourseService } from './../../../../services/course.service';
 import { BatchService } from './../../../../services/batch.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';

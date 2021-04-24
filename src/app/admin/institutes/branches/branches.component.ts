@@ -1,7 +1,7 @@
-import { BranchModel } from './../../../models/branch.model';
+import { BranchModel } from '../../../models/branch.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
-import { InstituteModel } from './../../../models/institute.model';
+import { InstituteModel } from '../../../models/institute.model';
 import { Component, OnInit } from '@angular/core';
 import { InstituteService } from '../../services/institute.service';
 

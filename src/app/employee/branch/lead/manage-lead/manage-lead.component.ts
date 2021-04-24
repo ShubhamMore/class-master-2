@@ -1,8 +1,8 @@
 import { DateService } from './../../../../services/shared-services/date.service';
 import { CourseService } from './../../../../services/course.service';
-import { CourseModel } from './../../../../models/course.model';
+import { CourseModel } from '../../../../models/course.model';
 import { NbToastrService } from '@nebular/theme';
-import { CategoryModel, BranchModel } from './../../../../models/branch.model';
+import { CategoryModel, BranchModel } from '../../../../models/branch.model';
 import { LeadService } from '../../../../services/lead.service';
 import { LeadModel } from '../../../../models/lead.model';
 import { Component, OnInit } from '@angular/core';

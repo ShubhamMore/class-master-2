@@ -2,10 +2,10 @@ import { ExamService } from './../../../../../../services/exam.service';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { BatchService } from './../../../../../../services/batch.service';
 import { CourseService } from './../../../../../../services/course.service';
-import { BatchModel } from './../../../../../../models/batch.model';
-import { CourseModel, SubjectModel } from './../../../../../../models/course.model';
-import { CategoryModel, BranchModel } from './../../../../../../models/branch.model';
-import { ExamModel } from './../../../../../../models/exam.model';
+import { BatchModel } from '../../../../../../models/batch.model';
+import { CourseModel, SubjectModel } from '../../../../../../models/course.model';
+import { CategoryModel, BranchModel } from '../../../../../../models/branch.model';
+import { ExamModel } from '../../../../../../models/exam.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { BranchService } from './../../../../../../services/branch.service';
@@ -55,8 +55,8 @@ export class AddTestComponent implements OnInit, OnDestroy {
 
     let mode: string;
 
-    this.route.queryParams.subscribe((param: Params) => {
-      mode = param.mode;
+    this.route.data.subscribe((data: any) => {
+      mode = data.mode;
     });
 
     this.examId = this.examService.getExamId();

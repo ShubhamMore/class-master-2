@@ -27,6 +27,7 @@ const routes: Routes = [
           import('./add-online-test-questions/add-online-test-questions.module').then(
             (m) => m.AddOnlineTestQuestionsModule,
           ),
+        data: { mode: 'edit' },
       },
 
       {

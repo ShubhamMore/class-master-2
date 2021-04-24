@@ -1,8 +1,8 @@
 import { LectureService } from './../../../services/lecture.service';
 import { BranchEmployeeService } from './../../../services/branch-employee.service';
-import { BranchEmployeeModel } from './../../../models/branch-employee.model';
-import { BatchModel } from './../../../models/batch.model';
-import { CourseModel } from './../../../models/course.model';
+import { BranchEmployeeModel } from '../../../models/branch-employee.model';
+import { BatchModel } from '../../../models/batch.model';
+import { CourseModel } from '../../../models/course.model';
 import { CourseService } from './../../../services/course.service';
 import { BatchService } from './../../../services/batch.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -32,7 +32,7 @@ export class LectureComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.back();
       return;
     }
 
@@ -57,9 +57,13 @@ export class LectureComponent implements OnInit, OnDestroy {
         this.loading = false;
       },
       (error: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.back();
       },
     );
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

@@ -5,10 +5,10 @@ import { OnlineExamService } from './../../../../../services/online-exam.service
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { BatchService } from './../../../../../services/batch.service';
 import { CourseService } from './../../../../../services/course.service';
-import { BatchModel } from './../../../../../models/batch.model';
-import { CourseModel, SubjectModel } from './../../../../../models/course.model';
-import { CategoryModel } from './../../../../../models/branch.model';
-import { OnlineExamModel } from './../../../../../models/online-exam.model';
+import { BatchModel } from '../../../../../models/batch.model';
+import { CourseModel, SubjectModel } from '../../../../../models/course.model';
+import { CategoryModel } from '../../../../../models/branch.model';
+import { OnlineExamModel } from '../../../../../models/online-exam.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 
@@ -57,8 +57,8 @@ export class AddOnlineTestComponent implements OnInit, OnDestroy {
 
     let mode: string;
 
-    this.route.queryParams.subscribe((param: Params) => {
-      mode = param.mode;
+    this.route.data.subscribe((data: any) => {
+      mode = data.mode;
     });
 
     this.onlineExamId = this.onlineExamService.getOnlineExamId();

@@ -1,5 +1,5 @@
 import { MembershipService } from './../../../services/membership.service';
-import { MembershipPlanModel as MembershipModel } from './../../../models/membership-plan.model';
+import { MembershipPlanModel as MembershipModel } from '../../../models/membership-plan.model';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';

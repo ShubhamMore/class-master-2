@@ -1,15 +1,15 @@
 import { BranchEmployeeService } from './../../../../../services/branch-employee.service';
-import { BranchEmployeeModel } from './../../../../../models/branch-employee.model';
+import { BranchEmployeeModel } from '../../../../../models/branch-employee.model';
 import { BranchService } from './../../../../../services/branch.service';
 import { InstituteBillingService } from './../../../../../services/billing.service';
-import { InstituteBillingModel } from './../../../../../models/institute-billing.model';
+import { InstituteBillingModel } from '../../../../../models/institute-billing.model';
 import { NbToastrService } from '@nebular/theme';
 import { DateService } from './../../../../../services/shared-services/date.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EmployeeService } from './../../../../../services/employee.service';
 import { EmployeeSalaryService } from './../../../../../services/employee-salary.service';
-import { EmployeeModel } from './../../../../../models/employee.model';
-import { EmployeeSalaryModel } from './../../../../../models/employee-salary.model';
+import { EmployeeModel } from '../../../../../models/employee.model';
+import { EmployeeSalaryModel } from '../../../../../models/employee-salary.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
@@ -83,6 +83,11 @@ export class ViewSalaryReceiptComponent implements OnInit, OnDestroy {
       totalEarningAmount += +earning.amount;
     });
     return parseFloat(totalEarningAmount).toFixed(2);
+  }
+
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
   }
 
   totalDeduction() {

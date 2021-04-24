@@ -7,8 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BranchSMSService } from './../../../services/branch-sms.service';
 import { BranchService } from './../../../services/branch.service';
 import { SMSPackageService } from './../../../services/sms-package.service';
-import { SMSPackageModel } from './../../../models/sms-package.model';
-import { BranchSMSModel } from './../../../models/branch-sms.model';
+import { SMSPackageModel } from '../../../models/sms-package.model';
+import { BranchSMSModel } from '../../../models/branch-sms.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

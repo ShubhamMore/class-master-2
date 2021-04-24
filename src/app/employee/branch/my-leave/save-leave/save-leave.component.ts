@@ -1,6 +1,6 @@
 import { BranchService } from './../../../../services/branch.service';
 import { EmployeeLeaveService } from './../../../../services/employee-leave.service';
-import { EmployeeLeaveModel } from './../../../../models/employee-leave.model';
+import { EmployeeLeaveModel } from '../../../../models/employee-leave.model';
 import { DateService } from './../../../../services/shared-services/date.service';
 import { NbDialogRef, NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { FormGroup, FormControl, Validators } from '@angular/forms';

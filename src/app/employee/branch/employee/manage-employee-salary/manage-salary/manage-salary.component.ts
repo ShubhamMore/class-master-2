@@ -1,6 +1,6 @@
-import { EmployeeModel } from './../../../../../models/employee.model';
+import { EmployeeModel } from '../../../../../models/employee.model';
 import { BranchService } from './../../../../../services/branch.service';
-import { EmployeeSalaryModel } from './../../../../../models/employee-salary.model';
+import { EmployeeSalaryModel } from '../../../../../models/employee-salary.model';
 import { DateService, Month } from './../../../../../services/shared-services/date.service';
 import { EmployeeService } from './../../../../../services/employee.service';
 import { EmployeeSalaryService } from './../../../../../services/employee-salary.service';
@@ -68,6 +68,11 @@ export class ManageSalaryComponent implements OnInit, OnDestroy {
   onSelectMonth(month: string) {
     this.month = month;
     this.getEmployeeSalary();
+  }
+
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
   }
 
   onSelectYear(year: string) {

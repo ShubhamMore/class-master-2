@@ -4,7 +4,7 @@ import { AuthService } from './../../../../authentication/auth/auth-service/auth
 import { Router, ActivatedRoute } from '@angular/router';
 import { LectureQuestionModel } from '../../../../models/lecture-question.model';
 import { Component, OnInit } from '@angular/core';
-import { ScheduleModel as LectureModel } from './../../../../models/schedule.model';
+import { ScheduleModel as LectureModel } from '../../../../models/schedule.model';
 import { LectureService } from './../../../../services/lecture.service';
 import { QuestionAnswersService } from './../../../../services/question-answers.service';
 import { BranchService } from './../../../../services/branch.service';
@@ -40,7 +40,6 @@ export class QuestionAnswersComponent implements OnInit {
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
       this.back();
-
       return;
     }
 
@@ -54,7 +53,6 @@ export class QuestionAnswersComponent implements OnInit {
       this.lecture = lecture;
       if (!this.lecture) {
         this.back();
-
         return;
       }
       this.getQuestionAnswers();

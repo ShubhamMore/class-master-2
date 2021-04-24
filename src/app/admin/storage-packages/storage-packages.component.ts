@@ -1,6 +1,6 @@
 import { StorageService } from './../../services/shared-services/storage.service';
 import { SaveStoragePackageComponent } from './save-storage-package/save-storage-package.component';
-import { StoragePackageModel } from './../../models/storage-package.model';
+import { StoragePackageModel } from '../../models/storage-package.model';
 import { NbToastrService, NbDialogService } from '@nebular/theme';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StoragePackageService } from './../../services/storage-package.service';
@@ -60,7 +60,7 @@ export class StoragePackagesComponent implements OnInit {
 
   getAmount(amount: any) {
     amount = parseFloat(amount.toString());
-    return amount.toFixed(2).toString();
+    return amount.toFixed(2).toString() + '/-';
   }
 
   editStoragePackage(storagePackage: StoragePackageModel) {

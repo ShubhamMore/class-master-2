@@ -1,10 +1,10 @@
 import { SubjectService } from './../../../../../services/subject.service';
-import { SubjectModel } from './../../../../../models/course.model';
-import { OnlineExamModel } from './../../../../../models/online-exam.model';
+import { SubjectModel } from '../../../../../models/course.model';
+import { OnlineExamModel } from '../../../../../models/online-exam.model';
 import { OnlineExamService } from './../../../../../services/online-exam.service';
 import { StudentBranchService } from './../../../student-branch.service';
 import { StudentCourseService } from './../../../../../services/student-course.service';
-import { StudentCourseModel } from './../../../../../models/student-course.model';
+import { StudentCourseModel } from '../../../../../models/student-course.model';
 import { NbToastrService } from '@nebular/theme';
 import { LectureService } from './../../../../../services/lecture.service';
 import { DateService, Month } from './../../../../../services/shared-services/date.service';

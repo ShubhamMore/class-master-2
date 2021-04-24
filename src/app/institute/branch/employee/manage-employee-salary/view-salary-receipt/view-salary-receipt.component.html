@@ -59,11 +59,11 @@
               <tr *ngFor="let earning of salary.earnings; let i = index">
                 <td>{{ i + 1 }}</td>
                 <td>{{ earning.description }}</td>
-                <td>{{ earning.amount }}</td>
+                <td>{{ getAmount(earning.amount) }}</td>
               </tr>
               <tr>
                 <th colspan="2">Total</th>
-                <th>{{ totalEarning() }}</th>
+                <th>{{ getAmount(totalEarning()) }}</th>
               </tr>
             </tbody>
           </table>
@@ -85,11 +85,11 @@
               <tr *ngFor="let deduction of salary.deductions; let i = index">
                 <td>{{ i + 1 }}</td>
                 <td>{{ deduction.description }}</td>
-                <td>{{ deduction.amount }}</td>
+                <td>{{ getAmount(deduction.amount) }}</td>
               </tr>
               <tr>
                 <th colspan="2">Total</th>
-                <th>{{ totalDeduction() }}</th>
+                <th>{{ getAmount(totalDeduction()) }}</th>
               </tr>
             </tbody>
           </table>
@@ -100,7 +100,7 @@
     <div class="row">
       <div class="col-12">
         <div class="text-right">
-          <span><strong>Net Salary: </strong> {{ salary.netSalary }}/-</span>
+          <span><strong>Net Salary: </strong> {{ getAmount(salary.netSalary) }}</span>
         </div>
         <span><strong>Net Salary in Words: </strong> {{ salary.netSalaryInWords }}</span>
       </div>

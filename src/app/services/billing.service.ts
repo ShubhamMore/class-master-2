@@ -1,4 +1,4 @@
-import { InstituteBillingModel } from './../models/institute-billing.model';
+import { InstituteBillingModel } from '../models/institute-billing.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';

@@ -1,4 +1,4 @@
-import { MembershipPlanModel } from './../../../../../models/membership-plan.model';
+import { MembershipPlanModel } from '../../../../../models/membership-plan.model';
 import { NbToastrService, NbDialogRef } from '@nebular/theme';
 import { MembershipService } from './../../../../../services/membership.service';
 import { Component, OnInit } from '@angular/core';
@@ -58,7 +58,7 @@ export class PlanTypeComponent implements OnInit {
 
   getAmount(amount: any) {
     amount = parseFloat(amount.toString());
-    return amount.toFixed(2).toString();
+    return amount.toFixed(2).toString() + '/-';
   }
 
   selectPlanType(membershipPlan: MembershipPlanModel) {

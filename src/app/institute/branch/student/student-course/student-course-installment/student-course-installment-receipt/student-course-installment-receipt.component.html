@@ -27,7 +27,7 @@
                         : course.basicDetails.courseName
                     }}
                   </td>
-                  <td>{{ amount }}/-</td>
+                  <td>{{ getAmount(amount) }}</td>
                 </tr>
                 <tr class="p-2" *ngIf="instituteBilling.gstNumber">
                   <td>GST {{ course.feeDetails.gst }}%</td>

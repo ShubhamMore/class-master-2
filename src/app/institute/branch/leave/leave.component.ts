@@ -1,12 +1,12 @@
 import { LeaveCommentComponent } from './leave-comment/leave-comment.component';
-import { EmployeeNameIdModel } from './../../../models/branch-employee.model';
+import { EmployeeNameIdModel } from '../../../models/branch-employee.model';
 import { BranchEmployeeService } from './../../../services/branch-employee.service';
 import { NbToastrService, NbDialogService } from '@nebular/theme';
 import { Month, DateService } from './../../../services/shared-services/date.service';
 import { EmployeeLeaveService } from './../../../services/employee-leave.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BranchService } from './../../../services/branch.service';
-import { EmployeeLeaveModel } from './../../../models/employee-leave.model';
+import { EmployeeLeaveModel } from '../../../models/employee-leave.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -156,6 +156,7 @@ export class LeaveComponent implements OnInit {
       _id,
       status,
       comment,
+      branch: this.branchId,
     };
 
     this.employeeLeaveService.changeEmployeeLeaveStatus(employeeLeave).subscribe(

@@ -29,9 +29,9 @@ const routes: Routes = [
         path: 'edit',
         loadChildren: () =>
           import(
-            // tslint:disable-next-line: trailing-comma
             './collect-student-course-installment/collect-student-course-installment.module'
           ).then((m) => m.CollectStudentCourseInstallmentModule),
+        data: { mode: 'edit' },
       },
 
       {

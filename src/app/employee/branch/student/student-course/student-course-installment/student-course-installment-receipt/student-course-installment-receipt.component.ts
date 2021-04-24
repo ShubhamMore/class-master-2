@@ -1,8 +1,8 @@
-import { CourseModel } from './../../../../../../models/course.model';
+import { CourseModel } from '../../../../../../models/course.model';
 import { NbToastrService } from '@nebular/theme';
 import { StudentCourseInstallmentReceiptService } from './../../../../../../services/student-course-installment-receipt.service';
-import { InstituteBillingModel } from './../../../../../../models/institute-billing.model';
-import { StudentCourseInstallmentReceiptModel } from './../../../../../../models/student-course-installment-receipt.model';
+import { InstituteBillingModel } from '../../../../../../models/institute-billing.model';
+import { StudentCourseInstallmentReceiptModel } from '../../../../../../models/student-course-installment-receipt.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from '../../../../../../services/branch.service';
 import { StudentService } from '../../../../../../services/student.service';
@@ -100,8 +100,9 @@ export class StudentCourseInstallmentReceiptComponent implements OnInit, OnDestr
     window.print();
   }
 
-  back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
   }
 
   private showToastr(position: any, status: any, message: string) {
@@ -109,6 +110,10 @@ export class StudentCourseInstallmentReceiptComponent implements OnInit, OnDestr
       position,
       status,
     });
+  }
+
+  back() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

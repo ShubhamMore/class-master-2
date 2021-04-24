@@ -2,7 +2,7 @@ import { StudentCourseInstallmentReceiptService } from './../../../../../../serv
 import { DateService } from './../../../../../../services/shared-services/date.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { StudentCourseInstallmentModel } from './../../../../../../models/student-course-installment.model';
+import { StudentCourseInstallmentModel } from '../../../../../../models/student-course-installment.model';
 import { StudentCourseInstallmentService } from './../../../../../../services/student-course-installment.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from '../../../../../../services/branch.service';
@@ -99,6 +99,11 @@ export class ManageStudentCourseInstallmentComponent implements OnInit, OnDestro
         return courseName;
       }),
     );
+  }
+
+  getAmount(amount: any) {
+    amount = +amount;
+    return amount.toFixed(2).toString() + '/-';
   }
 
   editReceipt(installmentId: string, receiptId: string) {

@@ -1,9 +1,9 @@
 import { DateService } from './../../../../../../services/shared-services/date.service';
-import { CourseModel } from './../../../../../../models/course.model';
+import { CourseModel } from '../../../../../../models/course.model';
 import { CourseService } from './../../../../../../services/course.service';
 import { BatchService } from './../../../../../../services/batch.service';
 import { BranchService } from './../../../../../../services/branch.service';
-import { BatchModel } from './../../../../../../models/batch.model';
+import { BatchModel } from '../../../../../../models/batch.model';
 import { NbToastrService } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';

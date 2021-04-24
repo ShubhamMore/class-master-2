@@ -1,7 +1,7 @@
 import { StudentBranchService } from './../../student-branch.service';
 import { CourseService } from './../../../../services/course.service';
 import { NbToastrService } from '@nebular/theme';
-import { StudentCourseModel } from './../../../../models/student-course.model';
+import { StudentCourseModel } from '../../../../models/student-course.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from './../../../../services/branch.service';
 import { StudentCourseService } from './../../../../services/student-course.service';

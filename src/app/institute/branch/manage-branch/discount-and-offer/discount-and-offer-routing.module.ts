@@ -27,6 +27,7 @@ const routes: Routes = [
           import('./add-discount-and-offer/add-discount-and-offer.module').then(
             (m) => m.AddDiscountAndOfferModule,
           ),
+        data: { mode: 'edit' },
       },
 
       {

@@ -1,14 +1,14 @@
 import { RepeatScheduleComponent } from './repeat-schedule/repeat-schedule.component';
 import { BranchEmployeeService } from './../../../../../services/branch-employee.service';
-import { EmployeeNameIdModel } from './../../../../../models/branch-employee.model';
+import { EmployeeNameIdModel } from '../../../../../models/branch-employee.model';
 import { ScheduleService } from './../../../../../services/schedule.service';
 import { NbToastrService, NbStepperComponent, NbDialogService } from '@nebular/theme';
 import { BatchService } from './../../../../../services/batch.service';
 import { CourseService } from './../../../../../services/course.service';
-import { BatchModel } from './../../../../../models/batch.model';
-import { CourseModel, SubjectModel } from './../../../../../models/course.model';
-import { CategoryModel } from './../../../../../models/branch.model';
-import { ScheduleModel } from './../../../../../models/schedule.model';
+import { BatchModel } from '../../../../../models/batch.model';
+import { CourseModel, SubjectModel } from '../../../../../models/course.model';
+import { CategoryModel } from '../../../../../models/branch.model';
+import { ScheduleModel } from '../../../../../models/schedule.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { BranchService } from './../../../../../services/branch.service';
@@ -76,6 +76,10 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
 
     let mode: string;
 
+    this.route.data.subscribe((data: any) => {
+      // mode = data.mode;
+    });
+
     this.route.queryParams.subscribe((param: Params) => {
       mode = param.mode;
     });
@@ -88,7 +92,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
       return;
     } else if (mode && mode === 'edit' && !this.scheduleId) {
       this.showToastr('top-right', 'danger', 'Schedule Not Found');
-      // this.back()
+      this.back();
       return;
     }
 
@@ -140,6 +144,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
     });
 
     let day: string;
+
     if (mode && mode === 'date') {
       const date = this.scheduleService.getScheduleDay();
       day = this.dateService.convertToDateString(date);
@@ -230,7 +235,7 @@ export class AddScheduleComponent implements OnInit, OnDestroy {
   }
 
   removeRepeatSchedule(i: number) {
-    this.repeatSchedules.splice(i, 1);
+    const repeatSchedule = this.repeatSchedules.splice(i, 1);
   }
 
   openRepeatScheduleDialog(type: string) {

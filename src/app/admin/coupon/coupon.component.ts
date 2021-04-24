@@ -1,6 +1,6 @@
 import { DateService } from './../../services/shared-services/date.service';
 import { AddCouponComponent } from './add-coupon/add-coupon.component';
-import { CouponModel } from './../../models/coupon.model';
+import { CouponModel } from '../../models/coupon.model';
 import { NbToastrService, NbDialogService } from '@nebular/theme';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CouponService } from './../../services/coupon.service';

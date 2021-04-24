@@ -1,11 +1,11 @@
 import { SubjectService } from './../../../../services/subject.service';
 import { DateService } from './../../../../services/shared-services/date.service';
-import { BatchModel } from './../../../../models/batch.model';
-import { CategoryModel } from './../../../../models/branch.model';
+import { BatchModel } from '../../../../models/batch.model';
+import { CategoryModel } from '../../../../models/branch.model';
 import { BatchService } from './../../../../services/batch.service';
 import { CourseService } from './../../../../services/course.service';
-import { SubjectModel, CourseModel } from './../../../../models/course.model';
-import { AssignmentModel } from './../../../../models/assignment.model';
+import { SubjectModel, CourseModel } from '../../../../models/course.model';
+import { AssignmentModel } from '../../../../models/assignment.model';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { AssignmentService } from './../../../../services/assignment.service';
@@ -50,13 +50,7 @@ export class SaveAssignmentComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private toastrService: NbToastrService,
-  ) {
-    this.route.queryParams.subscribe((param: Params) => {
-      if (param.mode) {
-        this.ngOnInit();
-      }
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -93,8 +87,8 @@ export class SaveAssignmentComponent implements OnInit, OnDestroy {
 
     let mode: string;
 
-    this.route.queryParams.subscribe((param: Params) => {
-      mode = param.mode;
+    this.route.data.subscribe((data: any) => {
+      mode = data.mode;
     });
 
     if (mode && mode !== 'edit') {

@@ -1,4 +1,4 @@
-import { BranchModel, CategoryModel } from './../../../models/branch.model';
+import { BranchModel, CategoryModel } from '../../../models/branch.model';
 import { MenuService } from './../../menu.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from '../../../services/branch.service';

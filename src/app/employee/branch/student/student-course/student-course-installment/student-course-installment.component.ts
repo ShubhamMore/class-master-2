@@ -64,7 +64,7 @@ export class StudentCourseInstallmentComponent implements OnInit, OnDestroy {
     //       },
     //       (err: any) => {
     //         this.showToastr('top-right', 'danger', err);
-    //         this.back()
+    //        this.back()
     //       },
     //     );
     // }

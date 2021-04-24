@@ -2,9 +2,9 @@ import { AddQuestionComponent } from './add-question-answers/add-question/add-qu
 import { DateService } from './../../../../../services/shared-services/date.service';
 import { AuthService } from './../../../../../authentication/auth/auth-service/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LectureQuestionModel } from './../../../../../models/lecture-question.model';
+import { LectureQuestionModel } from '../../../../../models/lecture-question.model';
 import { Component, OnInit } from '@angular/core';
-import { ScheduleModel as LectureModel } from './../../../../../models/schedule.model';
+import { ScheduleModel as LectureModel } from '../../../../../models/schedule.model';
 import { LectureService } from './../../../../../services/lecture.service';
 import { QuestionAnswersService } from './../../../../../services/question-answers.service';
 import { BranchService } from './../../../../../services/branch.service';

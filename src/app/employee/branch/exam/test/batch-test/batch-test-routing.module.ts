@@ -23,6 +23,7 @@ const routes: Routes = [
       {
         path: 'edit',
         loadChildren: () => import('./add-test/add-test.module').then((m) => m.AddTestModule),
+        data: { mode: 'edit' },
       },
 
       {

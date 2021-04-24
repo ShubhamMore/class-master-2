@@ -1,5 +1,5 @@
 import { SaveMembershipPlanComponent } from './save-membership-plan/save-membership-plan.component';
-import { MembershipPlanModel } from './../../models/membership-plan.model';
+import { MembershipPlanModel } from '../../models/membership-plan.model';
 import { NbToastrService, NbDialogService } from '@nebular/theme';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MembershipService } from './../../services/membership.service';
@@ -68,7 +68,7 @@ export class MembershipPlansComponent implements OnInit {
 
   getAmount(amount: any) {
     amount = parseFloat(amount.toString());
-    return amount.toFixed(2).toString();
+    return amount.toFixed(2).toString() + '/-';
   }
 
   editMembership(membershipPlan: MembershipPlanModel) {

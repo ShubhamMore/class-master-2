@@ -1,4 +1,4 @@
-import { CategoryModel } from './../models/branch.model';
+import { CategoryModel } from '../models/branch.model';
 import { BranchModel } from '../models/branch.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';

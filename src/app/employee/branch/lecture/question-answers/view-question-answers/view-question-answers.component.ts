@@ -8,7 +8,7 @@ import { LectureService } from './../../../../../services/lecture.service';
 import { BranchService } from './../../../../../services/branch.service';
 import { LectureQuestionModel } from '../../../../../models/lecture-question.model';
 import { NbToastrService, NbDialogService } from '@nebular/theme';
-import { ScheduleModel as LectureModel } from './../../../../../models/schedule.model';
+import { ScheduleModel as LectureModel } from '../../../../../models/schedule.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LectureQuestionAnswerModel } from '../../../../../models/lecture-question-answers.model';
 

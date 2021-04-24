@@ -1,7 +1,7 @@
 import { NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { InstituteKeysModel } from './../../models/institute-keys.model';
+import { InstituteKeysModel } from '../../models/institute-keys.model';
 import { Component, OnInit } from '@angular/core';
 import { AdminZoomService } from '../services/admin-zoom.service';
 

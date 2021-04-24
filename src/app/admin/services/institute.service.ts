@@ -1,5 +1,5 @@
-import { BranchModel } from './../../models/branch.model';
-import { InstituteModel } from './../../models/institute.model';
+import { BranchModel } from '../../models/branch.model';
+import { InstituteModel } from '../../models/institute.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from '../../services/shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';

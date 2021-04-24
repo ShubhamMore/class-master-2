@@ -1,13 +1,13 @@
 import { NbToastrService } from '@nebular/theme';
 import { CourseService } from './../../../../../services/course.service';
 import { BatchService } from './../../../../../services/batch.service';
-import { CategoryModel } from './../../../../../models/branch.model';
-import { BatchModel } from './../../../../../models/batch.model';
+import { CategoryModel } from '../../../../../models/branch.model';
+import { BatchModel } from '../../../../../models/batch.model';
 import { Month, DateService } from './../../../../../services/shared-services/date.service';
-import { SubjectModel, CourseModel } from './../../../../../models/course.model';
+import { SubjectModel, CourseModel } from '../../../../../models/course.model';
 import { Component, OnInit } from '@angular/core';
 import { OnlineExamService } from './../../../../../services/online-exam.service';
-import { OnlineExamModel } from './../../../../../models/online-exam.model';
+import { OnlineExamModel } from '../../../../../models/online-exam.model';
 import { BranchService } from './../../../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';
 

@@ -1,9 +1,9 @@
 import { StudentBranchService } from './../../../student-branch.service';
 import { StudentCourseService } from './../../../../../services/student-course.service';
-import { StudentCourseModel } from './../../../../../models/student-course.model';
+import { StudentCourseModel } from '../../../../../models/student-course.model';
 import { NbToastrService } from '@nebular/theme';
 import { LectureService } from './../../../../../services/lecture.service';
-import { ScheduleModel as LectureModel } from './../../../../../models/schedule.model';
+import { ScheduleModel as LectureModel } from '../../../../../models/schedule.model';
 import { DateService } from './../../../../../services/shared-services/date.service';
 import { Component, OnInit } from '@angular/core';
 import { BranchService } from './../../../../../services/branch.service';

@@ -1,8 +1,8 @@
-import { CourseModel, SubjectModel } from './../../../../../models/course.model';
+import { CourseModel, SubjectModel } from '../../../../../models/course.model';
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { CourseService } from './../../../../../services/course.service';
-import { CategoryModel, BranchModel } from './../../../../../models/branch.model';
+import { CategoryModel, BranchModel } from '../../../../../models/branch.model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from './../../../../../services/branch.service';
@@ -38,11 +38,11 @@ export class AddCourseComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    this.route.queryParams.subscribe((param: Params) => {
-      if (param.mode) {
-        this.ngOnInit();
-      }
-    });
+    // this.route.queryParams.subscribe((param: Params) => {
+    //   if (param.mode) {
+    //     this.ngOnInit();
+    //   }
+    // });
   }
 
   ngOnInit(): void {
@@ -60,8 +60,8 @@ export class AddCourseComponent implements OnInit, OnDestroy {
 
     let mode: string;
 
-    this.route.queryParams.subscribe((param: Params) => {
-      mode = param.mode;
+    this.route.data.subscribe((data: any) => {
+      mode = data.mode;
     });
 
     if (mode && mode !== 'edit') {
@@ -349,7 +349,15 @@ export class AddCourseComponent implements OnInit, OnDestroy {
     const gstPercentage = this.courseFeeDetailsForm.value.gst;
     const amount = totalFees / (1 + gstPercentage / 100);
     const gstAmount = totalFees - amount;
-    return Math.round(gstAmount).toString();
+    return Math.round(gstAmount).toFixed(2).toString() + '/-';
+  }
+
+  getAmount(amount: any) {
+    amount = +amount;
+    if (amount) {
+      return amount.toFixed(2).toString() + '/-';
+    }
+    return amount;
   }
 
   getCategory(categoryId: string) {

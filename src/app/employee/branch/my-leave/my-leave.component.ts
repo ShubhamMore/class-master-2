@@ -4,7 +4,7 @@ import { Month, DateService } from './../../../services/shared-services/date.ser
 import { EmployeeLeaveService } from './../../../services/employee-leave.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BranchService } from './../../../services/branch.service';
-import { EmployeeLeaveModel } from './../../../models/employee-leave.model';
+import { EmployeeLeaveModel } from '../../../models/employee-leave.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

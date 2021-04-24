@@ -1,5 +1,5 @@
-import { StudentTransactionModel } from './../models/student-transaction.model';
-import { InstituteTransactionModel } from './../models/institute-transaction.model';
+import { StudentTransactionModel } from '../models/student-transaction.model';
+import { InstituteTransactionModel } from '../models/institute-transaction.model';
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { HttpService } from './shared-services/http.service';

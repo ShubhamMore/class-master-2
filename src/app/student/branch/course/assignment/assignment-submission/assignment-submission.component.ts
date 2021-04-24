@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NbToastrService, NbStepperComponent } from '@nebular/theme';
 import { BranchService } from './../../../../../services/branch.service';
 import { AssignmentService } from './../../../../../services/assignment.service';
-import { AssignmentModel } from './../../../../../models/assignment.model';
-import { AssignmentSubmissionModel } from './../../../../../models/assignment-submission.model';
+import { AssignmentModel } from '../../../../../models/assignment.model';
+import { AssignmentSubmissionModel } from '../../../../../models/assignment-submission.model';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AssignmentSubmissionService } from '../../../../../services/assignment-submission.service';
 

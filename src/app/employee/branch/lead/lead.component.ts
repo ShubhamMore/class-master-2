@@ -1,5 +1,5 @@
 import { LeadService } from './../../../services/lead.service';
-import { CourseModel } from './../../../models/course.model';
+import { CourseModel } from '../../../models/course.model';
 import { CourseService } from './../../../services/course.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchService } from './../../../services/branch.service';

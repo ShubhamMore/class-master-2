@@ -1,7 +1,7 @@
 import { DateService } from './../../../../../services/shared-services/date.service';
 import { DiscountAndOfferService } from './../../../../../services/discount-and-offer.service';
 import { BranchService } from './../../../../../services/branch.service';
-import { DiscountAndOfferModel } from './../../../../../models/discount-and-offer.model';
+import { DiscountAndOfferModel } from '../../../../../models/discount-and-offer.model';
 import { NbToastrService } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';

@@ -1,4 +1,4 @@
-import { OnlineExamModel } from './../models/online-exam.model';
+import { OnlineExamModel } from '../models/online-exam.model';
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { HttpService } from './shared-services/http.service';

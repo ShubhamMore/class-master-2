@@ -1,5 +1,5 @@
 import { SaveSmsPackageComponent } from './save-sms-package/save-sms-package.component';
-import { SMSPackageModel } from './../../models/sms-package.model';
+import { SMSPackageModel } from '../../models/sms-package.model';
 import { NbToastrService, NbDialogService } from '@nebular/theme';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SMSPackageService } from './../../services/sms-package.service';
@@ -52,7 +52,7 @@ export class SmsPackagesComponent implements OnInit {
 
   getAmount(amount: any) {
     amount = parseFloat(amount.toString());
-    return amount.toFixed(2).toString();
+    return amount.toFixed(2).toString() + '/-';
   }
 
   editSMSPackage(smsPackage: SMSPackageModel) {

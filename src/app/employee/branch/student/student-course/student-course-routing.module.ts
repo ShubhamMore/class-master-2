@@ -29,6 +29,7 @@ const routes: Routes = [
           import('./add-student-course/add-student-course.module').then(
             (m) => m.AddStudentCourseModule,
           ),
+        data: { mode: 'edit' },
       },
 
       {

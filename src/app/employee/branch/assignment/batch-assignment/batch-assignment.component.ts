@@ -1,9 +1,9 @@
 import { DateService } from './../../../../services/shared-services/date.service';
 import { BatchService } from './../../../../services/batch.service';
 import { CourseService } from './../../../../services/course.service';
-import { BatchModel } from './../../../../models/batch.model';
-import { CourseModel, SubjectModel } from './../../../../models/course.model';
-import { CategoryModel, BranchModel } from './../../../../models/branch.model';
+import { BatchModel } from '../../../../models/batch.model';
+import { CourseModel, SubjectModel } from '../../../../models/course.model';
+import { CategoryModel, BranchModel } from '../../../../models/branch.model';
 import { Component, OnInit } from '@angular/core';
 import { BranchService } from './../../../../services/branch.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -39,8 +39,7 @@ export class BatchAssignmentComponent implements OnInit {
     this.loading = true;
     this.branchId = this.branchService.getBranchId();
     if (!this.branchId) {
-      this.back();
-
+      this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
     this.categories = [];
@@ -150,10 +149,6 @@ export class BatchAssignmentComponent implements OnInit {
     }
 
     return '--';
-  }
-
-  back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   private showToastr(position: any, status: any, message: string) {

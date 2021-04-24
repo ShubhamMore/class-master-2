@@ -1,4 +1,4 @@
-import { EmployeeNameIdModel } from './../../../../models/branch-employee.model';
+import { EmployeeNameIdModel } from '../../../../models/branch-employee.model';
 import { BranchEmployeeService } from './../../../../services/branch-employee.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BatchService } from './../../../../services/batch.service';

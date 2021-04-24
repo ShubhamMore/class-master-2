@@ -1,7 +1,7 @@
-import { BranchModel } from './../../../models/branch.model';
+import { BranchModel } from '../../../models/branch.model';
 import { DateService } from './../../../services/shared-services/date.service';
 import { NotificationService } from './../../../services/notification.service';
-import { NotificationModel } from './../../../models/notification.model';
+import { NotificationModel } from '../../../models/notification.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BranchService } from './../../../services/branch.service';
 import { SocketService } from './../../../services/socket.service';
